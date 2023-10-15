@@ -1,7 +1,7 @@
 import os
 import openai
 
-openai.api_key = f'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'
+openai.api_key = 'YOUR_API_KEY'
 
 def article_to_question(text):
     messages = [
