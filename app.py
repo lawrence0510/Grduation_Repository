@@ -1,7 +1,8 @@
 import os
 import openai
+from flask import Flask, request, jsonify, render_template
 
-openai.api_key = 'YOUR_API_KEY'
+openai.api_key = f'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'
 
 def article_to_question(text):
     messages = [
@@ -17,18 +18,19 @@ def article_to_question(text):
     answer = response['choices'][0]['message']['content']
     return answer
 
-def main():
-    with open('article.txt', 'r') as file:
-        article_text = file.read()
+app = Flask(__name__)
+@app.route('/generate_questions', methods=['POST', 'GET'])
 
-    result = article_to_question(article_text)
+def generate_questions():
+    input_text = request.json['text']
+    result = article_to_question(input_text)
+    return result
 
-    with open('output.txt', 'w') as output_file:
-        output_file.write(result)
-
-    print("已輸出至output.txt")
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 if __name__ == "__main__":
-    main()
+    app.run(debug=True)
 
 
