@@ -32,26 +32,6 @@ def generate_questions():
     print(result + '\n\n')
     questions_and_answers = parse_questions_and_answers(result)
     print(questions_and_answers)
-#     text = """
-# 問題1：輕微燒燙傷時，可以使用哪些止痛藥物？
-
-# 答案：輕微燒燙傷時，可以使用乙醯胺酚（Acetaminophen）和非類固醇消炎藥（NSAIDs），如阿斯匹靈（Aspirin）、布洛芬（Ibuprofen）等。
-
-# 解釋：根據文本所述，在輕微燒燙傷的情況下，可使用乙醯胺酚和非類固醇消炎藥來緩解疼痛。
-
-# 問題2：淺二度燒燙傷時，傷口常出現什麼狀況？應如何處理？
-
-# 答案：淺二度燒燙傷時，傷口常出現水泡。應盡量維持水泡的完整，用自身的表皮作為天然的保護，以減少感染的風險。
-
-# 解釋：根據文本所述，淺二度燒燙傷常伴隨著水泡的形成。在這種情況下，應該盡量保持水泡完整，因為水泡可以起到保護傷口的作用，避免感染。
-
-# 問題3：在清洗淺表性燒燙傷傷口時，推薦使用什麼方法？
-
-# 答案：在清洗淺表性燒燙傷傷口時，推薦使用溫和的肥皂和自來水。
-
-# 解釋：根據文本所述，目前的研究不再建議使用皮膚消毒劑（如優碘）來清洗傷口，而是建議使用溫和的肥皂和自來水來清洗淺表性燒燙傷傷口，以避免消毒劑對傷口癒合的不良影響。
-# """
-    # questions_and_answers = parse_questions_and_answers(text)
     return questions_and_answers
 
 
