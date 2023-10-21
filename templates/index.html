@@ -260,7 +260,7 @@
 
   </div>
   <script>
-    var a1, a2, a3;
+    var a1, a2, a3, e1, e2, e3;
     function generateQuestions() {
       event.preventDefault();
       var inputText = document.getElementById("inputText").value;
@@ -273,22 +273,24 @@
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data)
           document.querySelector('.q1content').textContent = data.question1;
           document.querySelector('.q2content').textContent = data.question2;
           document.querySelector('.q3content').textContent = data.question3;
           a1 = data.answer1;
           a2 = data.answer2;
           a3 = data.answer3;
+          e1 = data.explanation1;
+          e2 = data.explanation2;
+          e3 = data.explanation3;
         })
 
         .catch(error => console.error(error))
     }
     function generateAnswers(){
       event.preventDefault();
-      document.querySelector('.ca1').innerHTML = '標準答案<br>' + a1;
-      document.querySelector('.ca2').innerHTML = '標準答案<br>' + a2;
-      document.querySelector('.ca3').innerHTML = '標準答案<br>' + a3;
+      document.querySelector('.ca1').innerHTML = a1 + '<br>' + e1;
+      document.querySelector('.ca2').innerHTML = a2 + '<br>' + e2;
+      document.querySelector('.ca3').innerHTML = a3 + '<br>' + e3;
 
     }
   </script>
