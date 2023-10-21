@@ -209,9 +209,9 @@
       <h1 class="h">～～～ 快測試我 ～～～</h1>
       <div class="spacer"></div>
       <form>
-      <textarea placeholder="請輸入文本" class="i1" id="inputText"></textarea>
-      <br><br>
-      <button class="b1" onclick="generateQuestions()">送出</button>
+        <textarea placeholder="請輸入文本" class="i1" id="inputText"></textarea>
+        <br><br>
+        <button class="b1" onclick="generateQuestions()">送出</button>
       </form>
 
       <div class="q1div"><br>
@@ -223,64 +223,75 @@
       <div><br>
         <p class="a1">A1</p><textarea class="a1content"></textarea>
       </div>
-      <div class="ca1"></div>
+      <div class="ca1">
+        {{ answer1 }}
+      </div>
 
       <div class="q2div"><br>
         <p class="q2">Q2</p>
-        <div class="q2content"></div>
+        <div class="q2content">
+          {{ question2 }}
+        </div>
       </div>
       <div><br>
         <p class="a2">A2</p><textarea class="a2content"></textarea>
       </div>
-      <div class="ca2"></div>
+      <div class="ca2">
+        {{ answer2 }}
+      </div>
 
       <div class="q3div"><br>
         <p class="q3">Q3</p>
-        <div class="q3content"></div>
+        <div class="q3content">
+          {{ question3 }}
+        </div>
       </div>
       <div><br>
         <p class="a3">A3</p><textarea class="a3content"></textarea>
       </div>
-      <div class="ca3"></div>
+      <div class="ca3">
+        {{ answer3 }}
+      </div>
 
-      <br><br><button class="b1">提交</button>
+      <br><br><button class="b1"onclick="generateAnswers()">提交</button>
     </div>
   </div>
   <div>
 
   </div>
   <script>
-    function generateQuestions(){
+    var a1, a2, a3;
+    function generateQuestions() {
+      event.preventDefault();
       var inputText = document.getElementById("inputText").value;
-      fetch('/generate_questions',{
+      fetch('/generate_questions', {
         method: 'POST',
-        body: JSON.stringify({text: inputText}),
-        headers:{
+        body: JSON.stringify({ text: inputText }),
+        headers: {
           'Content-Type': 'application/json'
         }
       })
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error(error))
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          document.querySelector('.q1content').textContent = data.question1;
+          document.querySelector('.q2content').textContent = data.question2;
+          document.querySelector('.q3content').textContent = data.question3;
+          a1 = data.answer1;
+          a2 = data.answer2;
+          a3 = data.answer3;
+        })
+
+        .catch(error => console.error(error))
     }
-    
+    function generateAnswers(){
+      event.preventDefault();
+      document.querySelector('.ca1').innerHTML = '標準答案<br>' + a1;
+      document.querySelector('.ca2').innerHTML = '標準答案<br>' + a2;
+      document.querySelector('.ca3').innerHTML = '標準答案<br>' + a3;
+
+    }
   </script>
 </body>
 
 </html>
-<!-- 貼上文本的大格_OK
-送出Button_OK
-
-回傳問題1顯示區域_OK
-使用者作答區_OK
-
-回傳問題2顯示區域_OK
-使用者作答區_OK
-
-回傳問題3顯示區域_OK
-使用者作答區_OK
-
-使用者送出Button答覆
-
-顯示標準答案Button
-顯示標準答案區域 -->
