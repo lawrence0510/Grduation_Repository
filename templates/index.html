@@ -93,7 +93,7 @@
     .ca1 {
       border-style: dashed;
       border-color: gray;
-      height: 100px;
+      height: 200px;
       width: 700px;
       align-items: center;
       position: relative;
@@ -143,7 +143,7 @@
     .ca2 {
       border-style: dashed;
       border-color: gray;
-      height: 100px;
+      height: 200px;
       width: 700px;
       align-items: center;
       position: relative;
@@ -193,7 +193,7 @@
     .ca3 {
       border-style: dashed;
       border-color: gray;
-      height: 100px;
+      height: 200px;
       width: 700px;
       align-items: center;
       position: relative;
@@ -213,16 +213,18 @@
         <br><br>
         <button class="b1" onclick="generateQuestions()">送出</button>
       </form>
-
+      <!-- 問題1 -->
       <div class="q1div"><br>
         <p class="q1">Q1</p>
         <div class="q1content">
           {{ question1 }}
         </div>
       </div>
+      <!-- 輸入區 -->
       <div><br>
-        <p class="a1">A1</p><textarea class="a1content"></textarea>
+        <p class="a1">A1</p><textarea class="a1content" id="answer1"></textarea>
       </div>
+      <!-- 顯示答案區 -->
       <div class="ca1">
         {{ answer1 }}
       </div>
@@ -234,7 +236,7 @@
         </div>
       </div>
       <div><br>
-        <p class="a2">A2</p><textarea class="a2content"></textarea>
+        <p class="a2">A2</p><textarea class="a2content" id="answer2"></textarea>
       </div>
       <div class="ca2">
         {{ answer2 }}
@@ -247,13 +249,13 @@
         </div>
       </div>
       <div><br>
-        <p class="a3">A3</p><textarea class="a3content"></textarea>
+        <p class="a3">A3</p><textarea class="a3content" id="answer3"></textarea>
       </div>
       <div class="ca3">
         {{ answer3 }}
       </div>
 
-      <br><br><button class="b1"onclick="generateAnswers()">提交</button>
+      <br><br><button class="b1" onclick="generateAnswers()">提交</button>
     </div>
   </div>
   <div>
@@ -286,13 +288,35 @@
 
         .catch(error => console.error(error))
     }
-    function generateAnswers(){
+    function generateAnswers() {
       event.preventDefault();
-      document.querySelector('.ca1').innerHTML = a1 + '<br>' + e1;
-      document.querySelector('.ca2').innerHTML = a2 + '<br>' + e2;
-      document.querySelector('.ca3').innerHTML = a3 + '<br>' + e3;
 
+      var answer1 = document.getElementById('answer1').value;
+      var answer2 = document.getElementById('answer2').value;
+      var answer3 = document.getElementById('answer3').value;
+
+      var data = {
+        answer1: answer1,
+        answer2: answer2,
+        answer3: answer3
+      };
+
+      fetch('/generate_answers', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          document.querySelector('.ca1').innerText = data.rate1 + "\n參考解答：" + a1 +"\n參考解釋" + e1;
+          document.querySelector('.ca2').innerText = data.rate2 + "\n參考解答：" + a2 +"\n參考解釋" + e2;
+          document.querySelector('.ca3').innerText = data.rate3 + "\n參考解答：" + a3 +"\n參考解釋" + e3;
+        })
+        .catch(error => console.error(error));
     }
+
   </script>
 </body>
 
