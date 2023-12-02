@@ -310,9 +310,9 @@
       })
         .then(response => response.json())
         .then(data => {
-          document.querySelector('.ca1').innerText = data.rate1 + "\n參考解答：" + a1 +"\n參考解釋" + e1;
-          document.querySelector('.ca2').innerText = data.rate2 + "\n參考解答：" + a2 +"\n參考解釋" + e2;
-          document.querySelector('.ca3').innerText = data.rate3 + "\n參考解答：" + a3 +"\n參考解釋" + e3;
+          document.querySelector('.ca1').innerText = data.rate1 + "\n" + a1 +"\n" + e1;
+          document.querySelector('.ca2').innerText = data.rate2 + "\n" + a2 +"\n" + e2;
+          document.querySelector('.ca3').innerText = data.rate3 + "\n" + a3 +"\n" + e3;
         })
         .catch(error => console.error(error));
     }
