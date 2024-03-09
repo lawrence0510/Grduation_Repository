@@ -3,7 +3,7 @@ import openai
 from flask import Flask, request, jsonify, render_template
 import json
 
-openai.api_key = f'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'
+openai.api_key = f'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'
 
 
 def article_to_question(text):
