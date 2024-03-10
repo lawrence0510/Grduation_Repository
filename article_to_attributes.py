@@ -46,19 +46,20 @@ def evaluate_article():
 
 def evaluate_reading_age(article):
     # 使用OpenAI API評估文章的適讀年齡
+    prompt = f"給定以下文章：\n\n{article}\n\n請你判斷這篇文章是適合幾歲的學生閱讀，答案只能給一個阿拉伯數字，不要有其他多餘的冗字，給一個「阿拉伯數字」代表其年齡即可。"
     response = openai.Completion.create(
         engine="gpt-3.5-turbo-instruct",
-        prompt=f"根據以下文章內容，評估適合的閱讀年齡為何？請給我一個阿拉伯數字就好，不要其他的冗言贅字或理由，就是一個單純的數字，幾歲的學生是適合讀這篇文章的？\n\n{article}",
-        temperature=0.7,
-        max_tokens=50,
+        prompt=prompt,
+        temperature=0.5,
         top_p=1.0,
         frequency_penalty=0.0,
         presence_penalty=0.0
     )
     try:
+        print(response)
         age_estimate = int(response.choices[0].text.strip())
     except ValueError:
-        age_estimate = 10
+        age_estimate = 5
     return age_estimate
 
 def generate_question(article, age, adjustment=0):
