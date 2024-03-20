@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 import openai
+import json
 
 app = Flask(__name__)
 
@@ -22,25 +23,13 @@ def evaluate_article():
     # 評估適讀年齡
     age = evaluate_reading_age(article)
     # 生成問題
-    question1, options1, answer1, explanation1 = generate_question(article, age, -1)
-    question2, options2, answer2, explanation2 = generate_question(article, age, 1)
+    questions = generate_questions(article, age)
     question3 = generate_open_ended_question(article, age)
     
     # 返回生成的問題
     return jsonify({
         'age': age,
-        'question1': {
-            'question': question1,
-            'options': options1,
-            'correct_answer': answer1,
-            'explanation': explanation1
-        },
-        'question2': {
-            'question': question2,
-            'options': options2,
-            'correct_answer': answer2,
-            'explanation': explanation2
-        },
+        **questions,  # 展開questions字典以包含所有問題
         'question3': question3
     })
 
@@ -56,32 +45,78 @@ def evaluate_reading_age(article):
         presence_penalty=0.0
     )
     try:
-        print(response)
         age_estimate = int(response.choices[0].text.strip())
     except ValueError:
         age_estimate = 5
     return age_estimate
 
-def generate_question(article, age, adjustment=0):
-    # 根據指定年齡生成選擇題
-    adjusted_age = age + adjustment
-    prompt = f"給定以下文章：\n\n{article}\n\n為{adjusted_age}歲的兒童創建一個適合的選擇題問題，一定要包括四個選項和一個正確答案。"
-    
+def generate_questions(article, age):
+    prompt = (f"給定以下文章：\n\n{article}\n\n"
+              f"請為{age-1}歲和{age+1}歲的兒童各創建一個適合的選擇題問題，"
+              f"每個問題都要包括四個選項和一個正確答案，以及一個解析。"
+              f"請確保這兩個問題是不同的。"
+              f"然後，請你follow以下格式回傳給我。\n"
+              f"問題1：（這邊放入問題1的內容）\n"
+              f"選項A： \n選項B： \n選項C： \n選項D：\n"
+              f"答案1：\n"
+              f"解釋1：\n"
+              f"問題2：（這邊放入問題2的內容）\n"
+              f"選項A： \n選項B： \n選項C： \n選項D：\n"
+              f"答案2：\n"
+              f"解釋2：\n")
+
     response = openai.Completion.create(
         engine="gpt-3.5-turbo-instruct",
         prompt=prompt,
         temperature=0.5,
-        max_tokens=200,
+        max_tokens=2000,
         top_p=1.0,
         frequency_penalty=0.0,
         presence_penalty=0.0
     )
-    output = response.choices[0].text.strip().split('\n')
-    question = output[0]
-    options = output[1:5]
-    correct_answer = output[-1].split(". ")[-1]  # 假設正確答案是最後一行，並且格式為"X. 答案"
-    explanation = f"正確答案是{correct_answer}，因為..."
-    return question, options, correct_answer, explanation
+
+    output = response.choices[0].text.strip().split('\n')  # 直接按行分割
+    print(output)
+    # 解析問題1
+    question1 = output[0].strip()
+    options1 = {
+        'A': output[1].strip(),
+        'B': output[2].strip(),
+        'C': output[3].strip(),
+        'D': output[4].strip(),
+    }
+    answer1 = output[5].strip()
+    explanation1 = output[6].strip()
+
+    # 解析問題2
+    question2 = output[8].strip()
+    options2 = {
+        'A': output[9].strip(),
+        'B': output[10].strip(),
+        'C': output[11].strip(),
+        'D': output[12].strip(),
+    }
+    answer2 = output[13].strip()
+    explanation2 = output[14].strip()
+
+    questions = {
+        'question1': {
+            'question': question1,
+            'options': options1,
+            'correct_answer': answer1,
+            'explanation': explanation1,
+        },
+        'question2': {
+            'question': question2,
+            'options': options2,
+            'correct_answer': answer2,
+            'explanation': explanation2,
+        }
+    }
+
+    return questions
+
+
 
 def generate_open_ended_question(article, age):
     # 根據指定年齡生成開放式問題
