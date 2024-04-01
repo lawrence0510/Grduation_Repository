@@ -340,6 +340,23 @@ class SchoolReset(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+#Article api區
+ns2 = api.namespace('Article', description='Article operations')
+
+@ns2.route('/getallarticle')
+class DataList(Resource):
+    def get(self):
+        '''取得所有Article資料'''
+        connection = create_db_connection()
+        if connection is not None:
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM `Article`")
+            data = cursor.fetchall()
+            cursor.close()
+            connection.close()
+            return data
+        else:
+            return {"error": "Unable to connect to the database"}, 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)
