@@ -67,7 +67,7 @@ ns = api.namespace('User', description='User operations')
 @ns.route('/getalluser')
 class DataList(Resource):
     def get(self):
-        '''測試遠端取得所有User資料'''
+        '''取得所有User資料'''
         connection = create_db_connection()
         if connection is not None:
             cursor = connection.cursor(dictionary=True)
