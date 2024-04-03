@@ -1,10 +1,17 @@
-from flask import Flask
+from flask import Flask, session, jsonify
 from flask_restx import Api, Resource, reqparse
 import mysql.connector
 from mysql.connector import Error
 import hashlib
+import openai
+from datetime import datetime, timedelta
+from werkzeug.datastructures import FileStorage
+import pandas as pd
 
+
+openai.api_key = f'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'
 app = Flask(__name__)
+app.secret_key = '5b52b65660fc4c498fe0ed356fdc5212'
 api = Api(app, version='1.0', title='Graduation_Repository APIs', description='110級畢業專案第一組\n組員：吳堃豪、侯程麟、謝佳蓉、許馨文、王暐睿\n指導教授：洪智鐸')
 
 def create_db_connection():
@@ -59,6 +66,9 @@ school_reset_parser = reqparse.RequestParser()
 school_reset_parser.add_argument('user_email', type=str, required=True, help='The user email address')
 school_reset_parser.add_argument('user_password', type=str, required=True, help='The user password')
 school_reset_parser.add_argument('new_school', type=str, required=True, help='The new school')
+
+article_upload_parser = reqparse.RequestParser()
+article_upload_parser.add_argument('file', type=FileStorage, location='files', required=True, help='Excel file with articles')
 
 
 #User api區
@@ -141,9 +151,10 @@ class LoginUser(Resource):
                 user = cursor.fetchone()
                 
                 if user:
-                    return {"user_id": user['user_id']}, 200
+                    session['user_id'] = user['user_id']
+                    return {"message": "Login successful", "user_id": user['user_id']}, 200
                 else:
-                    return {"error": "Invalid username or password"}, 401
+                    return {"message": "Invalid username or password"}, 401
             except Error as e:
                 return {"error": str(e)}, 500
             finally:
@@ -151,6 +162,13 @@ class LoginUser(Resource):
                 connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
+
+@ns.route('/logout')
+class LogoutUser(Resource):
+    def post(self):
+        '''登出用戶'''
+        session.pop('user_id', None)
+        return {"message": "You have been logged out."}, 200
 
 @ns.route('/getuserfromid')
 class GetUserFromID(Resource):
@@ -350,13 +368,81 @@ class DataList(Resource):
         connection = create_db_connection()
         if connection is not None:
             cursor = connection.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM `Article`")
-            data = cursor.fetchall()
-            cursor.close()
-            connection.close()
-            return data
+            try:
+                cursor.execute("SELECT * FROM `Article`")
+                articles = cursor.fetchall()
+                # 將所有datetime對象轉換為字符串
+                for article in articles:
+                    if isinstance(article['article_expired_day'], datetime):
+                        article['article_expired_day'] = article['article_expired_day'].strftime('%Y-%m-%d')
+                return jsonify(articles)
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
+
+def get_max_article_id(connection):
+    cursor = connection.cursor()
+    cursor.execute("SELECT MAX(article_id) FROM `Article`")
+    result = cursor.fetchone()
+    max_id = result[0] if result[0] is not None else 0
+    cursor.close()
+    return max_id
+
+@ns2.route('/uploadarticles')
+class UploadArticles(Resource):
+    @ns.expect(article_upload_parser)
+    def post(self):
+        '''從Excel上傳文章資料並插入到數據庫'''
+        args = article_upload_parser.parse_args()
+        uploaded_file = args['file']
+
+        if uploaded_file:
+            df = pd.read_excel(uploaded_file.stream)
+            connection = create_db_connection()
+
+            if connection is not None:
+                max_article_id = get_max_article_id(connection)
+
+                for index, row in df.iterrows():
+                    new_article_id = max_article_id + 1
+                    article_title = row['article_title']
+                    article_link = row['article_link']
+                    article_content = row['article_content']
+                    article_expired_day = (datetime.now() + timedelta(days=60)).strftime('%Y-%m-%d')
+
+                    try:
+                        cursor = connection.cursor()
+                        insert_query = """
+                        INSERT INTO `Article` (
+                            `article_id`, `article_title`, `article_link`,
+                            `article_category`, `article_content`,
+                            `article_grade`, `article_expired_day`
+                        ) VALUES (%s, %s, %s, %s, %s, %s, %s)
+                        """
+                        cursor.execute(insert_query, (
+                            new_article_id, article_title, article_link, None,
+                            article_content, None, article_expired_day
+                        ))
+                        connection.commit()
+                        max_article_id = new_article_id
+                    except Error as e:
+                        return {"error": str(e)}, 500
+
+                cursor.close()
+                connection.close()
+                return {"message": "Articles uploaded successfully"}, 201
+            else:
+                return {"error": "Unable to connect to the database"}, 500
+        else:
+            return {"error": "No file uploaded"}, 400
+
+
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)
