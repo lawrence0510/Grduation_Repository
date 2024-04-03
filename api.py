@@ -68,7 +68,7 @@ school_reset_parser.add_argument('user_password', type=str, required=True, help=
 school_reset_parser.add_argument('new_school', type=str, required=True, help='The new school')
 
 article_upload_parser = reqparse.RequestParser()
-article_upload_parser.add_argument('file', type=FileStorage, location='files', required=True, help='Excel file with articles')
+article_upload_parser.add_argument('file', type=FileStorage, location='files', required=True, help='可以上傳Excel檔案，格式要是|article_title|article_link|article_content|')
 
 
 #User api區
