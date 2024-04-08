@@ -6,6 +6,7 @@ import pandas as pd
 import time
 
 start_time = time.time()
+
 # 第一部分：收集 unique_links
 categories = ['humanbeing', 'earth', 'space', '文明足跡', 'environment', 'lifescience',
               'scicomm', 'technology', 'nature', '物理-化學', 'medicine-health', 'scienceinmovies']
@@ -14,11 +15,11 @@ base_url = 'https://pansci.asia/archives/category/type/'
 
 pattern = re.compile(r'https://pansci.asia/archives/\d+$')
 
-unique_links = set()
+unique_links = []
 
 for category in categories:
     category = unquote(category)
-    for page in range(1, 4):
+    for page in range(1, 11):
         full_url = f"{base_url}{category}/page/{page}"
         print(f"Fetching articles for category page: {full_url}")
         response = requests.get(full_url)
@@ -26,51 +27,45 @@ for category in categories:
         soup = BeautifulSoup(response.text, 'html.parser')
         article_links = soup.find_all("a", href=True)
         for link in article_links:
-            if pattern.match(link['href']) and link['href'] not in unique_links:
-                unique_links.add(link['href'])
+            if pattern.match(link['href']):
+                link_info = {'url': link['href'], 'category': category}
+                if link_info not in unique_links:
+                    unique_links.append(link_info)
 
 print(f"Total unique articles found: {len(unique_links)}")
 
 mid_time = time.time()
-print(f"First Part execution time: {mid_time-start_time} seconds")
+print(f"First Part execution time: {mid_time - start_time} seconds")
+
 # 第二部分：遍歷 unique_links 並提取標題和內文
 data = []
 
-for url in unique_links:
+for link_info in unique_links:
+    url = link_info['url']
+    category = link_info['category']
     response = requests.get(url)
     response.encoding = 'utf-8'
     soup = BeautifulSoup(response.text, 'html.parser')
     
-    title = soup.find('title')
-
-    paragraphs_text = []
-    paragraphs = soup.find_all('p')
-    for paragraph in paragraphs:
-        paragraphs_text.append(paragraph.text)
-
-    paragraphs_text = paragraphs_text[4:]
-
+    title = soup.find('title').text
+    paragraphs = soup.find_all('p')[4:]
     updated_paragraphs_text = []
-    for paragraph in paragraphs_text:
-        if '討論功能關閉中。'in paragraph:
+
+    for paragraph in paragraphs:
+        text = paragraph.text
+        if '討論功能關閉中。' in text or text.startswith('延伸閱讀') or text.strip() == '0' or '查看原始文章' in text:
             break
-        elif paragraph.startswith('延伸閱讀'):
-            break
-        elif paragraph.strip() == '0':
-            break
-        elif '查看原始文章'in paragraph:
-            break
-        else:
-            updated_paragraphs_text.append(paragraph)
+        updated_paragraphs_text.append(text)
 
     content = '\n'.join(updated_paragraphs_text)
     
     data.append({
-        'article_title': title.text,
+        'article_title': title,
         'article_link': url,
-        'article_content': content
+        'article_content': content,
+        'article_category': category,
     })
-    print('存入標題： '+ title.text + '\n' + '目前Excel進度：'+ str(len(data)) + '/' + str(len(unique_links)))
+    print('存入標題：' + title + '\n' + '目前Excel進度：' + str(len(data)) + '/' + str(len(unique_links)))
 
 df = pd.DataFrame(data)
 
@@ -81,5 +76,5 @@ with pd.ExcelWriter(excel_path, engine='openpyxl') as writer:
 end_time = time.time()
 total_time = end_time - start_time
 print(f"Excel file has been saved to {excel_path}")
-print(f"First Part execution time: {mid_time-start_time} seconds")
+print(f"First Part execution time: {mid_time - start_time} seconds")
 print(f"Total execution time: {total_time} seconds")
