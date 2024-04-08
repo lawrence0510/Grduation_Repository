@@ -1,7 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 
-url = 'https://pansci.asia/archives/374794'
+
+url = 'https://pansci.asia/archives/368012'
 response = requests.get(url)
 response.encoding = 'utf-8'
 
@@ -19,11 +20,11 @@ paragraphs_text = paragraphs_text[4:]
 
 updated_paragraphs_text = []
 for paragraph in paragraphs_text:
-    if '討論功能關閉中。' in paragraph:
+    if '討論功能關閉中。'in paragraph:
         break
     else:
         updated_paragraphs_text.append(paragraph)
 
 final_text = '\n'.join(updated_paragraphs_text)
 
-print('內文：\n'+final_text)
+print(updated_paragraphs_text)
