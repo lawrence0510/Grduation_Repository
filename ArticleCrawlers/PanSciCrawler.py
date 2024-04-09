@@ -5,6 +5,7 @@ from urllib.parse import unquote
 import pandas as pd
 import time
 from openpyxl.utils.exceptions import IllegalCharacterError
+from tqdm import tqdm
 
 start_time = time.time()
 
@@ -18,9 +19,9 @@ pattern = re.compile(r'https://pansci.asia/archives/\d+$')
 
 unique_links = []
 
-for category in categories:
+for category in tqdm(categories, desc='Collecting categories'):
     category = unquote(category)
-    for page in range(1, 2):
+    for page in range(1, 101):
         full_url = f"{base_url}{category}/page/{page}"
         print(f"Fetching articles for category page: {full_url}")
         response = requests.get(full_url)
@@ -41,7 +42,7 @@ print(f"First Part execution time: {mid_time - start_time} seconds")
 # 第二部分：遍歷 unique_links 並提取標題和內文
 data = []
 
-for link_info in unique_links:
+for link_info in tqdm(unique_links, desc='Processing links'):
     url = link_info['url']
     category = link_info['category']
     response = requests.get(url)
@@ -84,6 +85,6 @@ except IllegalCharacterError as e:
 end_time = time.time()
 total_time = end_time - start_time
 print(f"Excel file has been saved to {excel_path}")
-print(f"{str(skipped_entries)} Articles were skipped because of the illegal characters.")
+print(f"{str(skipped_entries)} Articles were skipped because of illegal characters.")
 print(f"First Part execution time: {mid_time - start_time} seconds")
 print(f"Total execution time: {total_time} seconds")    
