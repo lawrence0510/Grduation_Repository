@@ -4,6 +4,7 @@ import re
 from urllib.parse import unquote
 import pandas as pd
 import time
+from openpyxl.utils.exceptions import IllegalCharacterError
 
 start_time = time.time()
 
@@ -19,7 +20,7 @@ unique_links = []
 
 for category in categories:
     category = unquote(category)
-    for page in range(1, 11):
+    for page in range(1, 2):
         full_url = f"{base_url}{category}/page/{page}"
         print(f"Fetching articles for category page: {full_url}")
         response = requests.get(full_url)
@@ -48,6 +49,7 @@ for link_info in unique_links:
     soup = BeautifulSoup(response.text, 'html.parser')
     
     title = soup.find('title').text
+    
     paragraphs = soup.find_all('p')[4:]
     updated_paragraphs_text = []
 
@@ -70,11 +72,18 @@ for link_info in unique_links:
 df = pd.DataFrame(data)
 
 excel_path = 'PanSciArticles.xlsx'
-with pd.ExcelWriter(excel_path, engine='openpyxl') as writer:
-    df.to_excel(writer, index=False, sheet_name='Articles')
+skipped_entries=0
+
+try:
+    with pd.ExcelWriter(excel_path, engine='openpyxl') as writer:
+        df.to_excel(writer, index=False, sheet_name='Articles')
+except IllegalCharacterError as e:
+    print(f"遇到非法字符錯誤: {e}")
+    skipped_entries = skipped_entries + 1
 
 end_time = time.time()
 total_time = end_time - start_time
 print(f"Excel file has been saved to {excel_path}")
+print(f"{str(skipped_entries)} Articles were skipped because of the illegal characters.")
 print(f"First Part execution time: {mid_time - start_time} seconds")
-print(f"Total execution time: {total_time} seconds")
+print(f"Total execution time: {total_time} seconds")    
