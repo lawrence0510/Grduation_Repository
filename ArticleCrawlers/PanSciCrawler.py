@@ -49,8 +49,14 @@ for link_info in tqdm(unique_links, desc='Processing links'):
     response.encoding = 'utf-8'
     soup = BeautifulSoup(response.text, 'html.parser')
     
-    title = soup.find('title').text
+    title_element = soup.find('title')
     
+    if title_element is None or not title_element.text.strip():
+        print(f"跳過標題為空的文章: {url}")
+        continue
+    
+    title = title_element.text
+        
     paragraphs = soup.find_all('p')[4:]
     updated_paragraphs_text = []
 
