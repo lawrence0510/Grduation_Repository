@@ -28,53 +28,56 @@ def create_db_connection():
         return None
 
 user_parser = reqparse.RequestParser()
-user_parser.add_argument('user_name', type=str, required=True, help='The user name')
-user_parser.add_argument('user_password', type=str, required=True, help='The user password')
-user_parser.add_argument('user_school', type=str, required=True, help='The user school')
-user_parser.add_argument('user_age', type=int, required=True, help='The user age')
-user_parser.add_argument('user_email', type=str, required=True, help='The user email')
-user_parser.add_argument('user_phone', type=str, required=True, help='The user phone number')
+user_parser.add_argument('user_name', type=str, required=True, help='使用者名稱')
+user_parser.add_argument('user_password', type=str, required=True, help='使用者密碼')
+user_parser.add_argument('user_school', type=str, required=True, help='使用者學校')
+user_parser.add_argument('user_age', type=int, required=True, help='使用者年齡')
+user_parser.add_argument('user_email', type=str, required=True, help='使用者email')
+user_parser.add_argument('user_phone', type=str, required=True, help='使用者電話')
 
 login_parser = reqparse.RequestParser()
-login_parser.add_argument('user_name', type=str, required=True, help='The user name')
-login_parser.add_argument('user_password', type=str, required=True, help='The user password')
+login_parser.add_argument('user_name', type=str, required=True, help='使用者名稱')
+login_parser.add_argument('user_password', type=str, required=True, help='使用者密碼')
 
 user_id_parser = reqparse.RequestParser()
-user_id_parser.add_argument('user_id', type=int, required=True, help='The user ID')
+user_id_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
 
 email_reset_parser = reqparse.RequestParser()
-email_reset_parser.add_argument('original_email', type=str, required=True, help='The original email address')
-email_reset_parser.add_argument('original_password', type=str, required=True, help='The original password')
-email_reset_parser.add_argument('new_email', type=str, required=True, help='The new email address')
+email_reset_parser.add_argument('original_email', type=str, required=True, help='使用者舊email')
+email_reset_parser.add_argument('original_password', type=str, required=True, help='使用者密碼')
+email_reset_parser.add_argument('new_email', type=str, required=True, help='使用者新email')
 
 password_reset_parser = reqparse.RequestParser()
-password_reset_parser.add_argument('user_email', type=str, required=True, help='The user email address')
-password_reset_parser.add_argument('original_password', type=str, required=True, help='The original password')
-password_reset_parser.add_argument('new_password', type=str, required=True, help='The new password')
+password_reset_parser.add_argument('user_email', type=str, required=True, help='使用者email')
+password_reset_parser.add_argument('original_password', type=str, required=True, help='使用者舊密碼')
+password_reset_parser.add_argument('new_password', type=str, required=True, help='使用者新密碼')
 
 phone_reset_parser = reqparse.RequestParser()
-phone_reset_parser.add_argument('user_email', type=str, required=True, help='The user email address')
-phone_reset_parser.add_argument('user_password', type=str, required=True, help='The user password')
-phone_reset_parser.add_argument('new_phone', type=str, required=True, help='The new phone number')
+phone_reset_parser.add_argument('user_email', type=str, required=True, help='使用者email')
+phone_reset_parser.add_argument('user_password', type=str, required=True, help='使用者密碼')
+phone_reset_parser.add_argument('new_phone', type=str, required=True, help='使用者新電話號碼')
 
 name_reset_parser = reqparse.RequestParser()
-name_reset_parser.add_argument('user_email', type=str, required=True, help='The user email address')
-name_reset_parser.add_argument('user_password', type=str, required=True, help='The user password')
-name_reset_parser.add_argument('new_name', type=str, required=True, help='The new name')
+name_reset_parser.add_argument('user_email', type=str, required=True, help='使用者email')
+name_reset_parser.add_argument('user_password', type=str, required=True, help='使用者密碼')
+name_reset_parser.add_argument('new_name', type=str, required=True, help='使用者新名稱')
 
 school_reset_parser = reqparse.RequestParser()
-school_reset_parser.add_argument('user_email', type=str, required=True, help='The user email address')
-school_reset_parser.add_argument('user_password', type=str, required=True, help='The user password')
-school_reset_parser.add_argument('new_school', type=str, required=True, help='The new school')
+school_reset_parser.add_argument('user_email', type=str, required=True, help='使用者email')
+school_reset_parser.add_argument('user_password', type=str, required=True, help='使用者密碼')
+school_reset_parser.add_argument('new_school', type=str, required=True, help='新學校名稱')
 
 article_upload_parser = reqparse.RequestParser()
 article_upload_parser.add_argument('file', type=FileStorage, location='files', required=True, help='可以上傳Excel檔案，格式要是|article_title|article_link|article_content|')
 
+get_questions_parser = reqparse.RequestParser()
+get_questions_parser.add_argument('article_text', type=str, required=True, help='欲產生問題之文章內文')
+
 
 #User api區
-ns = api.namespace('User', description='User operations')
+user_ns = api.namespace('User', description='與使用者操作相關之api')
 
-@ns.route('/getalluser')
+@user_ns.route('/get_all_user')
 class DataList(Resource):
     def get(self):
         '''取得所有User資料'''
@@ -89,9 +92,9 @@ class DataList(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
-@ns.route('/register')
+@user_ns.route('/register')
 class RegisterUser(Resource):
-    @ns.expect(user_parser)
+    @user_ns.expect(user_parser)
     def post(self):
         '''註冊新用戶'''
         args = user_parser.parse_args()
@@ -128,9 +131,9 @@ class RegisterUser(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
-@ns.route('/login')
+@user_ns.route('/login')
 class LoginUser(Resource):
-    @ns.expect(login_parser)
+    @user_ns.expect(login_parser)
     def post(self):
         '''登入用戶'''
         args = login_parser.parse_args()
@@ -163,16 +166,16 @@ class LoginUser(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
-@ns.route('/logout')
+@user_ns.route('/logout')
 class LogoutUser(Resource):
     def post(self):
         '''登出用戶'''
         session.pop('user_id', None)
         return {"message": "You have been logged out."}, 200
 
-@ns.route('/getuserfromid')
+@user_ns.route('/get_user_from_id')
 class GetUserFromID(Resource):
-    @ns.expect(user_id_parser)
+    @user_ns.expect(user_id_parser)
     def get(self):
         '''根據 user_id 獲取用戶資料'''
         args = user_id_parser.parse_args()
@@ -198,9 +201,9 @@ class GetUserFromID(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
-@ns.route('/emailreset')
+@user_ns.route('/reset_email')
 class EmailReset(Resource):
-    @ns.expect(email_reset_parser)
+    @user_ns.expect(email_reset_parser)
     def post(self):
         '''重設email'''
         args = email_reset_parser.parse_args()
@@ -234,9 +237,9 @@ class EmailReset(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
-@ns.route('/passwordreset')
+@user_ns.route('/reset_password')
 class PasswordReset(Resource):
-    @ns.expect(password_reset_parser)
+    @user_ns.expect(password_reset_parser)
     def post(self):
         '''重設密碼'''
         args = password_reset_parser.parse_args()
@@ -268,9 +271,9 @@ class PasswordReset(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
-@ns.route('/phonereset')
+@user_ns.route('/reset_phone')
 class PhoneReset(Resource):
-    @ns.expect(phone_reset_parser)
+    @user_ns.expect(phone_reset_parser)
     def post(self):
         '''重設手機號碼'''
         args = phone_reset_parser.parse_args()
@@ -298,9 +301,9 @@ class PhoneReset(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
-@ns.route('/namereset')
+@user_ns.route('/reset_name')
 class NameReset(Resource):
-    @ns.expect(name_reset_parser)
+    @user_ns.expect(name_reset_parser)
     def post(self):
         '''重設姓名'''
         args = name_reset_parser.parse_args()
@@ -328,9 +331,9 @@ class NameReset(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
-@ns.route('/schoolreset')
+@user_ns.route('/reset_school')
 class SchoolReset(Resource):
-    @ns.expect(school_reset_parser)
+    @user_ns.expect(school_reset_parser)
     def post(self):
         '''重設學校資料'''
         args = school_reset_parser.parse_args()
@@ -359,9 +362,9 @@ class SchoolReset(Resource):
             return {"error": "Unable to connect to the database"}, 500
 
 #Article api區
-ns2 = api.namespace('Article', description='Article operations')
+article_ns = api.namespace('Article', description='與文章操作相關之api')
 
-@ns2.route('/getallarticle')
+@article_ns.route('/get_all_article')
 class DataList(Resource):
     def get(self):
         '''取得所有Article資料'''
@@ -392,9 +395,9 @@ def get_max_article_id(connection):
     cursor.close()
     return max_id
 
-@ns2.route('/uploadarticles')
+@article_ns.route('/upload_articles')
 class UploadArticles(Resource):
-    @ns.expect(article_upload_parser)
+    @user_ns.expect(article_upload_parser)
     def post(self):
         '''從Excel上傳文章資料並插入到數據庫'''
         args = article_upload_parser.parse_args()
@@ -440,10 +443,10 @@ class UploadArticles(Resource):
         else:
             return {"error": "No file uploaded"}, 400
 
-@ns2.route('/uploadpansci')
+@article_ns.route('/upload_pansci')
 class UploadPanSciArticles(Resource):
     def post(self):
-        '''從泛科學爬取文章資料並插入到數據庫'''
+        '''從泛科學爬取文章資料並插入到數據庫\n‼️執行此api將會耗費大量時間（約兩小時）請謹慎操作‼️'''
         from PanSciCrawler import start_crawling
 
         data = start_crawling()
@@ -482,6 +485,15 @@ class UploadPanSciArticles(Resource):
             return {"message": "PanSci articles uploaded successfully"}, 201
         else:
             return {"error": "Unable to connect to the database"}, 500
+
+#OpenAI api區
+openAI_ns = api.namespace('OpenAI', description='與openai操作相關之api，‼️此區皆為付費區，需測試請先洽Lawrence‼️')
+
+@openAI_ns.route('/get_questions_from_article')
+class GetQuestionsFromArticle(Resource):
+    @openAI_ns.expect(get_questions_parser)
+    def post(self):
+        '''傳送文章內容至openai API，獲得三個問題及標準答案'''
 
 
 
