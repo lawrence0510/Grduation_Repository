@@ -93,7 +93,7 @@ article_upload_parser.add_argument('file', type=FileStorage, location='files',
 
 get_questions_parser = reqparse.RequestParser()
 get_questions_parser.add_argument(
-    'article_text', type=str, required=True, help='欲產生問題之文章內文')
+    'article_id', type=str, required=True, help='欲產生問題之文章編號')
 
 
 # User api區
@@ -541,64 +541,133 @@ openAI_ns = api.namespace(
     'OpenAI', description='與openai操作相關之api，‼️此區皆為付費區，需測試請先洽Lawrence‼️')
 OpenAI.api_key = f'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'
 
+
 @openAI_ns.route('/get_questions_from_article')
 class GetQuestionsFromArticle(Resource):
     @openAI_ns.expect(get_questions_parser)
     def post(self):
         '''傳送文章內容至OpenAI API，獲得三個問題及標準答案'''
         args = get_questions_parser.parse_args()
-        article = args['article_text']
-        client = OpenAI(
-            api_key='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')
+        article_id = args['article_id']
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor(dictionary=True)
+                sql = """
+                SELECT `article_content` FROM `Article`
+                WHERE `article_id` = %s
+                """
+                cursor.execute(sql, (article_id,))
+                article = cursor.fetchone()
+                if article:
+                    article_content = article['article_content']
+                    client = OpenAI(
+                        api_key='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')
 
-        try:
-            prompt_message = (
-                f"以下是一篇文章的內容：\n{article}\n\n"
-                "請根據以上文本，follow這個格式使用繁體中文回傳給我，"
-                "我想要你首先判斷這篇文章的適讀年齡，要回傳一個阿拉伯數字放入article_age中，"
-                "介於6到15歲之間，再回傳三個問題，第一二題都是選擇題，分別要提供四個選項，"
-                "再提供答案和解析，第三題要是問答題，你可以先產生一個標準答案並儲存在answer3中，"
-                "格式如下：" + json.dumps({
-                    "article_age": None,
-                    "question1": None,
-                    "question1choice1": None,
-                    "question1choice2": None,
-                    "question1choice3": None,
-                    "question1choice4": None,
-                    "answer1": None,
-                    "explanation1": None,
-                    "question2": None,
-                    "question2choice1": None,
-                    "question2choice2": None,
-                    "question2choice3": None,
-                    "question2choice4": None,
-                    "answer2": None,
-                    "explanation2": None,
-                    "question3": None,
-                    "answer3": None
-                })
-            )
-            
-            response = client.chat.completions.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {"role": "system", "content": "你是一名專門在閱讀文章後產生問題給學生回答的得力助手。"},
-                    {"role": "user", "content": prompt_message}
-                ],
-            )
+                    try:
+                        prompt_message = (
+                            f"以下是一篇文章的內容：\n{article_content}\n\n"
+                            "請根據以上文本，follow這個格式使用繁體中文回傳給我，"
+                            "我想要你首先判斷這篇文章的適讀年齡，要回傳一個阿拉伯數字放入article_age中，"
+                            "介於6到15歲之間，再回傳三個問題，第一二題都是選擇題，分別要提供四個選項，"
+                            "再提供答案和解析，第三題要是問答題，你可以先產生一個標準答案並儲存在answer3中，"
+                            "格式如下：" + json.dumps({
+                                "article_age": None,
+                                "question1": None,
+                                "question1choice1": None,
+                                "question1choice2": None,
+                                "question1choice3": None,
+                                "question1choice4": None,
+                                "answer1": None,
+                                "explanation1": None,
+                                "question2": None,
+                                "question2choice1": None,
+                                "question2choice2": None,
+                                "question2choice3": None,
+                                "question2choice4": None,
+                                "answer2": None,
+                                "explanation2": None,
+                                "question3": None,
+                                "answer3": None
+                            })
+                        )
 
-            response_str = str(response).replace('\n', '').replace('\\n', '')
-            content_start = response_str.find("content='") + len("content='")
-            content_end = response_str.find("}', role='assistant'", content_start) + 1
-            content_json_str = response_str[content_start:content_end]
-            content_json_str = content_json_str.replace("\\'", "'").replace('\\"', '"').replace('\\\\', '\\')
-            content_json = json.loads(content_json_str)
+                        response = client.chat.completions.create(
+                            model="gpt-3.5-turbo",
+                            messages=[
+                                {"role": "system",
+                                    "content": "你是一名專門在閱讀文章後產生問題給學生回答的得力助手。"},
+                                {"role": "user", "content": prompt_message}
+                            ],
+                        )
 
-            return content_json, 200
-        except Exception as e:
-            return {'error': str(e)}, 500
-
-
+                        response_str = str(response).replace(
+                            '\n', '').replace('\\n', '')
+                        content_start = response_str.find(
+                            "content='") + len("content='")
+                        content_end = response_str.find(
+                            "}', role='assistant'", content_start) + 1
+                        content_json_str = response_str[content_start:content_end]
+                        content_json_str = content_json_str.replace(
+                            "\\'", "'").replace('\\"', '"').replace('\\\\', '\\')
+                        print(content_json_str)
+                        content_json = json.loads(content_json_str)
+                        print(content_json)
+                        cursor.execute("SELECT MAX(question_id) as max_id FROM `Question`")
+                        result = cursor.fetchone()
+                        max_id = result['max_id'] if result['max_id'] is not None else 0
+                        question_id = max_id + 1
+                        try:
+                            sql_insert = """
+                            INSERT INTO `Question`(
+                                `question_id`, `article_id`, `question_grade`, `question_1`, `question1_choice1`, 
+                                `question1_choice2`, `question1_choice3`, `question1_choice4`, 
+                                `question1_answer`, `question1_explanation`, `question_2`, 
+                                `question2_choice1`, `question2_choice2`, `question2_choice3`, 
+                                `question2_choice4`, `question2_answer`, `question2_explanation`, 
+                                `question3`, `question3_answer`
+                            ) VALUES (
+                                %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
+                            )
+                            """
+                            cursor.execute(sql_insert, (
+                                question_id,
+                                article_id,
+                                content_json['article_age'],
+                                content_json['question1'],
+                                content_json['question1choice1'],
+                                content_json['question1choice2'],
+                                content_json['question1choice3'],
+                                content_json['question1choice4'],
+                                content_json['answer1'],
+                                content_json['explanation1'],
+                                content_json['question2'],
+                                content_json['question2choice1'],
+                                content_json['question2choice2'],
+                                content_json['question2choice3'],
+                                content_json['question2choice4'],
+                                content_json['answer2'],
+                                content_json['explanation2'],
+                                content_json['question3'],
+                                content_json['answer3']
+                            ))
+                            connection.commit()
+                        except Exception as e:
+                            import traceback
+                            traceback.print_exc()
+                            return {"error": str(e)}, 500
+                    except Exception as e:
+                        import traceback
+                        traceback.print_exc()
+                        return {'error': str(e)}, 500
+            except Error as e:
+                import traceback
+                traceback.print_exc()
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+                
 
 
 if __name__ == '__main__':
