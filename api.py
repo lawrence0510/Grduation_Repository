@@ -9,8 +9,10 @@ from werkzeug.datastructures import FileStorage
 import pandas as pd
 import json
 from tqdm import tqdm
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 app.secret_key = '5b52b65660fc4c498fe0ed356fdc5212'
 api = Api(app, version='1.0', title='Graduation_Repository APIs',
           description='110級畢業專案第一組\n組員：吳堃豪、侯程麟、謝佳蓉、許馨文、王暐睿\n指導教授：洪智鐸')
