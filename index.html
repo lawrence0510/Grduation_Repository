@@ -58,7 +58,7 @@
             }
             var xhr = new XMLHttpRequest();
             // 將用戶名和密碼作為 URL 參數發送
-            var url = 'http://127.0.0.1:5001/User/login?user_name=' + encodeURIComponent(username) + '&user_password=' + encodeURIComponent(password);
+            var url = 'http://140.119.19.145:5001/User/login?user_name=' + encodeURIComponent(username) + '&user_password=' + encodeURIComponent(password);
             xhr.open('POST', url, true);
             xhr.onload = function () {
                 if (xhr.status === 200) {
@@ -88,7 +88,7 @@
                 }
             }
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://127.0.0.1:5001/User/register', true);
+            xhr.open('POST', 'http://140.119.19.145:5001/User/register', true);
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.onload = function () {
                 if (xhr.status === 201) {
