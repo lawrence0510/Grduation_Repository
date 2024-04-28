@@ -545,6 +545,49 @@ class UploadPanSciArticles(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+@article_ns.route('/upload_reader_digest')
+class UploadPanSciArticles(Resource):
+    def post(self):
+        '''從讀者文摘爬取文章資料並插入到數據庫'''
+        from ReaderDigestCrawler import start_crawling
+
+        data = start_crawling()
+        connection = create_db_connection()
+
+        if connection is not None:
+            max_article_id = get_max_article_id(connection)
+
+            for item in data:
+                new_article_id = max_article_id + 1
+                article_title = item['article_title']
+                article_link = item['article_link']
+                article_content = item['article_content']
+                # article_category = item['article_category']
+                article_expired_day = (
+                    datetime.now() + timedelta(days=60)).strftime('%Y-%m-%d')
+
+                try:
+                    cursor = connection.cursor()
+                    insert_query = """
+                    INSERT INTO `Article` (
+                        `article_id`, `article_title`, `article_link`,
+                        `article_category`, `article_content`,
+                        `article_grade`, `article_expired_day`
+                    ) VALUES (%s, %s, %s, %s, %s, %s, %s)
+                    """
+                    cursor.execute(insert_query, (
+                        new_article_id, article_title, article_link, None,
+                        article_content, None, article_expired_day
+                    ))
+                    connection.commit()
+                    max_article_id = new_article_id
+                except Error as e:
+                    return {"error": str(e)}, 500
+            cursor.close()
+            connection.close()
+            return {"message": "Reader Digest articles uploaded successfully"}, 201
+        else:
+            return {"error": "Unable to connect to the database"}, 500
 
 # OpenAI api區
 openAI_ns = api.namespace(
