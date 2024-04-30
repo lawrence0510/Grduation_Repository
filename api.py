@@ -642,8 +642,8 @@ class GetQuestionsFromArticle(Resource):
                                     "question3": None,
                                     "answer3": None
                                 }) +
-                                "尤其注意，你在回答answer1和answer2的時候要回答的是選項的內容，而不是回答question1choice2或是question2choice3這種" +
-                                "並請確保你回傳剛好17行數據，並按照上述的格式回傳給我。"
+                                "尤其注意，你在回答answer1和answer2的時候要回答的是選項的內容，而不是回答question1choice2或是question2choice3這種。" +
+                                "嚴格按照「上述的格式」回傳給我，讓你的回答「整串是一個JSON」，並且剛好「17行」，所有我上述提到的Key都不要少"
                             )
                             response = client.chat.completions.create(
                                 model="gpt-3.5-turbo",
@@ -726,6 +726,13 @@ class GetQuestionsFromArticle(Resource):
                                     content_json['question3'],
                                     content_json['answer3']
                                 ))
+                                sql_update_article = """
+                                UPDATE `Article`
+                                SET `article_grade` = %s
+                                WHERE `article_id` = %s
+                                """
+                                cursor.execute(sql_update_article, (content_json['article_age'], article_id))
+
                                 connection.commit()
                             except Exception as e:
                                 import traceback
