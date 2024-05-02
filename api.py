@@ -450,6 +450,22 @@ def get_max_article_id(connection):
     cursor.close()
     return max_id
 
+@article_ns.route('/get_random_article')
+class DataList(Resource):
+    def get(self):
+        '''取得隨機文章'''
+        connection = create_db_connection()
+        if connection is not None:
+            cursor = connection.cursor(dictionary=True)
+            try:
+                cursor.execute("SELECT article_content FROM Article ORDER BY RAND() LIMIT 1;")
+                article = cursor.fetchall()
+                return jsonify(article)
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
 
 @article_ns.route('/upload_articles')
 class UploadArticles(Resource):
