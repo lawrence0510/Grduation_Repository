@@ -416,32 +416,6 @@ class SchoolReset(Resource):
 # Article api區
 article_ns = api.namespace('Article', description='與文章操作相關之api')
 
-
-@article_ns.route('/get_all_article')
-class DataList(Resource):
-    def get(self):
-        '''取得所有Article資料'''
-        connection = create_db_connection()
-        if connection is not None:
-            cursor = connection.cursor(dictionary=True)
-            try:
-                cursor.execute("SELECT * FROM `Article`")
-                articles = cursor.fetchall()
-                # 將所有datetime對象轉換為字符串
-                for article in articles:
-                    if isinstance(article['article_expired_day'], datetime):
-                        article['article_expired_day'] = article['article_expired_day'].strftime(
-                            '%Y-%m-%d')
-                return jsonify(articles)
-            except Error as e:
-                return {"error": str(e)}, 500
-            finally:
-                cursor.close()
-                connection.close()
-        else:
-            return {"error": "Unable to connect to the database"}, 500
-
-
 def get_max_article_id(connection):
     cursor = connection.cursor()
     cursor.execute("SELECT MAX(article_id) FROM `Article`")
@@ -458,7 +432,7 @@ class DataList(Resource):
         if connection is not None:
             cursor = connection.cursor(dictionary=True)
             try:
-                cursor.execute("SELECT article_content FROM Article ORDER BY RAND() LIMIT 1;")
+                cursor.execute("SELECT article_title, article_content FROM Article ORDER BY RAND() LIMIT 1;")
                 article = cursor.fetchall()
                 return jsonify(article)
             except Error as e:
