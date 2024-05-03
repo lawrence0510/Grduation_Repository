@@ -105,6 +105,16 @@ get_rate_parser.add_argument(
     'article_id', type=int, required=True, help='原文文章id')
 get_rate_parser.add_argument('answer', type=str, required=True, help='回答')
 
+history_parser = reqparse.RequestParser()
+history_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
+history_parser.add_argument('article_id', type=int, required=True, help='文章ID')
+history_parser.add_argument('q1_user_answer', type=str, required=True, help='第一題使用者答案')
+history_parser.add_argument('q2_user_answer', type=str, required=True, help='第二題使用者答案')
+history_parser.add_argument('q3_user_answer', type=str, required=True, help='第三題使用者答案')
+history_parser.add_argument('q3_score_1', type=int, required=True, help='第三題評分1')
+history_parser.add_argument('q3_score_2', type=int, required=True, help='第三題評分2')
+history_parser.add_argument('q3_score_3', type=int, required=True, help='第三題評分3')
+
 
 # User api區
 user_ns = api.namespace('User', description='與使用者操作相關之api')
@@ -853,6 +863,81 @@ class GetRateFromAnswers(Resource):
                 return {"error": str(e)}, 500
             finally:
                 cursor.close()
+                connection.close()
+
+
+#History api區
+history_ns = api.namespace('History', description='與歷史紀錄操作之相關api')
+
+def get_max_history_id(connection):
+    cursor = connection.cursor()
+    cursor.execute("SELECT MAX(history_id) FROM `History`")
+    result = cursor.fetchone()
+    max_id = result[0] if result[0] is not None else 0
+    cursor.close()
+    return max_id
+
+@history_ns.route('/get_all_history')
+class DataList(Resource):
+    def get(self):
+        '''取得所有History資料'''
+        connection = create_db_connection()
+        if connection is not None:
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM `History`")
+            data = cursor.fetchall()
+            cursor.close()
+            connection.close()
+            return data
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+
+@history_ns.route('/record_new_history')
+class RecordHistory(Resource):
+    @history_ns.expect(history_parser)
+    def post(self):
+        '''記錄新的歷史答題數據'''
+        args = history_parser.parse_args()
+        connection = create_db_connection()
+        if connection is None:
+            return {"error": "Unable to connect to the database"}, 500
+
+        try:
+            new_history_id = get_max_history_id(connection) + 1
+            question_id = args['article_id']
+            time_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute(f"SELECT * FROM `Question` WHERE question_id = {question_id};")
+            question_data = cursor.fetchone()
+
+            q1_correct_answer = question_data['question1_answer']
+            q2_correct_answer = question_data['question2_answer']
+            q3_correct_answer = question_data['question3_answer']
+
+            q1_is_correct = int(args['q1_user_answer'] == q1_correct_answer)
+            q2_is_correct = int(args['q2_user_answer'] == q2_correct_answer)
+            
+            args['q3_total_score'] = args['q3_score_1'] + args['q3_score_2'] + args['q3_score_3']
+            total_score = 3 * q1_is_correct + 3 * q2_is_correct + (args['q3_score_1'] * 0.26 + args['q3_score_2'] * 0.26 + args['q3_score_3'] * 0.28)
+
+            insert_query = """
+            INSERT INTO `History`(`history_id`, `user_id`, `article_id`, `question_id`, `time`, `q1_user_answer`, `q1_correct_answer`, `q1_is_correct`, `q2_user_answer`, `q2_correct_answer`, `q2_is_correct`, `q3_user_answer`, `q3_correct_answer`, `q3_score_1`, `q3_score_2`, `q3_score_3`, `q3_total_score`, `total_score`)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """
+            cursor.execute(insert_query, (
+                new_history_id, args['user_id'], args['article_id'], question_id, time_now, 
+                args['q1_user_answer'], q1_correct_answer, q1_is_correct, args['q2_user_answer'], q2_correct_answer, q2_is_correct, 
+                args['q3_user_answer'], q3_correct_answer, args['q3_score_1'], args['q3_score_2'], args['q3_score_3'], 
+                args['q3_total_score'], total_score
+            ))
+            connection.commit()
+            return {"message": "Record saved successfully", "total_score": total_score}, 201
+
+        except Error as e:
+            return {"error": str(e)}, 500
+        finally:
+            if connection:
                 connection.close()
 
 
