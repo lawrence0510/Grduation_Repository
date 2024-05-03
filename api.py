@@ -940,6 +940,38 @@ class RecordHistory(Resource):
             if connection:
                 connection.close()
 
+@history_ns.route('/get_history_from_user')
+class GetHistoryFromUser(Resource):
+    @history_ns.expect(user_id_parser)
+    def get(self):
+        '''根據 user_id 獲取歷史資料'''
+        args = user_id_parser.parse_args()
+        user_id = args['user_id']
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor(dictionary=True)
+                sql = "SELECT * FROM `History` WHERE `user_id` = %s"
+                cursor.execute(sql, (user_id,))
+                histories = cursor.fetchall()
+
+                if histories:
+                    for history in histories:
+                        if 'time' in history and history['time']:
+                            history['time'] = history['time'].strftime('%Y-%m-%d %H:%M:%S')
+                    return histories, 200
+                else:
+                    return {"error": "No history found for the user"}, 404
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)
