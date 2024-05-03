@@ -1,3 +1,4 @@
+from decimal import Decimal
 from openai import OpenAI
 from flask import Flask, session, jsonify
 from flask_restx import Api, Resource, reqparse
@@ -960,6 +961,9 @@ class GetHistoryFromUser(Resource):
                     for history in histories:
                         if 'time' in history and history['time']:
                             history['time'] = history['time'].strftime('%Y-%m-%d %H:%M:%S')
+                            for key in history:
+                                if isinstance(history[key], Decimal):
+                                    history[key] = str(history[key])
                     return histories, 200
                 else:
                     return {"error": "No history found for the user"}, 404
