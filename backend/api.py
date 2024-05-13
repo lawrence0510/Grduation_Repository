@@ -1,20 +1,30 @@
+# 標準庫
+from datetime import datetime, timedelta
 from decimal import Decimal
-from openai import OpenAI
-from flask import Flask, session, jsonify
-from flask_restx import Api, Resource, reqparse
+import hashlib
+import json
+import os
+
+
+# 第三方庫
+import pandas as pd
 import mysql.connector
 from mysql.connector import Error
-import hashlib
-from datetime import datetime, timedelta
-from werkzeug.datastructures import FileStorage
-import pandas as pd
-import json
-from tqdm import tqdm
+from flask import Flask, session, jsonify, url_for
+from flask_restx import Api, Resource, reqparse
 from flask_cors import CORS
+from werkzeug.datastructures import FileStorage
+from authlib.integrations.flask_client import OAuth
+from tqdm import tqdm
+from openai import OpenAI
+from dotenv import load_dotenv
+
 
 app = Flask(__name__)
 CORS(app)
-app.secret_key = '5b52b65660fc4c498fe0ed356fdc5212'
+oauth = OAuth(app)
+load_dotenv()
+app.secret_key = os.getenv('FLASK_SECRET_KEY')
 api = Api(app, version='1.0', title='Graduation_Repository APIs',
           description='110級畢業專案第一組\n組員：吳堃豪、侯程麟、謝佳蓉、許馨文、王暐睿\n指導教授：洪智鐸')
 
@@ -22,10 +32,10 @@ api = Api(app, version='1.0', title='Graduation_Repository APIs',
 def create_db_connection():
     try:
         connection = mysql.connector.connect(
-            host='140.119.19.145',
-            user='lawrence',
-            password='25352Riigdii',
-            database='graduation_repository'
+            host=os.getenv('DATABASE_HOST'),
+            user=os.getenv('DATABASE_USER'),
+            password=os.getenv('DATABASE_PASSWORD'),
+            database=os.getenv('DATABASE_NAME')
         )
         return connection
     except Error as e:
@@ -109,32 +119,21 @@ get_rate_parser.add_argument('answer', type=str, required=True, help='回答')
 history_parser = reqparse.RequestParser()
 history_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
 history_parser.add_argument('article_id', type=int, required=True, help='文章ID')
-history_parser.add_argument('q1_user_answer', type=str, required=True, help='第一題使用者答案')
-history_parser.add_argument('q2_user_answer', type=str, required=True, help='第二題使用者答案')
-history_parser.add_argument('q3_user_answer', type=str, required=True, help='第三題使用者答案')
-history_parser.add_argument('q3_score_1', type=int, required=True, help='第三題評分1')
-history_parser.add_argument('q3_score_2', type=int, required=True, help='第三題評分2')
-history_parser.add_argument('q3_score_3', type=int, required=True, help='第三題評分3')
-
+history_parser.add_argument(
+    'q1_user_answer', type=str, required=True, help='第一題使用者答案')
+history_parser.add_argument(
+    'q2_user_answer', type=str, required=True, help='第二題使用者答案')
+history_parser.add_argument(
+    'q3_user_answer', type=str, required=True, help='第三題使用者答案')
+history_parser.add_argument('q3_score_1', type=int,
+                            required=True, help='第三題評分1')
+history_parser.add_argument('q3_score_2', type=int,
+                            required=True, help='第三題評分2')
+history_parser.add_argument('q3_score_3', type=int,
+                            required=True, help='第三題評分3')
 
 # User api區
 user_ns = api.namespace('User', description='與使用者操作相關之api')
-
-
-@user_ns.route('/get_all_user')
-class DataList(Resource):
-    def get(self):
-        '''取得所有User資料'''
-        connection = create_db_connection()
-        if connection is not None:
-            cursor = connection.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM `User`")
-            data = cursor.fetchall()
-            cursor.close()
-            connection.close()
-            return data
-        else:
-            return {"error": "Unable to connect to the database"}, 500
 
 
 @user_ns.route('/register')
@@ -194,8 +193,8 @@ class LoginUser(Resource):
             try:
                 cursor = connection.cursor(dictionary=True)
                 sql = """
-                SELECT `user_id` FROM `User`
-                WHERE `user_name` = %s AND `user_password` = %s
+                SELECT user_id FROM User
+                WHERE user_name = %s AND user_password = %s
                 """
                 cursor.execute(sql, (user_name, encrypted_password))
                 user = cursor.fetchone()
@@ -212,6 +211,34 @@ class LoginUser(Resource):
                 connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
+
+
+google = oauth.register(
+    name='google',
+    client_id=os.getenv('GOOGLE_CLIENT_ID'),
+    client_secret=os.getenv('GOOGLE_CLIENT_SECRET'),
+    access_token_url='https://accounts.google.com/o/oauth2/token',
+    access_token_params=None,
+    authorize_url='https://accounts.google.com/o/oauth2/auth',
+    authorize_params=None,
+    api_base_url='https://www.googleapis.com/oauth2/v1/',
+    jwks_uri='https://www.googleapis.com/oauth2/v3/certs',
+    client_kwargs={'scope': 'openid email profile'},
+)
+
+
+@app.route('/User/google_login')
+def login():
+    redirect_uri = url_for('authorize', _external=True)
+    return google.authorize_redirect(redirect_uri)
+
+
+@app.route('/User/authorize')
+def authorize():
+    token = google.authorize_access_token()
+    resp = google.get('userinfo')
+    user_info = resp.json()
+    return f'Login succesfully as {user_info["name"]}!{user_info}'
 
 
 @user_ns.route('/logout')
@@ -234,7 +261,7 @@ class GetUserFromID(Resource):
         if connection is not None:
             try:
                 cursor = connection.cursor(dictionary=True)
-                sql = "SELECT * FROM `User` WHERE `user_id` = %s"
+                sql = "SELECT * FROM User WHERE user_id = %s"
                 cursor.execute(sql, (user_id,))
                 user = cursor.fetchone()
 
@@ -427,6 +454,7 @@ class SchoolReset(Resource):
 # Article api區
 article_ns = api.namespace('Article', description='與文章操作相關之api')
 
+
 def get_max_article_id(connection):
     cursor = connection.cursor()
     cursor.execute("SELECT MAX(article_id) FROM `Article`")
@@ -434,6 +462,7 @@ def get_max_article_id(connection):
     max_id = result[0] if result[0] is not None else 0
     cursor.close()
     return max_id
+
 
 @article_ns.route('/get_random_article')
 class DataList(Resource):
@@ -443,7 +472,8 @@ class DataList(Resource):
         if connection is not None:
             cursor = connection.cursor(dictionary=True)
             try:
-                cursor.execute("SELECT article_title, article_content FROM Article ORDER BY RAND() LIMIT 1;")
+                cursor.execute(
+                    "SELECT article_title, article_content FROM Article ORDER BY RAND() LIMIT 1;")
                 article = cursor.fetchall()
                 return jsonify(article)
             except Error as e:
@@ -451,6 +481,7 @@ class DataList(Resource):
             finally:
                 cursor.close()
                 connection.close()
+
 
 @article_ns.route('/upload_articles')
 class UploadArticles(Resource):
@@ -546,6 +577,7 @@ class UploadPanSciArticles(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+
 @article_ns.route('/upload_reader_digest')
 class UploadPanSciArticles(Resource):
     def post(self):
@@ -589,6 +621,7 @@ class UploadPanSciArticles(Resource):
             return {"message": "Reader Digest articles uploaded successfully"}, 201
         else:
             return {"error": "Unable to connect to the database"}, 500
+
 
 # OpenAI api區
 openAI_ns = api.namespace(
@@ -732,7 +765,8 @@ class GetQuestionsFromArticle(Resource):
                                 SET `article_grade` = %s
                                 WHERE `article_id` = %s
                                 """
-                                cursor.execute(sql_update_article, (content_json['article_age'], article_id))
+                                cursor.execute(
+                                    sql_update_article, (content_json['article_age'], article_id))
 
                                 connection.commit()
                             except Exception as e:
@@ -800,7 +834,7 @@ class GetRateFromAnswers(Resource):
 
                     try:
                         prompt_message = (
-                            f"以下是一篇文章的內容：\n{article_content}\n以下是根據這篇文章所產生的開放性問題：\n{question}\n然後，以下是我的使用者回答：\n{answer}\n現在，請你根據以下標準，針對此回答給予評分。標準如下：\n{rate_standard}\n，然後根據以下JSON格式回傳你的回覆給我："+
+                            f"以下是一篇文章的內容：\n{article_content}\n以下是根據這篇文章所產生的開放性問題：\n{question}\n然後，以下是我的使用者回答：\n{answer}\n現在，請你根據以下標準，針對此回答給予評分。標準如下：\n{rate_standard}\n，然後根據以下JSON格式回傳你的回覆給我：" +
                             json.dumps({
                                 "正確度": None,
                                 "正確度原因": None,
@@ -867,8 +901,9 @@ class GetRateFromAnswers(Resource):
                 connection.close()
 
 
-#History api區
+# History api區
 history_ns = api.namespace('History', description='與歷史紀錄操作之相關api')
+
 
 def get_max_history_id(connection):
     cursor = connection.cursor()
@@ -877,6 +912,7 @@ def get_max_history_id(connection):
     max_id = result[0] if result[0] is not None else 0
     cursor.close()
     return max_id
+
 
 @history_ns.route('/get_all_history')
 class DataList(Resource):
@@ -892,6 +928,7 @@ class DataList(Resource):
             return data
         else:
             return {"error": "Unable to connect to the database"}, 500
+
 
 @history_ns.route('/record_new_history')
 class RecordHistory(Resource):
@@ -909,7 +946,8 @@ class RecordHistory(Resource):
             time_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
             cursor = connection.cursor(dictionary=True)
-            cursor.execute(f"SELECT * FROM `Question` WHERE question_id = {question_id};")
+            cursor.execute(
+                f"SELECT * FROM `Question` WHERE question_id = {question_id};")
             question_data = cursor.fetchone()
 
             q1_correct_answer = question_data['question1_answer']
@@ -918,18 +956,21 @@ class RecordHistory(Resource):
 
             q1_is_correct = int(args['q1_user_answer'] == q1_correct_answer)
             q2_is_correct = int(args['q2_user_answer'] == q2_correct_answer)
-            
-            args['q3_total_score'] = args['q3_score_1'] + args['q3_score_2'] + args['q3_score_3']
-            total_score = 3 * q1_is_correct + 3 * q2_is_correct + (args['q3_score_1'] * 0.26 + args['q3_score_2'] * 0.26 + args['q3_score_3'] * 0.28)
+
+            args['q3_total_score'] = args['q3_score_1'] + \
+                args['q3_score_2'] + args['q3_score_3']
+            total_score = 3 * q1_is_correct + 3 * q2_is_correct + \
+                (args['q3_score_1'] * 0.26 + args['q3_score_2']
+                 * 0.26 + args['q3_score_3'] * 0.28)
 
             insert_query = """
             INSERT INTO `History`(`history_id`, `user_id`, `article_id`, `question_id`, `time`, `q1_user_answer`, `q1_correct_answer`, `q1_is_correct`, `q2_user_answer`, `q2_correct_answer`, `q2_is_correct`, `q3_user_answer`, `q3_correct_answer`, `q3_score_1`, `q3_score_2`, `q3_score_3`, `q3_total_score`, `total_score`)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
             cursor.execute(insert_query, (
-                new_history_id, args['user_id'], args['article_id'], question_id, time_now, 
-                args['q1_user_answer'], q1_correct_answer, q1_is_correct, args['q2_user_answer'], q2_correct_answer, q2_is_correct, 
-                args['q3_user_answer'], q3_correct_answer, args['q3_score_1'], args['q3_score_2'], args['q3_score_3'], 
+                new_history_id, args['user_id'], args['article_id'], question_id, time_now,
+                args['q1_user_answer'], q1_correct_answer, q1_is_correct, args['q2_user_answer'], q2_correct_answer, q2_is_correct,
+                args['q3_user_answer'], q3_correct_answer, args['q3_score_1'], args['q3_score_2'], args['q3_score_3'],
                 args['q3_total_score'], total_score
             ))
             connection.commit()
@@ -940,6 +981,7 @@ class RecordHistory(Resource):
         finally:
             if connection:
                 connection.close()
+
 
 @history_ns.route('/get_history_from_user')
 class GetHistoryFromUser(Resource):
@@ -960,7 +1002,8 @@ class GetHistoryFromUser(Resource):
                 if histories:
                     for history in histories:
                         if 'time' in history and history['time']:
-                            history['time'] = history['time'].strftime('%Y-%m-%d %H:%M:%S')
+                            history['time'] = history['time'].strftime(
+                                '%Y-%m-%d %H:%M:%S')
                             for key in history:
                                 if isinstance(history[key], Decimal):
                                     history[key] = str(history[key])
@@ -974,7 +1017,6 @@ class GetHistoryFromUser(Resource):
                 connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
-
 
 
 if __name__ == '__main__':
