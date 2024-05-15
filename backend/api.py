@@ -136,7 +136,7 @@ history_parser.add_argument('q3_score_3', type=int,
 user_ns = api.namespace('User', description='與使用者操作相關之api')
 
 
-@user_ns.route('/register')
+@user_ns.route('/normal_register')
 class RegisterUser(Resource):
     @user_ns.expect(user_parser)
     def post(self):
@@ -161,11 +161,11 @@ class RegisterUser(Resource):
                 max_id = result[0] if result[0] is not None else 0
                 new_user_id = max_id + 1
                 sql = """
-                INSERT INTO `User`(`user_id`, `user_name`, `user_password`, `user_school`, `user_age`, `user_email`, `user_phone`)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                INSERT INTO `User`(`user_id`, `user_name`, `user_password`, `user_school`, `user_age`, `user_email`, `user_phone`, `created_at`)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
                 """
                 cursor.execute(sql, (new_user_id, user_name, encrypted_password,
-                               user_school, user_age, user_email, user_phone))
+                               user_school, user_age, user_email, user_phone, datetime.now().date()))
                 connection.commit()
                 return {"message": "User registered successfully"}, 201
             except Error as e:
@@ -177,7 +177,7 @@ class RegisterUser(Resource):
             return {"error": "Unable to connect to the database"}, 500
 
 
-@user_ns.route('/login')
+@user_ns.route('/normal_login')
 class LoginUser(Resource):
     @user_ns.expect(login_parser)
     def post(self):
@@ -238,7 +238,48 @@ def authorize():
     token = google.authorize_access_token()
     resp = google.get('userinfo')
     user_info = resp.json()
-    return f'Login succesfully as {user_info["name"]}!{user_info}'
+
+    user_school = user_info.get('hd')
+
+    connection = create_db_connection()
+    if connection is not None:
+        try:
+            cursor = connection.cursor()
+            cursor.execute("SELECT user_id FROM User WHERE google_id = %s OR user_email = %s", (user_info['id'], user_info['email']))
+            user = cursor.fetchone()
+            if user is None:
+                cursor.execute("SELECT MAX(user_id) FROM User")
+                result = cursor.fetchone()
+                max_id = result[0] if result[0] is not None else 0
+                new_user_id = max_id + 1
+                sql = """
+                INSERT INTO User (user_id, google_id, user_name, profile_picture, user_email, user_school, created_at)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                """
+                cursor.execute(sql, (new_user_id, user_info['id'], user_info['name'], user_info.get('picture'), user_info['email'], user_school, datetime.now().date()))
+                connection.commit()
+                user_id = new_user_id
+            else:
+                user_id = user[0]
+                sql = """
+                UPDATE User
+                SET google_id = %s, user_name = %s, profile_picture = %s, user_school = %s
+                WHERE user_id = %s
+                """
+                cursor.execute(sql, (user_info['id'], user_info['name'], user_info.get('picture'), user_school, user_id))
+                connection.commit()
+            session['user_id'] = user_id
+            return f"Login successfully as {user_info['name']}!"
+        except Error as e:
+            return {"error": str(e)}, 500
+        finally:
+            cursor.close()
+            connection.close()
+    else:
+        return {"error": "Unable to connect to the database"}, 500
+
+
+
 
 
 @user_ns.route('/logout')
