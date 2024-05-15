@@ -10,7 +10,7 @@ import os
 import pandas as pd
 import mysql.connector
 from mysql.connector import Error
-from flask import Flask, session, jsonify, url_for
+from flask import Flask, request, session, jsonify, url_for
 from flask_restx import Api, Resource, reqparse
 from flask_cors import CORS
 from werkzeug.datastructures import FileStorage
@@ -199,7 +199,12 @@ class LoginUser(Resource):
                 cursor.execute(sql, (user_name, encrypted_password))
                 user = cursor.fetchone()
 
-                if user:
+                user_id = user['user_id'] if user else None
+                success = bool(user)
+
+                insert_login_record(user_id, success)
+
+                if success:
                     session['user_id'] = user['user_id']
                     return {"message": "Login successful", "user_id": user['user_id']}, 200
                 else:
@@ -211,6 +216,30 @@ class LoginUser(Resource):
                 connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
+
+def insert_login_record(user_id, success):
+    connection = create_db_connection()
+    if connection is not None:
+        try:
+            cursor = connection.cursor()
+            sql = """
+            INSERT INTO LoginRecord (user_id, login_time, ip_address, user_agent, success)
+            VALUES (%s, %s, %s, %s, %s)
+            """
+            cursor.execute(sql, (
+                user_id,
+                datetime.now(),
+                request.remote_addr,
+                request.headers.get('User-Agent'),
+                success
+            ))
+            connection.commit()
+        except Error as e:
+            print(f"Error logging login attempt: {e}")
+        finally:
+            cursor.close()
+            connection.close()
+
 
 
 google = oauth.register(
@@ -268,19 +297,18 @@ def authorize():
                 """
                 cursor.execute(sql, (user_info['id'], user_info['name'], user_info.get('picture'), user_school, user_id))
                 connection.commit()
+
+            insert_login_record(user_id, True)
             session['user_id'] = user_id
             return f"Login successfully as {user_info['name']}!"
         except Error as e:
+            insert_login_record(None, False)
             return {"error": str(e)}, 500
         finally:
             cursor.close()
             connection.close()
     else:
         return {"error": "Unable to connect to the database"}, 500
-
-
-
-
 
 @user_ns.route('/logout')
 class LogoutUser(Resource):
