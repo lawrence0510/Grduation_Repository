@@ -217,6 +217,7 @@ class LoginUser(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+
 def insert_login_record(user_id, success):
     connection = create_db_connection()
     if connection is not None:
@@ -239,7 +240,6 @@ def insert_login_record(user_id, success):
         finally:
             cursor.close()
             connection.close()
-
 
 
 google = oauth.register(
@@ -274,7 +274,8 @@ def authorize():
     if connection is not None:
         try:
             cursor = connection.cursor()
-            cursor.execute("SELECT user_id FROM User WHERE google_id = %s OR user_email = %s", (user_info['id'], user_info['email']))
+            cursor.execute("SELECT user_id FROM User WHERE google_id = %s OR user_email = %s",
+                           (user_info['id'], user_info['email']))
             user = cursor.fetchone()
             if user is None:
                 cursor.execute("SELECT MAX(user_id) FROM User")
@@ -285,7 +286,8 @@ def authorize():
                 INSERT INTO User (user_id, google_id, user_name, profile_picture, user_email, user_school, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
                 """
-                cursor.execute(sql, (new_user_id, user_info['id'], user_info['name'], user_info.get('picture'), user_info['email'], user_school, datetime.now().date()))
+                cursor.execute(sql, (new_user_id, user_info['id'], user_info['name'], user_info.get(
+                    'picture'), user_info['email'], user_school, datetime.now().date()))
                 connection.commit()
                 user_id = new_user_id
             else:
@@ -295,7 +297,8 @@ def authorize():
                 SET google_id = %s, user_name = %s, profile_picture = %s, user_school = %s
                 WHERE user_id = %s
                 """
-                cursor.execute(sql, (user_info['id'], user_info['name'], user_info.get('picture'), user_school, user_id))
+                cursor.execute(sql, (user_info['id'], user_info['name'], user_info.get(
+                    'picture'), user_school, user_id))
                 connection.commit()
 
             insert_login_record(user_id, True)
@@ -309,6 +312,7 @@ def authorize():
             connection.close()
     else:
         return {"error": "Unable to connect to the database"}, 500
+
 
 @user_ns.route('/logout')
 class LogoutUser(Resource):
