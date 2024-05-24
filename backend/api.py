@@ -132,6 +132,10 @@ history_parser.add_argument('q3_score_2', type=int,
 history_parser.add_argument('q3_score_3', type=int,
                             required=True, help='第三題評分3')
 
+random_article_parser = reqparse.RequestParser()
+random_article_parser.add_argument('user_id', type=int,required=True,help='使用者ID')
+random_article_parser.add_argument('article_category', type=str, required=True,help='文章類別')
+
 # User api區
 user_ns = api.namespace('User', description='與使用者操作相關之api')
 
@@ -555,6 +559,38 @@ class DataList(Resource):
                 cursor.close()
                 connection.close()
 
+@article_ns.route('/get_random_unseen_article')
+class DataList(Resource):
+    @user_ns.expect(random_article_parser)
+    def get(self):
+        '''根據使用者id以及所選的類別找出此使用者還沒看過的文章'''
+        args = random_article_parser.parse_args()
+        user_id = args['user_id']
+        article_category = args['article_category']
+        connection = create_db_connection()
+        if connection is not None:
+            cursor = connection.cursor(dictionary=True)
+            try:
+                sql = """SELECT a.article_title, a.article_content
+                    FROM Article a
+                    WHERE a.article_category = %s
+                    AND NOT EXISTS (
+                        SELECT 1
+                        FROM History h
+                        WHERE h.article_id = a.article_id
+                        AND h.user_id = %s
+                    )
+                    ORDER BY RAND()
+                    LIMIT 1;"""
+                cursor.execute(sql, (article_category, user_id))
+                article = cursor.fetchall()
+                return jsonify(article)
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+            
 
 @article_ns.route('/upload_articles')
 class UploadArticles(Resource):
