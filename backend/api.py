@@ -107,7 +107,7 @@ article_upload_parser.add_argument('file', type=FileStorage, location='files',
 
 get_questions_parser = reqparse.RequestParser()
 get_questions_parser.add_argument(
-    'article_id_start', type=int, required=True, help='欲產生問題之第一個文章編號')
+    'article_id_start', type=int, required=True, help='檢驗範圍的文章id')
 get_questions_parser.add_argument(
     'article_id_end', type=int, required=True, help='欲產生問題之最後一個文章編號')
 
@@ -735,13 +735,14 @@ class UploadPanSciArticles(Resource):
 # OpenAI api區
 openAI_ns = api.namespace(
     'OpenAI', description='與openai操作相關之api，‼️此區皆為付費區，需測試請先洽Lawrence‼️')
-OpenAI.api_key = f'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'
+OpenAI.api_key = os.getenv('OPENAI_API_KEY')
 
 
 @openAI_ns.route('/get_questions_from_article')
 class GetQuestionsFromArticle(Resource):
     @openAI_ns.expect(get_questions_parser)
     def post(self):
+        error = 0
         '''傳送多個文章內容至OpenAI API，獲得三個問題及標準答案進資料庫'''
         args = get_questions_parser.parse_args()
         article_id_start = args['article_id_start']
@@ -751,141 +752,136 @@ class GetQuestionsFromArticle(Resource):
             try:
                 cursor = connection.cursor(dictionary=True)
                 for article_id in tqdm(range(article_id_start, article_id_end + 1), desc='Processing articles'):
-                    sql = "SELECT `article_content` FROM `Article` WHERE `article_id` = %s"
-                    cursor.execute(sql, (article_id,))
-                    article = cursor.fetchone()
-                    if article:
-                        article_content = article['article_content']
-                        client = OpenAI(
-                            api_key='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')
+                    try:
+                        sql_check = "SELECT 1 FROM `Question` WHERE `article_id` = %s"
+                        cursor.execute(sql_check, (article_id,))
+                        if cursor.fetchone():
+                            print('文章編號: '+ str(article_id) + '已存在於資料庫中，跳過')
+                            continue
+                        sql = "SELECT `article_content` FROM `Article` WHERE `article_id` = %s"
+                        cursor.execute(sql, (article_id,))
+                        article = cursor.fetchone()
+                        if article:
+                            article = article['article_content']
+                            client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
-                        try:
-                            prompt_message = (
-                                f"以下是一篇文章的內容：\n{article_content}\n\n"
-                                "請根據以上文本，follow這個格式使用繁體中文回傳給我，"
-                                "我想要你首先判斷這篇文章的適讀年齡，要回傳一個阿拉伯數字放入article_age中，"
-                                "介於6到15歲之間，再回傳三個問題，第一二題都是選擇題，分別要提供四個選項，"
-                                "再提供答案和解析，第三題要是問答題，你必須產生一個標準答案並儲存在answer3中，"
-                                "格式如下：" + json.dumps({
-                                    "article_age": None,
-                                    "question1": None,
-                                    "question1choice1": None,
-                                    "question1choice2": None,
-                                    "question1choice3": None,
-                                    "question1choice4": None,
-                                    "answer1": None,
-                                    "explanation1": None,
-                                    "question2": None,
-                                    "question2choice1": None,
-                                    "question2choice2": None,
-                                    "question2choice3": None,
-                                    "question2choice4": None,
-                                    "answer2": None,
-                                    "explanation2": None,
-                                    "question3": None,
-                                    "answer3": None
-                                }) +
-                                "尤其注意，你在回答answer1和answer2的時候要回答的是選項的內容，而不是回答question1choice2或是question2choice3這種。" +
-                                "嚴格按照「上述的格式」回傳給我，讓你的回答「整串是一個JSON」，並且剛好「17行」，所有我上述提到的Key都不要少"
-                            )
-                            response = client.chat.completions.create(
-                                model="gpt-3.5-turbo",
-                                messages=[
-                                    {"role": "system",
-                                        "content": "你是一名專門在閱讀文章後產生問題給學生回答的得力助手。"},
-                                    {"role": "user", "content": prompt_message}
-                                ],
-                            )
-
-                            response_str = str(response).replace(
-                                '\n', '').replace('\\n', '')
-                            content_start = response_str.find(
-                                "content='") + len("content='")
-                            content_end = response_str.find(
-                                "}', role='assistant'", content_start) + 1
-                            content_json_str = response_str[content_start:content_end]
-                            content_json_str = content_json_str.replace(
-                                "\\'", "'").replace('\\"', '"').replace('\\\\', '\\')
-                            print(content_json_str)
                             try:
-                                content_json = json.loads(content_json_str)
-                            except ValueError as e:
-                                retry_prompt = "請你檢查你剛剛傳給我的訊息，其並非JSON格式，幫我轉成JSON以後再給我一次"
+                                prompt = f"""
+                                我將給你一篇文章，請你判斷以下資訊：
+                                1. 此篇文章的適讀年齡，回傳一個阿拉伯數字介於6到15之間代表歲數。
+                                2. 產生兩個選擇題，兩個題目要不一樣，且兩個題目都有四個選項。
+                                3. 產生兩個選擇題的正確答案和解釋。
+                                4. 產生一個問答題（開放性題目）的題目。
+                                5. 提供一個問答題的標準答案。
+                                文章內容如下：
+                                {article}
+                                將以上資訊放進以下格式的JSON當中回傳，不要多也不要少，使用繁體中文回傳，回傳時請確認是否為JSON好讓我做parsing，你容易忘記在question3和answer3之間加上逗號，還有，answer1和answer2要是正確選項內的「文字」而非「question"x"choice"y"」
+
+                                {{
+                                    "article_age": null,
+                                    "question1": null,
+                                    "question1choice1": null,
+                                    "question1choice2": null,
+                                    "question1choice3": null,
+                                    "question1choice4": null,
+                                    "answer1": null,
+                                    "explanation1": null,
+                                    "question2": null,
+                                    "question2choice1": null,
+                                    "question2choice2": null,
+                                    "question2choice3": null,
+                                    "question2choice4": null,
+                                    "answer2": null,
+                                    "explanation2": null,
+                                    "question3": null,
+                                    "answer3": null
+                                }}
+                                不要漏掉任何一個，請你嚴格檢查以後再傳給我，我要收到17行的response"。
+                                """
                                 response = client.chat.completions.create(
                                     model="gpt-3.5-turbo",
                                     messages=[
-                                        {"role": "system",
-                                            "content": "你是一名專門在閱讀文章後產生問題給學生回答的得力助手。"},
-                                        {"role": "user", "content": retry_prompt}
-                                    ],
+                                    {"role": "system",
+                                    "content": "你是一名專門在閱讀文章後產生問題給學生回答的得力助手。"},
+                                    {"role": "user", "content": prompt}]
                                 )
-                                response_str = str(response).replace(
-                                    '\n', '').replace('\\n', '')
-                                content_start = response_str.find(
-                                    "content='") + len("content='")
-                                content_end = response_str.find(
-                                    "}', role='assistant'", content_start) + 1
-                                content_json_str = response_str[content_start:content_end]
-                                content_json_str = content_json_str.replace(
-                                    "\\'", "'").replace('\\"', '"').replace('\\\\', '\\')
-                                content_json = json.loads(content_json_str)
-                            print(content_json)
-                            cursor.execute(
-                                "SELECT MAX(question_id) as max_id FROM `Question`")
-                            result = cursor.fetchone()
-                            max_id = result['max_id'] if result['max_id'] is not None else 0
-                            question_id = max_id + 1
-                            try:
-                                sql_insert = """
-                                INSERT INTO `Question`(
-                                    `question_id`, `article_id`, `question_grade`, `question_1`, `question1_choice1`, 
-                                    `question1_choice2`, `question1_choice3`, `question1_choice4`, 
-                                    `question1_answer`, `question1_explanation`, `question_2`, 
-                                    `question2_choice1`, `question2_choice2`, `question2_choice3`, 
-                                    `question2_choice4`, `question2_answer`, `question2_explanation`, 
-                                    `question3`, `question3_answer`
-                                ) VALUES (
-                                    %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
-                                )
-                                """
-                                cursor.execute(sql_insert, (
-                                    question_id,
-                                    article_id,
-                                    content_json['article_age'],
-                                    content_json['question1'],
-                                    content_json['question1choice1'],
-                                    content_json['question1choice2'],
-                                    content_json['question1choice3'],
-                                    content_json['question1choice4'],
-                                    content_json['answer1'],
-                                    content_json['explanation1'],
-                                    content_json['question2'],
-                                    content_json['question2choice1'],
-                                    content_json['question2choice2'],
-                                    content_json['question2choice3'],
-                                    content_json['question2choice4'],
-                                    content_json['answer2'],
-                                    content_json['explanation2'],
-                                    content_json['question3'],
-                                    content_json['answer3']
-                                ))
-                                sql_update_article = """
-                                UPDATE `Article`
-                                SET `article_grade` = %s
-                                WHERE `article_id` = %s
-                                """
+                                response_text = str(response)
+                                start_pattern = "ChatCompletionMessage(content='{"
+                                end_pattern = "', role='assistant'"
+                                start = response_text.find(start_pattern) + len(start_pattern) - 1
+                                end = response_text.find(end_pattern)
+                                substring = response_text[start:end]
+                                noenter = substring.replace("\\n", "").replace("\n", "").replace("\\", "")
+                                if '"answer3"' in noenter:
+                                    answer3_index = noenter.find('"answer3"')
+                                    if noenter[answer3_index - 1] != ',' and noenter[answer3_index - 2] != ',' and noenter[answer3_index - 3] != ',' and noenter[answer3_index - 4] != ',' and noenter[answer3_index - 5] != ',' and noenter[answer3_index - 6] != ',':
+                                        noenter = noenter[:answer3_index] + ',' + noenter[answer3_index:]
+                                try:
+                                    content_json = json.loads(noenter)
+                                except json.JSONDecodeError as e:
+                                    content_json = None
                                 cursor.execute(
-                                    sql_update_article, (content_json['article_age'], article_id))
+                                    "SELECT MAX(question_id) as max_id FROM `Question`")
+                                result = cursor.fetchone()
+                                max_id = result['max_id'] if result['max_id'] is not None else 0
+                                question_id = max_id + 1
+                                try:
+                                    sql_insert = """
+                                    INSERT INTO `Question`(
+                                        `question_id`, `article_id`, `question_grade`, `question_1`, `question1_choice1`, 
+                                        `question1_choice2`, `question1_choice3`, `question1_choice4`, 
+                                        `question1_answer`, `question1_explanation`, `question_2`, 
+                                        `question2_choice1`, `question2_choice2`, `question2_choice3`, 
+                                        `question2_choice4`, `question2_answer`, `question2_explanation`, 
+                                        `question3`, `question3_answer`
+                                    ) VALUES (
+                                        %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
+                                    )
+                                    """
+                                    cursor.execute(sql_insert, (
+                                        question_id,
+                                        article_id,
+                                        content_json['article_age'],
+                                        content_json['question1'],
+                                        content_json['question1choice1'],
+                                        content_json['question1choice2'],
+                                        content_json['question1choice3'],
+                                        content_json['question1choice4'],
+                                        content_json['answer1'],
+                                        content_json['explanation1'],
+                                        content_json['question2'],
+                                        content_json['question2choice1'],
+                                        content_json['question2choice2'],
+                                        content_json['question2choice3'],
+                                        content_json['question2choice4'],
+                                        content_json['answer2'],
+                                        content_json['explanation2'],
+                                        content_json['question3'],
+                                        content_json['answer3']
+                                    ))
+                                    sql_update_article = """
+                                    UPDATE `Article`
+                                    SET `article_grade` = %s
+                                    WHERE `article_id` = %s
+                                    """
+                                    cursor.execute(
+                                        sql_update_article, (content_json['article_age'], article_id))
 
-                                connection.commit()
+                                    connection.commit()
+                                    print('已成功匯入文章id: ' + str(article_id))
+                                except Exception as e:
+                                    import traceback
+                                    traceback.print_exc()
+                                    error = error + 1
+                                    continue
                             except Exception as e:
                                 import traceback
                                 traceback.print_exc()
-                                return {"error": str(e)}, 500
-                        except Exception as e:
-                            import traceback
-                            traceback.print_exc()
-                            return {'error': str(e)}, 500
+                                continue
+                    except Error as e:
+                        import traceback
+                        traceback.print_exc()
+                        continue
             except Error as e:
                 import traceback
                 traceback.print_exc()
@@ -893,7 +889,7 @@ class GetQuestionsFromArticle(Resource):
             finally:
                 cursor.close()
                 connection.close()
-        return {'status': 'success'}, 200
+        return {'status': '指示總數： ' + str(article_id_end  - article_id_start + 1) + ' 錯誤總數：' + str(error) + ' 成功率： ' + str((1 - (error)/(article_id_end  - article_id_start + 1))*100) + '%'}, 200
 
 
 @openAI_ns.route('/get_rate_from_answers')
@@ -939,7 +935,7 @@ class GetRateFromAnswers(Resource):
                     question = article['question3']
                     standard_answer = article['question3_answer']
                     client = OpenAI(
-                        api_key='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')
+                        api_key=os.getenv('OPENAI_API_KEY'))
 
                     try:
                         prompt_message = (
