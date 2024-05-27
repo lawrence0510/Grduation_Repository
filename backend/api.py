@@ -4,6 +4,7 @@ from decimal import Decimal
 import hashlib
 import json
 import os
+import random
 
 
 # 第三方庫
@@ -135,6 +136,11 @@ history_parser.add_argument('q3_score_3', type=int,
 random_article_parser = reqparse.RequestParser()
 random_article_parser.add_argument('user_id', type=int,required=True,help='使用者ID')
 random_article_parser.add_argument('article_category', type=str, required=True,help='文章類別')
+
+test_article_parser = reqparse.RequestParser()
+test_article_parser.add_argument('article_pass', type=bool, required=True, help='測試結果(boolean)')
+test_article_parser.add_argument('article_note', type=str, required=False, help='測試備註')
+test_article_parser.add_argument('article_id', type=int, required=True, help='文章帳號')
 
 # User api區
 user_ns = api.namespace('User', description='與使用者操作相關之api')
@@ -590,7 +596,63 @@ class DataList(Resource):
             finally:
                 cursor.close()
                 connection.close()
-            
+
+@article_ns.route('/get_random_uncheck_article')
+class RandomArticle(Resource):
+    def get(self):
+        '''隨機選取1到1000範圍內且article_pass為NULL的文章'''
+        connection = create_db_connection()
+        if connection is not None:
+            cursor = connection.cursor(dictionary=True)
+            try:
+                article_id = random.randint(1, 1000)
+                sql = """
+                SELECT a.article_id, a.article_title, a.article_content, q.question_grade, q.question_1, 
+                    q.question1_choice1, q.question1_choice2, q.question1_choice3, q.question1_choice4, 
+                    q.question1_answer, q.question1_explanation, q.question_2, q.question2_choice1, 
+                    q.question2_choice2, q.question2_choice3, q.question2_choice4, q.question2_answer, 
+                    q.question2_explanation, q.question3, q.question3_answer 
+                FROM Article AS a
+                JOIN Question AS q ON a.article_id = q.article_id
+                WHERE a.article_id = %s AND a.article_pass IS NULL 
+                LIMIT 1;
+                """
+                cursor.execute(sql, (article_id,))
+                article = cursor.fetchone()
+                if article:
+                    return jsonify(article)
+                else:
+                    return {"message": "No article found or all articles are checked."}, 404
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()            
+
+@article_ns.route('/submit_article_note')
+class SubmitArticleNote(Resource):
+    @article_ns.expect(test_article_parser)
+    def post(self):
+        '''提交文章檢查結果'''
+        args = test_article_parser.parse_args()
+        check = args['article_pass']
+        note = args['article_note']
+        article_id = args['article_id']
+        check_time = datetime.now()
+
+        connection = create_db_connection()
+        if connection is not None:
+            cursor = connection.cursor()
+            try:
+                sql = "UPDATE Article SET article_pass = %s, article_note = %s, check_time= %s WHERE article_id = %s;"
+                cursor.execute(sql, (check, note, check_time, article_id))
+                connection.commit()
+                return {"success": True}, 200
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
 
 @article_ns.route('/upload_articles')
 class UploadArticles(Resource):
