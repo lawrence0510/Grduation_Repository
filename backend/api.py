@@ -138,7 +138,7 @@ random_article_parser.add_argument('user_id', type=int,required=True,help='使�
 random_article_parser.add_argument('article_category', type=str, required=True,help='文章類別')
 
 test_article_parser = reqparse.RequestParser()
-test_article_parser.add_argument('article_pass', type=bool, required=True, help='測試結果(boolean)')
+test_article_parser.add_argument('article_pass', type=int, required=True, help='測試結果(1 => 成功, 0 => 錯誤)')
 test_article_parser.add_argument('article_note', type=str, required=False, help='測試備註')
 test_article_parser.add_argument('article_id', type=int, required=True, help='文章帳號')
 
