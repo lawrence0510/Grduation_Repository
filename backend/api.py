@@ -580,6 +580,7 @@ class DataList(Resource):
                 sql = """SELECT a.article_title, a.article_content
                     FROM Article a
                     WHERE a.article_category = %s
+                    AND a.article_pass = 1
                     AND NOT EXISTS (
                         SELECT 1
                         FROM History h
