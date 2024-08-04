@@ -118,8 +118,7 @@ custom_fonts/font = SubResource( 2 )
 text = "multiple"
 
 [node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
-margin_left = 156.0
-margin_top = 20.0
+margin_left = 142.0
 margin_right = 157.0
 margin_bottom = 15.0
 rect_min_size = Vector2( 15, 15 )
