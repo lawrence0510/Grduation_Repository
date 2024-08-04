@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文章檢查</title>
+    <style>
+        .highlight {
+            color: red;
+            font-weight: bold;
+            font-size: 2em;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="highlight">文章 ID: <span id="articleId"></span></h1>
+    <h2>標題: <span id="title"></span></h2>
+    <p>內文: <br><span id="content"></span></p>
+
+    <h3>問題 1</h3>
+    <p>問題: <span id="question1"></span></p>
+    <p>選項 A: <span id="choice1_1"></span></p>
+    <p>選項 B: <span id="choice1_2"></span></p>
+    <p>選項 C: <span id="choice1_3"></span></p>
+    <p>選項 D: <span id="choice1_4"></span></p>
+    <p>答案: <span id="answer1"></span></p>
+    <p>詳解: <span id="explanation1"></span></p>
+
+    <h3>問題 2</h3>
+    <p>選項 A: <span id="choice2_1"></span></p>
+    <p>選項 B: <span id="choice2_2"></span></p>
+    <p>選項 C: <span id="choice2_3"></span></p>
+    <p>選項 D: <span id="choice2_4"></span></p>
+    <p>答案: <span id="answer2"></span></p>
+    <p>詳解: <span id="explanation2"></span></p>
+
+    <h3>問題 3</h3>
+    <p>問題: <span id="question3"></span></p>
+    <p>參考答案: <span id="answer3"></span></p>
+
+    <form id="articleForm">
+        <textarea name="article_note" placeholder="有問題或是要修正什麼請在這留言，沒有即留空"></textarea>
+        <br>
+        <input type="radio" id="pass" name="article_pass" value="1">
+        <label for="pass">Pass</label>
+        <input type="radio" id="fail" name="article_pass" value="0">
+        <label for="fail">Fail</label>
+        <br>
+        <input type="hidden" name="article_id" id="article_id">
+        <button type="submit">送出</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const endpoint = 'http://140.119.19.145:5001/Article/get_random_uncheck_article';
+
+            fetch(endpoint)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('articleId').textContent = data.article_id;
+                    document.getElementById('title').textContent = data.article_title;
+                    document.getElementById('content').textContent = data.article_content;
+                    document.getElementById('question1').textContent = data.question_1;
+                    document.getElementById('choice1_1').textContent = data.question1_choice1;
+                    document.getElementById('choice1_2').textContent = data.question1_choice2;
+                    document.getElementById('choice1_3').textContent = data.question1_choice3;
+                    document.getElementById('choice1_4').textContent = data.question1_choice4;
+                    document.getElementById('answer1').textContent = data.question1_answer;
+                    document.getElementById('explanation1').textContent = data.question1_explanation;
+                    document.getElementById('choice2_1').textContent = data.question2_choice1;
+                    document.getElementById('choice2_2').textContent = data.question2_choice2;
+                    document.getElementById('choice2_3').textContent = data.question2_choice3;
+                    document.getElementById('choice2_4').textContent = data.question2_choice4;
+                    document.getElementById('answer2').textContent = data.question2_answer;
+                    document.getElementById('explanation2').textContent = data.question2_explanation;
+                    document.getElementById('question3').textContent = data.question3;
+                    document.getElementById('answer3').textContent = data.question3_answer;
+                    document.getElementById('article_id').value = data.article_id;
+                });
+
+            document.getElementById('articleForm').onsubmit = function(event) {
+                event.preventDefault();
+                var formData = new FormData(this);
+
+                const passValue = document.querySelector('input[name="article_pass"]:checked').value;
+                formData.set('article_pass', passValue);
+                
+                fetch('http://140.119.19.145:5001/Article/submit_article_note', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('提交成功');
+                        window.location.reload();
+                    } else {
+                        alert('提交失敗');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        });
+    </script>
+</body>
+</html>
