@@ -135,11 +135,22 @@ margin_bottom = 430.0
 rect_min_size = Vector2( 50, 46 )
 custom_styles/panel = SubResource( 5 )
 
-[node name="Input" type="LineEdit" parent="MarginContainer/VBoxContainer/InputArea"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/InputArea"]
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 942.0
 margin_bottom = 44.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 2
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 2
+
+[node name="Input" type="LineEdit" parent="MarginContainer/VBoxContainer/InputArea/MarginContainer"]
+margin_left = 10.0
+margin_top = 2.0
+margin_right = 930.0
+margin_bottom = 40.0
+custom_colors/cursor_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 7 )
 custom_styles/focus = SubResource( 8 )
@@ -151,5 +162,5 @@ margin_top = 440.0
 margin_right = 944.0
 margin_bottom = 440.0
 
-[connection signal="text_entered" from="MarginContainer/VBoxContainer/InputArea/Input" to="." method="_on_Input_text_entered"]
-[connection signal="text_entered" from="MarginContainer/VBoxContainer/InputArea/Input" to="MarginContainer/VBoxContainer/InputArea/Input" method="_on_Input_text_entered"]
+[connection signal="text_entered" from="MarginContainer/VBoxContainer/InputArea/MarginContainer/Input" to="." method="_on_Input_text_entered"]
+[connection signal="text_entered" from="MarginContainer/VBoxContainer/InputArea/MarginContainer/Input" to="MarginContainer/VBoxContainer/InputArea/MarginContainer/Input" method="_on_Input_text_entered"]

@@ -13,3 +13,4 @@ script = ExtResource( 2 )
 autowrap = true
 
 [node name="Response" parent="." instance=ExtResource( 3 )]
+margin_bottom = 64.0

@@ -33,6 +33,7 @@ thickness = 10
 
 [sub_resource type="DynamicFont" id=5]
 size = 20
+outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=6]
