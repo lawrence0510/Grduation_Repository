@@ -126,6 +126,13 @@ custom_styles/fg = SubResource( 9 )
 custom_styles/bg = SubResource( 10 )
 percent_visible = false
 
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+margin_left = 187.0
+margin_right = 232.0
+margin_bottom = 35.0
+custom_fonts/font = SubResource( 2 )
+text = "     "
+
 [node name="F0Bb0D3F884D8A915E2103648E1A1A8a" type="Sprite" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 position = Vector2( 163.438, 18.4434 )
 scale = Vector2( 0.0804626, 0.0804626 )
@@ -142,8 +149,8 @@ scale = Vector2( 0.08, 0.08 )
 texture = ExtResource( 6 )
 
 [node name="Label3" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
-margin_left = 187.0
-margin_right = 259.0
+margin_left = 262.0
+margin_right = 334.0
 margin_bottom = 35.0
 custom_fonts/font = SubResource( 2 )
 text = "33 %"
