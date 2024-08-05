@@ -1,0 +1,94 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Fonts/noto_sans_64.tres" type="DynamicFont" id=1]
+[ext_resource path="res://BattleSystem/ConfirmEndingScene.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.952941, 0.0901961, 0.0901961, 1 )
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.709804, 0.14902, 0.14902, 1 )
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.709804, 0.14902, 0.14902, 1 )
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.584314, 0.564706, 0.564706, 1 )
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.47451, 0.45098, 0.45098, 1 )
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.47451, 0.45098, 0.45098, 1 )
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[node name="ColorRect" type="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.784314 )
+script = ExtResource( 2 )
+
+[node name="Confirmation" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -272.0
+margin_top = -209.0
+margin_right = 272.0
+margin_bottom = -115.0
+custom_fonts/font = ExtResource( 1 )
+text = "確定要離開戰鬥嗎?"
+
+[node name="ConfirmEndingButton" type="Button" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 346.0
+margin_top = 28.5
+margin_right = 846.0
+margin_bottom = 153.5
+custom_fonts/font = ExtResource( 1 )
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/normal = SubResource( 3 )
+text = "離開"
+
+[node name="CancelButton" type="Button" parent="."]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -832.0
+margin_top = 28.5
+margin_right = -332.0
+margin_bottom = 153.5
+custom_fonts/font = ExtResource( 1 )
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
+text = "取消"
+
+[connection signal="pressed" from="CancelButton" to="." method="_on_CancelButton_pressed"]

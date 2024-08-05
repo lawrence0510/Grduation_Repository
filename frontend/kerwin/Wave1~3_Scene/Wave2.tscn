@@ -1,0 +1,342 @@
+[gd_scene load_steps=79 format=2]
+
+[ext_resource path="res://Fonts/noto_sans_48.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Fonts/noto_sans_64.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Fonts/noto_sans_32.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Textures/PauseButton.png" type="Texture" id=4]
+[ext_resource path="res://Textures/BattleBG2.png" type="Texture" id=5]
+[ext_resource path="res://BattleSystem/FullStory.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Wave1~3_Scene/Wave2.gd" type="Script" id=7]
+[ext_resource path="res://BattleSystem/PauseScene.tscn" type="PackedScene" id=8]
+[ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt3.png" type="Texture" id=9]
+[ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt4.png" type="Texture" id=10]
+[ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt5.png" type="Texture" id=11]
+[ext_resource path="res://AttackAnimation/Lightning/Lightning11.png" type="Texture" id=12]
+[ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt6.png" type="Texture" id=13]
+[ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt7.png" type="Texture" id=14]
+[ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt9.png" type="Texture" id=15]
+[ext_resource path="res://AttackAnimation/Lightning/Lightning10.png" type="Texture" id=16]
+[ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt1.png" type="Texture" id=17]
+[ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt2.png" type="Texture" id=18]
+[ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt8.png" type="Texture" id=19]
+[ext_resource path="res://Spritesheets/fx_explosionblueelectrical.png" type="Texture" id=20]
+[ext_resource path="res://AttackAnimation/Lightning/Lightning2.png" type="Texture" id=21]
+[ext_resource path="res://AttackAnimation/Lightning/Lightning7.png" type="Texture" id=22]
+[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb5.png" type="Texture" id=23]
+[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb9.png" type="Texture" id=24]
+[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb13.png" type="Texture" id=25]
+[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb10.png" type="Texture" id=26]
+[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb7.png" type="Texture" id=27]
+[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb11.png" type="Texture" id=28]
+[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb3.png" type="Texture" id=29]
+[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb14.png" type="Texture" id=30]
+[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb8.png" type="Texture" id=31]
+[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb2.png" type="Texture" id=32]
+[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb4.png" type="Texture" id=33]
+[ext_resource path="res://AttackAnimation/Lightning/Lightning5.png" type="Texture" id=34]
+[ext_resource path="res://AttackAnimation/Lightning/Lightning6.png" type="Texture" id=35]
+[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb1.png" type="Texture" id=36]
+[ext_resource path="res://AttackAnimation/Lightning/Lightning1.png" type="Texture" id=37]
+[ext_resource path="res://AttackAnimation/Lightning/Lightning3.png" type="Texture" id=38]
+[ext_resource path="res://AttackAnimation/Lightning/Lightning9.png" type="Texture" id=39]
+[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb12.png" type="Texture" id=40]
+[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb6.png" type="Texture" id=41]
+[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb15.png" type="Texture" id=42]
+[ext_resource path="res://AttackAnimation/Lightning/Lightning4.png" type="Texture" id=43]
+[ext_resource path="res://AttackAnimation/Lightning/Lightning8.png" type="Texture" id=44]
+[ext_resource path="res://AttackAnimation/Spark/spark7.png" type="Texture" id=45]
+[ext_resource path="res://AttackAnimation/Spark/spark2.png" type="Texture" id=46]
+[ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt11.png" type="Texture" id=47]
+[ext_resource path="res://AttackAnimation/Spark/spark6.png" type="Texture" id=48]
+[ext_resource path="res://AttackAnimation/Spark/spark5.png" type="Texture" id=49]
+[ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt10.png" type="Texture" id=50]
+[ext_resource path="res://AttackAnimation/Spark/spark3.png" type="Texture" id=51]
+[ext_resource path="res://AttackAnimation/Spark/spark4.png" type="Texture" id=52]
+[ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt12.png" type="Texture" id=53]
+[ext_resource path="res://AttackAnimation/Spark/spark8.png" type="Texture" id=54]
+[ext_resource path="res://AttackAnimation/Spark/spark1.png" type="Texture" id=55]
+[ext_resource path="res://Enemy/Enemy1.png" type="Texture" id=56]
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.886275, 0.941176, 0.933333, 1 )
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+corner_radius_bottom_right = 40
+
+[sub_resource type="StyleBoxFlat" id=6]
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id=10]
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.886275, 0.941176, 0.933333, 1 )
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id=7]
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id=11]
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id=8]
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id=12]
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id=9]
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id=13]
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="AtlasTexture" id=15]
+flags = 4
+atlas = ExtResource( 20 )
+region = Rect2( 0, 0, 53, 59 )
+
+[sub_resource type="AtlasTexture" id=16]
+flags = 4
+atlas = ExtResource( 20 )
+region = Rect2( 0, 59, 53, 59 )
+
+[sub_resource type="AtlasTexture" id=17]
+flags = 4
+atlas = ExtResource( 20 )
+region = Rect2( 0, 118, 53, 59 )
+
+[sub_resource type="AtlasTexture" id=18]
+flags = 4
+atlas = ExtResource( 20 )
+region = Rect2( 0, 177, 53, 59 )
+
+[sub_resource type="AtlasTexture" id=19]
+flags = 4
+atlas = ExtResource( 20 )
+region = Rect2( 53, 0, 53, 59 )
+
+[sub_resource type="AtlasTexture" id=20]
+flags = 4
+atlas = ExtResource( 20 )
+region = Rect2( 53, 59, 53, 59 )
+
+[sub_resource type="AtlasTexture" id=21]
+flags = 4
+atlas = ExtResource( 20 )
+region = Rect2( 53, 118, 53, 59 )
+
+[sub_resource type="AtlasTexture" id=22]
+flags = 4
+atlas = ExtResource( 20 )
+region = Rect2( 53, 177, 53, 59 )
+
+[sub_resource type="AtlasTexture" id=23]
+flags = 4
+atlas = ExtResource( 20 )
+region = Rect2( 106, 0, 53, 59 )
+
+[sub_resource type="AtlasTexture" id=24]
+flags = 4
+atlas = ExtResource( 20 )
+region = Rect2( 106, 59, 53, 59 )
+
+[sub_resource type="SpriteFrames" id=25]
+animations = [ {
+"frames": [ ExtResource( 17 ), ExtResource( 18 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 19 ), ExtResource( 15 ), ExtResource( 50 ), ExtResource( 47 ), ExtResource( 53 ) ],
+"loop": false,
+"name": "DarkBolt",
+"speed": 16.5
+}, {
+"frames": [ ExtResource( 36 ), ExtResource( 32 ), ExtResource( 29 ), ExtResource( 33 ), ExtResource( 23 ), ExtResource( 41 ), ExtResource( 27 ), ExtResource( 31 ), ExtResource( 24 ), ExtResource( 26 ), ExtResource( 28 ), ExtResource( 40 ), ExtResource( 25 ), ExtResource( 30 ), ExtResource( 42 ) ],
+"loop": false,
+"name": "FireBomb",
+"speed": 13.0
+}, {
+"frames": [ SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ) ],
+"loop": false,
+"name": "LightExplosion",
+"speed": 9.0
+}, {
+"frames": [ ExtResource( 37 ), ExtResource( 21 ), ExtResource( 38 ), ExtResource( 43 ), ExtResource( 34 ), ExtResource( 35 ), ExtResource( 22 ), ExtResource( 44 ), ExtResource( 39 ), ExtResource( 16 ), ExtResource( 12 ) ],
+"loop": false,
+"name": "Lightning",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 55 ), ExtResource( 46 ), ExtResource( 51 ), ExtResource( 52 ), ExtResource( 49 ), ExtResource( 48 ), ExtResource( 45 ), ExtResource( 54 ) ],
+"loop": false,
+"name": "Spark",
+"speed": 8.0
+} ]
+
+[node name="Wave2" type="Node"]
+script = ExtResource( 7 )
+
+[node name="BattleBackground" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 5 )
+
+[node name="PauseButton" type="TextureButton" parent="BattleBackground"]
+margin_left = 1764.0
+margin_top = 6.0
+margin_right = 2276.0
+margin_bottom = 518.0
+rect_scale = Vector2( 0.3, 0.3 )
+texture_normal = ExtResource( 4 )
+
+[node name="Wave" type="Label" parent="BattleBackground"]
+margin_left = 510.0
+margin_top = 15.0
+margin_right = 1410.0
+margin_bottom = 165.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
+custom_styles/normal = SubResource( 4 )
+text = "Wave 2/3"
+align = 1
+valign = 1
+
+[node name="Question" type="Label" parent="BattleBackground"]
+margin_left = 975.0
+margin_top = 250.0
+margin_right = 1875.0
+margin_bottom = 650.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+custom_styles/normal = SubResource( 4 )
+text = "請問這關背景人物
+會在多久之後
+跟侯程麟結婚?"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="OpenStoryButton" type="Button" parent="BattleBackground/Question"]
+margin_left = 624.0
+margin_top = 335.0
+margin_right = 900.0
+margin_bottom = 399.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 3 )
+custom_styles/normal = SubResource( 5 )
+text = "查看全文 ▼"
+
+[node name="Enemy" type="Sprite" parent="BattleBackground/Question"]
+position = Vector2( -487, 221 )
+scale = Vector2( 0.562963, 0.521898 )
+texture = ExtResource( 56 )
+
+[node name="Option_A" type="Button" parent="BattleBackground"]
+margin_left = 45.0
+margin_top = 720.0
+margin_right = 945.0
+margin_bottom = 870.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/disabled = SubResource( 10 )
+custom_styles/normal = SubResource( 3 )
+text = "A. 1天"
+icon_align = 1
+expand_icon = true
+
+[node name="Option_B" type="Button" parent="BattleBackground"]
+margin_left = 975.0
+margin_top = 720.0
+margin_right = 1875.0
+margin_bottom = 870.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+custom_styles/hover = SubResource( 7 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 3 )
+text = "B. 1個禮拜"
+icon_align = 1
+expand_icon = true
+
+[node name="Option_C" type="Button" parent="BattleBackground"]
+margin_left = 45.0
+margin_top = 890.0
+margin_right = 945.0
+margin_bottom = 1040.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+custom_styles/hover = SubResource( 8 )
+custom_styles/disabled = SubResource( 12 )
+custom_styles/normal = SubResource( 3 )
+text = "C. 1個月"
+icon_align = 1
+expand_icon = true
+
+[node name="Option_D" type="Button" parent="BattleBackground"]
+margin_left = 975.0
+margin_top = 890.0
+margin_right = 1875.0
+margin_bottom = 1040.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+custom_styles/hover = SubResource( 9 )
+custom_styles/disabled = SubResource( 13 )
+custom_styles/normal = SubResource( 3 )
+text = "D. 一年"
+icon_align = 1
+expand_icon = true
+
+[node name="FullStory" parent="BattleBackground" instance=ExtResource( 6 )]
+visible = false
+
+[node name="PauseScene" parent="BattleBackground" instance=ExtResource( 8 )]
+visible = false
+
+[node name="ChangeLevelTimer" type="Timer" parent="BattleBackground"]
+process_mode = 0
+wait_time = 3.0
+one_shot = true
+
+[node name="AttackAnimation" type="AnimatedSprite" parent="BattleBackground"]
+position = Vector2( 485, 540 )
+scale = Vector2( 6.25767, 3.81555 )
+frames = SubResource( 25 )
+animation = "Spark"
+
+[connection signal="pressed" from="BattleBackground/PauseButton" to="." method="_on_PauseButton_pressed"]
+[connection signal="pressed" from="BattleBackground/Question/OpenStoryButton" to="." method="_on_OpenStoryButton_pressed"]
+[connection signal="pressed" from="BattleBackground/Option_A" to="." method="_on_Option_A_pressed"]
+[connection signal="pressed" from="BattleBackground/Option_B" to="." method="_on_Option_B_pressed"]
+[connection signal="pressed" from="BattleBackground/Option_C" to="." method="_on_Option_C_pressed"]
+[connection signal="pressed" from="BattleBackground/Option_D" to="." method="_on_Option_D_pressed"]
+[connection signal="timeout" from="BattleBackground/ChangeLevelTimer" to="." method="_on_ChangeLevelTimer_timeout"]
+[connection signal="animation_finished" from="BattleBackground/AttackAnimation" to="." method="_on_AttackAnimation_animation_finished"]
