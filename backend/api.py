@@ -5,13 +5,14 @@ import hashlib
 import json
 import os
 import random
-
+import string
 
 # 第三方庫
 import pandas as pd
 import mysql.connector
 from mysql.connector import Error
 from flask import Flask, request, session, jsonify, url_for
+from flask_mail import Mail, Message
 from flask_restx import Api, Resource, reqparse
 from flask_cors import CORS
 from werkzeug.datastructures import FileStorage
@@ -322,6 +323,69 @@ def authorize():
             connection.close()
     else:
         return {"error": "Unable to connect to the database"}, 500
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER')
+
+mail = Mail(app)
+
+verification_code_parser = reqparse.RequestParser()
+verification_code_parser.add_argument('user_email', type=str, required=True, help='使用者 email')
+
+@user_ns.route('/send_verification_code')
+class SendVerificationCode(Resource):
+    @user_ns.expect(verification_code_parser)
+    def post(self):
+        '''寄送驗證碼到使用者的 email'''
+        args = verification_code_parser.parse_args()
+        user_email = args['user_email']
+
+        # 生成 6 位隨機驗證碼
+        verification_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+
+        # 將驗證碼存入資料庫
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                cursor.execute("SELECT user_id FROM User WHERE user_email = %s", (user_email,))
+                user = cursor.fetchone()
+
+                if user:
+                    user_id = user[0]
+
+                    cursor.execute("SELECT COALESCE(MAX(id), 0) + 1 FROM VerificationCodes")
+                    new_id = cursor.fetchone()[0]
+
+                    sql = """
+                    INSERT INTO VerificationCodes (id, user_id, verification_code, created_at)
+                    VALUES (%s, %s, %s, %s)
+                    """
+                    cursor.execute(sql, (new_id, user_id, verification_code, datetime.now()))
+                    connection.commit()
+
+                    try:
+                        msg = Message("您的驗證碼", recipients=[user_email])
+                        msg.body = f"您的驗證碼是：{verification_code}，請在10分鐘內使用。"
+                        mail.send(msg)
+                    except Exception as mail_error:
+                        return {"error": "Failed to send email", "details": str(mail_error)}, 500
+
+                    return {"message": "Verification code sent successfully"}, 200
+                else:
+                    return {"message": "Email not found"}, 404
+            except Error as db_error:
+                return {"error": str(db_error)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
 
 
 @user_ns.route('/logout')
