@@ -1,0 +1,11 @@
+[gd_resource type="DynamicFont" load_steps=2 format=2]
+
+[ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=1]
+
+[resource]
+size = 20
+outline_size = 1
+outline_color = Color( 0.619608, 0.580392, 0.580392, 1 )
+use_filter = true
+extra_spacing_top = -10
+font_data = ExtResource( 1 )

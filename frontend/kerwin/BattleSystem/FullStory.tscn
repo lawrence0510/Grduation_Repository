@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Fonts/noto_sans_48.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Fonts/noto_sans_32.tres" type="DynamicFont" id=2]
+[ext_resource path="res://BattleSystem/FullStory.gd" type="Script" id=3]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.886275, 0.941176, 1, 1 )
+
+[node name="FullStory" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_left = 100.0
+margin_top = 100.0
+margin_right = 1820.0
+margin_bottom = 980.0
+focus_mode = 2
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_fonts/normal_font = ExtResource( 2 )
+custom_styles/normal = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center]
+
+
+金玟池男友就是侯程麟，
+不用看文章就能回答得出來，
+不知道你點查看全文幹嘛。
+
+金玟池男友就是侯程麟，
+不用看文章就能回答得出來，
+不知道你點查看全文幹嘛。
+
+金玟池男友就是侯程麟，
+不用看文章就能回答得出來，
+不知道你點查看全文幹嘛。
+
+金玟池男友就是侯程麟，
+不用看文章就能回答得出來，
+不知道你點查看全文幹嘛。
+
+金玟池男友就是侯程麟，
+不用看文章就能回答得出來，
+不知道你點查看全文幹嘛。"
+text = "
+
+
+金玟池男友就是侯程麟，
+不用看文章就能回答得出來，
+不知道你點查看全文幹嘛。
+
+金玟池男友就是侯程麟，
+不用看文章就能回答得出來，
+不知道你點查看全文幹嘛。
+
+金玟池男友就是侯程麟，
+不用看文章就能回答得出來，
+不知道你點查看全文幹嘛。
+
+金玟池男友就是侯程麟，
+不用看文章就能回答得出來，
+不知道你點查看全文幹嘛。
+
+金玟池男友就是侯程麟，
+不用看文章就能回答得出來，
+不知道你點查看全文幹嘛。"
+selection_enabled = true
+
+[node name="CloseStoryButton" type="Button" parent="RichTextLabel"]
+margin_left = 1549.0
+margin_top = 12.0
+margin_right = 1697.0
+margin_bottom = 88.0
+custom_fonts/font = ExtResource( 1 )
+text = "關閉 X"
+
+[connection signal="pressed" from="RichTextLabel/CloseStoryButton" to="." method="_on_CloseStoryButton_pressed"]
