@@ -74,12 +74,12 @@ corner_radius_bottom_left = 10
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 8 )
 
-[node name="bg" type="TextureRect" parent="."]
+[node name="BackgroundPicture" type="TextureRect" parent="."]
 margin_right = 1600.0
 margin_bottom = 900.0
 texture = ExtResource( 1 )
 
-[node name="底色" type="Panel" parent="bg"]
+[node name="BackGroundControl" type="Panel" parent="BackgroundPicture"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -90,7 +90,7 @@ margin_right = 649.5
 margin_bottom = 371.0
 custom_styles/panel = SubResource( 5 )
 
-[node name="google" type="Button" parent="bg/底色"]
+[node name="google" type="Button" parent="BackgroundPicture/BackGroundControl"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -105,16 +105,16 @@ button_mask = 0
 icon = ExtResource( 3 )
 flat = true
 
-[node name="姓名" type="Label" parent="bg/底色"]
+[node name="帳號" type="Label" parent="BackgroundPicture/BackGroundControl"]
 margin_left = 290.0
 margin_top = 312.0
 margin_right = 470.0
 margin_bottom = 390.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 4 )
-text = "姓名："
+text = "帳號："
 
-[node name="UserName" type="LineEdit" parent="bg/底色"]
+[node name="UserNameLineEdit" type="LineEdit" parent="BackgroundPicture/BackGroundControl"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -134,7 +134,7 @@ deselect_on_focus_loss_enabled = false
 placeholder_text = "User Name"
 placeholder_alpha = 1.0
 
-[node name="密碼" type="Label" parent="bg/底色"]
+[node name="密碼" type="Label" parent="BackgroundPicture/BackGroundControl"]
 margin_left = 290.0
 margin_top = 432.0
 margin_right = 470.0
@@ -143,7 +143,7 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 4 )
 text = "密碼："
 
-[node name="Password" type="LineEdit" parent="bg/底色"]
+[node name="PasswordLineEdit" type="LineEdit" parent="BackgroundPicture/BackGroundControl"]
 margin_left = 500.0
 margin_top = 430.0
 margin_right = 1050.0
@@ -159,7 +159,7 @@ deselect_on_focus_loss_enabled = false
 placeholder_text = "Password"
 placeholder_alpha = 1.0
 
-[node name="forget" type="Button" parent="bg/底色"]
+[node name="Button_forget" type="Button" parent="BackgroundPicture/BackGroundControl"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -181,7 +181,7 @@ custom_styles/disabled = ExtResource( 7 )
 custom_styles/normal = ExtResource( 7 )
 text = "忘記密碼"
 
-[node name="reregister" type="Button" parent="bg/底色"]
+[node name="Button_register" type="Button" parent="BackgroundPicture/BackGroundControl"]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 200.0
@@ -199,9 +199,9 @@ custom_styles/pressed = SubResource( 4 )
 custom_styles/focus = ExtResource( 7 )
 custom_styles/disabled = ExtResource( 7 )
 custom_styles/normal = ExtResource( 7 )
-text = "重新註冊"
+text = "註冊"
 
-[node name="enter" type="Button" parent="bg/底色"]
+[node name="Button_enter" type="Button" parent="BackgroundPicture/BackGroundControl"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -221,9 +221,9 @@ custom_styles/pressed = SubResource( 4 )
 custom_styles/focus = ExtResource( 7 )
 custom_styles/disabled = ExtResource( 7 )
 custom_styles/normal = ExtResource( 7 )
-text = "進入遊戲"
+text = "登入"
 
-[node name="login" type="Label" parent="bg"]
+[node name="login" type="Label" parent="BackgroundPicture"]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -250.0
@@ -240,6 +240,9 @@ align = 1
 valign = 1
 uppercase = true
 
-[connection signal="pressed" from="bg/底色/forget" to="." method="_on_forget_pressed"]
-[connection signal="pressed" from="bg/底色/reregister" to="." method="_on_reregister_pressed"]
-[connection signal="pressed" from="bg/底色/enter" to="." method="_on_enter_pressed"]
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="pressed" from="BackgroundPicture/BackGroundControl/Button_forget" to="." method="_on_forget_pressed"]
+[connection signal="pressed" from="BackgroundPicture/BackGroundControl/Button_register" to="." method="_on_reregister_pressed"]
+[connection signal="pressed" from="BackgroundPicture/BackGroundControl/Button_enter" to="." method="_on_enter_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
