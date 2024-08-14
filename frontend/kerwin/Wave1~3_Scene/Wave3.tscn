@@ -55,6 +55,7 @@
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt12.png" type="Texture" id=53]
 [ext_resource path="res://AttackAnimation/Spark/spark8.png" type="Texture" id=54]
 [ext_resource path="res://AttackAnimation/Spark/spark1.png" type="Texture" id=55]
+[ext_resource path="res://Enemy/Enemy1.png" type="Texture" id=56]
 
 [sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.886275, 0.941176, 0.933333, 1 )
@@ -138,7 +139,7 @@ animations = [ {
 "frames": [ ExtResource( 17 ), ExtResource( 18 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 19 ), ExtResource( 15 ), ExtResource( 50 ), ExtResource( 47 ), ExtResource( 53 ) ],
 "loop": false,
 "name": "DarkBolt",
-"speed": 11.0
+"speed": 116.5
 }, {
 "frames": [ ExtResource( 36 ), ExtResource( 32 ), ExtResource( 29 ), ExtResource( 33 ), ExtResource( 23 ), ExtResource( 41 ), ExtResource( 27 ), ExtResource( 31 ), ExtResource( 24 ), ExtResource( 26 ), ExtResource( 28 ), ExtResource( 40 ), ExtResource( 25 ), ExtResource( 30 ), ExtResource( 42 ) ],
 "loop": false,
@@ -212,9 +213,14 @@ custom_fonts/font = ExtResource( 3 )
 custom_styles/normal = SubResource( 7 )
 text = "查看全文 ▼"
 
+[node name="Enemy" type="Sprite" parent="BattleBackground/Question"]
+position = Vector2( -487, 221 )
+scale = Vector2( 0.562963, 0.521898 )
+texture = ExtResource( 56 )
+
 [node name="LineEdit" type="LineEdit" parent="BattleBackground"]
 margin_left = 46.0
-margin_top = 701.0
+margin_top = 717.0
 margin_right = 1875.0
 margin_bottom = 1031.0
 custom_colors/cursor_color = Color( 0.00392157, 0, 0, 1 )
@@ -245,3 +251,4 @@ animation = "Spark"
 [connection signal="pressed" from="BattleBackground/PauseButton" to="." method="_on_PauseButton_pressed"]
 [connection signal="pressed" from="BattleBackground/Question/OpenStoryButton" to="." method="_on_OpenStoryButton_pressed"]
 [connection signal="text_entered" from="BattleBackground/LineEdit" to="." method="_on_LineEdit_text_entered"]
+[connection signal="animation_finished" from="BattleBackground/AttackAnimation"to="." method="_on_AttackAnimation_animation_finished"]

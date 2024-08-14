@@ -10,16 +10,18 @@ var button_path_array = ["BattleBackground/Option_A",
 						 "BattleBackground/Option_C", 
 						 "BattleBackground/Option_D"]
 var enemy_death_effect = preload("res://Enemy/EnemyDeathEffect.tscn")
+var health_bar = load("res://UserSystem/HealthBar.tscn").instance()
 						
 
 ## 載入這個場景(Wave 2)後，馬上
 func _ready() -> void:
+	$BattleBackground/Question.add_child(health_bar) ## 因為畫面前後的關係，所以把節點放在Question的底下
+	health_bar.init_health_value(GlobalVar.global_player_health) ## 設定玩家血量
 	full_story_scene.set_visible(false) ## 隱藏全文
 	pause_scene.set_visible(false) ## 隱藏暫停場景
 	attack_animation = $BattleBackground/AttackAnimation
 	attack_animation.animation = "DarkBolt" ## 之後要根據使用者的角色匯入不同攻擊特效
 	attack_animation.visible = false ## 隱藏敵人死亡特效
-	
 	
 
 ## 查看全文button按下去
@@ -58,6 +60,7 @@ func change_button_color(button_path: String) -> void:
 		new_stylebox.bg_color = Color(0.16, 0.64, 0.25)
 		attack_animation.visible = true ## 顯示攻擊特效
 		attack_animation.play() ## 播放攻擊特效
+		health_bar.damaged(30) ## 玩家扣血測試
 
 	else:
 		new_stylebox.bg_color = Color(0.71, 0.15, 0.15)

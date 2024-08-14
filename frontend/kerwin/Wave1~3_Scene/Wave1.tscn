@@ -56,7 +56,6 @@
 [ext_resource path="res://AttackAnimation/Spark/spark8.png" type="Texture" id=54]
 [ext_resource path="res://AttackAnimation/Spark/spark1.png" type="Texture" id=55]
 [ext_resource path="res://Enemy/Enemy1.png" type="Texture" id=56]
-[ext_resource path="res://UserSystem/HealthBar.tscn" type="PackedScene" id=57]
 
 [sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 0.886275, 0.941176, 0.933333, 1 )
@@ -257,14 +256,6 @@ text = "查看全文 ▼"
 position = Vector2( -487, 221 )
 scale = Vector2( 0.562963, 0.521898 )
 texture = ExtResource( 56 )
-
-[node name="HealthBar" parent="BattleBackground/Question" instance=ExtResource( 57 )]
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = -1213.0
-margin_top = 219.0
-margin_right = 287.0
-margin_bottom = 249.0
 
 [node name="Option_A" type="Button" parent="BattleBackground"]
 margin_left = 45.0

@@ -83,6 +83,7 @@ custom_styles/normal = SubResource( 12 )
 text = "離開戰鬥"
 
 [node name="ConfirmEndingScene" parent="." instance=ExtResource( 3 )]
+color = Color( 0, 0, 0, 0.964706 )
 
 [connection signal="pressed" from="ResumeButton" to="." method="_on_ResumeButton_pressed"]
 [connection signal="pressed" from="EndinglButton" to="." method="_on_EndinglButton_pressed"]

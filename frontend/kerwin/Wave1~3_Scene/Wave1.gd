@@ -4,23 +4,25 @@ extends Node
 onready var full_story_scene = $BattleBackground/FullStory
 onready var pause_scene = $BattleBackground/PauseScene
 onready var attack_animation
-onready	var	health_bar = $BattleBackground/Question/HealthBar
 
 var button_path_array = ["BattleBackground/Option_A", 
 						 "BattleBackground/Option_B",
 						 "BattleBackground/Option_C", 
 						 "BattleBackground/Option_D"]
 var enemy_death_effect = preload("res://Enemy/EnemyDeathEffect.tscn")
+var health_bar = load("res://UserSystem/HealthBar.tscn").instance()
 
 
 ## 載入這個場景(Wave 1)後，馬上
 func _ready() -> void:
+	$BattleBackground/Question.add_child(health_bar) ## 因為畫面前後的關係，所以把節點放在Question的底下
+	health_bar.init_health_value(health_bar.health_value) ## 設定玩家血量
+	print(health_bar.health_value)
 	full_story_scene.set_visible(true) ## 顯示全文，第一關先讓玩家讀文章再作答
 	pause_scene.set_visible(false) ## 隱藏暫停場景
 	attack_animation = $BattleBackground/AttackAnimation
 	attack_animation.animation = "DarkBolt" ## 之後要根據使用者的角色匯入不同攻擊特效
 	attack_animation.visible = false ## 隱藏敵人死亡特效
-	health_bar.init_health(100) ## 設定玩家初始血量
 	
 
 ## 查看全文button按下去
@@ -59,7 +61,7 @@ func change_button_color(button_path: String) -> void:
 		new_stylebox.bg_color = Color(0.16, 0.64, 0.25) ## 正確選項改成綠色
 		attack_animation.visible = true ## 顯示攻擊特效
 		attack_animation.play() ## 播放攻擊特效
-		health_bar.health -= 10 ## 測試扣血動畫
+		health_bar.damaged(30) ## 玩家扣血測試
 
 	else:
 		new_stylebox.bg_color = Color(0.71, 0.15, 0.15)
