@@ -72,6 +72,7 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [node name="Node2D" type="Node2D"]
+scale = Vector2( 1, 1.00142 )
 script = ExtResource( 8 )
 
 [node name="BackgroundPicture" type="TextureRect" parent="."]
@@ -159,7 +160,7 @@ deselect_on_focus_loss_enabled = false
 placeholder_text = "Password"
 placeholder_alpha = 1.0
 
-[node name="Button_forget" type="Button" parent="BackgroundPicture/BackGroundControl"]
+[node name="ForgetButton" type="Button" parent="BackgroundPicture/BackGroundControl"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -181,7 +182,7 @@ custom_styles/disabled = ExtResource( 7 )
 custom_styles/normal = ExtResource( 7 )
 text = "忘記密碼"
 
-[node name="Button_register" type="Button" parent="BackgroundPicture/BackGroundControl"]
+[node name="RegisterButton" type="Button" parent="BackgroundPicture/BackGroundControl"]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 200.0
@@ -201,7 +202,7 @@ custom_styles/disabled = ExtResource( 7 )
 custom_styles/normal = ExtResource( 7 )
 text = "註冊"
 
-[node name="Button_enter" type="Button" parent="BackgroundPicture/BackGroundControl"]
+[node name="EnterButton" type="Button" parent="BackgroundPicture/BackGroundControl"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -242,7 +243,7 @@ uppercase = true
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
-[connection signal="pressed" from="BackgroundPicture/BackGroundControl/Button_forget" to="." method="_on_forget_pressed"]
-[connection signal="pressed" from="BackgroundPicture/BackGroundControl/Button_register" to="." method="_on_reregister_pressed"]
-[connection signal="pressed" from="BackgroundPicture/BackGroundControl/Button_enter" to="." method="_on_enter_pressed"]
+[connection signal="pressed" from="BackgroundPicture/BackGroundControl/ForgetButton" to="." method="_on_forget_pressed"]
+[connection signal="pressed" from="BackgroundPicture/BackGroundControl/RegisterButton" to="." method="_on_register_pressed"]
+[connection signal="pressed" from="BackgroundPicture/BackGroundControl/EnterButton" to="." method="_on_enter_pressed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

@@ -1,9 +1,6 @@
 extends Node2D
 
-onready var Button_forget: Button = $BackgroundPicture/BackGroundControl/Button_forget
-onready var Button_register: Button = $BackgroundPicture/BackGroundControl/Button_register
-onready var Button_enter: Button = $BackgroundPicture/BackGroundControl/Button_enter
-onready var user_name_input: LineEdit = $BackgroundPicture/BackGroundControl/UserNameLineEdit
+onready var username_input: LineEdit = $BackgroundPicture/BackGroundControl/UserNameLineEdit
 onready var password_input: LineEdit = $BackgroundPicture/BackGroundControl/PasswordLineEdit
 
 onready var http_request: HTTPRequest = $HTTPRequest
@@ -17,21 +14,21 @@ func _process(delta: float) -> void:
 		if OS.window_fullscreen:
 			get_tree().quit()
 
-# 註冊
-func _on_reregister_pressed():
+# 註冊ok
+func _on_register_pressed():
 	get_tree().change_scene("res://scene/1.2.1.tscn")
 
-# 進入遊戲
+# 登入ok
 func _on_enter_pressed():
 	# 獲取使用者輸入的帳號與密碼
-	var user_name = user_name_input.get_text()
+	var username = username_input.get_text()
 	var password = password_input.get_text()
 	
 	var url = "http://nccumisreading.ddnsking.com:5001/User/normal_login"
 	
 	# 建立 POST 請求的資料
 	var data = {
-		"user_name": user_name,
+		"user_name": username,
 		"user_password": password
 	}
 	

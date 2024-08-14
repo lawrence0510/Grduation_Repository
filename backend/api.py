@@ -50,7 +50,7 @@ user_parser.add_argument('user_name', type=str, required=True, help='使用者�
 user_parser.add_argument('user_password', type=str,
                          required=True, help='使用者密碼')
 user_parser.add_argument('user_school', type=str, required=True, help='使用者學校')
-user_parser.add_argument('user_age', type=int, required=True, help='使用者年齡')
+user_parser.add_argument('user_birthday', type=str, required=True, help='使用者生日 (YYYY-MM-DD)')
 user_parser.add_argument('user_email', type=str,
                          required=True, help='使用者email')
 user_parser.add_argument('user_phone', type=str, required=True, help='使用者電話')
@@ -156,7 +156,7 @@ class RegisterUser(Resource):
         user_name = args['user_name']
         user_password = args['user_password']
         user_school = args['user_school']
-        user_age = args['user_age']
+        user_birthday = args['user_birthday']
         user_email = args['user_email']
         user_phone = args['user_phone']
 
@@ -172,11 +172,11 @@ class RegisterUser(Resource):
                 max_id = result[0] if result[0] is not None else 0
                 new_user_id = max_id + 1
                 sql = """
-                INSERT INTO `User`(`user_id`, `user_name`, `user_password`, `user_school`, `user_age`, `user_email`, `user_phone`, `created_at`)
+                INSERT INTO `User`(`user_id`, `user_name`, `user_password`, `user_school`, `user_birthday`, `user_email`, `user_phone`, `created_at`)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
                 """
                 cursor.execute(sql, (new_user_id, user_name, encrypted_password,
-                               user_school, user_age, user_email, user_phone, datetime.now().date()))
+                               user_school, user_birthday, user_email, user_phone, datetime.now().date()))
                 connection.commit()
                 return {"message": "User registered successfully"}, 201
             except Error as e:
