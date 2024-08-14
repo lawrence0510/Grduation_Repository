@@ -93,12 +93,12 @@ corner_radius_bottom_left = 10
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 4 )
 
-[node name="bg" type="TextureRect" parent="."]
+[node name="BackgroundPicture" type="TextureRect" parent="."]
 margin_right = 1600.0
 margin_bottom = 900.0
 texture = ExtResource( 3 )
 
-[node name="底色2" type="Panel" parent="bg"]
+[node name="BackgroundControl" type="Panel" parent="BackgroundPicture"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -109,7 +109,7 @@ margin_right = 654.0
 margin_bottom = 371.0
 custom_styles/panel = SubResource( 9 )
 
-[node name="next" type="Button" parent="bg/底色2"]
+[node name="next" type="Button" parent="BackgroundPicture/BackgroundControl"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -131,7 +131,7 @@ custom_styles/disabled = ExtResource( 7 )
 custom_styles/normal = ExtResource( 7 )
 text = "下一步"
 
-[node name="MailLineEdit" type="LineEdit" parent="bg/底色2"]
+[node name="MailLineEdit" type="LineEdit" parent="BackgroundPicture/BackgroundControl"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -149,7 +149,7 @@ selecting_enabled = false
 deselect_on_focus_loss_enabled = false
 placeholder_alpha = 1.0
 
-[node name="輸入信箱" type="Label" parent="bg/底色2"]
+[node name="輸入信箱" type="Label" parent="BackgroundPicture/BackgroundControl"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -162,7 +162,7 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 6 )
 text = "請輸入信箱："
 
-[node name="紅字" type="Label" parent="bg/底色2"]
+[node name="紅字" type="Label" parent="BackgroundPicture/BackgroundControl"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -175,7 +175,7 @@ custom_colors/font_color = Color( 1, 0, 0, 1 )
 custom_fonts/font = SubResource( 7 )
 text = "系統將會寄送驗證碼至信箱"
 
-[node name="step1" type="Label" parent="bg/底色2"]
+[node name="step1" type="Label" parent="BackgroundPicture/BackgroundControl"]
 margin_left = 200.0
 margin_top = 100.0
 margin_right = 282.0
@@ -185,7 +185,7 @@ custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 8 )
 text = "step 1"
 
-[node name="dot1" type="Label" parent="bg/底色2"]
+[node name="dot1" type="Label" parent="BackgroundPicture/BackgroundControl"]
 margin_top = 210.0
 margin_right = 164.0
 margin_bottom = 224.0
@@ -195,7 +195,7 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "................................"
 align = 1
 
-[node name="step2" type="Label" parent="bg/底色2"]
+[node name="step2" type="Label" parent="BackgroundPicture/BackgroundControl"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -209,7 +209,7 @@ custom_colors/font_color_shadow = Color( 0.87451, 0.776471, 0.776471, 1 )
 custom_fonts/font = SubResource( 8 )
 text = "step 2"
 
-[node name="dot2" type="Label" parent="bg/底色2"]
+[node name="dot2" type="Label" parent="BackgroundPicture/BackgroundControl"]
 margin_left = 404.5
 margin_top = 210.0
 margin_right = 568.5
@@ -220,7 +220,7 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "................................"
 align = 1
 
-[node name="step3" type="Label" parent="bg/底色2"]
+[node name="step3" type="Label" parent="BackgroundPicture/BackgroundControl"]
 margin_left = 1016.0
 margin_top = 100.0
 margin_right = 1135.0
@@ -230,7 +230,7 @@ custom_colors/font_color_shadow = Color( 0.87451, 0.776471, 0.776471, 1 )
 custom_fonts/font = SubResource( 8 )
 text = "step 3"
 
-[node name="login" type="Label" parent="bg"]
+[node name="login" type="Label" parent="BackgroundPicture"]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -250.0
@@ -247,4 +247,6 @@ align = 1
 valign = 1
 uppercase = true
 
-[connection signal="pressed" from="bg/底色2/next" to="." method="_on_next_pressed"]
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="pressed" from="BackgroundPicture/BackgroundControl/next" to="." method="_on_next_pressed"]

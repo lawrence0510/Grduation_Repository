@@ -62,4 +62,4 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		
 #返回
 func _on_back_pressed():
-	get_tree().change_scene("res://scene/1.4.0.tscn")
+	get_tree().change_scene("res://scene/1.1.tscn")
