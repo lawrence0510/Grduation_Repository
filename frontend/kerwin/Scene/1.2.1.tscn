@@ -217,7 +217,7 @@ expand_to_text_length = true
 clear_button_enabled = true
 selecting_enabled = false
 deselect_on_focus_loss_enabled = false
-placeholder_text = "YYYY/MM/DD"
+placeholder_text = "YYYY-MM-DD"
 placeholder_alpha = 1.0
 
 [node name="信箱" type="Label" parent="BackgroundPicture/BackgroundControl"]

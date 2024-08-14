@@ -26,7 +26,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-GlobalVar = "*res://UserSystem/GlobalVar.gd"
+GlobalVar="*res://UserSystem/GlobalVar.gd"
 
 [display]
 
