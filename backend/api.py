@@ -330,7 +330,7 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
-app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER')
+app.config['MAIL_DEFAULT_SENDER'] = ('Reading King', 'reading@gmail.com')
 
 mail = Mail(app)
 
@@ -344,7 +344,6 @@ class SendVerificationCode(Resource):
         '''寄送驗證碼到使用者的 email'''
         args = verification_code_parser.parse_args()
         user_email = args['user_email']
-
         # 生成 6 位隨機驗證碼
         verification_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
 

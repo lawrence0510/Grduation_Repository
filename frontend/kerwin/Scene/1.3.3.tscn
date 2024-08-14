@@ -125,7 +125,7 @@ custom_styles/disabled = ExtResource( 7 )
 custom_styles/normal = ExtResource( 7 )
 text = "完成"
 
-[node name="新密碼輸入框" type="LineEdit" parent="bg/底色2"]
+[node name="PasswordLineEdit" type="LineEdit" parent="bg/底色2"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
