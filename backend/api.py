@@ -386,7 +386,60 @@ class SendVerificationCode(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+verification_code_check_parser = reqparse.RequestParser()
+verification_code_check_parser.add_argument('user_email', type=str, required=True, help='使用者 email')
+verification_code_check_parser.add_argument('verification_code', type=str, required=True, help='驗證碼')
 
+@user_ns.route('/check_verification_code')
+class CheckVerificationCode(Resource):
+    @user_ns.expect(verification_code_check_parser)
+    def get(self):
+        '''檢查使用者的驗證碼是否有效'''
+        args = verification_code_check_parser.parse_args()
+        user_email = args['user_email']
+        input_code = args['verification_code']
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                cursor.execute("SELECT user_id FROM User WHERE user_email = %s", (user_email,))
+                user = cursor.fetchone()
+
+                if user:
+                    user_id = user[0]
+
+                    cursor.execute("""
+                        SELECT verification_code, created_at FROM VerificationCodes
+                        WHERE user_id = %s
+                        ORDER BY created_at DESC
+                        LIMIT 1
+                    """, (user_id,))
+                    record = cursor.fetchone()
+
+                    if record:
+                        db_verification_code, created_at = record
+                        current_time = datetime.now()
+                        time_diff = current_time - created_at
+
+                        if time_diff > timedelta(minutes=3):
+                            return {"error": "驗證碼已過期"}, 400
+                        elif db_verification_code != input_code:
+                            return {"error": "驗證碼錯誤"}, 401
+                        else:
+                            return {"message": "驗證成功"}, 200
+                    else:
+                        return {"error": "未找到此使用者"}, 404
+                else:
+                    return {"error": "您輸入的電子郵件可能有誤，請重新輸入"}, 404
+            except Error as db_error:
+                return {"error": str(db_error)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+        
 @user_ns.route('/logout')
 class LogoutUser(Resource):
     def post(self):
