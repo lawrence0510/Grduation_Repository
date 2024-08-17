@@ -523,10 +523,7 @@ class PasswordReset(Resource):
         '''重設密碼'''
         args = password_reset_parser.parse_args()
         user_email = args['user_email']
-        original_password = args['original_password']
         new_password = args['new_password']
-        encrypted_original_password = hashlib.sha256(
-            original_password.encode()).hexdigest()
         encrypted_new_password = hashlib.sha256(
             new_password.encode()).hexdigest()
 
@@ -534,8 +531,9 @@ class PasswordReset(Resource):
         if connection is not None:
             try:
                 cursor = connection.cursor()
-                sql = "SELECT `user_id` FROM `User` WHERE `user_email` = %s AND `user_password` = %s"
-                cursor.execute(sql, (user_email, encrypted_original_password))
+                # 確認用戶是否存在
+                sql = "SELECT `user_id` FROM `User` WHERE `user_email` = %s"
+                cursor.execute(sql, (user_email,))
                 user = cursor.fetchone()
                 if user:
                     update_sql = "UPDATE `User` SET `user_password` = %s WHERE `user_email` = %s"
@@ -544,7 +542,7 @@ class PasswordReset(Resource):
                     connection.commit()
                     return {"message": "Password updated successfully"}, 200
                 else:
-                    return {"message": "Invalid email or original password"}, 404
+                    return {"message": "Invalid email"}, 404
             except Error as e:
                 return {"error": str(e)}, 500
             finally:

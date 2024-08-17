@@ -5,7 +5,7 @@ onready var mail_input: LineEdit = $BackgroundPicture/BackgroundControl/MailLine
 onready var http_request: HTTPRequest = $HTTPRequest
 
 func _ready() -> void:
-	pass
+	http_request.connect("request_completed", self, "_on_HTTPRequest_request_completed")
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -36,10 +36,12 @@ func _on_next_pressed():
 	var headers = ["Content-Type: application/json"]
 	
 	# 發送 HTTP POST 請求
-	http_request.request(url, headers, false, HTTPClient.METHOD_POST, json_data)
-	
-	get_tree().change_scene("res://scene/1.3.2.tscn")
-	
+	var error_code = http_request.request(url, headers, false, HTTPClient.METHOD_POST, json_data)
+
 # 處理 HTTP 請求的結果
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
-	get_tree().change_scene("res://scene/1.3.2.tscn")
+	
+	if response_code == 200:
+		get_tree().change_scene("res://scene/1.3.2.tscn")
+	else:
+		print("Request failed with response code: ", response_code)

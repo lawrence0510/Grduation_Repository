@@ -32,6 +32,7 @@ func _on_next_pressed():
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	if response_code == 200:
+		show_error_message("驗證成功")
 		get_tree().change_scene("res://scene/1.3.3.tscn")
 	elif response_code == 400:
 		show_error_message("驗證碼已過期，請重新請求一個新的驗證碼。")
@@ -47,6 +48,4 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 
 func show_error_message(message: String) -> void:
 	# 顯示錯誤訊息給使用者，例如透過一個標籤或彈出視窗
-	var error_label = $BackgroundPicture/BackgroundControl/ErrorLabel
-	error_label.text = message
-	error_label.visible = true
+	print(message)
