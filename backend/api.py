@@ -75,8 +75,6 @@ password_reset_parser = reqparse.RequestParser()
 password_reset_parser.add_argument(
     'user_email', type=str, required=True, help='使用者email')
 password_reset_parser.add_argument(
-    'original_password', type=str, required=True, help='使用者舊密碼')
-password_reset_parser.add_argument(
     'new_password', type=str, required=True, help='使用者新密碼')
 
 phone_reset_parser = reqparse.RequestParser()
