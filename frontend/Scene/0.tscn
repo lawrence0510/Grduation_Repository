@@ -1,24 +1,18 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://pic/bg.jpg" type="Texture" id=1]
+[ext_resource path="res://Pic/flower_bg.png" type="Texture" id=1]
 [ext_resource path="res://script/0.gd" type="Script" id=2]
-[ext_resource path="res://pic/button.png" type="Texture" id=3]
+[ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=3]
 
-[sub_resource type="StyleBoxTexture" id=2]
-texture = ExtResource( 3 )
-region_rect = Rect2( 0, 0, 324, 272 )
+[sub_resource type="DynamicFont" id=1]
+size = 60
+outline_size = 1
+outline_color = Color( 0.552941, 0.541176, 0.627451, 0.0705882 )
+extra_spacing_top = -10
+font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxTexture" id=3]
-texture = ExtResource( 3 )
-region_rect = Rect2( 0, 0, 324, 272 )
-
-[sub_resource type="StyleBoxEmpty" id=4]
-
-[sub_resource type="StyleBoxEmpty" id=5]
-
-[sub_resource type="StyleBoxTexture" id=1]
-texture = ExtResource( 3 )
-region_rect = Rect2( 0, 0, 324, 272 )
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.898039, 0.898039, 0.898039, 0.360784 )
 
 [node name="Control" type="Control"]
 margin_right = 1925.0
@@ -26,24 +20,34 @@ margin_bottom = 1079.0
 script = ExtResource( 2 )
 
 [node name="bg" type="TextureRect" parent="."]
-margin_right = 1024.0
-margin_bottom = 599.0
+margin_right = 1920.0
+margin_bottom = 1080.0
 texture = ExtResource( 1 )
+expand = true
+stretch_mode = 1
 
 [node name="play" type="Button" parent="bg"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -128.0
-margin_top = 142.0
-margin_right = 128.0
-margin_bottom = 376.0
+margin_left = -960.0
+margin_top = -75.0
+margin_right = 960.0
+margin_bottom = 75.0
+custom_colors/font_color_disabled = Color( 0.552941, 0.541176, 0.627451, 1 )
+custom_colors/font_color_focus = Color( 0.552941, 0.541176, 0.627451, 1 )
+custom_colors/font_color = Color( 0.552941, 0.541176, 0.627451, 1 )
+custom_colors/font_color_hover = Color( 0.552941, 0.541176, 0.627451, 1 )
+custom_colors/font_color_pressed = Color( 0.552941, 0.541176, 0.627451, 1 )
+custom_fonts/font = SubResource( 1 )
 custom_styles/hover = SubResource( 2 )
-custom_styles/pressed = SubResource( 3 )
-custom_styles/focus = SubResource( 4 )
-custom_styles/disabled = SubResource( 5 )
-custom_styles/normal = SubResource( 1 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/focus = SubResource( 2 )
+custom_styles/disabled = SubResource( 2 )
+custom_styles/normal = SubResource( 2 )
+text = "點擊進入遊戲"
+icon_align = 1
 
 [connection signal="button_up" from="bg/play" to="." method="_on_play_button_up"]
 [connection signal="mouse_entered" from="bg/play" to="." method="_on_play_mouse_entered"]

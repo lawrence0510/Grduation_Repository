@@ -1,15 +1,14 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://fonts/char_button.tres" type="StyleBox" id=1]
 [ext_resource path="res://pic/B1.png" type="Texture" id=2]
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://script/1.2.3.gd" type="Script" id=4]
 [ext_resource path="res://pic/B2.png" type="Texture" id=5]
-[ext_resource path="res://fonts/Chinese.tres" type="DynamicFont" id=6]
 [ext_resource path="res://fonts/style重新註冊.tres" type="StyleBox" id=7]
 [ext_resource path="res://fonts/font3.tres" type="DynamicFont" id=8]
 [ext_resource path="res://pic/B3.png" type="Texture" id=9]
-[ext_resource path="res://pic/bg.jpg" type="Texture" id=10]
+[ext_resource path="res://Pic/sky_bg.png" type="Texture" id=10]
 [ext_resource path="res://script/BB1.gd" type="Script" id=11]
 [ext_resource path="res://script/BB2.gd" type="Script" id=12]
 [ext_resource path="res://script/BB3.gd" type="Script" id=13]
@@ -26,13 +25,13 @@
 [ext_resource path="res://script/BG2.gd" type="Script" id=24]
 [ext_resource path="res://script/BG3.gd" type="Script" id=25]
 
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.886275, 0.941176, 0.933333, 1 )
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.737255, 0.870588, 1, 1 )
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color( 0, 0, 0, 1 )
+border_color = Color( 0, 0.952941, 1, 1 )
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
@@ -62,7 +61,7 @@ corner_radius_top_right = 30
 corner_radius_bottom_right = 30
 corner_radius_bottom_left = 30
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=8]
 size = 40
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
@@ -82,7 +81,7 @@ corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
 
 [sub_resource type="StyleBoxFlat" id=7]
-bg_color = Color( 0.431373, 0.564706, 0.458824, 1 )
+bg_color = Color( 0.505882, 0.941176, 0.898039, 1 )
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
@@ -93,27 +92,16 @@ corner_radius_top_right = 40
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
 
-[sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 0.87451, 0.796078, 0.796078, 1 )
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color( 0, 0, 0, 1 )
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 4 )
 
 [node name="bg" type="TextureRect" parent="."]
-margin_right = 1600.0
-margin_bottom = 900.0
+margin_right = 1920.0
+margin_bottom = 1080.0
 texture = ExtResource( 10 )
+expand = true
 
 [node name="底色2" type="Panel" parent="bg"]
 anchor_left = 0.5
@@ -124,7 +112,7 @@ margin_left = -649.5
 margin_top = -371.0
 margin_right = 649.5
 margin_bottom = 371.0
-custom_styles/panel = SubResource( 1 )
+custom_styles/panel = SubResource( 5 )
 
 [node name="enter" type="Button" parent="bg/底色2"]
 anchor_left = 0.5
@@ -177,7 +165,7 @@ custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 8 )
 custom_styles/hover = SubResource( 6 )
 custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = SubResource( 7 )
@@ -196,7 +184,7 @@ custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 8 )
 custom_styles/hover = SubResource( 6 )
 custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = SubResource( 7 )
@@ -215,7 +203,7 @@ custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 8 )
 custom_styles/hover = SubResource( 6 )
 custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = SubResource( 7 )
@@ -234,7 +222,7 @@ custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 8 )
 custom_styles/hover = SubResource( 6 )
 custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = SubResource( 7 )
@@ -253,7 +241,7 @@ custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 8 )
 custom_styles/hover = SubResource( 6 )
 custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = SubResource( 7 )
@@ -272,7 +260,7 @@ custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 8 )
 custom_styles/hover = SubResource( 6 )
 custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = SubResource( 7 )
@@ -291,7 +279,7 @@ custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 8 )
 custom_styles/hover = SubResource( 6 )
 custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = SubResource( 7 )
@@ -310,7 +298,7 @@ custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 8 )
 custom_styles/hover = SubResource( 6 )
 custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = SubResource( 7 )
@@ -329,7 +317,7 @@ custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 8 )
 custom_styles/hover = SubResource( 6 )
 custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = SubResource( 7 )
@@ -362,23 +350,6 @@ texture = ExtResource( 16 )
 visible = false
 position = Vector2( 849.5, 350 )
 texture = ExtResource( 19 )
-
-[node name="login" type="Label" parent="bg"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -250.0
-margin_top = 69.0
-margin_right = 250.0
-margin_bottom = 214.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 6 )
-custom_styles/normal = SubResource( 4 )
-text = "註冊"
-align = 1
-valign = 1
-uppercase = true
 
 [connection signal="pressed" from="bg/底色2/enter" to="." method="_on_enter_pressed"]
 [connection signal="pressed" from="bg/底色2/BB1" to="bg/底色2/BB1" method="_on_BB1_pressed"]
