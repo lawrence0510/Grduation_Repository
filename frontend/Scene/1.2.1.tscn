@@ -311,7 +311,7 @@ custom_styles/pressed = SubResource( 11 )
 custom_styles/focus = ExtResource( 6 )
 custom_styles/disabled = ExtResource( 6 )
 custom_styles/normal = ExtResource( 6 )
-text = "進入遊戲"
+text = "選擇角色"
 
 [node name="login" type="Label" parent="BackgroundPicture"]
 anchor_left = 0.5

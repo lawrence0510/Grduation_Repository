@@ -10,11 +10,9 @@ func _process(delta: float) -> void:
 		if OS.window_fullscreen:
 			get_tree().quit()
 
-func _on_choose_pressed():
-	get_tree().change_scene("res://scene/1.2.3.tscn")
 
 func _on_already_pressed():
 	get_tree().change_scene("res://scene/1.1.tscn")
 
 func _on_enter_pressed():
-	get_tree().change_scene("res://scene/1.4.0.tscn")
+	get_tree().change_scene("res://scene/1.2.3.tscn")

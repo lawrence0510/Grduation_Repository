@@ -146,7 +146,7 @@ custom_styles/pressed = SubResource( 3 )
 custom_styles/focus = ExtResource( 7 )
 custom_styles/disabled = ExtResource( 7 )
 custom_styles/normal = ExtResource( 7 )
-text = "確認"
+text = "註冊完成"
 
 [node name="B1" type="Sprite" parent="bg/底色2"]
 position = Vector2( 849.5, 350 )

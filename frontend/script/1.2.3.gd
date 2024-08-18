@@ -14,4 +14,4 @@ func _process(delta: float) -> void:
 			get_tree().quit()
 			
 func _on_enter_pressed():
-	get_tree().change_scene("res://scene/1.2.2.tscn")
+	get_tree().change_scene("res://scene/1.1.tscn")

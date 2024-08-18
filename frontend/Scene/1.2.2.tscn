@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://script/1.2.2.gd" type="Script" id=1]
 [ext_resource path="res://fonts/font2.tres" type="DynamicFont" id=2]
@@ -6,10 +6,8 @@
 [ext_resource path="res://fonts/font3.tres" type="DynamicFont" id=4]
 [ext_resource path="res://fonts/font1.tres" type="DynamicFont" id=5]
 [ext_resource path="res://fonts/style重新註冊.tres" type="StyleBox" id=6]
-[ext_resource path="res://fonts/font4.tres" type="DynamicFont" id=7]
 [ext_resource path="res://pic/bg.jpg" type="Texture" id=8]
 [ext_resource path="res://fonts/NAME.tres" type="StyleBox" id=9]
-[ext_resource path="res://fonts/選角.tres" type="StyleBox" id=10]
 
 [sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.886275, 0.941176, 0.933333, 1 )
@@ -60,34 +58,6 @@ corner_radius_top_left = 30
 corner_radius_top_right = 30
 corner_radius_bottom_right = 30
 corner_radius_bottom_left = 30
-
-[sub_resource type="StyleBoxFlat" id=6]
-bg_color = Color( 0.917647, 1, 0.356863, 1 )
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color( 0, 0, 0, 1 )
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-expand_margin_left = 10.0
-expand_margin_right = 10.0
-expand_margin_top = 10.0
-expand_margin_bottom = 10.0
-
-[sub_resource type="StyleBoxFlat" id=7]
-bg_color = Color( 0.917647, 1, 0.356863, 1 )
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color( 0, 0, 0, 1 )
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
 
 [sub_resource type="StyleBoxFlat" id=12]
 bg_color = Color( 0.87451, 0.796078, 0.796078, 1 )
@@ -302,25 +272,7 @@ custom_styles/pressed = SubResource( 11 )
 custom_styles/focus = ExtResource( 6 )
 custom_styles/disabled = ExtResource( 6 )
 custom_styles/normal = ExtResource( 6 )
-text = "進入遊戲"
-
-[node name="choose" type="Button" parent="bg/底色2"]
-margin_left = 605.0
-margin_top = 145.0
-margin_right = 677.0
-margin_bottom = 181.0
-custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 7 )
-custom_styles/hover = SubResource( 6 )
-custom_styles/pressed = SubResource( 7 )
-custom_styles/focus = ExtResource( 10 )
-custom_styles/disabled = ExtResource( 10 )
-custom_styles/normal = ExtResource( 10 )
-text = "選角"
+text = "選擇角色"
 
 [node name="login" type="Label" parent="bg"]
 anchor_left = 0.5
@@ -341,4 +293,3 @@ uppercase = true
 
 [connection signal="pressed" from="bg/底色2/already" to="." method="_on_already_pressed"]
 [connection signal="pressed" from="bg/底色2/enter" to="." method="_on_enter_pressed"]
-[connection signal="pressed" from="bg/底色2/choose" to="." method="_on_choose_pressed"]
