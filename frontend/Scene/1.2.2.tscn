@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://script/1.2.2.gd" type="Script" id=1]
 [ext_resource path="res://fonts/font2.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Pic/123.bg.png" type="Texture" id=3]
 [ext_resource path="res://fonts/font3.tres" type="DynamicFont" id=4]
 [ext_resource path="res://fonts/font1.tres" type="DynamicFont" id=5]
 [ext_resource path="res://fonts/style重新註冊.tres" type="StyleBox" id=6]
@@ -102,7 +103,7 @@ expand = true
 [node name="BackgroundPicture" type="TextureRect" parent="bg"]
 margin_right = 1920.0
 margin_bottom = 1080.0
-texture = ExtResource( 8 )
+texture = ExtResource( 3 )
 expand = true
 
 [node name="BackgroundControl" type="Panel" parent="bg/BackgroundPicture"]

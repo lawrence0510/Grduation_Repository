@@ -5,10 +5,10 @@
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://script/1.2.3.gd" type="Script" id=4]
 [ext_resource path="res://pic/B2.png" type="Texture" id=5]
+[ext_resource path="res://Pic/123.bg.png" type="Texture" id=6]
 [ext_resource path="res://fonts/style重新註冊.tres" type="StyleBox" id=7]
 [ext_resource path="res://fonts/font3.tres" type="DynamicFont" id=8]
 [ext_resource path="res://pic/B3.png" type="Texture" id=9]
-[ext_resource path="res://Pic/sky_bg.png" type="Texture" id=10]
 [ext_resource path="res://script/BB1.gd" type="Script" id=11]
 [ext_resource path="res://script/BB2.gd" type="Script" id=12]
 [ext_resource path="res://script/BB3.gd" type="Script" id=13]
@@ -100,7 +100,7 @@ script = ExtResource( 4 )
 [node name="bg" type="TextureRect" parent="."]
 margin_right = 1920.0
 margin_bottom = 1080.0
-texture = ExtResource( 10 )
+texture = ExtResource( 6 )
 expand = true
 
 [node name="底色2" type="Panel" parent="bg"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://Pic/sky_bg.png" type="Texture" id=2]
+[ext_resource path="res://Pic/123.bg.png" type="Texture" id=2]
 [ext_resource path="res://pic/google.png" type="Texture" id=3]
 [ext_resource path="res://fonts/font1.tres" type="DynamicFont" id=5]
 [ext_resource path="res://fonts/font3.tres" type="DynamicFont" id=6]

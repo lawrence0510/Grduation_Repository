@@ -6,7 +6,7 @@
 [ext_resource path="res://fonts/font3.tres" type="DynamicFont" id=4]
 [ext_resource path="res://fonts/font1.tres" type="DynamicFont" id=5]
 [ext_resource path="res://fonts/style重新註冊.tres" type="StyleBox" id=6]
-[ext_resource path="res://Pic/sky_bg.png" type="Texture" id=7]
+[ext_resource path="res://Pic/123.bg.png" type="Texture" id=7]
 [ext_resource path="res://Pic/signup.png" type="Texture" id=8]
 
 [sub_resource type="StyleBoxFlat" id=5]

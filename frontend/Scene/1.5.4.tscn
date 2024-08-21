@@ -250,7 +250,7 @@ custom_fonts/normal_font = SubResource( 7 )
 custom_styles/normal = SubResource( 3 )
 bbcode_enabled = true
 bbcode_text = "請問李多慧的男朋友是誰?"
-text = "我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度我是正確度"
+text = "請問李多慧的男朋友是誰?"
 
 [node name="完整度" type="Label" parent="bg"]
 margin_left = 784.0
@@ -298,7 +298,7 @@ custom_fonts/normal_font = SubResource( 7 )
 custom_styles/normal = SubResource( 3 )
 bbcode_enabled = true
 bbcode_text = "請問李多慧的男朋友是誰?"
-text = "我是完整度啦！！"
+text = "請問李多慧的男朋友是誰?"
 
 [node name="語言表達清晰" type="Label" parent="bg"]
 margin_left = 1255.0
@@ -342,7 +342,7 @@ custom_fonts/normal_font = SubResource( 7 )
 custom_styles/normal = SubResource( 3 )
 bbcode_enabled = true
 bbcode_text = "請問李多慧的男朋友是誰?"
-text = "我是語言表達清晰度喔喔喔喔喔喔喔喔"
+text = "請問李多慧的男朋友是誰?"
 
 [connection signal="pressed" from="bg/content" to="." method="_on_content_pressed"]
 [connection signal="pressed" from="bg/wave1" to="." method="_on_wave1_pressed"]
