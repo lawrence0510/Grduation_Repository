@@ -34,8 +34,8 @@ func _on_Input_text_entered(new_text):
 	add_response_to_game(input_response)
 	#控制回復
 	var ai_response_text = command_processor.process_command(new_text)
-	#ai_response.setText(ai_response_text)
-	#add_response_to_game(ai_response)
+	ai_response.set_text(ai_response_text)
+	add_response_to_game(ai_response)
 
 
 func add_response_to_game(response: Control):
