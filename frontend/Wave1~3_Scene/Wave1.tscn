@@ -330,6 +330,8 @@ scale = Vector2( 7.5, 4.5 )
 frames = SubResource( 25 )
 animation = "Spark"
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
 [connection signal="pressed" from="BattleBackground/PauseButton" to="." method="_on_PauseButton_pressed"]
 [connection signal="pressed" from="BattleBackground/Question/OpenStoryButton" to="." method="_on_OpenStoryButton_pressed"]
 [connection signal="pressed" from="BattleBackground/Option_A" to="." method="_on_Option_A_pressed"]
@@ -338,3 +340,4 @@ animation = "Spark"
 [connection signal="pressed" from="BattleBackground/Option_D" to="." method="_on_Option_D_pressed"]
 [connection signal="timeout" from="BattleBackground/ChangeLevelTimer" to="." method="_on_ChangeLevelTimer_timeout"]
 [connection signal="animation_finished" from="BattleBackground/AttackAnimation" to="." method="_on_AttackAnimation_animation_finished"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

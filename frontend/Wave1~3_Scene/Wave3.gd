@@ -5,12 +5,28 @@ onready var full_story_scene = $BattleBackground/FullStory
 onready var pause_scene = $BattleBackground/PauseScene
 onready var attack_animation
 onready var line_edit = $BattleBackground/LineEdit
+onready var http_request: HTTPRequest = $HTTPRequest
 var enemy_death_effect = preload("res://Enemy/EnemyDeathEffect.tscn")
 var health_bar = load("res://UserSystem/HealthBar.tscn").instance()
 
 
 ## 載入這個場景(Wave 3)後，馬上
 func _ready() -> void:
+	#拿題目
+	var url = "http://140.119.19.145:5001/Article/get_random_unseen_article"
+	
+	# 建立 POST 請求的資料
+	var data = {
+		"user_id": 2,
+		"article_category": "story",
+	}
+	
+	var json_data = JSON.print(data)
+	var headers = ["Content-Type: application/json"]
+	# 發送HTTP GET請求
+	http_request.request(url, headers, true, HTTPClient.METHOD_GET, json_data)
+	
+	
 	$BattleBackground/Question.add_child(health_bar) ## 因為畫面前後的關係，所以把節點放在Question的底下
 	health_bar.init_health_value(GlobalVar.global_player_health) ## 設定玩家血量
 	full_story_scene.set_visible(false) ## 隱藏全文
@@ -44,3 +60,9 @@ func _on_AttackAnimation_animation_finished() -> void:
 	var effect = enemy_death_effect.instance() ## 生成敵人死亡動畫
 	get_tree().current_scene.add_child(effect) ## 播放敵人死亡動畫
 	
+
+
+func _on_HTTPRequest_request_completed(result, response_code, headers, body):
+	var json = JSON.parse(body.get_string_from_utf8())
+	print(json.result[0].article_content)
+	full_story_scene.setStory(json.result[0].article_content)
