@@ -347,7 +347,6 @@ margin_right = 258.0
 margin_bottom = 144.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 7 )
-text = "小帥"
 align = 1
 valign = 1
 
@@ -425,7 +424,6 @@ margin_right = 410.0
 margin_bottom = 208.0
 custom_colors/font_color = Color( 0, 0.494118, 1, 1 )
 custom_fonts/font = ExtResource( 5 )
-text = "政治國小"
 
 [node name="右短線3" type="Line2D" parent="bg/框框"]
 position = Vector2( 393.922, 96.8904 )
@@ -451,7 +449,6 @@ margin_right = 442.0
 margin_bottom = 248.0
 custom_colors/font_color = Color( 0, 0.494118, 1, 1 )
 custom_fonts/font = ExtResource( 5 )
-text = "0912-345-678"
 
 [node name="右短線4" type="Line2D" parent="bg/框框"]
 position = Vector2( 393.922, 136.89 )
@@ -874,6 +871,8 @@ rect_scale = Vector2( 0.2, 0.2 )
 icon = ExtResource( 14 )
 flat = true
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
 [connection signal="pressed" from="bg/框框/personal" to="." method="_on_personal_pressed"]
 [connection signal="pressed" from="bg/框框/record" to="." method="_on_record_pressed"]
 [connection signal="pressed" from="bg/edit_birth" to="." method="_on_edit_birth_pressed"]
@@ -883,3 +882,4 @@ flat = true
 [connection signal="pressed" from="bg/school/s_enter" to="bg/school" method="_on_s_enter_pressed"]
 [connection signal="pressed" from="bg/phone/p_enter" to="bg/phone" method="_on_p_enter_pressed"]
 [connection signal="pressed" from="bg/cross" to="." method="_on_cross_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
