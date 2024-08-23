@@ -4,9 +4,6 @@ extends ProgressBar
 onready var timer = $Timer
 onready var damage_bar = $DamageBar
 var health_value = GlobalVar.global_player_health
-	
-	
-var health = 0 setget _set_health
 
 
 func init_health_value(health: int):
