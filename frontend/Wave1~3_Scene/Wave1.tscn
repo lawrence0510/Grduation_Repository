@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=2]
+[gd_scene load_steps=79 format=2]
 
 [ext_resource path="res://Fonts/noto_sans_48.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Fonts/noto_sans_64.tres" type="DynamicFont" id=2]

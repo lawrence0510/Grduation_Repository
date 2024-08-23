@@ -142,9 +142,12 @@ custom_styles/disabled = ExtResource( 3 )
 custom_styles/normal = ExtResource( 3 )
 text = "score"
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
 [connection signal="pressed" from="bg/content" to="." method="_on_content_pressed"]
 [connection signal="pressed" from="bg/wave1" to="." method="_on_wave1_pressed"]
 [connection signal="pressed" from="bg/wave2" to="." method="_on_wave2_pressed"]
 [connection signal="pressed" from="bg/wave3" to="." method="_on_wave3_pressed"]
 [connection signal="pressed" from="bg/cross" to="." method="_on_cross_pressed"]
 [connection signal="pressed" from="bg/score" to="." method="_on_score_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
