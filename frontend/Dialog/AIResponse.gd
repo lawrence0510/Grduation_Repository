@@ -1,5 +1,4 @@
 extends VBoxContainer
 
 func set_text(input: String):
-	$InputHistory.text = "Adji:  " + input
-
+	$responseHistory.text = "Adji:  " + input

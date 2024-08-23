@@ -8,16 +8,6 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "Control",
-"class": "textInDialog",
-"language": "GDScript",
-"path": "res://Dialog/text_in_dialog.gd"
-} ]
-_global_script_class_icons={
-"textInDialog": ""
-}
-
 [application]
 
 config/name="Kerwin"
@@ -32,8 +22,6 @@ GlobalVar="*res://UserSystem/GlobalVar.gd"
 
 window/size/width=1920
 window/size/height=1080
-window/size/borderless=true
-window/size/fullscreen=true
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
