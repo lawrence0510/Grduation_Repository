@@ -6,7 +6,7 @@
 [ext_resource path="res://pic/框框2.png" type="Texture" id=4]
 [ext_resource path="res://fonts/個人資料.tres" type="DynamicFont" id=5]
 [ext_resource path="res://fonts/日期框.tres" type="StyleBox" id=6]
-[ext_resource path="res://pic/bg.jpg" type="Texture" id=7]
+[ext_resource path="res://Pic/sea_bg.png" type="Texture" id=7]
 [ext_resource path="res://fonts/日期按鈕.tres" type="StyleBox" id=8]
 [ext_resource path="res://fonts/上線.tres" type="StyleBox" id=9]
 [ext_resource path="res://fonts/答對字.tres" type="DynamicFont" id=10]
@@ -63,7 +63,10 @@ script = ExtResource( 2 )
 [node name="bg" type="TextureRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = 1920.0
+margin_bottom = 1080.0
 texture = ExtResource( 7 )
+expand = true
 
 [node name="框框" type="TextureRect" parent="bg"]
 anchor_left = 0.5
@@ -420,7 +423,7 @@ text = "15"
 align = 1
 valign = 1
 
-[node name="16" type="Button" parent="bg/框框/DayPanel"]
+[node name="b16" type="Button" parent="bg/框框/DayPanel"]
 margin_left = 9.07144
 margin_top = 105.348
 margin_right = 52.0714
@@ -592,7 +595,6 @@ align = 1
 valign = 1
 
 [node name="LogDay" type="WindowDialog" parent="bg"]
-visible = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -792,5 +794,5 @@ flat = true
 
 [connection signal="pressed" from="bg/框框/personal" to="." method="_on_personal_pressed"]
 [connection signal="pressed" from="bg/框框/record" to="." method="_on_record_pressed"]
-[connection signal="pressed" from="bg/框框/DayPanel/16" to="." method="_on_16_pressed"]
+[connection signal="pressed" from="bg/框框/DayPanel/b16" to="." method="_on_16_pressed"]
 [connection signal="pressed" from="bg/cross" to="." method="_on_cross_pressed"]

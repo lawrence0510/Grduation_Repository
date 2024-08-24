@@ -10,7 +10,7 @@
 [ext_resource path="res://fonts/1.5.1-1.tres" type="StyleBox" id=8]
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=9]
 [ext_resource path="res://pic/框框3.png" type="Texture" id=10]
-[ext_resource path="res://pic/bg.jpg" type="Texture" id=11]
+[ext_resource path="res://Pic/sea_bg.png" type="Texture" id=11]
 [ext_resource path="res://script/1.5.2.gd" type="Script" id=12]
 [ext_resource path="res://pic/delete1.png" type="Texture" id=13]
 
@@ -65,9 +65,10 @@ corner_radius_bottom_left = 20
 script = ExtResource( 12 )
 
 [node name="bg" type="TextureRect" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_right = 1920.0
+margin_bottom = 1080.0
 texture = ExtResource( 11 )
+expand = true
 
 [node name="TextureRect" type="TextureRect" parent="bg"]
 anchor_left = 0.5

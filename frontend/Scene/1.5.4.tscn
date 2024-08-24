@@ -4,7 +4,7 @@
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://script/1.5.3.gd" type="Script" id=3]
 [ext_resource path="res://pic/框框3.png" type="Texture" id=4]
-[ext_resource path="res://pic/bg.jpg" type="Texture" id=5]
+[ext_resource path="res://Pic/sea_bg.png" type="Texture" id=5]
 [ext_resource path="res://pic/delete1.png" type="Texture" id=6]
 [ext_resource path="res://fonts/font1 - 複製 (11) - 複製.tres" type="DynamicFont" id=7]
 [ext_resource path="res://fonts/font8.tres" type="DynamicFont" id=9]
@@ -72,9 +72,10 @@ corner_radius_bottom_left = 20
 script = ExtResource( 3 )
 
 [node name="bg" type="TextureRect" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_right = 1920.0
+margin_bottom = 1080.0
 texture = ExtResource( 5 )
+expand = true
 
 [node name="TextureRect" type="TextureRect" parent="bg"]
 anchor_left = 0.5

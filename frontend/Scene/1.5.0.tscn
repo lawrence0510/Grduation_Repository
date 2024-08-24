@@ -5,7 +5,7 @@
 [ext_resource path="res://fonts/1.5.1-2.tres" type="StyleBox" id=3]
 [ext_resource path="res://fonts/font8.tres" type="DynamicFont" id=4]
 [ext_resource path="res://pic/框框3.png" type="Texture" id=5]
-[ext_resource path="res://pic/bg.jpg" type="Texture" id=6]
+[ext_resource path="res://Pic/sea_bg.png" type="Texture" id=6]
 [ext_resource path="res://fonts/font0.tres" type="DynamicFont" id=7]
 [ext_resource path="res://script/1.5.0.gd" type="Script" id=8]
 [ext_resource path="res://pic/delete1.png" type="Texture" id=9]
@@ -28,6 +28,7 @@ script = ExtResource( 8 )
 margin_right = 1920.0
 margin_bottom = 1080.0
 texture = ExtResource( 6 )
+expand = true
 
 [node name="TextureRect" type="TextureRect" parent="bg"]
 anchor_left = 0.5
