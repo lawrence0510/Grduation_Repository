@@ -125,7 +125,7 @@ margin_right = 284.0
 margin_bottom = 299.079
 custom_styles/panel = SubResource( 5 )
 
-[node name="google" type="Button" parent="BackgroundPicture/BackGroundControl"]
+[node name="GoogleButton" type="Button" parent="BackgroundPicture/BackGroundControl"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -288,7 +288,11 @@ text = "------------------  or  ------------------"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
+[node name="HTTPRequest2" type="HTTPRequest" parent="."]
+
+[connection signal="pressed" from="BackgroundPicture/BackGroundControl/GoogleButton" to="." method="_on_google_pressed"]
 [connection signal="pressed" from="BackgroundPicture/BackGroundControl/ForgetButton" to="." method="_on_forget_pressed"]
 [connection signal="pressed" from="BackgroundPicture/BackGroundControl/RegisterButton" to="." method="_on_register_pressed"]
 [connection signal="pressed" from="BackgroundPicture/BackGroundControl/EnterButton" to="." method="_on_enter_pressed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
+[connection signal="request_completed" from="HTTPRequest2" to="." method="_on_HTTPRequest2_request_completed"]

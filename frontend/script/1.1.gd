@@ -3,10 +3,17 @@ extends Node2D
 onready var username_input: LineEdit = $BackgroundPicture/BackGroundControl/UserNameLineEdit
 onready var password_input: LineEdit = $BackgroundPicture/BackGroundControl/PasswordLineEdit
 
+onready var google_button: Button = $BackgroundPicture/BackGroundControl/GoogleButton
+
 onready var http_request: HTTPRequest = $HTTPRequest
+onready var http_request2: HTTPRequest = $HTTPRequest2
 
 func _ready() -> void:
 	pass
+
+
+
+
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -53,3 +60,22 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 # 忘記密碼
 func _on_forget_pressed():
 	get_tree().change_scene("res://scene/1.3.1.tscn")
+
+
+func _on_google_pressed():
+	print("Google login button pressed")
+	var url = "http://nccumisreading.ddnsking.com:5001/User/google_login"
+	var headers = ["Content-Type: application/json"]
+	http_request2.request(url, headers, false, HTTPClient.METHOD_GET)
+
+
+
+func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
+	if response_code == 302: 
+		var redirect_url = headers.filter("Location")[0].split(": ")[1]
+		OS.shell_open(redirect_url)
+	elif response_code == 200:
+		print("登入成功")
+		get_tree().change_scene("res://scene/1.4.0.tscn")
+	else:
+		print("Google登入失敗")
