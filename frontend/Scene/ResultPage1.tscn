@@ -1,0 +1,136 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Pic/Free-Horizontal-2D-Game-Backgrounds-2.jpg" type="Texture" id=1]
+[ext_resource path="res://ARIAL.TTF" type="DynamicFontData" id=2]
+[ext_resource path="res://Pic/pixel-image-game-avatar-character-for-assets-vector-38164722.jpg" type="Texture" id=3]
+[ext_resource path="res://Scene/ResultPage.gd" type="Script" id=4]
+[ext_resource path="res://Scene/UserProgress.gd" type="Script" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 60
+outline_size = 6
+outline_color = Color( 0.184314, 0.121569, 0.121569, 1 )
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 60
+extra_spacing_char = 1
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxLine" id=3]
+color = Color( 0.796078, 0.164706, 0.101961, 1 )
+thickness = 10
+
+[sub_resource type="StyleBoxLine" id=4]
+color = Color( 0.72549, 0.72549, 0.72549, 1 )
+thickness = 10
+
+[sub_resource type="DynamicFont" id=6]
+size = 20
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 20
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 28.5, 33 )
+
+[sub_resource type="SegmentShape2D" id=8]
+b = Vector2( 0, 80 )
+
+[node name="Result_page" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 1 )
+expand = true
+
+[node name="ColorRect" type="ColorRect" parent="TextureRect"]
+margin_left = 50.0
+margin_top = 60.0
+margin_right = 1870.0
+margin_bottom = 1020.0
+color = Color( 0.666667, 0.584314, 0.584314, 0.717647 )
+
+[node name="Label2" type="Label" parent="TextureRect"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -910.0
+margin_top = 80.0
+margin_right = 910.0
+margin_bottom = 148.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 4
+custom_fonts/font = SubResource( 1 )
+text = "You Won !!!"
+align = 1
+valign = 1
+
+[node name="Label" type="Label" parent="TextureRect"]
+margin_left = 95.0
+margin_top = 820.0
+margin_right = 307.0
+margin_bottom = 888.0
+custom_fonts/font = SubResource( 2 )
+text = "multiple"
+
+[node name="ProgressBar" type="ProgressBar" parent="TextureRect"]
+margin_left = 1286.0
+margin_top = 763.0
+margin_right = 1586.0
+margin_bottom = 787.0
+rect_min_size = Vector2( 300, 10 )
+custom_colors/font_color = Color( 0, 0, 0, 0 )
+custom_styles/fg = SubResource( 3 )
+custom_styles/bg = SubResource( 4 )
+max_value = 80.0
+step = 0.05
+
+[node name="Button" type="Button" parent="TextureRect"]
+margin_left = 1207.0
+margin_top = 881.0
+margin_right = 1387.0
+margin_bottom = 911.0
+custom_fonts/font = SubResource( 6 )
+text = "Back to Main Page"
+
+[node name="Button2" type="Button" parent="TextureRect"]
+margin_left = 1436.0
+margin_top = 881.0
+margin_right = 1587.0
+margin_bottom = 911.0
+custom_fonts/font = SubResource( 5 )
+text = "download exam"
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="TextureRect"]
+position = Vector2( 1238, 794 )
+script = ExtResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="TextureRect/KinematicBody2D"]
+position = Vector2( -2, -33.0265 )
+scale = Vector2( 0.198675, 0.198675 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TextureRect/KinematicBody2D"]
+position = Vector2( 0, -32.0265 )
+shape = SubResource( 7 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( 1270, 684 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 211, 45 )
+shape = SubResource( 8 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.01
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
