@@ -689,8 +689,13 @@ class DataList(Resource):
         if connection is not None:
             cursor = connection.cursor(dictionary=True)
             try:
-                sql = """SELECT a.article_title, a.article_content
-                    FROM Article a
+                sql = """SELECT a.article_id, a.article_title, a.article_content, q.question_grade, q.question_1, 
+                    q.question1_choice1, q.question1_choice2, q.question1_choice3, q.question1_choice4, 
+                    q.question1_answer, q.question1_explanation, q.question_2, q.question2_choice1, 
+                    q.question2_choice2, q.question2_choice3, q.question2_choice4, q.question2_answer, 
+                    q.question2_explanation, q.question3, q.question3_answer
+                    FROM Article AS a
+                    JOIN Question AS q ON a.article_id = q.article_id
                     WHERE a.article_category = %s
                     AND a.article_pass = 1
                     AND NOT EXISTS (
