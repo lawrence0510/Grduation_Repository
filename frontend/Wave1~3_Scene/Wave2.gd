@@ -40,10 +40,11 @@ func _ready() -> void:
 	
 	#設定問題、選項及答案
 	$BattleBackground/Question.text = GlobalVar.question2[0]
-	$BattleBackground/Option_A.text = "A. " + GlobalVar.question2[1]
-	$BattleBackground/Option_B.text = "B. " + GlobalVar.question2[2]
-	$BattleBackground/Option_C.text = "C. " + GlobalVar.question2[3]
-	$BattleBackground/Option_D.text = "D. " + GlobalVar.question2[4]
+	#答案 = GlobalVar.question2[1]
+	$BattleBackground/Option_A.text = "A. " + GlobalVar.question2[2]
+	$BattleBackground/Option_B.text = "B. " + GlobalVar.question2[3]
+	$BattleBackground/Option_C.text = "C. " + GlobalVar.question2[4]
+	$BattleBackground/Option_D.text = "D. " + GlobalVar.question2[5]
 	
 
 ## 查看全文button按下去
