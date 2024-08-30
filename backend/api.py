@@ -56,7 +56,7 @@ user_parser.add_argument('user_email', type=str,
 user_parser.add_argument('user_phone', type=str, required=True, help='使用者電話')
 
 login_parser = reqparse.RequestParser()
-login_parser.add_argument('user_name', type=str, required=True, help='使用者名稱')
+login_parser.add_argument('user_email', type=str, required=True, help='使用者電子郵件')
 login_parser.add_argument('user_password', type=str,
                           required=True, help='使用者密碼')
 
@@ -192,7 +192,7 @@ class LoginUser(Resource):
     def post(self):
         '''登入用戶'''
         args = login_parser.parse_args()
-        user_name = args['user_name']
+        user_email = args['user_email']
         user_password = args['user_password']
 
         encrypted_password = hashlib.sha256(user_password.encode()).hexdigest()
@@ -203,9 +203,9 @@ class LoginUser(Resource):
                 cursor = connection.cursor(dictionary=True)
                 sql = """
                 SELECT user_id FROM User
-                WHERE user_name = %s AND user_password = %s
+                WHERE user_email = %s AND user_password = %s
                 """
-                cursor.execute(sql, (user_name, encrypted_password))
+                cursor.execute(sql, (user_email, encrypted_password))
                 user = cursor.fetchone()
 
                 user_id = user['user_id'] if user else None
