@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var username_input: LineEdit = $BackgroundPicture/BackGroundControl/UserNameLineEdit
+onready var useremail_input: LineEdit = $BackgroundPicture/BackGroundControl/UserEmailLineEdit
 onready var password_input: LineEdit = $BackgroundPicture/BackGroundControl/PasswordLineEdit
 
 onready var google_button: Button = $BackgroundPicture/BackGroundControl/GoogleButton
@@ -28,14 +28,14 @@ func _on_register_pressed():
 # 登入ok
 func _on_enter_pressed():
 	# 獲取使用者輸入的帳號與密碼
-	var username = username_input.get_text()
+	var useremail = useremail_input.get_text()
 	var password = password_input.get_text()
 	
 	var url = "http://nccumisreading.ddnsking.com:5001/User/normal_login"
 	
 	# 建立 POST 請求的資料
 	var data = {
-		"user_name": username,
+		"user_email": useremail,
 		"user_password": password
 	}
 	
@@ -51,9 +51,22 @@ func _on_enter_pressed():
 # 處理HTTP請求的結果
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	if response_code == 200:
-		print("登入成功")
-		# 成功登入後切換場景
-		get_tree().change_scene("res://scene/1.4.0.tscn")
+		var body_string = body.get_string_from_utf8()
+		print(body_string)
+		var response = JSON.parse(body_string)
+		if response.error == OK:
+			# 提取 user_id
+			var user_id = response.result["user_id"]
+			print("User ID: ", user_id)
+			
+			# 將 user_id 存入 GlobalVar
+			GlobalVar.user_id = user_id
+			
+			print("登入成功")
+			# 成功登入後切換場景
+			get_tree().change_scene("res://scene/1.4.0.tscn")
+		else:
+			print("解析 JSON 失敗")
 	else:
 		print("登入失敗，請檢查使用者名稱與密碼")
 

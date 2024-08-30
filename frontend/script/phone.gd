@@ -1,6 +1,6 @@
 extends WindowDialog
 
-onready var p_enter: Button = $"bg/birth/p_enter"
+onready var p_enter: Button = $p_enter
 
 func _ready() -> void:
 	pass
