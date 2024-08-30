@@ -38,13 +38,13 @@ func _on_record_pressed():
 	get_tree().change_scene("res://scene/1.4.2.tscn")
 
 func _on_edit_birth_pressed():
-	birth_label.popup_centered()
+	birth.popup_centered()
 
 func _on_edit_school_pressed():
-	school_label.popup_centered()
+	school.popup_centered()
 
 func _on_edit_phone_pressed():
-	phone_label.popup_centered()
+	phone.popup_centered()
 
 func _on_cross_pressed():
 	get_tree().change_scene("res://scene/1.4.0.tscn")
@@ -63,27 +63,43 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	
 	# 根據回傳的狀態碼進行處理
 	if response_code == 200:
-		# 檢查 user_birthday 是否為 null，並設定對應的文本
 		if json.result.user_birthday != null:
-			age_label.text = json.result.user_birthday
+			# 解析生日並計算年齡
+			var user_birthday = json.result.user_birthday.split("-")
+			var birth_year = int(user_birthday[0])
+			var birth_month = int(user_birthday[1])
+			var birth_day = int(user_birthday[2])
+			
+			# 取得目前的日期
+			var current_date = OS.get_datetime()
+			var current_year = current_date.year
+			var current_month = current_date.month
+			var current_day = current_date.day
+
+			# 計算年齡
+			var age = current_year - birth_year
+
+			# 檢查今年的生日是否已過，如果還沒過則年齡要減一歲
+			if current_month < birth_month or (current_month == birth_month and current_day < birth_day):
+				age -= 1
+
+			# 更新 UI
+			age_label.text = str(age)
 			birth_label.text = json.result.user_birthday
 		else:
 			age_label.text = "未提供生日"
 			birth_label.text = "未提供生日"
 		
-		# 檢查 user_school 是否為 null，並設定對應的文本
 		if json.result.user_school != null:
 			school_label.text = json.result.user_school
 		else:
 			school_label.text = "未提供學校"
 		
-		# 檢查 user_phone 是否為 null，並設定對應的文本
 		if json.result.user_phone != null:
 			phone_label.text = json.result.user_phone
 		else:
 			phone_label.text = "未提供電話"
 		
-		# 檢查 user_email 是否為 null，並設定對應的文本
 		if json.result.user_email != null:
 			mail_label.text = json.result.user_email
 		else:
