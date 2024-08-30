@@ -446,6 +446,9 @@ class LogoutUser(Resource):
         return {"message": "You have been logged out."}, 200
 
 
+from flask_restx import Resource
+from datetime import date, datetime
+
 @user_ns.route('/get_user_from_id')
 class GetUserFromID(Resource):
     @user_ns.expect(user_id_parser)
@@ -463,6 +466,9 @@ class GetUserFromID(Resource):
                 user = cursor.fetchone()
 
                 if user:
+                    for key, value in user.items():
+                        if isinstance(value, (date, datetime)):
+                            user[key] = value.isoformat()
                     return user, 200
                 else:
                     return {"error": "User not found"}, 404
@@ -473,6 +479,7 @@ class GetUserFromID(Resource):
                 connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
+
 
 
 @user_ns.route('/reset_email')
