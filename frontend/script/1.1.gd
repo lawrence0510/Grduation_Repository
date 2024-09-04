@@ -5,14 +5,13 @@ onready var password_input: LineEdit = $BackgroundPicture/BackGroundControl/Pass
 
 onready var google_button: Button = $BackgroundPicture/BackGroundControl/GoogleButton
 
+onready var Failed: WindowDialog = $BackgroundPicture/Failed
+
 onready var http_request: HTTPRequest = $HTTPRequest
 onready var http_request2: HTTPRequest = $HTTPRequest2
 
 func _ready() -> void:
 	pass
-
-
-
 
 
 func _process(delta: float) -> void:
@@ -68,6 +67,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		else:
 			print("解析 JSON 失敗")
 	else:
+		Failed.popup_centered()
 		print("登入失敗，請檢查使用者名稱與密碼")
 
 # 忘記密碼
@@ -75,12 +75,11 @@ func _on_forget_pressed():
 	get_tree().change_scene("res://scene/1.3.1.tscn")
 
 
-func _on_google_pressed():
+func _on_GoogleButton_pressed():
 	print("Google login button pressed")
 	var url = "http://nccumisreading.ddnsking.com:5001/User/google_login"
 	var headers = ["Content-Type: application/json"]
 	http_request2.request(url, headers, false, HTTPClient.METHOD_GET)
-
 
 
 func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
@@ -92,3 +91,7 @@ func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
 		get_tree().change_scene("res://scene/1.4.0.tscn")
 	else:
 		print("Google登入失敗")
+
+
+func _on_OKButton_pressed():
+	Failed.hide()
