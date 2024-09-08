@@ -17,7 +17,7 @@ func _ready() -> void:
 	
 	# 建立 POST 請求的資料
 	var data = {
-		"user_id": 2,
+		"user_id": GlobalVar.user_id,
 		"article_category": "story",
 	}
 	
@@ -34,6 +34,9 @@ func _ready() -> void:
 	attack_animation = $BattleBackground/AttackAnimation
 	attack_animation.animation = "DarkBolt" ## 之後要根據使用者的角色匯入不同攻擊特效
 	attack_animation.visible = false ## 隱藏敵人死亡特效
+	
+	#設定題目
+	$BattleBackground/Question.text = GlobalVar.question3[0]
 	
 ## 查看全文button按下去
 func _on_OpenStoryButton_pressed() -> void:

@@ -21,7 +21,7 @@ func _ready() -> void:
 	
 	# 建立 POST 請求的資料
 	var data = {
-		"user_id": 2,
+		"user_id": GlobalVar.user_id,
 		"article_category": "story",
 	}
 	
@@ -44,7 +44,6 @@ func _ready() -> void:
 func _on_OpenStoryButton_pressed() -> void:
 	full_story_scene.set_visible(true) ## 顯示全文
 
-
 ## 暫停button按下去
 func _on_PauseButton_pressed() -> void:
 	pause_scene.set_visible(true) ## 顯示暫停場景
@@ -54,15 +53,12 @@ func _on_PauseButton_pressed() -> void:
 ## 先複製StyleBox再用Override改顏色 才不會全部button都變色
 func _on_Option_A_pressed() -> void:
 	change_button_color("BattleBackground/Option_A")
-	
 
 func _on_Option_B_pressed() -> void:
 	change_button_color("BattleBackground/Option_B")
-	
 
 func _on_Option_C_pressed() -> void:
 	change_button_color("BattleBackground/Option_C")
-
 
 func _on_Option_D_pressed() -> void:
 	change_button_color("BattleBackground/Option_D")
@@ -119,6 +115,30 @@ func _on_AttackAnimation_animation_finished() -> void:
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
-	print(json.result[0].article_content)
-	full_story_scene.setStory(json.result[0].article_content)
 
+	full_story_scene.setStory(json.result[0].article_content)
+	$BattleBackground/Question.text = json.result[0].question_1
+	$BattleBackground/Option_A.text = "A. " + json.result[0].question1_choice1
+	$BattleBackground/Option_B.text = "B. " + json.result[0].question1_choice2
+	$BattleBackground/Option_C.text = "C. " + json.result[0].question1_choice3
+	$BattleBackground/Option_D.text = "D. " + json.result[0].question1_choice4
+	#正確答案
+	#$BattleBackground/Option_D.text = "D. " + json.result[0].question1_answer
+
+	#先記錄wave2, 3的問題、答案
+	GlobalVar.question2.append(json.result[0].question_2)
+	GlobalVar.question2.append(json.result[0].question2_answer)
+	GlobalVar.question2.append(json.result[0].question2_choice1)
+	GlobalVar.question2.append(json.result[0].question2_choice2)
+	GlobalVar.question2.append(json.result[0].question2_choice3)
+	GlobalVar.question2.append(json.result[0].question2_choice4)
+	
+	GlobalVar.question3.append(json.result[0].question3)
+#	GlobalVar.question3.append(json.result[0].question3_answer)
+#	GlobalVar.question3.append(json.result[0].question3_choice1)
+#	GlobalVar.question3.append(json.result[0].question3_choice2)
+#	GlobalVar.question3.append(json.result[0].question3_choice3)
+#	GlobalVar.question3.append(json.result[0].question3_choice4)
+	print(GlobalVar.question2)
+	print(GlobalVar.question3)
+	
