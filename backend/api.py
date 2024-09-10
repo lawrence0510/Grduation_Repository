@@ -64,10 +64,7 @@ user_id_parser = reqparse.RequestParser()
 user_id_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
 
 email_reset_parser = reqparse.RequestParser()
-email_reset_parser.add_argument(
-    'original_email', type=str, required=True, help='使用者舊email')
-email_reset_parser.add_argument(
-    'original_password', type=str, required=True, help='使用者密碼')
+email_reset_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
 email_reset_parser.add_argument(
     'new_email', type=str, required=True, help='使用者新email')
 
@@ -78,28 +75,18 @@ password_reset_parser.add_argument(
     'new_password', type=str, required=True, help='使用者新密碼')
 
 phone_reset_parser = reqparse.RequestParser()
-phone_reset_parser.add_argument(
-    'user_email', type=str, required=True, help='使用者email')
-phone_reset_parser.add_argument(
-    'user_password', type=str, required=True, help='使用者密碼')
+phone_reset_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
 phone_reset_parser.add_argument(
     'new_phone', type=str, required=True, help='使用者新電話號碼')
 
-name_reset_parser = reqparse.RequestParser()
-name_reset_parser.add_argument(
-    'user_email', type=str, required=True, help='使用者email')
-name_reset_parser.add_argument(
-    'user_password', type=str, required=True, help='使用者密碼')
-name_reset_parser.add_argument(
-    'new_name', type=str, required=True, help='使用者新名稱')
-
 school_reset_parser = reqparse.RequestParser()
-school_reset_parser.add_argument(
-    'user_email', type=str, required=True, help='使用者email')
-school_reset_parser.add_argument(
-    'user_password', type=str, required=True, help='使用者密碼')
+school_reset_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
 school_reset_parser.add_argument(
     'new_school', type=str, required=True, help='新學校名稱')
+
+birthday_reset_parser = reqparse.RequestParser()
+birthday_reset_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
+birthday_reset_parser.add_argument('new_birthday', type=str , required=True, help='新生日')
 
 article_upload_parser = reqparse.RequestParser()
 article_upload_parser.add_argument('file', type=FileStorage, location='files',
@@ -481,46 +468,6 @@ class GetUserFromID(Resource):
             return {"error": "Unable to connect to the database"}, 500
 
 
-
-@user_ns.route('/reset_email')
-class EmailReset(Resource):
-    @user_ns.expect(email_reset_parser)
-    def post(self):
-        '''重設email'''
-        args = email_reset_parser.parse_args()
-        original_email = args['original_email']
-        user_password = args['user_password']
-        new_email = args['new_email']
-        encrypted_password = hashlib.sha256(user_password.encode()).hexdigest()
-
-        connection = create_db_connection()
-        if connection is not None:
-            try:
-                cursor = connection.cursor()
-                select_sql = "SELECT `user_id` FROM `User` WHERE `user_email` = %s AND `user_password` = %s"
-                cursor.execute(
-                    select_sql, (original_email, encrypted_password))
-                user = cursor.fetchone()
-                if user:
-                    update_sql = "UPDATE `User` SET `user_email` = %s WHERE `user_email` = %s AND `user_password` = %s"
-                    cursor.execute(
-                        update_sql, (new_email, original_email, encrypted_password))
-                    connection.commit()
-                    if cursor.rowcount > 0:
-                        return {"message": "Email updated successfully"}, 200
-                    else:
-                        return {"message": "Email not updated, please check your details"}, 400
-                else:
-                    return {"message": "Original email or password is incorrect"}, 404
-            except Error as e:
-                return {"error": str(e)}, 500
-            finally:
-                cursor.close()
-                connection.close()
-        else:
-            return {"error": "Unable to connect to the database"}, 500
-
-
 @user_ns.route('/reset_password')
 class PasswordReset(Resource):
     @user_ns.expect(password_reset_parser)
@@ -563,55 +510,20 @@ class PhoneReset(Resource):
     def post(self):
         '''重設手機號碼'''
         args = phone_reset_parser.parse_args()
-        user_email = args['user_email']
-        user_password = args['user_password']
+        user_id = args['user_id']
         new_phone = args['new_phone']
-        encrypted_password = hashlib.sha256(user_password.encode()).hexdigest()
 
         connection = create_db_connection()
         if connection is not None:
             try:
                 cursor = connection.cursor()
-                update_sql = "UPDATE `User` SET `user_phone` = %s WHERE `user_email` = %s AND `user_password` = %s"
-                cursor.execute(
-                    update_sql, (new_phone, user_email, encrypted_password))
+                update_sql = "UPDATE `User` SET `user_phone` = %s WHERE `user_id` = %s"
+                cursor.execute(update_sql, (new_phone, user_id))
                 if cursor.rowcount == 0:
-                    return {"message": "Invalid email or password"}, 404
+                    return {"message": "User not found"}, 404
                 else:
                     connection.commit()
                     return {"message": "Phone number updated successfully"}, 200
-            except Error as e:
-                return {"error": str(e)}, 500
-            finally:
-                cursor.close()
-                connection.close()
-        else:
-            return {"error": "Unable to connect to the database"}, 500
-
-
-@user_ns.route('/reset_name')
-class NameReset(Resource):
-    @user_ns.expect(name_reset_parser)
-    def post(self):
-        '''重設姓名'''
-        args = name_reset_parser.parse_args()
-        user_email = args['user_email']
-        user_password = args['user_password']
-        new_name = args['new_name']
-        encrypted_password = hashlib.sha256(user_password.encode()).hexdigest()
-
-        connection = create_db_connection()
-        if connection is not None:
-            try:
-                cursor = connection.cursor()
-                update_sql = "UPDATE `User` SET `user_name` = %s WHERE `user_email` = %s AND `user_password` = %s"
-                cursor.execute(
-                    update_sql, (new_name, user_email, encrypted_password))
-                if cursor.rowcount == 0:
-                    return {"message": "Invalid email or password"}, 404
-                else:
-                    connection.commit()
-                    return {"message": "Name updated successfully"}, 200
             except Error as e:
                 return {"error": str(e)}, 500
             finally:
@@ -627,20 +539,17 @@ class SchoolReset(Resource):
     def post(self):
         '''重設學校資料'''
         args = school_reset_parser.parse_args()
-        user_email = args['user_email']
-        user_password = args['user_password']
+        user_id = args['user_id']
         new_school = args['new_school']
-        encrypted_password = hashlib.sha256(user_password.encode()).hexdigest()
 
         connection = create_db_connection()
         if connection is not None:
             try:
                 cursor = connection.cursor()
-                update_sql = "UPDATE `User` SET `user_school` = %s WHERE `user_email` = %s AND `user_password` = %s"
-                cursor.execute(
-                    update_sql, (new_school, user_email, encrypted_password))
+                update_sql = "UPDATE `User` SET `user_school` = %s WHERE `user_id` = %s"
+                cursor.execute(update_sql, (new_school, user_id))
                 if cursor.rowcount == 0:
-                    return {"message": "Invalid email or password"}, 404
+                    return {"message": "User not found"}, 404
                 else:
                     connection.commit()
                     return {"message": "School updated successfully"}, 200
@@ -652,6 +561,34 @@ class SchoolReset(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+@user_ns.route('/reset_birthday')
+class BirthdayReset(Resource):
+    @user_ns.expect(birthday_reset_parser)
+    def post(self):
+        '''重設生日'''
+        args = birthday_reset_parser.parse_args()
+        user_id = args['user_id']
+        new_birthday = args['new_birthday']
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                update_sql = "UPDATE `User` SET `user_birthday` = %s WHERE `user_id` = %s"
+                cursor.execute(update_sql, (new_birthday, user_id))
+                
+                if cursor.rowcount == 0:
+                    return {"message": "User not found"}, 404
+                else:
+                    connection.commit()
+                    return {"message": "Birthday updated successfully"}, 200
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
 
 # Article api區
 article_ns = api.namespace('Article', description='與文章操作相關之api')
