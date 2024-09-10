@@ -1,26 +1,23 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://fonts/char_button.tres" type="StyleBox" id=1]
-[ext_resource path="res://pic/B1.png" type="Texture" id=2]
+[ext_resource path="res://Pic/B2.png" type="Texture" id=2]
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://script/1.2.3.gd" type="Script" id=4]
-[ext_resource path="res://pic/B2.png" type="Texture" id=5]
+[ext_resource path="res://Pic/B4.png" type="Texture" id=5]
 [ext_resource path="res://Pic/123.bg.png" type="Texture" id=6]
-[ext_resource path="res://fonts/style重新註冊.tres" type="StyleBox" id=7]
 [ext_resource path="res://fonts/font3.tres" type="DynamicFont" id=8]
-[ext_resource path="res://pic/B3.png" type="Texture" id=9]
+[ext_resource path="res://Pic/G1.png" type="Texture" id=9]
+[ext_resource path="res://Pic/B1.png" type="Texture" id=10]
 [ext_resource path="res://script/BB1.gd" type="Script" id=11]
 [ext_resource path="res://script/BB2.gd" type="Script" id=12]
 [ext_resource path="res://script/BB3.gd" type="Script" id=13]
-[ext_resource path="res://pic/G1.png" type="Texture" id=14]
-[ext_resource path="res://pic/G4.png" type="Texture" id=15]
-[ext_resource path="res://pic/G5.png" type="Texture" id=16]
-[ext_resource path="res://pic/G2.png" type="Texture" id=17]
-[ext_resource path="res://pic/G3.png" type="Texture" id=18]
-[ext_resource path="res://pic/G6.png" type="Texture" id=19]
+[ext_resource path="res://Pic/B3.png" type="Texture" id=14]
+[ext_resource path="res://Pic/G2.png" type="Texture" id=15]
+[ext_resource path="res://Pic/G3.png" type="Texture" id=16]
+[ext_resource path="res://Pic/G4.png" type="Texture" id=17]
 [ext_resource path="res://script/BG4.gd" type="Script" id=20]
 [ext_resource path="res://script/BG5.gd" type="Script" id=21]
-[ext_resource path="res://script/BG6.gd" type="Script" id=22]
 [ext_resource path="res://script/BG1.gd" type="Script" id=23]
 [ext_resource path="res://script/BG2.gd" type="Script" id=24]
 [ext_resource path="res://script/BG3.gd" type="Script" id=25]
@@ -51,6 +48,18 @@ corner_radius_bottom_left = 30
 
 [sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.0941176, 0.815686, 0.909804, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 1, 1, 1, 1 )
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -131,35 +140,35 @@ custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 8 )
 custom_styles/hover = SubResource( 2 )
 custom_styles/pressed = SubResource( 3 )
-custom_styles/focus = ExtResource( 7 )
-custom_styles/disabled = ExtResource( 7 )
-custom_styles/normal = ExtResource( 7 )
+custom_styles/focus = SubResource( 9 )
+custom_styles/disabled = SubResource( 9 )
+custom_styles/normal = SubResource( 9 )
 text = "註冊完成"
 
 [node name="B1" type="Sprite" parent="bg/底色2"]
 position = Vector2( 849.5, 350 )
-texture = ExtResource( 2 )
+texture = ExtResource( 10 )
 
 [node name="B2" type="Sprite" parent="bg/底色2"]
 visible = false
-position = Vector2( 885.5, 350 )
-texture = ExtResource( 5 )
+position = Vector2( 862.5, 377 )
+texture = ExtResource( 2 )
 
 [node name="B3" type="Sprite" parent="bg/底色2"]
 visible = false
-position = Vector2( 849.5, 350 )
-texture = ExtResource( 9 )
+position = Vector2( 879.5, 355 )
+texture = ExtResource( 14 )
 
 [node name="G1" type="Sprite" parent="bg/底色2"]
 visible = false
 position = Vector2( 849.5, 350 )
-texture = ExtResource( 14 )
+texture = ExtResource( 9 )
 
 [node name="BB1" type="Button" parent="bg/底色2"]
 margin_left = 300.0
-margin_top = 200.0
+margin_top = 95.0
 margin_right = 418.0
-margin_bottom = 275.0
+margin_bottom = 170.0
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -176,9 +185,9 @@ script = ExtResource( 11 )
 
 [node name="BB2" type="Button" parent="bg/底色2"]
 margin_left = 300.0
-margin_top = 305.0
+margin_top = 200.0
 margin_right = 418.0
-margin_bottom = 380.0
+margin_bottom = 275.0
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -195,9 +204,9 @@ script = ExtResource( 12 )
 
 [node name="BB3" type="Button" parent="bg/底色2"]
 margin_left = 300.0
-margin_top = 410.0
+margin_top = 305.0
 margin_right = 418.0
-margin_bottom = 485.0
+margin_bottom = 380.0
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -288,30 +297,11 @@ custom_styles/normal = ExtResource( 1 )
 text = "G4"
 script = ExtResource( 20 )
 
-[node name="BG5" type="Button" parent="bg/底色2"]
-margin_left = 99.0
-margin_top = 515.0
-margin_right = 217.0
-margin_bottom = 590.0
-custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 8 )
-custom_styles/hover = SubResource( 6 )
-custom_styles/pressed = ExtResource( 1 )
-custom_styles/focus = SubResource( 7 )
-custom_styles/disabled = ExtResource( 1 )
-custom_styles/normal = ExtResource( 1 )
-text = "G5"
-script = ExtResource( 21 )
-
-[node name="BG6" type="Button" parent="bg/底色2"]
+[node name="BB4" type="Button" parent="bg/底色2"]
 margin_left = 300.0
-margin_top = 95.0
+margin_top = 410.0
 margin_right = 418.0
-margin_bottom = 170.0
+margin_bottom = 485.0
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -323,33 +313,28 @@ custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = SubResource( 7 )
 custom_styles/disabled = ExtResource( 1 )
 custom_styles/normal = ExtResource( 1 )
-text = "G6"
-script = ExtResource( 22 )
+text = "B4"
+script = ExtResource( 21 )
 
 [node name="G2" type="Sprite" parent="bg/底色2"]
 visible = false
-position = Vector2( 893.5, 350 )
-texture = ExtResource( 17 )
+position = Vector2( 848.5, 345 )
+texture = ExtResource( 15 )
 
 [node name="G3" type="Sprite" parent="bg/底色2"]
 visible = false
-position = Vector2( 946.5, 350 )
-texture = ExtResource( 18 )
+position = Vector2( 862.5, 341 )
+texture = ExtResource( 16 )
 
 [node name="G4" type="Sprite" parent="bg/底色2"]
 visible = false
 position = Vector2( 849.5, 350 )
-texture = ExtResource( 15 )
+texture = ExtResource( 17 )
 
-[node name="G5" type="Sprite" parent="bg/底色2"]
+[node name="B4" type="Sprite" parent="bg/底色2"]
 visible = false
 position = Vector2( 849.5, 350 )
-texture = ExtResource( 16 )
-
-[node name="G6" type="Sprite" parent="bg/底色2"]
-visible = false
-position = Vector2( 849.5, 350 )
-texture = ExtResource( 19 )
+texture = ExtResource( 5 )
 
 [connection signal="pressed" from="bg/底色2/enter" to="." method="_on_enter_pressed"]
 [connection signal="pressed" from="bg/底色2/BB1" to="bg/底色2/BB1" method="_on_BB1_pressed"]
@@ -359,5 +344,4 @@ texture = ExtResource( 19 )
 [connection signal="pressed" from="bg/底色2/BG2" to="bg/底色2/BG2" method="_on_BG2_pressed"]
 [connection signal="pressed" from="bg/底色2/BG3" to="bg/底色2/BG3" method="_on_BG3_pressed"]
 [connection signal="pressed" from="bg/底色2/BG4" to="bg/底色2/BG4" method="_on_BG4_pressed"]
-[connection signal="pressed" from="bg/底色2/BG5" to="bg/底色2/BG5" method="_on_BG5_pressed"]
-[connection signal="pressed" from="bg/底色2/BG6" to="bg/底色2/BG6" method="_on_BG6_pressed"]
+[connection signal="pressed" from="bg/底色2/BB4" to="bg/底色2/BB4" method="_on_BG5_pressed"]

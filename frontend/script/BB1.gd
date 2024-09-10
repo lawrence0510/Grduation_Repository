@@ -3,7 +3,7 @@ extends Button
 var character_name = "B1"
 
 func _on_BB1_pressed():
-	var characters = ["B1", "B2", "B3", "G1", "G2", "G3", "G4", "G5", "G6"]
+	var characters = ["B1", "B2", "B3", "G1", "G2", "G3", "G4", "B4"]
 	for character in characters:
 		get_parent().get_node(character).visible = false
 	get_parent().get_node(character_name).visible = true
