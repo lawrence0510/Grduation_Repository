@@ -103,6 +103,11 @@ get_rate_parser.add_argument(
     'article_id', type=int, required=True, help='原文文章id')
 get_rate_parser.add_argument('answer', type=str, required=True, help='回答')
 
+get_login_record_parser = reqparse.RequestParser()
+get_login_record_parser.add_argument(
+    'user_id', type=int, required=True, help='使用者id'
+)
+
 history_parser = reqparse.RequestParser()
 history_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
 history_parser.add_argument('article_id', type=int, required=True, help='文章ID')
@@ -590,6 +595,47 @@ class BirthdayReset(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+@user_ns.route('/get_login_record')
+class GetLoginRecord(Resource):
+    @user_ns.expect(get_login_record_parser)
+    def get(self):
+        '''取得登入紀錄'''
+        args = get_login_record_parser.parse_args()
+        user_id = args['user_id']
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor(dictionary=True)
+                
+                # 執行 SQL 查詢，查詢所有符合條件的記錄
+                sql = "SELECT login_time FROM `LoginRecord` WHERE user_id = %s;"
+                cursor.execute(sql, (user_id,))
+                
+                # 使用 fetchall 來抓取多行結果
+                login_records = cursor.fetchall()
+
+                # 如果查詢結果不為空
+                if login_records:
+                    # 將所有 datetime 物件轉換為 ISO 格式
+                    for record in login_records:
+                        for key, value in record.items():
+                            if isinstance(value, (date, datetime)):
+                                record[key] = value.isoformat()
+                    return login_records, 200
+                else:
+                    return {"error": "User not found"}, 404
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                # 確保 cursor 和 connection 正確關閉
+                if cursor:
+                    cursor.close()
+                if connection:
+                    connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+        
 # Article api區
 article_ns = api.namespace('Article', description='與文章操作相關之api')
 

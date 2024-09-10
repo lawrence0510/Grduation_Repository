@@ -5,6 +5,9 @@ from mysql.connector import Error
 import os
 from datetime import datetime, timedelta
 import time
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # 創建資料庫連接
 def create_db_connection():

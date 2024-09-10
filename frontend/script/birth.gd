@@ -7,3 +7,4 @@ func _ready() -> void:
 
 func _on_b_enter_pressed():
 	self.hide()
+	

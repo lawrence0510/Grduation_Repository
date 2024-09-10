@@ -708,7 +708,7 @@ margin_bottom = -6.0
 custom_fonts/font = SubResource( 30 )
 text = "您就讀的學校是："
 
-[node name="學校" type="LineEdit" parent="BackgroundPicture/school"]
+[node name="SchoolLineEdit" type="LineEdit" parent="BackgroundPicture/school"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -739,6 +739,8 @@ custom_styles/disabled = ExtResource( 11 )
 custom_styles/normal = ExtResource( 11 )
 text = "確定"
 icon_align = 1
+
+[node name="HTTPRequest" type="HTTPRequest" parent="BackgroundPicture/school"]
 
 [node name="phone" type="WindowDialog" parent="BackgroundPicture"]
 anchor_left = 0.5
@@ -880,6 +882,7 @@ flat = true
 [connection signal="pressed" from="BackgroundPicture/edit_phone_button" to="." method="_on_edit_phone_pressed"]
 [connection signal="pressed" from="BackgroundPicture/birth/b_enter" to="BackgroundPicture/birth" method="_on_b_enter_pressed"]
 [connection signal="pressed" from="BackgroundPicture/school/s_enter" to="BackgroundPicture/school" method="_on_s_enter_pressed"]
+[connection signal="request_completed" from="BackgroundPicture/school/HTTPRequest" to="BackgroundPicture/school" method="_on_HTTPRequest_request_completed"]
 [connection signal="pressed" from="BackgroundPicture/phone/p_enter" to="BackgroundPicture/phone" method="_on_p_enter_pressed"]
 [connection signal="pressed" from="BackgroundPicture/cross" to="." method="_on_cross_pressed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
