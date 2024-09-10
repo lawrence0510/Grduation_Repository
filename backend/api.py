@@ -132,6 +132,30 @@ test_article_parser = reqparse.RequestParser()
 test_article_parser.add_argument('article_pass', type=int, required=True, help='測試結果(1 => 成功, 0 => 錯誤)')
 test_article_parser.add_argument('article_note', type=str, required=False, help='測試備註')
 test_article_parser.add_argument('article_id', type=int, required=True, help='文章帳號')
+test_article_parser.add_argument('article_title', type=str, required=True, help='文章標題')
+test_article_parser.add_argument('article_content', type=str, required=True, help='文章內文')
+
+# Question 1
+test_article_parser.add_argument('question_1', type=str, required=True, help='問題 1')
+test_article_parser.add_argument('question1_choice1', type=str, required=True, help='問題 1 選項 A')
+test_article_parser.add_argument('question1_choice2', type=str, required=True, help='問題 1 選項 B')
+test_article_parser.add_argument('question1_choice3', type=str, required=True, help='問題 1 選項 C')
+test_article_parser.add_argument('question1_choice4', type=str, required=True, help='問題 1 選項 D')
+test_article_parser.add_argument('question1_answer', type=str, required=True, help='問題 1 答案')
+test_article_parser.add_argument('question1_explanation', type=str, required=True, help='問題 1 詳解')
+
+# Question 2
+test_article_parser.add_argument('question_2', type=str, required=True, help='問題 2')
+test_article_parser.add_argument('question2_choice1', type=str, required=True, help='問題 2 選項 A')
+test_article_parser.add_argument('question2_choice2', type=str, required=True, help='問題 2 選項 B')
+test_article_parser.add_argument('question2_choice3', type=str, required=True, help='問題 2 選項 C')
+test_article_parser.add_argument('question2_choice4', type=str, required=True, help='問題 2 選項 D')
+test_article_parser.add_argument('question2_answer', type=str, required=True, help='問題 2 答案')
+test_article_parser.add_argument('question2_explanation', type=str, required=True, help='問題 2 詳解')
+
+# Question 3
+test_article_parser.add_argument('question3', type=str, required=True, help='問題 3')
+test_article_parser.add_argument('question3_answer', type=str, required=True, help='問題 3 答案')
 
 # User api區
 user_ns = api.namespace('User', description='與使用者操作相關之api')
@@ -737,23 +761,70 @@ class RandomArticle(Resource):
                 cursor.close()
                 connection.close()            
 
-@article_ns.route('/submit_article_note')
-class SubmitArticleNote(Resource):
+@article_ns.route('/submit_article_fixed')
+class SubmitArticleFixed(Resource):
     @article_ns.expect(test_article_parser)
     def post(self):
         '''提交文章檢查結果'''
         args = test_article_parser.parse_args()
+        
+        # 提取所有提交的參數
         check = args['article_pass']
         note = args['article_note']
         article_id = args['article_id']
+        article_title = args['article_title']
+        article_content = args['article_content']
+        
+        # Question 1
+        question_1 = args['question_1']
+        question1_choice1 = args['question1_choice1']
+        question1_choice2 = args['question1_choice2']
+        question1_choice3 = args['question1_choice3']
+        question1_choice4 = args['question1_choice4']
+        question1_answer = args['question1_answer']
+        question1_explanation = args['question1_explanation']
+
+        # Question 2
+        question_2 = args['question_2']
+        question2_choice1 = args['question2_choice1']
+        question2_choice2 = args['question2_choice2']
+        question2_choice3 = args['question2_choice3']
+        question2_choice4 = args['question2_choice4']
+        question2_answer = args['question2_answer']
+        question2_explanation = args['question2_explanation']
+
+        # Question 3
+        question3 = args['question3']
+        question3_answer = args['question3_answer']
+
         check_time = datetime.now()
 
         connection = create_db_connection()
         if connection is not None:
             cursor = connection.cursor()
             try:
-                sql = "UPDATE Article SET article_pass = %s, article_note = %s, check_time= %s WHERE article_id = %s;"
-                cursor.execute(sql, (check, note, check_time, article_id))
+                # 更新文章表的文章基本信息
+                sql_article = """
+                UPDATE Article 
+                SET article_pass = %s, article_note = %s, check_time = %s, article_title = %s, article_content = %s
+                WHERE article_id = %s;
+                """
+                cursor.execute(sql_article, (check, note, check_time, article_title, article_content, article_id))
+
+                # 更新問題表的相關數據
+                sql_question = """
+                UPDATE Question
+                SET question_1 = %s, question1_choice1 = %s, question1_choice2 = %s, question1_choice3 = %s, question1_choice4 = %s,
+                question1_answer = %s, question1_explanation = %s, question_2 = %s, question2_choice1 = %s, question2_choice2 = %s, 
+                question2_choice3 = %s, question2_choice4 = %s, question2_answer = %s, question2_explanation = %s, 
+                question3 = %s, question3_answer = %s
+                WHERE article_id = %s;
+                """
+                cursor.execute(sql_question, (question_1, question1_choice1, question1_choice2, question1_choice3, question1_choice4, 
+                                              question1_answer, question1_explanation, question_2, question2_choice1, question2_choice2, 
+                                              question2_choice3, question2_choice4, question2_answer, question2_explanation, 
+                                              question3, question3_answer, article_id))
+
                 connection.commit()
                 return {"success": True}, 200
             except Error as e:
@@ -761,6 +832,8 @@ class SubmitArticleNote(Resource):
             finally:
                 cursor.close()
                 connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
 
 @article_ns.route('/upload_articles')
 class UploadArticles(Resource):

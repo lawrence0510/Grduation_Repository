@@ -17,29 +17,30 @@
 </head>
 <body>
     <h1 class="highlight">文章 ID: <span id="articleId"></span></h1>
-    <h2>標題: <span id="title"></span></h2>
-    <p>內文: <br><span id="content"></span></p>
+    <h2>標題: <textarea id="title" style="height: 30px;"></textarea></h2>
+    <p>內文: <br><textarea id="content" style="height: 800px;"></textarea></p>
 
     <h3>問題 1</h3>
-    <p>問題: <span id="question1"></span></p>
-    <p>選項 A: <span id="choice1_1"></span></p>
-    <p>選項 B: <span id="choice1_2"></span></p>
-    <p>選項 C: <span id="choice1_3"></span></p>
-    <p>選項 D: <span id="choice1_4"></span></p>
-    <p>答案: <span id="answer1"></span></p>
-    <p>詳解: <span id="explanation1"></span></p>
+    <p>問題: <textarea id="question1" style="height: 30px;"></textarea></p>
+    <p>選項 A: <textarea id="choice1_1" style="height: 30px;"></textarea></p>
+    <p>選項 B: <textarea id="choice1_2" style="height: 30px;"></textarea></p>
+    <p>選項 C: <textarea id="choice1_3" style="height: 30px;"></textarea></p>
+    <p>選項 D: <textarea id="choice1_4" style="height: 30px;"></textarea></p>
+    <p>答案: <textarea id="answer1" style="height: 30px;"></textarea></p>
+    <p>詳解: <textarea id="explanation1"></textarea></p>
 
     <h3>問題 2</h3>
-    <p>選項 A: <span id="choice2_1"></span></p>
-    <p>選項 B: <span id="choice2_2"></span></p>
-    <p>選項 C: <span id="choice2_3"></span></p>
-    <p>選項 D: <span id="choice2_4"></span></p>
-    <p>答案: <span id="answer2"></span></p>
-    <p>詳解: <span id="explanation2"></span></p>
+    <p>問題: <textarea id="question2" style="height: 30px;"></textarea></p>
+    <p>選項 A: <textarea id="choice2_1" style="height: 30px;"></textarea></p>
+    <p>選項 B: <textarea id="choice2_2" style="height: 30px;"></textarea></p>
+    <p>選項 C: <textarea id="choice2_3" style="height: 30px;"></textarea></p>
+    <p>選項 D: <textarea id="choice2_4" style="height: 30px;"></textarea></p>
+    <p>答案: <textarea id="answer2" style="height: 30px;"></textarea></p>
+    <p>詳解: <textarea id="explanation2"></textarea></p>
 
     <h3>問題 3</h3>
-    <p>問題: <span id="question3"></span></p>
-    <p>參考答案: <span id="answer3"></span></p>
+    <p>問題: <textarea id="question3" style="height: 30px;"></textarea></p>
+    <p>參考答案: <textarea id="answer3"></textarea></p>
 
     <form id="articleForm">
         <textarea name="article_note" placeholder="有問題或是要修正什麼請在這留言，沒有即留空"></textarea>
@@ -55,54 +56,83 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const endpoint = 'http://140.119.19.145:5001/Article/get_random_uncheck_article';
+            const endpoint = 'http://nccumisreading.ddnsking.com:5001/Article/get_random_uncheck_article';
 
             fetch(endpoint)
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('articleId').textContent = data.article_id;
-                    document.getElementById('title').textContent = data.article_title;
-                    document.getElementById('content').textContent = data.article_content;
-                    document.getElementById('question1').textContent = data.question_1;
-                    document.getElementById('choice1_1').textContent = data.question1_choice1;
-                    document.getElementById('choice1_2').textContent = data.question1_choice2;
-                    document.getElementById('choice1_3').textContent = data.question1_choice3;
-                    document.getElementById('choice1_4').textContent = data.question1_choice4;
-                    document.getElementById('answer1').textContent = data.question1_answer;
-                    document.getElementById('explanation1').textContent = data.question1_explanation;
-                    document.getElementById('choice2_1').textContent = data.question2_choice1;
-                    document.getElementById('choice2_2').textContent = data.question2_choice2;
-                    document.getElementById('choice2_3').textContent = data.question2_choice3;
-                    document.getElementById('choice2_4').textContent = data.question2_choice4;
-                    document.getElementById('answer2').textContent = data.question2_answer;
-                    document.getElementById('explanation2').textContent = data.question2_explanation;
-                    document.getElementById('question3').textContent = data.question3;
-                    document.getElementById('answer3').textContent = data.question3_answer;
+                    document.getElementById('title').value = data.article_title;
+                    document.getElementById('content').value = data.article_content;
+                    document.getElementById('question1').value = data.question_1;
+                    document.getElementById('question2').value = data.question_2;
+                    document.getElementById('choice1_1').value = data.question1_choice1;
+                    document.getElementById('choice1_2').value = data.question1_choice2;
+                    document.getElementById('choice1_3').value = data.question1_choice3;
+                    document.getElementById('choice1_4').value = data.question1_choice4;
+                    document.getElementById('answer1').value = data.question1_answer;
+                    document.getElementById('explanation1').value = data.question1_explanation;
+
+                    document.getElementById('choice2_1').value = data.question2_choice1;
+                    document.getElementById('choice2_2').value = data.question2_choice2;
+                    document.getElementById('choice2_3').value = data.question2_choice3;
+                    document.getElementById('choice2_4').value = data.question2_choice4;
+                    document.getElementById('answer2').value = data.question2_answer;
+                    document.getElementById('explanation2').value = data.question2_explanation;
+                    document.getElementById('question3').value = data.question3;
+                    document.getElementById('answer3').value = data.question3_answer;
                     document.getElementById('article_id').value = data.article_id;
                 });
 
-            document.getElementById('articleForm').onsubmit = function(event) {
-                event.preventDefault();
-                var formData = new FormData(this);
+                document.getElementById('articleForm').onsubmit = function(event) {
+    event.preventDefault();
 
-                const passValue = document.querySelector('input[name="article_pass"]:checked').value;
-                formData.set('article_pass', passValue);
-                
-                fetch('http://140.119.19.145:5001/Article/submit_article_note', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('提交成功');
-                        window.location.reload();
-                    } else {
-                        alert('提交失敗');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-            }
+    // 構建提交數據的JSON對象
+    const formData = {
+        article_title: document.getElementById('title').value,
+        article_content: document.getElementById('content').value,
+        question_1: document.getElementById('question1').value,
+        question_2: document.getElementById('question2').value,
+        question1_choice1: document.getElementById('choice1_1').value,
+        question1_choice2: document.getElementById('choice1_2').value,
+        question1_choice3: document.getElementById('choice1_3').value,
+        question1_choice4: document.getElementById('choice1_4').value,
+        question1_answer: document.getElementById('answer1').value,
+        question1_explanation: document.getElementById('explanation1').value,
+        question2_choice1: document.getElementById('choice2_1').value,
+        question2_choice2: document.getElementById('choice2_2').value,
+        question2_choice3: document.getElementById('choice2_3').value,
+        question2_choice4: document.getElementById('choice2_4').value,
+        question2_answer: document.getElementById('answer2').value,
+        question2_explanation: document.getElementById('explanation2').value,
+        question3: document.getElementById('question3').value,
+        question3_answer: document.getElementById('answer3').value,
+        article_pass: document.querySelector('input[name="article_pass"]:checked').value,
+        article_note: document.querySelector('textarea[name="article_note"]').value,
+        article_id: document.getElementById('article_id').value
+    };
+    console.log(formData)
+
+    // 發送請求
+    fetch('http://nccumisreading.ddnsking.com:5001/Article/submit_article_note', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('提交成功');
+            window.location.reload();
+        } else {
+            alert('提交失敗');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
         });
     </script>
 </body>
