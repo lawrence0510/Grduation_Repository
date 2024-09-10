@@ -76,7 +76,6 @@ func _on_forget_pressed():
 
 
 func _on_GoogleButton_pressed():
-	print("Google login button pressed")
 	var url = "http://nccumisreading.ddnsking.com:5001/User/google_login"
 	var headers = ["Content-Type: application/json"]
 	http_request2.request(url, headers, false, HTTPClient.METHOD_GET)
@@ -87,8 +86,20 @@ func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
 		var redirect_url = headers.filter("Location")[0].split(": ")[1]
 		OS.shell_open(redirect_url)
 	elif response_code == 200:
-		print("登入成功")
-		get_tree().change_scene("res://scene/1.4.0.tscn")
+		var body_string = body.get_string_from_utf8()
+		print(body_string)
+		var response = JSON.parse(body_string)
+		if response.error == OK:
+			# 提取 user_id
+			var user_id = response.result["user_id"]
+			print("User ID: ", user_id)
+			
+			# 將 user_id 存入 GlobalVar
+			GlobalVar.user_id = user_id
+			
+			print("登入成功")
+			# 成功登入後切換場景
+			get_tree().change_scene("res://scene/1.4.0.tscn")
 	else:
 		print("Google登入失敗")
 

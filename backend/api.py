@@ -299,7 +299,7 @@ def authorize():
 
             insert_login_record(user_id, True)
             session['user_id'] = user_id
-            return f"Login successfully as {user_info['name']}!"
+            return {"message": f"Login successfully as {user_info['name']}!", "user_id": user_id}, 200
         except Error as e:
             insert_login_record(None, False)
             return {"error": str(e)}, 500
