@@ -4,6 +4,7 @@ import mysql.connector
 from mysql.connector import Error
 import os
 from datetime import datetime, timedelta
+import time
 
 # 創建資料庫連接
 def create_db_connection():
@@ -18,6 +19,13 @@ def create_db_connection():
     except Error as e:
         print(f"Error: '{e}'")
         return None
+
+# 檢查文章是否已經存在
+def check_article_exists(cursor, article_link):
+    check_query = "SELECT COUNT(*) FROM Article WHERE article_link = %s"
+    cursor.execute(check_query, (article_link,))
+    result = cursor.fetchone()
+    return result[0] > 0
 
 # 爬取新聞內容
 def start_crawling():
@@ -115,12 +123,18 @@ def insert_data_to_db(data):
         max_article_id = result[0] if result[0] else 0
 
         for row in data:
-            new_article_id = max_article_id + 1
             article_title = row['Title']
             article_link = row['URL']
             article_category = row['Category']
             article_content = row['Content']
             article_expired_day = (datetime.now() + timedelta(days=60)).strftime('%Y-%m-%d')
+
+            # 檢查是否已經存在該 URL
+            if check_article_exists(cursor, article_link):
+                print(f"文章已存在，跳過：{article_link}")
+                continue  # 如果文章已存在，跳過此文章
+
+            new_article_id = max_article_id + 1
 
             insert_query = """
             INSERT INTO `Article` (
@@ -146,7 +160,11 @@ def insert_data_to_db(data):
         cursor.close()
         connection.close()
 
-# 主程式運行
+# 主程式運行 - 每小時執行一次
 if __name__ == "__main__":
-    articles_data = start_crawling()
-    insert_data_to_db(articles_data)
+    while True:
+        print("開始爬取新聞...")
+        articles_data = start_crawling()
+        insert_data_to_db(articles_data)
+        print("等待1小時後再次執行...")
+        time.sleep(3600)  # 每1小時執行一次

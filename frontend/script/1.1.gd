@@ -82,12 +82,15 @@ func _on_GoogleButton_pressed():
 
 
 func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
+	print('response_code: ' + str(response_code))
 	if response_code == 302: 
 		var redirect_url = headers.filter("Location")[0].split(": ")[1]
+		print(redirect_url)
 		OS.shell_open(redirect_url)
 	elif response_code == 200:
 		var body_string = body.get_string_from_utf8()
-		print(body_string)
+		print(headers)
+
 		var response = JSON.parse(body_string)
 		if response.error == OK:
 			# 提取 user_id
