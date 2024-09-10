@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://Pic/sea_bg.png" type="Texture" id=1]
 [ext_resource path="res://pic/框框.png" type="Texture" id=2]
@@ -146,11 +146,6 @@ expand_margin_bottom = 5.0
 
 [sub_resource type="StyleBoxFlat" id=15]
 bg_color = Color( 0.866667, 0.698039, 0.603922, 1 )
-
-[sub_resource type="DynamicFont" id=29]
-size = 58
-use_filter = true
-font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=19]
 size = 35
@@ -538,6 +533,7 @@ custom_styles/normal = ExtResource( 8 )
 text = "修改"
 
 [node name="birth" type="WindowDialog" parent="BackgroundPicture"]
+visible = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -574,67 +570,51 @@ points = PoolVector2Array( -250, 120, 250, 120 )
 width = 2.0
 default_color = Color( 0, 0, 0, 1 )
 
-[node name="Label" type="Label" parent="BackgroundPicture/birth"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -239.0
-margin_top = -84.0
-margin_right = 239.0
-margin_bottom = -6.0
-custom_fonts/font = SubResource( 29 )
-text = "年     -     月     -     日"
-
-[node name="yyyy" type="LineEdit" parent="BackgroundPicture/birth"]
+[node name="YearLineEdit" type="LineEdit" parent="BackgroundPicture/birth"]
 margin_left = 211.0
-margin_top = 311.0
-margin_right = 311.0
-margin_bottom = 391.0
+margin_top = 226.0
+margin_right = 317.0
+margin_bottom = 306.0
 custom_fonts/font = SubResource( 19 )
 align = 1
 placeholder_text = "YYYY"
 
-[node name="mm" type="LineEdit" parent="BackgroundPicture/birth"]
+[node name="MonthLineEdit" type="LineEdit" parent="BackgroundPicture/birth"]
 margin_left = 421.0
-margin_top = 311.0
-margin_right = 521.0
-margin_bottom = 391.0
+margin_top = 226.0
+margin_right = 527.0
+margin_bottom = 306.0
 custom_fonts/font = SubResource( 20 )
 align = 1
 placeholder_text = "MM"
 
-[node name="dd" type="LineEdit" parent="BackgroundPicture/birth"]
+[node name="DayLineEdit" type="LineEdit" parent="BackgroundPicture/birth"]
 margin_left = 631.0
-margin_top = 311.0
-margin_right = 731.0
-margin_bottom = 391.0
+margin_top = 226.0
+margin_right = 737.0
+margin_bottom = 306.0
 custom_fonts/font = SubResource( 21 )
 align = 1
 placeholder_text = "DD"
 
 [node name="-" type="Label" parent="BackgroundPicture/birth"]
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
 margin_left = -113.5
-margin_top = 35.0
+margin_top = -50.0
 margin_right = -94.5
-margin_bottom = 113.0
+margin_bottom = 28.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 9 )
 text = "-"
 
 [node name="-2" type="Label" parent="BackgroundPicture/birth"]
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
 margin_left = 96.5
-margin_top = 35.0
+margin_top = -50.0
 margin_right = 115.5
-margin_bottom = 113.0
+margin_bottom = 28.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 9 )
 text = "-"
@@ -658,6 +638,8 @@ custom_styles/disabled = ExtResource( 11 )
 custom_styles/normal = ExtResource( 11 )
 text = "確定"
 icon_align = 1
+
+[node name="HTTPRequest" type="HTTPRequest" parent="BackgroundPicture/birth"]
 
 [node name="school" type="WindowDialog" parent="BackgroundPicture"]
 anchor_left = 0.5
@@ -791,58 +773,13 @@ margin_bottom = -6.0
 custom_fonts/font = SubResource( 31 )
 text = "您的電話號碼是："
 
-[node name="09XX" type="LineEdit" parent="BackgroundPicture/phone"]
-margin_left = 211.0
-margin_top = 311.0
-margin_right = 311.0
-margin_bottom = 391.0
+[node name="PhoneLineEdit" type="LineEdit" parent="BackgroundPicture/phone"]
+margin_left = 207.0
+margin_top = 309.0
+margin_right = 694.0
+margin_bottom = 389.0
 custom_fonts/font = SubResource( 19 )
 align = 1
-placeholder_text = "09XX"
-
-[node name="XXX右" type="LineEdit" parent="BackgroundPicture/phone"]
-margin_left = 421.0
-margin_top = 311.0
-margin_right = 521.0
-margin_bottom = 391.0
-custom_fonts/font = SubResource( 20 )
-align = 1
-placeholder_text = "XXX"
-
-[node name="XXX左" type="LineEdit" parent="BackgroundPicture/phone"]
-margin_left = 631.0
-margin_top = 311.0
-margin_right = 731.0
-margin_bottom = 391.0
-custom_fonts/font = SubResource( 21 )
-align = 1
-placeholder_text = "XXX"
-
-[node name="-" type="Label" parent="BackgroundPicture/phone"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -113.5
-margin_top = 35.0
-margin_right = -94.5
-margin_bottom = 113.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 9 )
-text = "-"
-
-[node name="-2" type="Label" parent="BackgroundPicture/phone"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 96.5
-margin_top = 35.0
-margin_right = 115.5
-margin_bottom = 113.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 9 )
-text = "-"
 
 [node name="p_enter" type="Button" parent="BackgroundPicture/phone"]
 margin_left = 384.0
@@ -864,6 +801,8 @@ custom_styles/normal = ExtResource( 11 )
 text = "確定"
 icon_align = 1
 
+[node name="HTTPRequest" type="HTTPRequest" parent="BackgroundPicture/phone"]
+
 [node name="cross" type="Button" parent="BackgroundPicture"]
 margin_left = 1789.0
 margin_top = 30.0
@@ -881,8 +820,10 @@ flat = true
 [connection signal="pressed" from="BackgroundPicture/edit_school_button" to="." method="_on_edit_school_pressed"]
 [connection signal="pressed" from="BackgroundPicture/edit_phone_button" to="." method="_on_edit_phone_pressed"]
 [connection signal="pressed" from="BackgroundPicture/birth/b_enter" to="BackgroundPicture/birth" method="_on_b_enter_pressed"]
+[connection signal="request_completed" from="BackgroundPicture/birth/HTTPRequest" to="BackgroundPicture/birth" method="_on_HTTPRequest_request_completed"]
 [connection signal="pressed" from="BackgroundPicture/school/s_enter" to="BackgroundPicture/school" method="_on_s_enter_pressed"]
 [connection signal="request_completed" from="BackgroundPicture/school/HTTPRequest" to="BackgroundPicture/school" method="_on_HTTPRequest_request_completed"]
 [connection signal="pressed" from="BackgroundPicture/phone/p_enter" to="BackgroundPicture/phone" method="_on_p_enter_pressed"]
+[connection signal="request_completed" from="BackgroundPicture/phone/HTTPRequest" to="BackgroundPicture/phone" method="_on_HTTPRequest_request_completed"]
 [connection signal="pressed" from="BackgroundPicture/cross" to="." method="_on_cross_pressed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

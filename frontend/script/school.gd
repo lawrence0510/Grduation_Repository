@@ -2,19 +2,25 @@ extends WindowDialog
 
 onready var s_enter: Button = $s_enter
 onready var school: LineEdit = $SchoolLineEdit
-onready var http_request: HTTPRequest = $HTTPRequest  # 新增的 HTTPRequest 節點
+onready var http_request: HTTPRequest = $HTTPRequest
 
 # 當按鈕被按下時執行
-func _on_b_enter_pressed():
-	# 從 GlobalVar 取得 user_id，並從輸入框取得學校名稱
+func _on_s_enter_pressed():
 	var user_id = GlobalVar.user_id
-	var new_school = school.text
+	var new_school = school.get_text()
 
-	# 構建 HTTP 請求 URL
-	var url = "http://nccumisreading.ddnsking.com:5001/User/reset_school?user_id=%d&new_school=%s" % [user_id, new_school]
+	var url = "http://nccumisreading.ddnsking.com:5001/User/reset_school"
 
-	# 發送 HTTP 請求
-	var err = http_request.request(url)
+	var data = {
+		"user_id": user_id,
+		"new_school": new_school
+	}
+	
+	var json_data = JSON.print(data)
+
+	var headers = ["Content-Type: application/json"]
+
+	var err = http_request.request(url, headers, false, HTTPClient.METHOD_POST, json_data)
 	
 	if err != OK:
 		print("Error sending HTTP request: ", err)
@@ -31,4 +37,5 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		# 更新完成後重新載入場景
 		get_tree().reload_current_scene()
 	else:
+		print("Update School Error Code: " + str(response_code))
 		print("Failed to update school. Response code: ", response_code)
