@@ -1,11 +1,36 @@
-import requests
-from bs4 import BeautifulSoup
+# 標準庫
+from datetime import datetime, timedelta
+from decimal import Decimal
+import hashlib
+import json
+import os
+import random
+import string
+
+# 第三方庫
+import pandas as pd
 import mysql.connector
 from mysql.connector import Error
-import os
-from datetime import datetime, timedelta
+from flask import Flask, request, session, jsonify, url_for
+from flask_mail import Mail, Message
+from flask_restx import Api, Resource, reqparse
+from flask_cors import CORS
+from werkzeug.datastructures import FileStorage
+from authlib.integrations.flask_client import OAuth
+from tqdm import tqdm
+from openai import OpenAI
+from dotenv import load_dotenv
 
-# 創建資料庫連接
+
+app = Flask(__name__)
+CORS(app)
+oauth = OAuth(app)
+load_dotenv()
+app.secret_key = os.getenv('FLASK_SECRET_KEY')
+api = Api(app, version='1.0', title='Graduation_Repository APIs',
+          description='110級畢業專案第一組\n組員：吳堃豪、侯程麟、謝佳蓉、許馨文、王暐睿\n指導教授：洪智鐸')
+
+
 def create_db_connection():
     try:
         connection = mysql.connector.connect(
@@ -19,134 +44,1208 @@ def create_db_connection():
         print(f"Error: '{e}'")
         return None
 
-# 爬取新聞內容
-def start_crawling():
-    # 類別列表
-    categories = ['world', 'local']
-    data = []
 
-    # 迴圈遍歷每個類別
-    for category in categories:
-        url = f'https://news.ltn.com.tw/list/breakingnews/{category}'
-        headers = {
-            'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Safari/605.1.15',
-            'referer': f'https://news.ltn.com.tw/list/breakingnews/{category}'
-        }
+user_parser = reqparse.RequestParser()
+user_parser.add_argument('user_name', type=str, required=True, help='使用者名稱')
+user_parser.add_argument('user_password', type=str,
+                         required=True, help='使用者密碼')
+user_parser.add_argument('user_school', type=str, required=True, help='使用者學校')
+user_parser.add_argument('user_birthday', type=str, required=True, help='使用者生日 (YYYY-MM-DD)')
+user_parser.add_argument('user_email', type=str,
+                         required=True, help='使用者email')
+user_parser.add_argument('user_phone', type=str, required=True, help='使用者電話')
 
-        # 發送 GET 請求到每個類別的主頁
-        response = requests.get(url, headers=headers)
-        response.encoding = 'utf-8'
+login_parser = reqparse.RequestParser()
+login_parser.add_argument('user_email', type=str, required=True, help='使用者電子郵件')
+login_parser.add_argument('user_password', type=str,
+                          required=True, help='使用者密碼')
 
-        # 確認請求成功
-        if response.status_code == 200:
-            soup = BeautifulSoup(response.text, 'html.parser')
+user_id_parser = reqparse.RequestParser()
+user_id_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
 
-            # 找到所有新聞的 URL（根據你的 HTML 結構）
-            swiper_slides = soup.find_all('a', class_='ph listS_h')
-            
-            # 檢查是否有找到新聞連結
-            if swiper_slides:
-                # 遍歷每個新聞連結
-                for slide in swiper_slides:
-                    news_url = slide['href']
-                    title = slide.get('title', 'No title available')
+email_reset_parser = reqparse.RequestParser()
+email_reset_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
+email_reset_parser.add_argument(
+    'new_email', type=str, required=True, help='使用者新email')
 
-                    # 發送 GET 請求進入每個新聞頁面
-                    news_response = requests.get(news_url, headers=headers)
-                    if news_response.status_code == 200:
-                        news_soup = BeautifulSoup(news_response.text, 'html.parser')
-                        
-                        # 爬取指定的 <p> 標籤內容
-                        article_content = ""
-                        paragraphs = news_soup.find_all('p')  # 找到頁面中的所有 <p> 標籤
-                        
-                        if paragraphs:
-                            # 提取所有 <p> 標籤中的文本
-                            full_text = '\n'.join([p.get_text() for p in paragraphs])
-                            
-                            # 找到起始點 "為達最佳瀏覽效果" 並開始截取
-                            start_keyword = "為達最佳瀏覽效果，建議使用 Chrome、Firefox 或 Microsoft Edge 的瀏覽器。"
-                            end_keyword = "不用抽 不用搶 現在用APP看新聞 保證天天中獎"
+password_reset_parser = reqparse.RequestParser()
+password_reset_parser.add_argument(
+    'user_email', type=str, required=True, help='使用者email')
+password_reset_parser.add_argument(
+    'new_password', type=str, required=True, help='使用者新密碼')
 
-                            start_index = full_text.find(start_keyword)
-                            end_index = full_text.find(end_keyword)
+phone_reset_parser = reqparse.RequestParser()
+phone_reset_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
+phone_reset_parser.add_argument(
+    'new_phone', type=str, required=True, help='使用者新電話號碼')
 
-                            if start_index != -1 and end_index != -1:
-                                # 提取從 start_keyword 後到 end_keyword 之前的內容
-                                article_content = full_text[start_index + len(start_keyword):end_index].strip()
-                            else:
-                                article_content = 'No relevant content found'
-                        else:
-                            article_content = 'No content found'
-                        
-                        # 檢查文章是否以「爆」開頭，如果是，則刪除第一個字
-                        if article_content.startswith("爆"):
-                            article_content = article_content[1:].strip()
+school_reset_parser = reqparse.RequestParser()
+school_reset_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
+school_reset_parser.add_argument(
+    'new_school', type=str, required=True, help='新學校名稱')
 
-                        # 將結果添加到 data 中
-                        data.append({
-                            'Title': title,
-                            'URL': news_url,
-                            'Content': article_content,
-                            'Category': category
-                        })
-                    else:
-                        print(f"Failed to retrieve content from {news_url}")
-            else:
-                print(f"No news articles found for category: {category}")
+birthday_reset_parser = reqparse.RequestParser()
+birthday_reset_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
+birthday_reset_parser.add_argument('new_birthday', type=str , required=True, help='新生日')
+
+article_upload_parser = reqparse.RequestParser()
+article_upload_parser.add_argument('file', type=FileStorage, location='files',
+                                   required=True, help='可以上傳Excel檔案，格式要是|article_title|article_link|article_content|')
+
+get_questions_parser = reqparse.RequestParser()
+get_questions_parser.add_argument(
+    'article_id_start', type=int, required=True, help='檢驗範圍的文章id')
+get_questions_parser.add_argument(
+    'article_id_end', type=int, required=True, help='欲產生問題之最後一個文章編號')
+
+get_rate_parser = reqparse.RequestParser()
+get_rate_parser.add_argument(
+    'article_id', type=int, required=True, help='原文文章id')
+get_rate_parser.add_argument('answer', type=str, required=True, help='回答')
+
+history_parser = reqparse.RequestParser()
+history_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
+history_parser.add_argument('article_id', type=int, required=True, help='文章ID')
+history_parser.add_argument(
+    'q1_user_answer', type=str, required=True, help='第一題使用者答案')
+history_parser.add_argument(
+    'q2_user_answer', type=str, required=True, help='第二題使用者答案')
+history_parser.add_argument(
+    'q3_user_answer', type=str, required=True, help='第三題使用者答案')
+history_parser.add_argument('q3_score_1', type=int,
+                            required=True, help='第三題評分1')
+history_parser.add_argument('q3_score_2', type=int,
+                            required=True, help='第三題評分2')
+history_parser.add_argument('q3_score_3', type=int,
+                            required=True, help='第三題評分3')
+
+random_article_parser = reqparse.RequestParser()
+random_article_parser.add_argument('user_id', type=int,required=True,help='使用者ID')
+random_article_parser.add_argument('article_category', type=str, required=True,help='文章類別')
+
+test_article_parser = reqparse.RequestParser()
+test_article_parser.add_argument('article_pass', type=int, required=True, help='測試結果(1 => 成功, 0 => 錯誤)')
+test_article_parser.add_argument('article_note', type=str, required=False, help='測試備註')
+test_article_parser.add_argument('article_id', type=int, required=True, help='文章帳號')
+
+# User api區
+user_ns = api.namespace('User', description='與使用者操作相關之api')
+
+
+@user_ns.route('/normal_register')
+class RegisterUser(Resource):
+    @user_ns.expect(user_parser)
+    def post(self):
+        '''註冊新用戶'''
+        args = user_parser.parse_args()
+        user_name = args['user_name']
+        user_password = args['user_password']
+        user_school = args['user_school']
+        user_birthday = args['user_birthday']
+        user_email = args['user_email']
+        user_phone = args['user_phone']
+
+        # 使用 SHA-256 對密碼加密
+        encrypted_password = hashlib.sha256(user_password.encode()).hexdigest()
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                cursor.execute("SELECT MAX(user_id) FROM `User`")
+                result = cursor.fetchone()
+                max_id = result[0] if result[0] is not None else 0
+                new_user_id = max_id + 1
+                sql = """
+                INSERT INTO `User`(`user_id`, `user_name`, `user_password`, `user_school`, `user_birthday`, `user_email`, `user_phone`, `created_at`)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                """
+                cursor.execute(sql, (new_user_id, user_name, encrypted_password,
+                               user_school, user_birthday, user_email, user_phone, datetime.now().date()))
+                connection.commit()
+                return {"message": "User registered successfully"}, 201
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
         else:
-            print(f"Failed to retrieve the webpage for category: {category}. Status code:", response.status_code)
-    
-    return data
+            return {"error": "Unable to connect to the database"}, 500
 
-# 將爬取到的資料插入資料庫
-def insert_data_to_db(data):
+
+@user_ns.route('/normal_login')
+class LoginUser(Resource):
+    @user_ns.expect(login_parser)
+    def post(self):
+        '''登入用戶'''
+        args = login_parser.parse_args()
+        user_email = args['user_email']
+        user_password = args['user_password']
+
+        encrypted_password = hashlib.sha256(user_password.encode()).hexdigest()
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor(dictionary=True)
+                sql = """
+                SELECT user_id FROM User
+                WHERE user_email = %s AND user_password = %s
+                """
+                cursor.execute(sql, (user_email, encrypted_password))
+                user = cursor.fetchone()
+
+                user_id = user['user_id'] if user else None
+                success = bool(user)
+
+                insert_login_record(user_id, success)
+
+                if success:
+                    session['user_id'] = user['user_id']
+                    return {"message": "Login successful", "user_id": user['user_id']}, 200
+                else:
+                    return {"message": "Invalid username or password"}, 401
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+
+
+def insert_login_record(user_id, success):
     connection = create_db_connection()
-    if connection is None:
-        print("資料庫連接失敗")
-        return
+    if connection is not None:
+        try:
+            cursor = connection.cursor()
+            sql = """
+            INSERT INTO LoginRecord (user_id, login_time, ip_address, user_agent, success)
+            VALUES (%s, %s, %s, %s, %s)
+            """
+            cursor.execute(sql, (
+                user_id,
+                datetime.now(),
+                request.remote_addr,
+                request.headers.get('User-Agent'),
+                success
+            ))
+            connection.commit()
+        except Error as e:
+            print(f"Error logging login attempt: {e}")
+        finally:
+            cursor.close()
+            connection.close()
 
-    try:
-        cursor = connection.cursor()
 
-        # 找到最大 article_id
-        cursor.execute("SELECT MAX(article_id) FROM Article")
-        result = cursor.fetchone()
-        max_article_id = result[0] if result[0] else 0
+google = oauth.register(
+    name='google',
+    client_id=os.getenv('GOOGLE_CLIENT_ID'),
+    client_secret=os.getenv('GOOGLE_CLIENT_SECRET'),
+    access_token_url='https://accounts.google.com/o/oauth2/token',
+    access_token_params=None,
+    authorize_url='https://accounts.google.com/o/oauth2/auth',
+    authorize_params=None,
+    api_base_url='https://www.googleapis.com/oauth2/v1/',
+    jwks_uri='https://www.googleapis.com/oauth2/v3/certs',
+    client_kwargs={'scope': 'openid email profile'},
+)
 
-        for row in data:
-            new_article_id = max_article_id + 1
-            article_title = row['Title']
-            article_link = row['URL']
-            article_category = row['Category']
-            article_content = row['Content']
-            article_expired_day = (datetime.now() + timedelta(days=60)).strftime('%Y-%m-%d')
+
+@app.route('/User/google_login')
+def login():
+    redirect_uri = url_for('authorize', _external=True)
+    return google.authorize_redirect(redirect_uri)
+
+
+@app.route('/User/authorize')
+def authorize():
+    token = google.authorize_access_token()
+    resp = google.get('userinfo')
+    user_info = resp.json()
+
+    user_school = user_info.get('hd')
+
+    connection = create_db_connection()
+    if connection is not None:
+        try:
+            cursor = connection.cursor()
+            cursor.execute("SELECT user_id FROM User WHERE google_id = %s OR user_email = %s",
+                           (user_info['id'], user_info['email']))
+            user = cursor.fetchone()
+            if user is None:
+                cursor.execute("SELECT MAX(user_id) FROM User")
+                result = cursor.fetchone()
+                max_id = result[0] if result[0] is not None else 0
+                new_user_id = max_id + 1
+                sql = """
+                INSERT INTO User (user_id, google_id, user_name, profile_picture, user_email, user_school, created_at)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                """
+                cursor.execute(sql, (new_user_id, user_info['id'], user_info['name'], user_info.get(
+                    'picture'), user_info['email'], user_school, datetime.now().date()))
+                connection.commit()
+                user_id = new_user_id
+            else:
+                user_id = user[0]
+                sql = """
+                UPDATE User
+                SET google_id = %s, user_name = %s, profile_picture = %s, user_school = %s
+                WHERE user_id = %s
+                """
+                cursor.execute(sql, (user_info['id'], user_info['name'], user_info.get(
+                    'picture'), user_school, user_id))
+                connection.commit()
+
+            insert_login_record(user_id, True)
+            session['user_id'] = user_id
+            return {"message": f"Login successfully as {user_info['name']}!", "user_id": user_id}, 200
+        except Error as e:
+            insert_login_record(None, False)
+            return {"error": str(e)}, 500
+        finally:
+            cursor.close()
+            connection.close()
+    else:
+        return {"error": "Unable to connect to the database"}, 500
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USERNAME'] = '110306047@g.nccu.edu.tw'
+app.config['MAIL_PASSWORD'] = 'sdpbnrynypmufpsj'
+app.config['MAIL_DEFAULT_SENDER'] = ('Reading King', 'reading@gmail.com')
+
+mail = Mail(app)
+
+verification_code_parser = reqparse.RequestParser()
+verification_code_parser.add_argument('user_email', type=str, required=True, help='使用者 email')
+
+@user_ns.route('/send_verification_code')
+class SendVerificationCode(Resource):
+    @user_ns.expect(verification_code_parser)
+    def post(self):
+        '''寄送驗證碼到使用者的 email'''
+        args = verification_code_parser.parse_args()
+        user_email = args['user_email']
+        # 生成 6 位隨機驗證碼
+        verification_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+
+        # 將驗證碼存入資料庫
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                cursor.execute("SELECT user_id FROM User WHERE user_email = %s", (user_email,))
+                user = cursor.fetchone()
+
+                if user:
+                    user_id = user[0]
+
+                    cursor.execute("SELECT COALESCE(MAX(id), 0) + 1 FROM VerificationCodes")
+                    new_id = cursor.fetchone()[0]
+
+                    sql = """
+                    INSERT INTO VerificationCodes (id, user_id, verification_code, created_at)
+                    VALUES (%s, %s, %s, %s)
+                    """
+                    cursor.execute(sql, (new_id, user_id, verification_code, datetime.now()))
+                    connection.commit()
+
+                    try:
+                        msg = Message("您的驗證碼", recipients=[user_email])
+                        msg.body = f"您的驗證碼是：{verification_code}，請在10分鐘內使用。"
+                        mail.send(msg)
+                    except Exception as mail_error:
+                        return {"error": "Failed to send email", "details": str(mail_error)}, 500
+
+                    return {"message": "Verification code sent successfully"}, 200
+                else:
+                    return {"message": "Email not found"}, 404
+            except Error as db_error:
+                return {"error": str(db_error)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+
+verification_code_check_parser = reqparse.RequestParser()
+verification_code_check_parser.add_argument('user_email', type=str, required=True, help='使用者 email')
+verification_code_check_parser.add_argument('verification_code', type=str, required=True, help='驗證碼')
+
+@user_ns.route('/check_verification_code')
+class CheckVerificationCode(Resource):
+    @user_ns.expect(verification_code_check_parser)
+    def get(self):
+        '''檢查使用者的驗證碼是否有效'''
+        args = verification_code_check_parser.parse_args()
+        user_email = args['user_email']
+        input_code = args['verification_code']
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                cursor.execute("SELECT user_id FROM User WHERE user_email = %s", (user_email,))
+                user = cursor.fetchone()
+
+                if user:
+                    user_id = user[0]
+
+                    cursor.execute("""
+                        SELECT verification_code, created_at FROM VerificationCodes
+                        WHERE user_id = %s
+                        ORDER BY created_at DESC
+                        LIMIT 1
+                    """, (user_id,))
+                    record = cursor.fetchone()
+
+                    if record:
+                        db_verification_code, created_at = record
+                        current_time = datetime.now()
+                        time_diff = current_time - created_at
+
+                        if time_diff > timedelta(minutes=3):
+                            return {"error": "驗證碼已過期"}, 400
+                        elif db_verification_code != input_code:
+                            return {"error": "驗證碼錯誤"}, 401
+                        else:
+                            return {"message": "驗證成功"}, 200
+                    else:
+                        return {"error": "未找到此使用者"}, 404
+                else:
+                    return {"error": "您輸入的電子郵件可能有誤，請重新輸入"}, 404
+            except Error as db_error:
+                return {"error": str(db_error)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+        
+@user_ns.route('/logout')
+class LogoutUser(Resource):
+    def post(self):
+        '''登出用戶'''
+        session.pop('user_id', None)
+        return {"message": "You have been logged out."}, 200
+
+
+from flask_restx import Resource
+from datetime import date, datetime
+
+@user_ns.route('/get_user_from_id')
+class GetUserFromID(Resource):
+    @user_ns.expect(user_id_parser)
+    def get(self):
+        '''根據 user_id 獲取用戶資料'''
+        args = user_id_parser.parse_args()
+        user_id = args['user_id']
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor(dictionary=True)
+                sql = "SELECT * FROM User WHERE user_id = %s"
+                cursor.execute(sql, (user_id,))
+                user = cursor.fetchone()
+
+                if user:
+                    for key, value in user.items():
+                        if isinstance(value, (date, datetime)):
+                            user[key] = value.isoformat()
+                    return user, 200
+                else:
+                    return {"error": "User not found"}, 404
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+
+
+@user_ns.route('/reset_password')
+class PasswordReset(Resource):
+    @user_ns.expect(password_reset_parser)
+    def post(self):
+        '''重設密碼'''
+        args = password_reset_parser.parse_args()
+        user_email = args['user_email']
+        new_password = args['new_password']
+        encrypted_new_password = hashlib.sha256(
+            new_password.encode()).hexdigest()
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                # 確認用戶是否存在
+                sql = "SELECT `user_id` FROM `User` WHERE `user_email` = %s"
+                cursor.execute(sql, (user_email,))
+                user = cursor.fetchone()
+                if user:
+                    update_sql = "UPDATE `User` SET `user_password` = %s WHERE `user_email` = %s"
+                    cursor.execute(
+                        update_sql, (encrypted_new_password, user_email))
+                    connection.commit()
+                    return {"message": "Password updated successfully"}, 200
+                else:
+                    return {"message": "Invalid email"}, 404
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+
+
+@user_ns.route('/reset_phone')
+class PhoneReset(Resource):
+    @user_ns.expect(phone_reset_parser)
+    def post(self):
+        '''重設手機號碼'''
+        args = phone_reset_parser.parse_args()
+        user_id = args['user_id']
+        new_phone = args['new_phone']
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                update_sql = "UPDATE `User` SET `user_phone` = %s WHERE `user_id` = %s"
+                cursor.execute(update_sql, (new_phone, user_id))
+                if cursor.rowcount == 0:
+                    return {"message": "User not found"}, 404
+                else:
+                    connection.commit()
+                    return {"message": "Phone number updated successfully"}, 200
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+
+
+@user_ns.route('/reset_school')
+class SchoolReset(Resource):
+    @user_ns.expect(school_reset_parser)
+    def post(self):
+        '''重設學校資料'''
+        args = school_reset_parser.parse_args()
+        user_id = args['user_id']
+        new_school = args['new_school']
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                update_sql = "UPDATE `User` SET `user_school` = %s WHERE `user_id` = %s"
+                cursor.execute(update_sql, (new_school, user_id))
+                if cursor.rowcount == 0:
+                    return {"message": "User not found"}, 404
+                else:
+                    connection.commit()
+                    return {"message": "School updated successfully"}, 200
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+
+@user_ns.route('/reset_birthday')
+class BirthdayReset(Resource):
+    @user_ns.expect(birthday_reset_parser)
+    def post(self):
+        '''重設生日'''
+        args = birthday_reset_parser.parse_args()
+        user_id = args['user_id']
+        new_birthday = args['new_birthday']
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                update_sql = "UPDATE `User` SET `user_birthday` = %s WHERE `user_id` = %s"
+                cursor.execute(update_sql, (new_birthday, user_id))
+                
+                if cursor.rowcount == 0:
+                    return {"message": "User not found"}, 404
+                else:
+                    connection.commit()
+                    return {"message": "Birthday updated successfully"}, 200
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+
+# Article api區
+article_ns = api.namespace('Article', description='與文章操作相關之api')
+
+
+def get_max_article_id(connection):
+    cursor = connection.cursor()
+    cursor.execute("SELECT MAX(article_id) FROM `Article`")
+    result = cursor.fetchone()
+    max_id = result[0] if result[0] is not None else 0
+    cursor.close()
+    return max_id
+
+
+@article_ns.route('/get_random_article')
+class DataList(Resource):
+    def get(self):
+        '''取得隨機文章'''
+        connection = create_db_connection()
+        if connection is not None:
+            cursor = connection.cursor(dictionary=True)
+            try:
+                cursor.execute(
+                    "SELECT article_title, article_content FROM Article ORDER BY RAND() LIMIT 1;")
+                article = cursor.fetchall()
+                return jsonify(article)
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+
+@article_ns.route('/get_random_unseen_article')
+class DataList(Resource):
+    @user_ns.expect(random_article_parser)
+    def get(self):
+        '''根據使用者id以及所選的類別找出此使用者還沒看過的文章'''
+        args = random_article_parser.parse_args()
+        user_id = args['user_id']
+        article_category = args['article_category']
+        connection = create_db_connection()
+        if connection is not None:
+            cursor = connection.cursor(dictionary=True)
+            try:
+                sql = """SELECT a.article_id, a.article_title, a.article_content, q.question_grade, q.question_1, 
+                    q.question1_choice1, q.question1_choice2, q.question1_choice3, q.question1_choice4, 
+                    q.question1_answer, q.question1_explanation, q.question_2, q.question2_choice1, 
+                    q.question2_choice2, q.question2_choice3, q.question2_choice4, q.question2_answer, 
+                    q.question2_explanation, q.question3, q.question3_answer
+                    FROM Article AS a
+                    JOIN Question AS q ON a.article_id = q.article_id
+                    WHERE a.article_category = %s
+                    AND a.article_pass = 1
+                    AND NOT EXISTS (
+                        SELECT 1
+                        FROM History h
+                        WHERE h.article_id = a.article_id
+                        AND h.user_id = %s
+                    )
+                    ORDER BY RAND()
+                    LIMIT 1;"""
+                cursor.execute(sql, (article_category, user_id))
+                article = cursor.fetchall()
+                return jsonify(article)
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+
+@article_ns.route('/get_random_uncheck_article')
+class RandomArticle(Resource):
+    def get(self):
+        '''隨機選取1到1000範圍內且article_pass為NULL的文章'''
+        connection = create_db_connection()
+        if connection is not None:
+            cursor = connection.cursor(dictionary=True)
+            try:
+                article_id = random.randint(1, 1000)
+                sql = """
+                SELECT a.article_id, a.article_title, a.article_content, q.question_grade, q.question_1, 
+                    q.question1_choice1, q.question1_choice2, q.question1_choice3, q.question1_choice4, 
+                    q.question1_answer, q.question1_explanation, q.question_2, q.question2_choice1, 
+                    q.question2_choice2, q.question2_choice3, q.question2_choice4, q.question2_answer, 
+                    q.question2_explanation, q.question3, q.question3_answer 
+                FROM Article AS a
+                JOIN Question AS q ON a.article_id = q.article_id
+                WHERE a.article_id = %s AND a.article_pass IS NULL 
+                LIMIT 1;
+                """
+                cursor.execute(sql, (article_id,))
+                article = cursor.fetchone()
+                if article:
+                    return jsonify(article)
+                else:
+                    return {"message": "No article found or all articles are checked."}, 404
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()            
+
+@article_ns.route('/submit_article_note')
+class SubmitArticleNote(Resource):
+    @article_ns.expect(test_article_parser)
+    def post(self):
+        '''提交文章檢查結果'''
+        args = test_article_parser.parse_args()
+        check = args['article_pass']
+        note = args['article_note']
+        article_id = args['article_id']
+        check_time = datetime.now()
+
+        connection = create_db_connection()
+        if connection is not None:
+            cursor = connection.cursor()
+            try:
+                sql = "UPDATE Article SET article_pass = %s, article_note = %s, check_time= %s WHERE article_id = %s;"
+                cursor.execute(sql, (check, note, check_time, article_id))
+                connection.commit()
+                return {"success": True}, 200
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+
+@article_ns.route('/upload_articles')
+class UploadArticles(Resource):
+    @user_ns.expect(article_upload_parser)
+    def post(self):
+        '''從Excel上傳文章資料並插入到數據庫'''
+        args = article_upload_parser.parse_args()
+        uploaded_file = args['file']
+
+        if uploaded_file:
+            df = pd.read_excel(uploaded_file.stream)
+            connection = create_db_connection()
+
+            if connection is not None:
+                max_article_id = get_max_article_id(connection)
+
+                for index, row in df.iterrows():
+                    new_article_id = max_article_id + 1
+                    article_title = row['article_title']
+                    article_link = row['article_link']
+                    article_content = row['article_content']
+                    article_expired_day = (
+                        datetime.now() + timedelta(days=60)).strftime('%Y-%m-%d')
+
+                    try:
+                        cursor = connection.cursor()
+                        insert_query = """
+                        INSERT INTO `Article` (
+                            `article_id`, `article_title`, `article_link`,
+                            `article_category`, `article_content`,
+                            `article_grade`, `article_expired_day`
+                        ) VALUES (%s, %s, %s, %s, %s, %s, %s)
+                        """
+                        cursor.execute(insert_query, (
+                            new_article_id, article_title, article_link, None,
+                            article_content, None, article_expired_day
+                        ))
+                        connection.commit()
+                        max_article_id = new_article_id
+                    except Error as e:
+                        return {"error": str(e)}, 500
+
+                cursor.close()
+                connection.close()
+                return {"message": "Articles uploaded successfully"}, 201
+            else:
+                return {"error": "Unable to connect to the database"}, 500
+        else:
+            return {"error": "No file uploaded"}, 400
+
+
+@article_ns.route('/upload_pansci')
+class UploadPanSciArticles(Resource):
+    def post(self):
+        '''從泛科學爬取文章資料並插入到數據庫\n‼️執行此api將會耗費大量時間（約兩小時）請謹慎操作‼️'''
+        from PanSciCrawler import start_crawling
+
+        data = start_crawling()
+        connection = create_db_connection()
+
+        if connection is not None:
+            max_article_id = get_max_article_id(connection)
+
+            for item in data:
+                new_article_id = max_article_id + 1
+                article_title = item['article_title']
+                article_link = item['article_link']
+                article_content = item['article_content']
+                article_category = item['article_category']
+                article_expired_day = (
+                    datetime.now() + timedelta(days=60)).strftime('%Y-%m-%d')
+
+                try:
+                    cursor = connection.cursor()
+                    insert_query = """
+                    INSERT INTO `Article` (
+                        `article_id`, `article_title`, `article_link`,
+                        `article_category`, `article_content`,
+                        `article_grade`, `article_expired_day`
+                    ) VALUES (%s, %s, %s, %s, %s, %s, %s)
+                    """
+                    cursor.execute(insert_query, (
+                        new_article_id, article_title, article_link, article_category,
+                        article_content, None, article_expired_day
+                    ))
+                    connection.commit()
+                    max_article_id = new_article_id
+                except Error as e:
+                    return {"error": str(e)}, 500
+            cursor.close()
+            connection.close()
+            return {"message": "PanSci articles uploaded successfully"}, 201
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+
+
+@article_ns.route('/upload_reader_digest')
+class UploadPanSciArticles(Resource):
+    def post(self):
+        '''從讀者文摘爬取文章資料並插入到數據庫'''
+        from ReaderDigestCrawler import start_crawling
+
+        data = start_crawling()
+        connection = create_db_connection()
+
+        if connection is not None:
+            max_article_id = get_max_article_id(connection)
+
+            for item in data:
+                new_article_id = max_article_id + 1
+                article_title = item['article_title']
+                article_link = item['article_link']
+                article_content = item['article_content']
+                # article_category = item['article_category']
+                article_expired_day = (
+                    datetime.now() + timedelta(days=60)).strftime('%Y-%m-%d')
+
+                try:
+                    cursor = connection.cursor()
+                    insert_query = """
+                    INSERT INTO `Article` (
+                        `article_id`, `article_title`, `article_link`,
+                        `article_category`, `article_content`,
+                        `article_grade`, `article_expired_day`
+                    ) VALUES (%s, %s, %s, %s, %s, %s, %s)
+                    """
+                    cursor.execute(insert_query, (
+                        new_article_id, article_title, article_link, None,
+                        article_content, None, article_expired_day
+                    ))
+                    connection.commit()
+                    max_article_id = new_article_id
+                except Error as e:
+                    return {"error": str(e)}, 500
+            cursor.close()
+            connection.close()
+            return {"message": "Reader Digest articles uploaded successfully"}, 201
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+
+# OpenAI api區
+openAI_ns = api.namespace(
+    'OpenAI', description='與openai操作相關之api，‼️此區皆為付費區，需測試請先洽Lawrence‼️')
+OpenAI.api_key = os.getenv('OPENAI_API_KEY')
+
+
+@openAI_ns.route('/get_questions_from_article')
+class GetQuestionsFromArticle(Resource):
+    @openAI_ns.expect(get_questions_parser)
+    def post(self):
+        error = 0
+        '''傳送多個文章內容至OpenAI API，獲得三個問題及標準答案進資料庫'''
+        args = get_questions_parser.parse_args()
+        article_id_start = args['article_id_start']
+        article_id_end = args['article_id_end']
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor(dictionary=True)
+                for article_id in tqdm(range(article_id_start, article_id_end + 1), desc='Processing articles'):
+                    try:
+                        sql_check = "SELECT 1 FROM `Question` WHERE `article_id` = %s"
+                        cursor.execute(sql_check, (article_id,))
+                        if cursor.fetchone():
+                            print('文章編號: '+ str(article_id) + '已存在於資料庫中，跳過')
+                            continue
+                        sql = "SELECT `article_content` FROM `Article` WHERE `article_id` = %s"
+                        cursor.execute(sql, (article_id,))
+                        article = cursor.fetchone()
+                        if article:
+                            article = article['article_content']
+                            client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+
+                            try:
+                                prompt = f"""
+                                我將給你一篇文章，請你判斷以下資訊：
+                                1. 此篇文章的適讀年齡，回傳一個阿拉伯數字介於6到15之間代表歲數。
+                                2. 產生兩個選擇題，兩個題目要不一樣，且兩個題目都有四個選項。
+                                3. 產生兩個選擇題的正確答案和解釋。
+                                4. 產生一個問答題（開放性題目）的題目。
+                                5. 提供一個問答題的標準答案。
+                                文章內容如下：
+                                {article}
+                                將以上資訊放進以下格式的JSON當中回傳，不要多也不要少，使用繁體中文回傳，回傳時請確認是否為JSON好讓我做parsing，你容易忘記在question3和answer3之間加上逗號，還有，answer1和answer2要是正確選項內的「文字」而非「question"x"choice"y"」
+
+                                {{
+                                    "article_age": null,
+                                    "question1": null,
+                                    "question1choice1": null,
+                                    "question1choice2": null,
+                                    "question1choice3": null,
+                                    "question1choice4": null,
+                                    "answer1": null,
+                                    "explanation1": null,
+                                    "question2": null,
+                                    "question2choice1": null,
+                                    "question2choice2": null,
+                                    "question2choice3": null,
+                                    "question2choice4": null,
+                                    "answer2": null,
+                                    "explanation2": null,
+                                    "question3": null,
+                                    "answer3": null
+                                }}
+                                不要漏掉任何一個，請你嚴格檢查以後再傳給我，我要收到17行的response"。
+                                """
+                                response = client.chat.completions.create(
+                                    model="gpt-3.5-turbo",
+                                    messages=[
+                                    {"role": "system",
+                                    "content": "你是一名專門在閱讀文章後產生問題給學生回答的得力助手。"},
+                                    {"role": "user", "content": prompt}]
+                                )
+                                response_text = str(response)
+                                start_pattern = "ChatCompletionMessage(content='{"
+                                end_pattern = "', role='assistant'"
+                                start = response_text.find(start_pattern) + len(start_pattern) - 1
+                                end = response_text.find(end_pattern)
+                                substring = response_text[start:end]
+                                noenter = substring.replace("\\n", "").replace("\n", "").replace("\\", "")
+                                if '"answer3"' in noenter:
+                                    answer3_index = noenter.find('"answer3"')
+                                    if noenter[answer3_index - 1] != ',' and noenter[answer3_index - 2] != ',' and noenter[answer3_index - 3] != ',' and noenter[answer3_index - 4] != ',' and noenter[answer3_index - 5] != ',' and noenter[answer3_index - 6] != ',':
+                                        noenter = noenter[:answer3_index] + ',' + noenter[answer3_index:]
+                                try:
+                                    content_json = json.loads(noenter)
+                                except json.JSONDecodeError as e:
+                                    content_json = None
+                                cursor.execute(
+                                    "SELECT MAX(question_id) as max_id FROM `Question`")
+                                result = cursor.fetchone()
+                                max_id = result['max_id'] if result['max_id'] is not None else 0
+                                question_id = max_id + 1
+                                try:
+                                    sql_insert = """
+                                    INSERT INTO `Question`(
+                                        `question_id`, `article_id`, `question_grade`, `question_1`, `question1_choice1`, 
+                                        `question1_choice2`, `question1_choice3`, `question1_choice4`, 
+                                        `question1_answer`, `question1_explanation`, `question_2`, 
+                                        `question2_choice1`, `question2_choice2`, `question2_choice3`, 
+                                        `question2_choice4`, `question2_answer`, `question2_explanation`, 
+                                        `question3`, `question3_answer`
+                                    ) VALUES (
+                                        %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
+                                    )
+                                    """
+                                    cursor.execute(sql_insert, (
+                                        question_id,
+                                        article_id,
+                                        content_json['article_age'],
+                                        content_json['question1'],
+                                        content_json['question1choice1'],
+                                        content_json['question1choice2'],
+                                        content_json['question1choice3'],
+                                        content_json['question1choice4'],
+                                        content_json['answer1'],
+                                        content_json['explanation1'],
+                                        content_json['question2'],
+                                        content_json['question2choice1'],
+                                        content_json['question2choice2'],
+                                        content_json['question2choice3'],
+                                        content_json['question2choice4'],
+                                        content_json['answer2'],
+                                        content_json['explanation2'],
+                                        content_json['question3'],
+                                        content_json['answer3']
+                                    ))
+                                    sql_update_article = """
+                                    UPDATE `Article`
+                                    SET `article_grade` = %s
+                                    WHERE `article_id` = %s
+                                    """
+                                    cursor.execute(
+                                        sql_update_article, (content_json['article_age'], article_id))
+
+                                    connection.commit()
+                                    print('已成功匯入文章id: ' + str(article_id))
+                                except Exception as e:
+                                    import traceback
+                                    traceback.print_exc()
+                                    error = error + 1
+                                    continue
+                            except Exception as e:
+                                import traceback
+                                traceback.print_exc()
+                                continue
+                    except Error as e:
+                        import traceback
+                        traceback.print_exc()
+                        continue
+            except Error as e:
+                import traceback
+                traceback.print_exc()
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        return {'status': '指示總數： ' + str(article_id_end  - article_id_start + 1) + ' 錯誤總數：' + str(error) + ' 成功率： ' + str((1 - (error)/(article_id_end  - article_id_start + 1))*100) + '%'}, 200
+
+
+@openAI_ns.route('/get_rate_from_answers')
+class GetRateFromAnswers(Resource):
+    @openAI_ns.expect(get_rate_parser)
+    def post(self):
+        '''傳送回答獲得評分與評語'''
+        args = get_rate_parser.parse_args()
+        article_id = args['article_id']
+        answer = args['answer']
+        connection = create_db_connection()
+        rate_standard = (
+            "回答評分標準\n"
+            "1. 正確度\n"
+            "1分：回答與問題無關或包含嚴重錯誤。\n"
+            "2分：回答包含一些正確信息，但存在明顯的錯誤。\n"
+            "3分：回答正確度一般，涵蓋了主要內容，但可能有一些不準確之處。\n"
+            "4分：回答正確度較高，包含主要內容，但可能缺少一些細節。\n"
+            "5分：回答非常正確，涵蓋了問題的所有關鍵內容，並提供了詳盡的解釋。\n"
+            "\n"
+            "2. 完整度\n"
+            "1分：回答非常不完整，未涵蓋問題的主要內容。\n"
+            "2分：回答缺乏關鍵信息，僅涵蓋了部分內容。\n"
+            "3分：回答包含一些內容，但缺少關鍵細節。\n"
+            "4分：回答涵蓋了主要內容，但可能缺少一些次要細節。\n"
+            "5分：回答非常完整，涵蓋了問題的所有重要內容，包括次要細節。\n"
+            "\n"
+            "3. 語言表達清晰度\n"
+            "1分：回答存在嚴重語句不通順或難以理解的問題。\n"
+            "2分：回答有明顯的表達問題，導致理解上的困難。\n"
+            "3分：回答表達尚可，但可能存在一些不通順或模糊之處。\n"
+            "4分：回答表達清晰，但可能存在一些表達不夠精確的地方。\n"
+            "5分：回答表達非常清晰，言之有物，易於理解。\n\n"
+        )
+        if connection is not None:
+            try:
+                cursor = connection.cursor(dictionary=True)
+                sql = "SELECT a.article_content, q.question3,q.question3_answer FROM Question AS q LEFT JOIN Article AS a ON q.article_id = a.article_id WHERE a.article_id = %s;"
+                cursor.execute(sql, (article_id,))
+                article = cursor.fetchone()
+                if article:
+                    article_content = article['article_content']
+                    question = article['question3']
+                    standard_answer = article['question3_answer']
+                    client = OpenAI(
+                        api_key=os.getenv('OPENAI_API_KEY'))
+
+                    try:
+                        prompt_message = (
+                            f"以下是一篇文章的內容：\n{article_content}\n以下是根據這篇文章所產生的開放性問題：\n{question}\n然後，以下是我的使用者回答：\n{answer}\n現在，請你根據以下標準，針對此回答給予評分。標準如下：\n{rate_standard}\n，然後根據以下JSON格式回傳你的回覆給我：" +
+                            json.dumps({
+                                "正確度": None,
+                                "正確度原因": None,
+                                "完整度": None,
+                                "完整度原因": None,
+                                "語言表達清晰度": None,
+                                "語言表達清晰度原因": None,
+                                "總分": None,
+                                "總評": None
+                            })
+                        )
+                        response = client.chat.completions.create(
+                            model="gpt-3.5-turbo",
+                            messages=[
+                                {"role": "system",
+                                    "content": "你是一名專門在閱讀學生答案後產生評分與評語的嚴格老師。"},
+                                {"role": "user", "content": prompt_message}
+                            ],
+                        )
+                        print(response)
+                        response_str = str(response).replace(
+                            '\n', '').replace('\\n', '')
+                        content_start = response_str.find(
+                            "content='") + len("content='")
+                        content_end = response_str.find(
+                            "}', role='assistant'", content_start) + 1
+                        content_json_str = response_str[content_start:content_end]
+                        content_json_str = content_json_str.replace(
+                            "\\'", "'").replace('\\"', '"').replace('\\\\', '\\')
+                        print(content_json_str)
+                        try:
+                            content_json = json.loads(content_json_str)
+                        except ValueError as e:
+                            retry_prompt = "請你檢查你剛剛傳給我的訊息，其並非JSON格式，幫我轉成JSON以後再給我一次"
+                            response = client.chat.completions.create(
+                                model="gpt-3.5-turbo",
+                                messages=[
+                                    {"role": "system",
+                                        "content": "你是一名專門在閱讀學生答案後產生評分與評語的嚴格老師。對於胡亂回答的，你可以直接則被使用者，也應該要給予很低的分數。"},
+                                    {"role": "user", "content": retry_prompt}
+                                ],
+                            )
+                            response_str = str(response).replace(
+                                '\n', '').replace('\\n', '')
+                            content_start = response_str.find(
+                                "content='") + len("content='")
+                            content_end = response_str.find(
+                                "}', role='assistant'", content_start) + 1
+                            content_json_str = response_str[content_start:content_end]
+                            content_json_str = content_json_str.replace(
+                                "\\'", "'").replace('\\"', '"').replace('\\\\', '\\')
+                            content_json = json.loads(content_json_str)
+                        return {'status': 'success', 'content': content_json}, 200
+                    except Exception as e:
+                        import traceback
+                        traceback.print_exc()
+                        return {'error': str(e)}, 500
+            except Error as e:
+                import traceback
+                traceback.print_exc()
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+
+
+# History api區
+history_ns = api.namespace('History', description='與歷史紀錄操作之相關api')
+
+
+def get_max_history_id(connection):
+    cursor = connection.cursor()
+    cursor.execute("SELECT MAX(history_id) FROM `History`")
+    result = cursor.fetchone()
+    max_id = result[0] if result[0] is not None else 0
+    cursor.close()
+    return max_id
+
+
+@history_ns.route('/get_all_history')
+class DataList(Resource):
+    def get(self):
+        '''取得所有History資料'''
+        connection = create_db_connection()
+        if connection is not None:
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM `History`")
+            data = cursor.fetchall()
+            cursor.close()
+            connection.close()
+            return data
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+
+
+@history_ns.route('/record_new_history')
+class RecordHistory(Resource):
+    @history_ns.expect(history_parser)
+    def post(self):
+        '''記錄新的歷史答題數據'''
+        args = history_parser.parse_args()
+        connection = create_db_connection()
+        if connection is None:
+            return {"error": "Unable to connect to the database"}, 500
+
+        try:
+            new_history_id = get_max_history_id(connection) + 1
+            question_id = args['article_id']
+            time_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute(
+                f"SELECT * FROM `Question` WHERE question_id = {question_id};")
+            question_data = cursor.fetchone()
+
+            q1_correct_answer = question_data['question1_answer']
+            q2_correct_answer = question_data['question2_answer']
+            q3_correct_answer = question_data['question3_answer']
+
+            q1_is_correct = int(args['q1_user_answer'] == q1_correct_answer)
+            q2_is_correct = int(args['q2_user_answer'] == q2_correct_answer)
+
+            args['q3_total_score'] = args['q3_score_1'] + \
+                args['q3_score_2'] + args['q3_score_3']
+            total_score = 3 * q1_is_correct + 3 * q2_is_correct + \
+                (args['q3_score_1'] * 0.26 + args['q3_score_2']
+                 * 0.26 + args['q3_score_3'] * 0.28)
 
             insert_query = """
-            INSERT INTO `Article` (
-                `article_id`, `article_title`, `article_link`,
-                `article_category`, `article_content`,
-                `article_expired_day`
-            ) VALUES (%s, %s, %s, %s, %s, %s)
+            INSERT INTO `History`(`history_id`, `user_id`, `article_id`, `question_id`, `time`, `q1_user_answer`, `q1_correct_answer`, `q1_is_correct`, `q2_user_answer`, `q2_correct_answer`, `q2_is_correct`, `q3_user_answer`, `q3_correct_answer`, `q3_score_1`, `q3_score_2`, `q3_score_3`, `q3_total_score`, `total_score`)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
-
             cursor.execute(insert_query, (
-                new_article_id, article_title, article_link, article_category,
-                article_content, article_expired_day
+                new_history_id, args['user_id'], args['article_id'], question_id, time_now,
+                args['q1_user_answer'], q1_correct_answer, q1_is_correct, args['q2_user_answer'], q2_correct_answer, q2_is_correct,
+                args['q3_user_answer'], q3_correct_answer, args['q3_score_1'], args['q3_score_2'], args['q3_score_3'],
+                args['q3_total_score'], total_score
             ))
-
             connection.commit()
-            max_article_id = new_article_id
-            print(f"已成功插入文章：{article_title}")
-    
-    except Error as e:
-        print(f"插入資料庫時發生錯誤: {e}")
-    
-    finally:
-        cursor.close()
-        connection.close()
+            return {"message": "Record saved successfully", "total_score": total_score}, 201
 
-# 主程式運行
-if __name__ == "__main__":
-    articles_data = start_crawling()
-    insert_data_to_db(articles_data)
+        except Error as e:
+            return {"error": str(e)}, 500
+        finally:
+            if connection:
+                connection.close()
+
+
+@history_ns.route('/get_history_from_user')
+class GetHistoryFromUser(Resource):
+    @history_ns.expect(user_id_parser)
+    def get(self):
+        '''根據 user_id 獲取歷史資料'''
+        args = user_id_parser.parse_args()
+        user_id = args['user_id']
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor(dictionary=True)
+                sql = "SELECT * FROM `History` WHERE `user_id` = %s"
+                cursor.execute(sql, (user_id,))
+                histories = cursor.fetchall()
+
+                if histories:
+                    for history in histories:
+                        if 'time' in history and history['time']:
+                            history['time'] = history['time'].strftime(
+                                '%Y-%m-%d %H:%M:%S')
+                            for key in history:
+                                if isinstance(history[key], Decimal):
+                                    history[key] = str(history[key])
+                    return histories, 200
+                else:
+                    return {"error": "No history found for the user"}, 404
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5001, debug=True)
