@@ -23,7 +23,7 @@ func _on_record_pressed():
 	get_tree().change_scene("res://scene/1.5.0.tscn")
 
 func _on_story_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene(("res://UserSystem/StageBackground.tscn"))
 
 
 func _on_news_pressed():
