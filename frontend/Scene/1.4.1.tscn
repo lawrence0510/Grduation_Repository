@@ -533,7 +533,6 @@ custom_styles/normal = ExtResource( 8 )
 text = "修改"
 
 [node name="birth" type="WindowDialog" parent="BackgroundPicture"]
-visible = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
