@@ -85,12 +85,12 @@ func _on_ScrollContainer_gui_input(event: InputEvent) -> void:
 			scroll()
 
 ## 按下各關卡圖片
-func _on_news_pressed() -> void:
+func _on_chinese_pressed() -> void:
 	pass # Replace with function body.
 
-func _on_story_pressed() -> void:
+func _on_society_pressed() -> void:
 	pass # Replace with function body.
 
-func _on_school_pressed() -> void:
+func _on_nature_pressed() -> void:
 	get_tree().change_scene("res://scene/1.4.4.tscn")
 

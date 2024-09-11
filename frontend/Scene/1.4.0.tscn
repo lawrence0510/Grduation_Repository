@@ -1,27 +1,26 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=21 format=2]
 
-[ext_resource path="res://Pic/sea_bg.png" type="Texture" id=1]
+[ext_resource path="res://Pic/island5.png" type="Texture" id=1]
 [ext_resource path="res://script/1.4.0.gd" type="Script" id=2]
-[ext_resource path="res://Pic/flag6.png" type="Texture" id=3]
-[ext_resource path="res://Pic/flag1.png" type="Texture" id=4]
+[ext_resource path="res://Pic/island3.png" type="Texture" id=3]
+[ext_resource path="res://Pic/island1.png" type="Texture" id=4]
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=5]
-[ext_resource path="res://Pic/flag5.png" type="Texture" id=6]
-[ext_resource path="res://Pic/flag8.png" type="Texture" id=7]
+[ext_resource path="res://Pic/island2.png" type="Texture" id=6]
+[ext_resource path="res://Pic/bc911.png" type="Texture" id=7]
+[ext_resource path="res://Pic/island4.png" type="Texture" id=8]
+[ext_resource path="res://Scene/main_school.gd" type="Script" id=9]
+[ext_resource path="res://Pic/island55.png" type="Texture" id=10]
+[ext_resource path="res://Pic/island33.png" type="Texture" id=11]
+[ext_resource path="res://Pic/island44.png" type="Texture" id=12]
+[ext_resource path="res://Pic/island22.png" type="Texture" id=13]
+[ext_resource path="res://Pic/island11.png" type="Texture" id=14]
+[ext_resource path="res://script/main_news.gd" type="Script" id=15]
+[ext_resource path="res://script/main_story.gd" type="Script" id=16]
+[ext_resource path="res://script/main_record.gd" type="Script" id=17]
+[ext_resource path="res://script/main_player.gd" type="Script" id=18]
 
-[sub_resource type="StyleBoxEmpty" id=6]
-
-[sub_resource type="DynamicFont" id=3]
-size = 30
-outline_size = 3
-use_filter = true
-font_data = ExtResource( 5 )
-
-[sub_resource type="DynamicFont" id=4]
-size = 30
-outline_size = 1
-outline_color = Color( 0, 0, 0, 1 )
-use_filter = true
-font_data = ExtResource( 5 )
+[sub_resource type="StyleBoxLine" id=10]
+color = Color( 0, 0, 0, 0 )
 
 [sub_resource type="DynamicFont" id=1]
 size = 55
@@ -29,14 +28,6 @@ outline_size = 1
 outline_color = Color( 0.286275, 0.690196, 0.501961, 1 )
 use_filter = true
 font_data = ExtResource( 5 )
-
-[sub_resource type="StyleBoxEmpty" id=7]
-
-[sub_resource type="StyleBoxEmpty" id=8]
-
-[sub_resource type="StyleBoxEmpty" id=9]
-
-[sub_resource type="StyleBoxEmpty" id=5]
 
 [node name="Control" type="Control"]
 margin_right = 1925.0
@@ -46,182 +37,140 @@ script = ExtResource( 2 )
 [node name="bg" type="TextureRect" parent="."]
 margin_right = 1920.0
 margin_bottom = 1080.0
-texture = ExtResource( 1 )
+texture = ExtResource( 7 )
 expand = true
 
 [node name="player" type="Button" parent="bg"]
-anchor_left = 0.533333
-anchor_top = 0.881481
-anchor_right = 0.533333
-anchor_bottom = 0.881481
+anchor_left = 0.444271
+anchor_top = 1.07685
+anchor_right = 0.651042
+anchor_bottom = 1.31759
 margin_left = -603.0
 margin_top = -596.0
 margin_right = -373.0
 margin_bottom = -276.0
-rect_scale = Vector2( 1.5, 1.5 )
-custom_styles/hover = SubResource( 6 )
-icon = ExtResource( 4 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/focus = SubResource( 10 )
+custom_styles/disabled = SubResource( 10 )
+custom_styles/normal = SubResource( 10 )
+icon = ExtResource( 1 )
 flat = true
 expand_icon = true
+script = ExtResource( 18 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="下" type="Label" parent="bg/player"]
-margin_left = 62.0969
-margin_top = 106.0
-margin_right = 182.097
-margin_bottom = 150.0
-rect_rotation = 6.21522
-custom_fonts/font = SubResource( 3 )
-text = "個人檔案"
-
-[node name="上" type="Label" parent="bg/player"]
-margin_left = 62.0969
-margin_top = 106.0
-margin_right = 182.097
-margin_bottom = 150.0
-rect_rotation = 6.21522
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "個人檔案"
-
 [node name="record" type="Button" parent="bg"]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = 490.0
-margin_top = -748.0
-margin_right = 720.0
-margin_bottom = -428.0
-rect_scale = Vector2( 1.5, 1.5 )
+margin_left = 1156.0
+margin_top = 514.0
+margin_right = 1685.0
+margin_bottom = 1015.0
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color_focus = Color( 0.286275, 0.690196, 0.501961, 1 )
 custom_colors/font_color = Color( 0.286275, 0.690196, 0.501961, 1 )
 custom_colors/font_color_hover = Color( 0.286275, 0.690196, 0.501961, 1 )
 custom_colors/font_color_pressed = Color( 0.286275, 0.690196, 0.501961, 1 )
 custom_fonts/font = SubResource( 1 )
-custom_styles/hover = SubResource( 7 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/focus = SubResource( 10 )
+custom_styles/disabled = SubResource( 10 )
+custom_styles/normal = SubResource( 10 )
+icon = ExtResource( 6 )
+flat = true
+icon_align = 1
+script = ExtResource( 17 )
+
+[node name="story" type="Button" parent="bg"]
+margin_left = 70.0
+margin_top = 7.0
+margin_right = 570.0
+margin_bottom = 508.0
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/focus = SubResource( 10 )
+custom_styles/disabled = SubResource( 10 )
+custom_styles/normal = SubResource( 10 )
+icon = ExtResource( 3 )
+flat = true
+icon_align = 1
+script = ExtResource( 16 )
+
+[node name="news" type="Button" parent="bg"]
+margin_left = 1374.0
+margin_top = 29.0
+margin_right = 1874.0
+margin_bottom = 530.0
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/focus = SubResource( 10 )
+custom_styles/disabled = SubResource( 10 )
+custom_styles/normal = SubResource( 10 )
+icon = ExtResource( 8 )
+flat = true
+icon_align = 1
+script = ExtResource( 15 )
+
+[node name="main_school" type="Button" parent="bg"]
+margin_left = 751.0
+margin_top = 3.0
+margin_right = 1251.0
+margin_bottom = 504.0
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/focus = SubResource( 10 )
+custom_styles/disabled = SubResource( 10 )
+custom_styles/normal = SubResource( 10 )
+button_mask = 4
 icon = ExtResource( 4 )
 flat = true
 icon_align = 1
-expand_icon = true
+script = ExtResource( 9 )
 
-[node name="下" type="Label" parent="bg/record"]
-margin_left = 64.7636
-margin_top = 108.0
-margin_right = 184.764
-margin_bottom = 152.0
-rect_rotation = 6.21522
-custom_fonts/font = SubResource( 3 )
-text = "答題記錄"
+[node name="white_record" type="TextureRect" parent="bg"]
+visible = false
+margin_left = 1170.0
+margin_top = 514.0
+margin_right = 1670.0
+margin_bottom = 1014.0
+texture = ExtResource( 14 )
 
-[node name="上" type="Label" parent="bg/record"]
-margin_left = 64.7636
-margin_top = 108.0
-margin_right = 184.764
-margin_bottom = 152.0
-rect_rotation = 6.21522
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "答題記錄"
+[node name="white_school" type="TextureRect" parent="bg"]
+visible = false
+margin_left = 750.0
+margin_top = 6.0
+margin_right = 1250.0
+margin_bottom = 506.0
+texture = ExtResource( 13 )
 
-[node name="story" type="Button" parent="bg"]
-margin_left = 795.0
-margin_top = -105.0
-margin_right = 1025.0
-margin_bottom = 215.0
-rect_scale = Vector2( 1.5, 1.5 )
-custom_styles/hover = SubResource( 8 )
-icon = ExtResource( 3 )
-flat = true
-expand_icon = true
+[node name="white_story" type="TextureRect" parent="bg"]
+visible = false
+margin_left = 69.0
+margin_top = 7.0
+margin_right = 569.0
+margin_bottom = 507.0
+texture = ExtResource( 11 )
 
-[node name="下" type="Label" parent="bg/story"]
-margin_left = 64.0
-margin_top = 122.72
-margin_right = 184.0
-margin_bottom = 166.72
-rect_rotation = -3.21014
-custom_fonts/font = SubResource( 3 )
-text = "故事合輯"
+[node name="white_news" type="TextureRect" parent="bg"]
+visible = false
+margin_left = 1372.0
+margin_top = 32.0
+margin_right = 1872.0
+margin_bottom = 532.0
+texture = ExtResource( 12 )
 
-[node name="上" type="Label" parent="bg/story"]
-margin_left = 64.0
-margin_top = 122.72
-margin_right = 184.0
-margin_bottom = 166.72
-rect_rotation = -3.21014
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "故事合輯"
-
-[node name="news" type="Button" parent="bg"]
-margin_left = 1433.0
-margin_top = -123.0
-margin_right = 1724.0
-margin_bottom = 208.0
-rect_scale = Vector2( 1.7, 1.7 )
-custom_styles/hover = SubResource( 9 )
-icon = ExtResource( 6 )
-flat = true
-expand_icon = true
-
-[node name="下" type="Label" parent="bg/news"]
-margin_left = 93.8651
-margin_top = 138.235
-margin_right = 213.865
-margin_bottom = 182.235
-rect_rotation = 3.0403
-rect_scale = Vector2( 0.9, 0.9 )
-custom_fonts/font = SubResource( 3 )
-text = "新聞時事"
-
-[node name="上" type="Label" parent="bg/news"]
-margin_left = 93.8651
-margin_top = 138.235
-margin_right = 213.865
-margin_bottom = 182.235
-rect_rotation = 3.0403
-rect_scale = Vector2( 0.9, 0.9 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "新聞時事"
-
-[node name="school" type="Button" parent="bg"]
-margin_left = 375.0
-margin_top = -54.0
-margin_right = 605.0
-margin_bottom = 266.0
-rect_scale = Vector2( 1.5, 1.5 )
-custom_styles/hover = SubResource( 5 )
-icon = ExtResource( 7 )
-flat = true
-icon_align = 1
-expand_icon = true
-
-[node name="下" type="Label" parent="bg/school"]
-margin_left = 64.1808
-margin_top = 116.0
-margin_right = 184.181
-margin_bottom = 160.0
-rect_rotation = 5.45235
-custom_fonts/font = SubResource( 3 )
-text = "學校課文"
-
-[node name="上" type="Label" parent="bg/school"]
-margin_left = 64.1808
-margin_top = 116.0
-margin_right = 184.181
-margin_bottom = 160.0
-rect_rotation = 5.45235
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "學校課文"
+[node name="white_player" type="TextureRect" parent="bg"]
+visible = false
+margin_left = 288.0
+margin_top = 555.0
+margin_right = 788.0
+margin_bottom = 1055.0
+texture = ExtResource( 10 )
 
 [connection signal="pressed" from="bg/player" to="." method="_on_player_pressed"]
 [connection signal="pressed" from="bg/record" to="." method="_on_record_pressed"]
 [connection signal="pressed" from="bg/story" to="." method="_on_story_pressed"]
 [connection signal="pressed" from="bg/news" to="." method="_on_news_pressed"]
-[connection signal="pressed" from="bg/school" to="." method="_on_school_pressed"]
+[connection signal="pressed" from="bg/main_school" to="." method="_on_school_pressed"]

@@ -1,63 +1,58 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://script/swipeRecord.gd" type="Script" id=1]
-[ext_resource path="res://Pic/B3.png" type="Texture" id=2]
-[ext_resource path="res://Pic/B2.png" type="Texture" id=3]
-[ext_resource path="res://Pic/B1.png" type="Texture" id=5]
+[ext_resource path="res://Pic/re_school.jpg" type="Texture" id=2]
+[ext_resource path="res://Pic/re_news.jpg" type="Texture" id=3]
+[ext_resource path="res://Pic/re_story.jpg" type="Texture" id=4]
 
 [node name="ScrollContainer" type="ScrollContainer"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -960.0
-margin_top = -540.0
-margin_right = 960.0
-margin_bottom = 540.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = -2.0
+margin_right = 1.0
+margin_bottom = -2.0
 rect_clip_content = false
 mouse_filter = 1
 script = ExtResource( 1 )
+card_scale = 0.6
+card_current_scale = 1.0
+scroll_duration = 0.3
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
-margin_right = 5540.0
-margin_bottom = 1068.0
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer"]
-margin_top = 284.0
-margin_right = 5540.0
-margin_bottom = 784.0
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_right = 5900.0
+margin_bottom = 900.0
 mouse_filter = 2
 custom_constants/margin_right = 1920
+custom_constants/margin_top = 300
 custom_constants/margin_left = 1920
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 margin_left = 1920.0
-margin_right = 3620.0
-margin_bottom = 500.0
+margin_top = 300.0
+margin_right = 3980.0
+margin_bottom = 900.0
 mouse_filter = 2
-custom_constants/separation = 100
+custom_constants/separation = 130
 
-[node name="新聞" type="TextureButton" parent="CenterContainer/MarginContainer/HBoxContainer"]
-margin_right = 500.0
-margin_bottom = 500.0
-texture_normal = ExtResource( 5 )
-
-[node name="故事" type="TextureButton" parent="CenterContainer/MarginContainer/HBoxContainer"]
-margin_left = 600.0
-margin_right = 1100.0
-margin_bottom = 500.0
+[node name="news" type="TextureButton" parent="MarginContainer/HBoxContainer"]
+margin_right = 600.0
+margin_bottom = 600.0
 texture_normal = ExtResource( 3 )
 
-[node name="教科書" type="TextureButton" parent="CenterContainer/MarginContainer/HBoxContainer"]
-margin_left = 1200.0
-margin_right = 1700.0
-margin_bottom = 500.0
+[node name="story" type="TextureButton" parent="MarginContainer/HBoxContainer"]
+margin_left = 730.0
+margin_right = 1330.0
+margin_bottom = 600.0
+texture_normal = ExtResource( 4 )
+
+[node name="school" type="TextureButton" parent="MarginContainer/HBoxContainer"]
+margin_left = 1460.0
+margin_right = 2060.0
+margin_bottom = 600.0
 texture_normal = ExtResource( 2 )
 
 [connection signal="gui_input" from="." to="." method="_on_ScrollContainer_gui_input"]
-[connection signal="pressed" from="CenterContainer/MarginContainer/HBoxContainer/新聞" to="." method="_on_Card1_pressed"]
-[connection signal="pressed" from="CenterContainer/MarginContainer/HBoxContainer/故事" to="." method="_on_Card2_pressed"]
-[connection signal="pressed" from="CenterContainer/MarginContainer/HBoxContainer/教科書" to="." method="_on_Card3_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/news" to="." method="_on_news_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/story" to="." method="_on_story_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/school" to="." method="_on_school_pressed"]

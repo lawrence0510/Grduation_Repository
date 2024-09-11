@@ -6,6 +6,7 @@ onready var story: Button = $bg/story
 onready var news: Button = $bg/news
 onready var school: Button = $bg/school
 
+
 func _ready() -> void:
 	pass
 
@@ -20,15 +21,15 @@ func _on_player_pressed():
 	get_tree().change_scene("res://scene/1.4.1.tscn")
 
 func _on_record_pressed():
-	get_tree().change_scene("res://scene/1.5.0.tscn")
+	get_tree().change_scene("res://scene/1.4.3.tscn")
 
 func _on_story_pressed():
 	get_tree().change_scene(("res://UserSystem/StageBackground.tscn"))
 
-
 func _on_news_pressed():
 	pass # Replace with function body.
 
-
 func _on_school_pressed():
-	pass # Replace with function body.
+	pass # Replace with function body.    
+
+
