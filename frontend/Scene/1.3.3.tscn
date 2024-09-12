@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Pic/123.bg.png" type="Texture" id=1]
 [ext_resource path="res://fonts/font1.tres" type="DynamicFont" id=2]
@@ -90,6 +90,14 @@ font_data = ExtResource( 4 )
 
 [sub_resource type="StyleBoxFlat" id=15]
 bg_color = Color( 1, 1, 1, 0.329412 )
+
+[sub_resource type="DynamicFont" id=19]
+size = 25
+outline_size = 1
+outline_color = Color( 1, 0, 0, 0.392157 )
+use_filter = true
+extra_spacing_top = -10
+font_data = ExtResource( 4 )
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 3 )
@@ -244,6 +252,22 @@ custom_styles/normal = SubResource( 15 )
 text = "忘記密碼？"
 align = 1
 valign = 1
+
+[node name="error" type="Label" parent="BackgroundPicture/BackgroundControl"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -175.0
+margin_top = 106.0
+margin_right = 175.0
+margin_bottom = 133.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 1, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 19 )
+text = "！目前發生錯誤，請稍後再試！"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 

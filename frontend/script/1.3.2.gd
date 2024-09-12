@@ -3,6 +3,10 @@ extends Node2D
 onready var verification_input: LineEdit = $BackgroundPicture/BackgroundControl/VerificationLineEdit
 onready var next_button: Button = $BackgroundPicture/BackgroundControl/NextButton
 onready var http_request: HTTPRequest = $HTTPRequest
+onready var four: Label = $"BackgroundPicture/BackgroundControl/400"
+onready var fourone: Label = $"BackgroundPicture/BackgroundControl/401"
+onready var Failed: Label = $BackgroundPicture/BackgroundControl/Failed
+onready var none: Label = $"BackgroundPicture/BackgroundControl/none"
 
 func _ready() -> void:
 	next_button.connect("pressed", self, "_on_next_pressed")
@@ -36,12 +40,16 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		get_tree().change_scene("res://scene/1.3.3.tscn")
 	elif response_code == 400:
 		show_error_message("驗證碼已過期，請重新請求一個新的驗證碼。")
+		four.show()
 	elif response_code == 401:
 		show_error_message("驗證碼錯誤，請檢查並重新輸入。")
+		fourone.show()
 	elif response_code == 404:
 		show_error_message("找不到該電子郵件地址，請檢查並重試。")
+		none.show()
 	else:
 		show_error_message("發生未知錯誤，請稍後重試。")
+		Failed.show()
 	
 	# 恢復按鈕
 	next_button.disabled = false

@@ -4,6 +4,7 @@ extends Node2D
 onready var finish_button: Button = $BackgroundPicture/BackgroundControl/FinishButton
 onready var password_lineedit: LineEdit = $BackgroundPicture/BackgroundControl/PasswordLineEdit
 onready var http_request: HTTPRequest = $HTTPRequest
+onready var error: Label = $BackgroundPicture/BackgroundControl/error
 
 # 假設 user_email 從全局變數傳遞過來
 var user_email: String = GlobalVar.user_email  # 全局變數中保存的使用者電子郵件
@@ -45,3 +46,4 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		get_tree().change_scene("res://scene/1.1.tscn")
 	else:
 		print("Failed to reset password, response code: ", response_code)
+		error.show()

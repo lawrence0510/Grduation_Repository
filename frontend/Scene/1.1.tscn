@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Pic/123.bg.png" type="Texture" id=2]
@@ -19,6 +19,9 @@ corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id=16]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [sub_resource type="StyleBoxFlat" id=2]
 content_margin_left = 10.0
@@ -122,7 +125,7 @@ use_filter = true
 extra_spacing_top = -10
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=16]
+[sub_resource type="DynamicFont" id=19]
 size = 30
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
@@ -176,6 +179,11 @@ margin_top = 176.626
 margin_right = 419.0
 margin_bottom = 350.626
 rect_scale = Vector2( 0.7, 0.7 )
+custom_styles/hover = SubResource( 16 )
+custom_styles/pressed = SubResource( 16 )
+custom_styles/focus = SubResource( 16 )
+custom_styles/disabled = SubResource( 16 )
+custom_styles/normal = SubResource( 16 )
 action_mode = 0
 icon = ExtResource( 3 )
 flat = true
@@ -364,7 +372,7 @@ margin_top = 134.356
 margin_right = 343.0
 margin_bottom = 169.356
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 16 )
+custom_fonts/font = SubResource( 19 )
 text = "帳號或密碼輸入錯誤！"
 
 [node name="OKButton" type="Button" parent="BackgroundPicture/Failed/Label"]

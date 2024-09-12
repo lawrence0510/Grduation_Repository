@@ -106,6 +106,5 @@ func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
 	else:
 		print("Google登入失敗")
 
-
 func _on_OKButton_pressed():
 	Failed.hide()

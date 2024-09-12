@@ -3,6 +3,9 @@ extends Node2D
 # 獲取 UI 中的節點
 onready var mail_input: LineEdit = $BackgroundPicture/BackgroundControl/MailLineEdit
 onready var http_request: HTTPRequest = $HTTPRequest
+onready var error: Label = $BackgroundPicture/BackgroundControl/error
+onready var notice: Label = $BackgroundPicture/BackgroundControl/notice
+onready var none: Label = $"BackgroundPicture/BackgroundControl/none"
 
 func _ready() -> void:
 	http_request.connect("request_completed", self, "_on_HTTPRequest_request_completed")
@@ -43,5 +46,12 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	
 	if response_code == 200:
 		get_tree().change_scene("res://scene/1.3.2.tscn")
+	elif response_code == 404:
+		print("找不到該電子郵件地址，請檢查並重試。")
+		notice.hide()
+		none.show()
 	else:
 		print("Request failed with response code: ", response_code)
+		notice.hide()
+		error.show()
+		

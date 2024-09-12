@@ -7,6 +7,7 @@ onready var birthday_input: LineEdit = $BackgroundPicture/BackgroundControl/Birt
 onready var mail_input: LineEdit = $BackgroundPicture/BackgroundControl/MailLineEdit
 onready var phone_input: LineEdit = $BackgroundPicture/BackgroundControl/PhoneLineEdit  # 修正拼寫錯誤
 
+onready var Failed: WindowDialog = $BackgroundPicture/Failed
 onready var http_request: HTTPRequest = $HTTPRequest
 
 func _ready() -> void:
@@ -58,8 +59,12 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		# 成功註冊後切換場景
 		get_tree().change_scene("res://scene/1.2.3.tscn")
 	else:
+		Failed.popup_centered()
 		print("註冊失敗，請檢查輸入資料")
 		
 #返回
 func _on_back_pressed():
 	get_tree().change_scene("res://scene/1.1.tscn")
+
+func _on_OKButton_pressed():
+	Failed.hide()

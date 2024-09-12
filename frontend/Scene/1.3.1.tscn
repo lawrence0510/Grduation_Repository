@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Pic/123.bg.png" type="Texture" id=1]
 [ext_resource path="res://fonts/font1.tres" type="DynamicFont" id=2]
@@ -80,6 +80,14 @@ corner_radius_bottom_left = 20
 
 [sub_resource type="DynamicFont" id=12]
 size = 22
+use_filter = true
+extra_spacing_top = -10
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=19]
+size = 25
+outline_size = 1
+outline_color = Color( 1, 0, 0, 0.392157 )
 use_filter = true
 extra_spacing_top = -10
 font_data = ExtResource( 8 )
@@ -189,18 +197,34 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 6 )
 text = "請輸入信箱："
 
-[node name="紅字" type="Label" parent="BackgroundPicture/BackgroundControl"]
+[node name="notice" type="Label" parent="BackgroundPicture/BackgroundControl"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -193.0
+margin_left = -132.0
 margin_top = 106.0
-margin_right = 71.0
+margin_right = 132.0
 margin_bottom = 129.0
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 custom_fonts/font = SubResource( 12 )
 text = "系統將會寄送驗證碼至信箱"
+
+[node name="error" type="Label" parent="BackgroundPicture/BackgroundControl"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -175.0
+margin_top = 106.0
+margin_right = 175.0
+margin_bottom = 133.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 1, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 19 )
+text = "！目前發生錯誤，請稍後再試！"
 
 [node name="step1" type="Label" parent="BackgroundPicture/BackgroundControl"]
 margin_left = 52.0
@@ -275,6 +299,22 @@ custom_styles/normal = SubResource( 15 )
 text = "忘記密碼？"
 align = 1
 valign = 1
+
+[node name="none" type="Label" parent="BackgroundPicture/BackgroundControl"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -225.0
+margin_top = 106.0
+margin_right = 225.0
+margin_bottom = 133.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 1, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 19 )
+text = "找不到該電子郵件地址，請檢查並重試。"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 

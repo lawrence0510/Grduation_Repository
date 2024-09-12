@@ -13,7 +13,7 @@ mouse_filter = 1
 script = ExtResource( 4 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-margin_right = 5580.0
+margin_right = 5600.0
 margin_bottom = 800.0
 mouse_filter = 2
 custom_constants/margin_right = 1920
@@ -23,10 +23,10 @@ custom_constants/margin_left = 1920
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 margin_left = 1920.0
 margin_top = 300.0
-margin_right = 3660.0
+margin_right = 3680.0
 margin_bottom = 800.0
 mouse_filter = 2
-custom_constants/separation = 120
+custom_constants/separation = 130
 
 [node name="chinese" type="TextureButton" parent="MarginContainer/HBoxContainer"]
 margin_right = 500.0
@@ -34,14 +34,14 @@ margin_bottom = 500.0
 texture_normal = ExtResource( 2 )
 
 [node name="society" type="TextureButton" parent="MarginContainer/HBoxContainer"]
-margin_left = 620.0
-margin_right = 1120.0
+margin_left = 630.0
+margin_right = 1130.0
 margin_bottom = 500.0
 texture_normal = ExtResource( 1 )
 
 [node name="nature" type="TextureButton" parent="MarginContainer/HBoxContainer"]
-margin_left = 1240.0
-margin_right = 1740.0
+margin_left = 1260.0
+margin_right = 1760.0
 margin_bottom = 500.0
 texture_normal = ExtResource( 3 )
 
