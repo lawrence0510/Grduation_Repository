@@ -17,19 +17,18 @@ func _process(delta: float) -> void:
 		if OS.window_fullscreen:
 			get_tree().quit()
 
-func _on_player_pressed():
-	get_tree().change_scene("res://scene/1.4.1.tscn")
 
-func _on_record_pressed():
+func _on_white_record_pressed():
 	get_tree().change_scene("res://scene/1.4.3.tscn")
 
-func _on_story_pressed():
-	get_tree().change_scene(("res://UserSystem/StageBackground.tscn"))
-
-func _on_news_pressed():
+func _on_white_school_pressed():
 	pass # Replace with function body.
 
-func _on_school_pressed():
-	pass # Replace with function body.    
+func _on_white_story_pressed():
+	get_tree().change_scene(("res://UserSystem/StageBackground.tscn"))
 
+func _on_white_news_pressed():
+	pass # Replace with function body.
 
+func _on_white_player_pressed():
+	get_tree().change_scene("res://scene/1.4.1.tscn")

@@ -86,11 +86,11 @@ func _on_ScrollContainer_gui_input(event: InputEvent) -> void:
 
 ## 按下各關卡圖片
 func _on_news_pressed() -> void:
-	pass # Replace with function body.
+	get_tree().change_scene("res://scene/1.4.4.tscn")
 
 func _on_story_pressed() -> void:
 	pass # Replace with function body.
 
 func _on_school_pressed() -> void:
-	get_tree().change_scene("res://scene/1.4.4.tscn")
+	pass
 

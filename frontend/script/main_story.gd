@@ -1,6 +1,6 @@
 extends Button
 
-onready var white_story: TextureRect = $"../white_story"
+onready var white_story: Button = $"../white_story"
 
 # 當滑鼠進入按鈕時
 func _on_Button_mouse_entered():

@@ -1,10 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Pic/bc911.png" type="Texture" id=2]
 [ext_resource path="res://Pic/roll.png" type="Texture" id=3]
 [ext_resource path="res://script/ScrollContent.gd" type="Script" id=4]
-[ext_resource path="res://Fonts/font911.tres" type="DynamicFont" id=5]
+[ext_resource path="res://Fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=6]
 
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0, 0, 0, 0.6 )
@@ -16,6 +16,12 @@ outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
 font_data = ExtResource( 1 )
 
+[sub_resource type="DynamicFont" id=5]
+size = 50
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
+
 [sub_resource type="DynamicFont" id=3]
 size = 50
 outline_size = 1
@@ -23,11 +29,10 @@ outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=6]
 size = 50
-outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
-font_data = ExtResource( 1 )
+font_data = ExtResource( 6 )
 
 [node name="Node2D" type="Node2D"]
 
@@ -77,17 +82,17 @@ margin_right = 1593.0
 margin_bottom = 366.0
 
 [node name="time" type="Label" parent="TextureRect/TextureRect/bar"]
-margin_right = 200.0
-margin_bottom = 73.0
+margin_right = 64.0
+margin_bottom = 24.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 5 )
 text = "答題時間"
 
-[node name="topic" type="Label" parent="TextureRect/TextureRect/bar"]
-margin_left = 420.0
-margin_right = 620.0
+[node name="title" type="Label" parent="TextureRect/TextureRect/bar"]
+margin_left = 359.0
+margin_right = 559.0
 margin_bottom = 73.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
@@ -113,14 +118,15 @@ margin_bottom = 804.0
 script = ExtResource( 4 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TextureRect/TextureRect/ScrollContainer"]
-margin_right = 1191.0
-margin_bottom = 602.0
+margin_right = 1203.0
+margin_bottom = 423.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 70
 
 [node name="line1" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer"]
-margin_right = 1191.0
+visible = false
+margin_right = 1203.0
 margin_bottom = 14.0
 
 [node name="time" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line1"]
@@ -129,7 +135,7 @@ margin_bottom = 73.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = SubResource( 6 )
 text = "2024-12-01 13:14"
 
 [node name="topic" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line1"]
@@ -139,7 +145,7 @@ margin_bottom = 73.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 6 )
 text = "探討生成式人工智慧於會計業文字客服之應用"
 clip_text = true
 
@@ -150,7 +156,7 @@ margin_bottom = 73.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 6 )
 text = "80"
 align = 1
 valign = 1
@@ -162,13 +168,13 @@ margin_bottom = 73.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 6 )
 text = "..."
 
 [node name="line2" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer"]
-margin_top = 84.0
-margin_right = 1191.0
-margin_bottom = 98.0
+visible = false
+margin_right = 1203.0
+margin_bottom = 14.0
 
 [node name="time" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line2"]
 margin_right = 200.0
@@ -176,7 +182,7 @@ margin_bottom = 73.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 6 )
 text = "答題時間"
 
 [node name="topic" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line2"]
@@ -186,7 +192,7 @@ margin_bottom = 73.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 6 )
 text = "文章標題文章標題文章標題文章標題"
 clip_text = true
 
@@ -197,7 +203,7 @@ margin_bottom = 73.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 6 )
 text = "分數"
 align = 1
 valign = 1
@@ -209,13 +215,13 @@ margin_bottom = 73.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 6 )
 text = "..."
 
 [node name="line3" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer"]
-margin_top = 168.0
-margin_right = 1191.0
-margin_bottom = 182.0
+visible = false
+margin_right = 1203.0
+margin_bottom = 14.0
 
 [node name="time" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line3"]
 margin_right = 200.0
@@ -223,7 +229,7 @@ margin_bottom = 73.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 6 )
 text = "答題時間"
 
 [node name="topic" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line3"]
@@ -233,7 +239,7 @@ margin_bottom = 73.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 6 )
 text = "文章標題文章標題文章標題文章標題"
 clip_text = true
 
@@ -244,7 +250,7 @@ margin_bottom = 73.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 6 )
 text = "分數"
 align = 1
 valign = 1
@@ -256,13 +262,13 @@ margin_bottom = 73.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 6 )
 text = "..."
 
 [node name="line4" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer"]
-margin_top = 252.0
-margin_right = 1191.0
-margin_bottom = 266.0
+visible = false
+margin_right = 1203.0
+margin_bottom = 14.0
 
 [node name="time" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line4"]
 margin_right = 200.0
@@ -270,7 +276,7 @@ margin_bottom = 73.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 6 )
 text = "答題時間"
 
 [node name="topic" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line4"]
@@ -280,7 +286,7 @@ margin_bottom = 73.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 6 )
 text = "文章標題文章標題文章標題文章標題"
 clip_text = true
 
@@ -291,7 +297,7 @@ margin_bottom = 73.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 6 )
 text = "分數"
 align = 1
 valign = 1
@@ -303,193 +309,5 @@ margin_bottom = 73.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "..."
-
-[node name="line5" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer"]
-margin_top = 336.0
-margin_right = 1191.0
-margin_bottom = 350.0
-
-[node name="time" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line5"]
-margin_right = 200.0
-margin_bottom = 73.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "答題時間"
-
-[node name="topic" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line5"]
-margin_left = 420.0
-margin_right = 970.0
-margin_bottom = 73.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "文章標題文章標題文章標題文章標題"
-clip_text = true
-
-[node name="score" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line5"]
-margin_left = 1050.0
-margin_right = 1150.0
-margin_bottom = 73.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "分數"
-align = 1
-valign = 1
-
-[node name="point" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line5"]
-margin_left = 972.0
-margin_right = 1008.0
-margin_bottom = 73.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "..."
-
-[node name="line6" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer"]
-margin_top = 420.0
-margin_right = 1191.0
-margin_bottom = 434.0
-
-[node name="time" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line6"]
-margin_right = 200.0
-margin_bottom = 73.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "答題時間"
-
-[node name="topic" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line6"]
-margin_left = 420.0
-margin_right = 970.0
-margin_bottom = 73.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "文章標題文章標題文章標題文章標題"
-clip_text = true
-
-[node name="score" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line6"]
-margin_left = 1050.0
-margin_right = 1150.0
-margin_bottom = 73.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "分數"
-align = 1
-valign = 1
-
-[node name="point" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line6"]
-margin_left = 972.0
-margin_right = 1008.0
-margin_bottom = 73.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "..."
-
-[node name="line7" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer"]
-margin_top = 504.0
-margin_right = 1191.0
-margin_bottom = 518.0
-
-[node name="time" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line7"]
-margin_right = 200.0
-margin_bottom = 73.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "答題時間"
-
-[node name="topic" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line7"]
-margin_left = 420.0
-margin_right = 970.0
-margin_bottom = 73.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "文章標題文章標題文章標題文章標題"
-clip_text = true
-
-[node name="score" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line7"]
-margin_left = 1050.0
-margin_right = 1150.0
-margin_bottom = 73.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "分數"
-align = 1
-valign = 1
-
-[node name="point" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line7"]
-margin_left = 972.0
-margin_right = 1008.0
-margin_bottom = 73.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "..."
-
-[node name="line8" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer"]
-margin_top = 588.0
-margin_right = 1191.0
-margin_bottom = 602.0
-
-[node name="time" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line8"]
-margin_right = 200.0
-margin_bottom = 73.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "答題時間"
-
-[node name="topic" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line8"]
-margin_left = 420.0
-margin_right = 970.0
-margin_bottom = 73.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "文章標題文章標題文章標題文章標題"
-clip_text = true
-
-[node name="score" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line8"]
-margin_left = 1050.0
-margin_right = 1150.0
-margin_bottom = 73.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "分數"
-align = 1
-valign = 1
-
-[node name="point" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line8"]
-margin_left = 972.0
-margin_right = 1008.0
-margin_bottom = 73.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 6 )
 text = "..."

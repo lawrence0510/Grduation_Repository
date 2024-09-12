@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Pic/island5.png" type="Texture" id=1]
 [ext_resource path="res://script/1.4.0.gd" type="Script" id=2]
@@ -28,6 +28,9 @@ outline_size = 1
 outline_color = Color( 0.286275, 0.690196, 0.501961, 1 )
 use_filter = true
 font_data = ExtResource( 5 )
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [node name="Control" type="Control"]
 margin_right = 1925.0
@@ -129,48 +132,83 @@ flat = true
 icon_align = 1
 script = ExtResource( 9 )
 
-[node name="white_record" type="TextureRect" parent="bg"]
+[node name="white_record" type="Button" parent="bg"]
 visible = false
-margin_left = 1170.0
-margin_top = 514.0
-margin_right = 1670.0
-margin_bottom = 1014.0
-texture = ExtResource( 14 )
+margin_left = 1171.0
+margin_top = 511.0
+margin_right = 1683.0
+margin_bottom = 1017.0
+mouse_filter = 1
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+icon = ExtResource( 14 )
 
-[node name="white_school" type="TextureRect" parent="bg"]
+[node name="white_school" type="Button" parent="bg"]
 visible = false
-margin_left = 750.0
-margin_top = 6.0
-margin_right = 1250.0
-margin_bottom = 506.0
-texture = ExtResource( 13 )
+margin_left = 749.0
+margin_top = 2.0
+margin_right = 1261.0
+margin_bottom = 508.0
+mouse_filter = 1
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+icon = ExtResource( 13 )
 
-[node name="white_story" type="TextureRect" parent="bg"]
+[node name="white_story" type="Button" parent="bg"]
 visible = false
-margin_left = 69.0
+margin_left = 71.0
 margin_top = 7.0
-margin_right = 569.0
+margin_right = 571.0
 margin_bottom = 507.0
-texture = ExtResource( 11 )
+mouse_filter = 1
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+icon = ExtResource( 11 )
 
-[node name="white_news" type="TextureRect" parent="bg"]
+[node name="white_news" type="Button" parent="bg"]
 visible = false
-margin_left = 1372.0
-margin_top = 32.0
-margin_right = 1872.0
-margin_bottom = 532.0
-texture = ExtResource( 12 )
+margin_left = 1374.0
+margin_top = 34.0
+margin_right = 1874.0
+margin_bottom = 534.0
+mouse_filter = 1
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+icon = ExtResource( 12 )
 
-[node name="white_player" type="TextureRect" parent="bg"]
+[node name="white_player" type="Button" parent="bg"]
 visible = false
-margin_left = 288.0
+margin_left = 287.0
 margin_top = 555.0
-margin_right = 788.0
+margin_right = 787.0
 margin_bottom = 1055.0
-texture = ExtResource( 10 )
+mouse_filter = 1
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 11 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+icon = ExtResource( 10 )
 
 [connection signal="pressed" from="bg/player" to="." method="_on_player_pressed"]
 [connection signal="pressed" from="bg/record" to="." method="_on_record_pressed"]
 [connection signal="pressed" from="bg/story" to="." method="_on_story_pressed"]
 [connection signal="pressed" from="bg/news" to="." method="_on_news_pressed"]
 [connection signal="pressed" from="bg/main_school" to="." method="_on_school_pressed"]
+[connection signal="pressed" from="bg/white_record" to="." method="_on_white_record_pressed"]
+[connection signal="pressed" from="bg/white_school" to="." method="_on_white_school_pressed"]
+[connection signal="pressed" from="bg/white_story" to="." method="_on_white_story_pressed"]
+[connection signal="pressed" from="bg/white_news" to="." method="_on_white_news_pressed"]
+[connection signal="pressed" from="bg/white_player" to="." method="_on_white_player_pressed"]
