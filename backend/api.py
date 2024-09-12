@@ -1329,7 +1329,6 @@ class RecordHistory(Resource):
             if connection:
                 connection.close()
 
-
 @history_ns.route('/get_history_from_user')
 class GetHistoryFromUser(Resource):
     @history_ns.expect(user_id_parser)
@@ -1342,18 +1341,33 @@ class GetHistoryFromUser(Resource):
         if connection is not None:
             try:
                 cursor = connection.cursor(dictionary=True)
+                # 查找對應的 user_id 的歷史資料
                 sql = "SELECT * FROM `History` WHERE `user_id` = %s"
                 cursor.execute(sql, (user_id,))
                 histories = cursor.fetchall()
 
                 if histories:
                     for history in histories:
+                        # 處理時間格式
                         if 'time' in history and history['time']:
                             history['time'] = history['time'].strftime(
                                 '%Y-%m-%d %H:%M:%S')
-                            for key in history:
-                                if isinstance(history[key], Decimal):
-                                    history[key] = str(history[key])
+
+                        # 將 Decimal 類型轉換為字串
+                        for key in history:
+                            if isinstance(history[key], Decimal):
+                                history[key] = str(history[key])
+
+                        article_id = history.get('article_id')
+                        if article_id:
+                            article_sql = "SELECT `article_title` FROM `Article` WHERE `article_id` = %s"
+                            cursor.execute(article_sql, (article_id,))
+                            article = cursor.fetchone()
+                            if article:
+                                history['article_title'] = article['article_title']
+                            else:
+                                history['article_title'] = "Unknown Title"
+
                     return histories, 200
                 else:
                     return {"error": "No history found for the user"}, 404
