@@ -26,6 +26,14 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			# 抓取時間的月、日、時、分
 			var time = entry["time"].substr(5, 11)  # 只取 "MM-DD HH:MM" 部分
 			var title = entry.get("article_title", "未知標題")  # 使用 article_title，如果無則顯示“未知標題”
+			
+			# 處理標題：限制在12個中文字，超過則補「...」，少於則補空格
+			var title_length = title.length()
+			if title_length > 12:
+				title = title.substr(0, 11) + "..."  # 截斷到11字並補上「...」
+			elif title_length < 12:
+				title = title.ljust(12)  # 如果不足12字，則補滿空格
+
 			var score = str(entry["total_score"])  # 抓取 total_score
 			
 			# 將資料加入 data_list
@@ -37,7 +45,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			
 		# 刷新 UI，動態生成 Label
 		for data in data_list:
-			var text = data["time"] + "              " + data["title"] + "              " + data["score"]
+			var text = data["time"] + "              " + data["title"] + "                  " + data["score"]
 			create_label_r(text)
 	else:
 		print("Error parsing JSON: ", json.error_string)
