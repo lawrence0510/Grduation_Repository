@@ -1,9 +1,9 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://fonts/font6.tres" type="DynamicFont" id=1]
 [ext_resource path="res://script/1.4.2.gd" type="Script" id=2]
 [ext_resource path="res://fonts/font1 - 複製 (8) - 複製.tres" type="DynamicFont" id=3]
-[ext_resource path="res://pic/框框2.png" type="Texture" id=4]
+[ext_resource path="res://pic/框框.png" type="Texture" id=4]
 [ext_resource path="res://fonts/個人資料.tres" type="DynamicFont" id=5]
 [ext_resource path="res://fonts/日期框.tres" type="StyleBox" id=6]
 [ext_resource path="res://Pic/sea_bg.png" type="Texture" id=7]
@@ -16,6 +16,7 @@
 [ext_resource path="res://fonts/上線字.tres" type="DynamicFont" id=14]
 [ext_resource path="res://fonts/關卡.tres" type="StyleBox" id=15]
 [ext_resource path="res://pic/delete1.png" type="Texture" id=16]
+[ext_resource path="res://Pic/color.jpg" type="Texture" id=17]
 
 [sub_resource type="StyleBoxFlat" id=6]
 draw_center = false
@@ -39,6 +40,8 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Theme" id=12]
 
 [sub_resource type="StyleBoxFlat" id=8]
 draw_center = false
@@ -74,9 +77,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -772.0
-margin_top = -511.0
+margin_top = -500.0
 margin_right = -218.0
-margin_bottom = -61.0
+margin_bottom = -50.0
 rect_scale = Vector2( 2.8, 2.3 )
 texture = ExtResource( 4 )
 
@@ -252,14 +255,23 @@ text = "星期日"
 align = 1
 valign = 1
 
-[node name="DayPanel" type="Panel" parent="bg/框框"]
-margin_left = 52.0
-margin_top = 197.261
-margin_right = 507.0
-margin_bottom = 397.261
+[node name="pic" type="TextureRect" parent="bg/框框"]
+margin_left = 217.5
+margin_top = 264.348
+margin_right = 523.5
+margin_bottom = 392.348
+theme = SubResource( 12 )
+texture = ExtResource( 17 )
+expand = true
+
+[node name="DayPanel" type="Panel" parent="bg/框框/pic"]
+margin_left = -165.5
+margin_top = -67.0868
+margin_right = 289.5
+margin_bottom = 132.913
 custom_styles/panel = SubResource( 8 )
 
-[node name="1" type="Label" parent="bg/框框/DayPanel"]
+[node name="1" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 400.0
 margin_right = 440.0
 margin_bottom = 24.0
@@ -269,7 +281,7 @@ text = "1"
 align = 1
 valign = 1
 
-[node name="2" type="Label" parent="bg/框框/DayPanel"]
+[node name="2" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 10.0
 margin_top = 35.0
 margin_right = 50.0
@@ -280,7 +292,7 @@ text = "2"
 align = 1
 valign = 1
 
-[node name="3" type="Label" parent="bg/框框/DayPanel"]
+[node name="3" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 75.0
 margin_top = 35.0
 margin_right = 115.0
@@ -291,7 +303,7 @@ text = "3"
 align = 1
 valign = 1
 
-[node name="4" type="Label" parent="bg/框框/DayPanel"]
+[node name="4" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 140.0
 margin_top = 35.0
 margin_right = 180.0
@@ -302,7 +314,7 @@ text = "4"
 align = 1
 valign = 1
 
-[node name="5" type="Label" parent="bg/框框/DayPanel"]
+[node name="5" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 205.0
 margin_top = 35.0
 margin_right = 245.0
@@ -313,7 +325,7 @@ text = "5"
 align = 1
 valign = 1
 
-[node name="6" type="Label" parent="bg/框框/DayPanel"]
+[node name="6" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 270.0
 margin_top = 35.0
 margin_right = 310.0
@@ -324,7 +336,7 @@ text = "6"
 align = 1
 valign = 1
 
-[node name="7" type="Label" parent="bg/框框/DayPanel"]
+[node name="7" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 335.0
 margin_top = 35.0
 margin_right = 375.0
@@ -335,7 +347,7 @@ text = "7"
 align = 1
 valign = 1
 
-[node name="8" type="Label" parent="bg/框框/DayPanel"]
+[node name="8" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 400.0
 margin_top = 35.0
 margin_right = 440.0
@@ -346,7 +358,7 @@ text = "8"
 align = 1
 valign = 1
 
-[node name="9" type="Label" parent="bg/框框/DayPanel"]
+[node name="9" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 10.0
 margin_top = 70.0
 margin_right = 50.0
@@ -357,7 +369,7 @@ text = "9"
 align = 1
 valign = 1
 
-[node name="10" type="Label" parent="bg/框框/DayPanel"]
+[node name="10" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 75.0
 margin_top = 70.0
 margin_right = 115.0
@@ -368,7 +380,7 @@ text = "10"
 align = 1
 valign = 1
 
-[node name="11" type="Label" parent="bg/框框/DayPanel"]
+[node name="11" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 140.0
 margin_top = 70.0
 margin_right = 180.0
@@ -379,7 +391,7 @@ text = "11"
 align = 1
 valign = 1
 
-[node name="12" type="Label" parent="bg/框框/DayPanel"]
+[node name="12" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 205.0
 margin_top = 70.0
 margin_right = 245.0
@@ -390,7 +402,7 @@ text = "12"
 align = 1
 valign = 1
 
-[node name="13" type="Label" parent="bg/框框/DayPanel"]
+[node name="13" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 270.0
 margin_top = 70.0
 margin_right = 310.0
@@ -401,7 +413,7 @@ text = "13"
 align = 1
 valign = 1
 
-[node name="14" type="Label" parent="bg/框框/DayPanel"]
+[node name="14" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 335.0
 margin_top = 70.0
 margin_right = 375.0
@@ -412,7 +424,7 @@ text = "14"
 align = 1
 valign = 1
 
-[node name="15" type="Label" parent="bg/框框/DayPanel"]
+[node name="15" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 400.0
 margin_top = 70.0
 margin_right = 440.0
@@ -423,7 +435,7 @@ text = "15"
 align = 1
 valign = 1
 
-[node name="b16" type="Button" parent="bg/框框/DayPanel"]
+[node name="b16" type="Button" parent="bg/框框/pic/DayPanel"]
 margin_left = 9.07144
 margin_top = 105.348
 margin_right = 52.0714
@@ -440,7 +452,7 @@ custom_styles/disabled = ExtResource( 8 )
 custom_styles/normal = ExtResource( 8 )
 text = "16"
 
-[node name="17" type="Label" parent="bg/框框/DayPanel"]
+[node name="17" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 75.0
 margin_top = 105.0
 margin_right = 115.0
@@ -451,7 +463,7 @@ text = "17"
 align = 1
 valign = 1
 
-[node name="18" type="Label" parent="bg/框框/DayPanel"]
+[node name="18" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 140.0
 margin_top = 105.0
 margin_right = 180.0
@@ -462,7 +474,7 @@ text = "18"
 align = 1
 valign = 1
 
-[node name="19" type="Label" parent="bg/框框/DayPanel"]
+[node name="19" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 205.0
 margin_top = 105.0
 margin_right = 245.0
@@ -473,7 +485,7 @@ text = "19"
 align = 1
 valign = 1
 
-[node name="20" type="Label" parent="bg/框框/DayPanel"]
+[node name="20" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 270.0
 margin_top = 105.0
 margin_right = 310.0
@@ -484,7 +496,7 @@ text = "20"
 align = 1
 valign = 1
 
-[node name="21" type="Label" parent="bg/框框/DayPanel"]
+[node name="21" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 335.0
 margin_top = 105.0
 margin_right = 375.0
@@ -495,7 +507,7 @@ text = "21"
 align = 1
 valign = 1
 
-[node name="22" type="Label" parent="bg/框框/DayPanel"]
+[node name="22" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 400.0
 margin_top = 105.0
 margin_right = 440.0
@@ -506,7 +518,7 @@ text = "22"
 align = 1
 valign = 1
 
-[node name="23" type="Label" parent="bg/框框/DayPanel"]
+[node name="23" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 10.0
 margin_top = 140.0
 margin_right = 50.0
@@ -517,7 +529,7 @@ text = "23"
 align = 1
 valign = 1
 
-[node name="24" type="Label" parent="bg/框框/DayPanel"]
+[node name="24" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 75.0
 margin_top = 140.0
 margin_right = 115.0
@@ -528,7 +540,7 @@ text = "24"
 align = 1
 valign = 1
 
-[node name="25" type="Label" parent="bg/框框/DayPanel"]
+[node name="25" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 140.0
 margin_top = 140.0
 margin_right = 180.0
@@ -539,7 +551,7 @@ text = "25"
 align = 1
 valign = 1
 
-[node name="26" type="Label" parent="bg/框框/DayPanel"]
+[node name="26" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 205.0
 margin_top = 140.0
 margin_right = 245.0
@@ -550,7 +562,7 @@ text = "26"
 align = 1
 valign = 1
 
-[node name="27" type="Label" parent="bg/框框/DayPanel"]
+[node name="27" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 270.0
 margin_top = 140.0
 margin_right = 310.0
@@ -561,7 +573,7 @@ text = "27"
 align = 1
 valign = 1
 
-[node name="28" type="Label" parent="bg/框框/DayPanel"]
+[node name="28" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 335.0
 margin_top = 140.0
 margin_right = 375.0
@@ -572,7 +584,7 @@ text = "28"
 align = 1
 valign = 1
 
-[node name="29" type="Label" parent="bg/框框/DayPanel"]
+[node name="29" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 400.0
 margin_top = 140.0
 margin_right = 440.0
@@ -583,7 +595,7 @@ text = "29"
 align = 1
 valign = 1
 
-[node name="30" type="Label" parent="bg/框框/DayPanel"]
+[node name="30" type="Label" parent="bg/框框/pic/DayPanel"]
 margin_left = 10.0
 margin_top = 175.0
 margin_right = 50.0
@@ -794,5 +806,5 @@ flat = true
 
 [connection signal="pressed" from="bg/框框/personal" to="." method="_on_personal_pressed"]
 [connection signal="pressed" from="bg/框框/record" to="." method="_on_record_pressed"]
-[connection signal="pressed" from="bg/框框/DayPanel/b16" to="." method="_on_16_pressed"]
+[connection signal="pressed" from="bg/框框/pic/DayPanel/b16" to="." method="_on_16_pressed"]
 [connection signal="pressed" from="bg/cross" to="." method="_on_cross_pressed"]
