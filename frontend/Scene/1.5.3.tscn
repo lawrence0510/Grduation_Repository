@@ -33,7 +33,7 @@ content_margin_left = 20.0
 content_margin_right = 20.0
 content_margin_top = 10.0
 content_margin_bottom = 20.0
-bg_color = Color( 0.976471, 0.823529, 0.462745, 1 )
+bg_color = Color( 0.403922, 0.909804, 0.992157, 1 )
 border_color = Color( 0.0196078, 0.00784314, 0.00784314, 1 )
 corner_radius_top_left = 20
 corner_radius_top_right = 20
@@ -181,11 +181,11 @@ custom_styles/disabled = ExtResource( 1 )
 custom_styles/normal = ExtResource( 1 )
 text = "score"
 
-[node name="參考答案" type="RichTextLabel" parent="bg"]
+[node name="details" type="RichTextLabel" parent="bg"]
 margin_left = 301.0
-margin_top = 665.0
-margin_right = 1659.0
-margin_bottom = 918.0
+margin_top = 708.0
+margin_right = 1619.0
+margin_bottom = 909.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
@@ -213,44 +213,44 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -130.0
-margin_top = -295.0
+margin_top = -234.0
 margin_right = -25.0
-margin_bottom = -243.0
+margin_bottom = -182.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 1 )
 text = "得分："
 
-[node name="XX分" type="Label" parent="bg"]
+[node name="XX score" type="Label" parent="bg"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -18.0
-margin_top = -312.0
+margin_top = -251.0
 margin_right = 44.0
-margin_bottom = -224.0
+margin_bottom = -163.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 2 )
 text = "40"
 
-[node name="答案" type="RichTextLabel" parent="bg"]
+[node name="A" type="RichTextLabel" parent="bg"]
 margin_left = 912.0
-margin_top = 495.0
-margin_right = 1650.0
-margin_bottom = 634.0
+margin_top = 549.0
+margin_right = 1616.0
+margin_bottom = 678.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = ExtResource( 10 )
 custom_styles/normal = SubResource( 4 )
-text = "這我 :D"
+text = "這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D"
 
-[node name="問題" type="RichTextLabel" parent="bg"]
+[node name="Q" type="RichTextLabel" parent="bg"]
 margin_left = 301.0
-margin_top = 333.0
+margin_top = 387.0
 margin_right = 1039.0
-margin_bottom = 472.0
+margin_bottom = 516.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )

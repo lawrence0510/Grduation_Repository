@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Pic/bc911.png" type="Texture" id=1]
 [ext_resource path="res://Fonts/1.5Pressed.tres" type="StyleBox" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://fonts/font9.tres" type="DynamicFont" id=6]
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=7]
 [ext_resource path="res://fonts/答案.tres" type="StyleBox" id=8]
-[ext_resource path="res://fonts/答案字.tres" type="DynamicFont" id=9]
 [ext_resource path="res://fonts/詳解字.tres" type="DynamicFont" id=10]
 [ext_resource path="res://fonts/詳解.tres" type="StyleBox" id=11]
 [ext_resource path="res://script/1.5.1.gd" type="Script" id=12]
@@ -25,16 +24,28 @@ font_data = ExtResource( 7 )
 [sub_resource type="DynamicFont" id=2]
 size = 50
 outline_size = 1
-outline_color = Color( 0, 1, 0.0156863, 1 )
+outline_color = Color( 0.364706, 0.917647, 0.333333, 1 )
 use_filter = true
 font_data = ExtResource( 7 )
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="DynamicFont" id=3]
+size = 30
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 25
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 7 )
+
+[sub_resource type="StyleBoxFlat" id=5]
 content_margin_left = 20.0
 content_margin_right = 20.0
-content_margin_top = 20.0
+content_margin_top = 10.0
 content_margin_bottom = 20.0
-bg_color = Color( 0.282353, 0.937255, 0.478431, 1 )
+bg_color = Color( 0.364706, 0.917647, 0.333333, 1 )
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
@@ -176,104 +187,43 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -130.0
-margin_top = -295.0
+margin_top = -245.0
 margin_right = -25.0
-margin_bottom = -243.0
+margin_bottom = -193.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 1 )
 text = "回答："
 
-[node name="正確" type="Label" parent="bg"]
+[node name="(in)correct" type="Label" parent="bg"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -23.0
-margin_top = -304.0
+margin_top = -254.0
 margin_right = 127.0
-margin_bottom = -231.0
-custom_colors/font_color = Color( 0, 1, 0.0156863, 1 )
-custom_colors/font_color_shadow = Color( 0, 1, 0.0156863, 1 )
+margin_bottom = -181.0
+custom_colors/font_color = Color( 0.364706, 0.917647, 0.333333, 1 )
+custom_colors/font_color_shadow = Color( 0.364706, 0.917647, 0.333333, 1 )
 custom_fonts/font = SubResource( 2 )
 text = "正確 ✓"
 
-[node name="問題" type="Label" parent="bg"]
-margin_left = 301.0
-margin_top = 327.0
-margin_right = 1659.0
-margin_bottom = 481.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 9 )
-custom_styles/normal = ExtResource( 8 )
-text = "請問下列何者昨天和侯程麟去遊樂園玩?"
-align = 1
-valign = 1
-autowrap = true
-
-[node name="A" type="Label" parent="bg"]
-margin_left = 303.0
-margin_top = 628.0
-margin_right = 943.0
-margin_bottom = 728.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 9 )
-custom_styles/normal = ExtResource( 8 )
-text = "C. 金玟池"
-align = 1
-valign = 1
-
-[node name="correct" type="Label" parent="bg"]
-margin_left = 1019.0
-margin_top = 509.0
-margin_right = 1659.0
-margin_bottom = 609.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 9 )
-custom_styles/normal = SubResource( 3 )
-text = "B. 李多慧"
-align = 1
-valign = 1
-
-[node name="C" type="Label" parent="bg"]
-margin_left = 303.0
-margin_top = 509.0
-margin_right = 943.0
-margin_bottom = 609.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 9 )
-custom_styles/normal = ExtResource( 8 )
-align = 1
-valign = 1
-
-[node name="D" type="Label" parent="bg"]
-margin_left = 1019.0
-margin_top = 628.0
-margin_right = 1659.0
-margin_bottom = 728.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 9 )
-custom_styles/normal = ExtResource( 8 )
-text = "D. 許瑋甯"
-align = 1
-valign = 1
-
-[node name="詳解" type="RichTextLabel" parent="bg"]
-margin_left = 301.0
-margin_top = 750.0
-margin_right = 1659.0
-margin_bottom = 935.0
+[node name="details" type="RichTextLabel" parent="bg"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -575.0
+margin_top = -316.0
+margin_right = 575.0
+margin_bottom = -145.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = ExtResource( 10 )
 custom_styles/normal = ExtResource( 11 )
-text = "詳解：侯程麟昨天跟李多慧去遊樂園玩！不可置信！"
+text = "詳解：這些選擇都反映了當今社會對科技進步和隱私、倫理問題的不同觀點。選擇哪個答案取決於你對科技風險與創新潛力之間權衡的態度。"
 
 [node name="cross" type="Button" parent="bg"]
 margin_left = 1789.0
@@ -283,6 +233,79 @@ margin_bottom = 536.0
 rect_scale = Vector2( 0.2, 0.2 )
 icon = ExtResource( 13 )
 flat = true
+
+[node name="Q" type="RichTextLabel" parent="bg"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -575.0
+margin_top = -167.0
+margin_right = 575.0
+margin_bottom = -16.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_colors/selection_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/normal_font = SubResource( 3 )
+custom_styles/normal = ExtResource( 8 )
+text = "你認為在這樣的背景下，我們是否應該更多地關注科技發展對倫理和隱私的影響，特別是在涉及人工智慧決策、自動化系統管理和數據隱私保護的方面，並且在未來，我們是否應該優先制定更加嚴格的政策來確保這些技術的發展不會對人類的基本權利和自由造成潛在的威脅或不利影響？"
+
+[node name="A" type="RichTextLabel" parent="bg"]
+margin_left = 390.0
+margin_top = 545.0
+margin_right = 940.0
+margin_bottom = 634.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_colors/selection_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/normal_font = SubResource( 4 )
+custom_styles/normal = ExtResource( 8 )
+text = "A.是的，我認為我們應該更加關注科技發展對倫理和隱私的影響。
+隨著科技的快速發展，特別是在人工智慧和自動化領域，確保人類基本權利和隱私不受侵害是至關重要的。我們應該制定更嚴格的政策來保障這些權利。"
+
+[node name="B" type="RichTextLabel" parent="bg"]
+margin_left = 980.0
+margin_top = 545.0
+margin_right = 1530.0
+margin_bottom = 634.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_colors/selection_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/normal_font = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+text = "B.我部分同意，但科技進步的速度不應受到過多限制。
+科技的快速發展帶來了許多好處，但我們也需要在推動創新與保護個人隱私之間找到平衡，確保不過度限制科技的進步。"
+
+[node name="C" type="RichTextLabel" parent="bg"]
+margin_left = 390.0
+margin_top = 650.0
+margin_right = 940.0
+margin_bottom = 739.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_colors/selection_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/normal_font = SubResource( 4 )
+custom_styles/normal = ExtResource( 8 )
+text = "C.不，我認為科技發展的重點應該放在推動創新，而非擔心隱私問題。
+科技發展是人類進步的核心推動力，過度關注隱私和倫理問題可能會減緩創新。我們應更專注於技術的潛力。"
+
+[node name="D" type="RichTextLabel" parent="bg"]
+margin_left = 980.0
+margin_top = 650.0
+margin_right = 1530.0
+margin_bottom = 739.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_colors/selection_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/normal_font = SubResource( 4 )
+custom_styles/normal = ExtResource( 8 )
+text = "D.我不確定，因為科技發展的影響取決於具體情況。
+科技發展對倫理和隱私的影響可能因行業和應用領域而異。因此，我認為需要根據具體情況來判斷是否應該關注這些問題。"
 
 [connection signal="pressed" from="bg/content" to="." method="_on_content_pressed"]
 [connection signal="pressed" from="bg/wave1" to="." method="_on_wave1_pressed"]

@@ -5,7 +5,6 @@
 [ext_resource path="res://Fonts/1.5Pressed.tres" type="StyleBox" id=3]
 [ext_resource path="res://fonts/font9.tres" type="DynamicFont" id=4]
 [ext_resource path="res://fonts/font8.tres" type="DynamicFont" id=5]
-[ext_resource path="res://fonts/答案字.tres" type="DynamicFont" id=6]
 [ext_resource path="res://fonts/答案.tres" type="StyleBox" id=7]
 [ext_resource path="res://Fonts/1.5Normal.tres" type="StyleBox" id=8]
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=9]
@@ -29,34 +28,35 @@ outline_color = Color( 1, 0, 0, 1 )
 use_filter = true
 font_data = ExtResource( 9 )
 
+[sub_resource type="DynamicFont" id=3]
+size = 30
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 25
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 9 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color( 0.364706, 0.917647, 0.333333, 1 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
 [sub_resource type="StyleBoxFlat" id=5]
 content_margin_left = 20.0
 content_margin_right = 20.0
-content_margin_top = 20.0
+content_margin_top = 10.0
 content_margin_bottom = 20.0
-bg_color = Color( 0.286275, 0.72549, 0.0352941, 1 )
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-
-[sub_resource type="StyleBoxFlat" id=3]
-content_margin_left = 20.0
-content_margin_right = 20.0
-content_margin_top = 20.0
-content_margin_bottom = 20.0
-bg_color = Color( 0.882353, 0.882353, 0.882353, 1 )
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-
-[sub_resource type="StyleBoxFlat" id=4]
-content_margin_left = 20.0
-content_margin_right = 20.0
-content_margin_top = 20.0
-content_margin_bottom = 20.0
-bg_color = Color( 1, 0.203922, 0.203922, 1 )
+bg_color = Color( 1, 0.443137, 0.443137, 1 )
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
@@ -198,97 +198,31 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -130.0
-margin_top = -295.0
+margin_top = -245.0
 margin_right = -25.0
-margin_bottom = -243.0
+margin_bottom = -193.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 1 )
 text = "回答："
 
-[node name="正確" type="Label" parent="bg"]
+[node name="(in)correct" type="Label" parent="bg"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -23.0
-margin_top = -304.0
-margin_right = 127.0
-margin_bottom = -231.0
+margin_top = -254.0
+margin_right = 164.0
+margin_bottom = -181.0
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 1, 0, 0, 1 )
 custom_fonts/font = SubResource( 2 )
 text = "不正確 X"
 
-[node name="問題" type="Label" parent="bg"]
-margin_left = 301.0
-margin_top = 327.0
-margin_right = 1659.0
-margin_bottom = 481.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 6 )
-custom_styles/normal = ExtResource( 7 )
-text = "請問下列何者昨天和李多慧去遊樂園玩?"
-align = 1
-valign = 1
-autowrap = true
-
-[node name="A" type="Label" parent="bg"]
-margin_left = 303.0
-margin_top = 628.0
-margin_right = 943.0
-margin_bottom = 728.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 6 )
-custom_styles/normal = SubResource( 5 )
-text = "C. 侯程麟"
-align = 1
-valign = 1
-
-[node name="correct" type="Label" parent="bg"]
-margin_left = 1019.0
-margin_top = 509.0
-margin_right = 1659.0
-margin_bottom = 609.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 6 )
-custom_styles/normal = SubResource( 3 )
-text = "B. 吳堃豪"
-align = 1
-valign = 1
-
-[node name="C" type="Label" parent="bg"]
-margin_left = 303.0
-margin_top = 509.0
-margin_right = 943.0
-margin_bottom = 609.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 6 )
-custom_styles/normal = ExtResource( 7 )
-text = "A. 許馨文"
-align = 1
-valign = 1
-
-[node name="D" type="Label" parent="bg"]
-margin_left = 1019.0
-margin_top = 628.0
-margin_right = 1659.0
-margin_bottom = 728.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 6 )
-custom_styles/normal = SubResource( 4 )
-text = "D. 王暐睿"
-align = 1
-valign = 1
-
-[node name="詳解" type="RichTextLabel" parent="bg"]
-margin_left = 301.0
-margin_top = 750.0
-margin_right = 1659.0
+[node name="details" type="RichTextLabel" parent="bg"]
+margin_left = 385.0
+margin_top = 764.0
+margin_right = 1535.0
 margin_bottom = 935.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
@@ -296,8 +230,8 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = ExtResource( 1 )
 custom_styles/normal = ExtResource( 2 )
-text = "解答：C. 侯程麟
-詳解：李多慧昨天是和侯程麟去遊樂園玩，在故事內容中第__行可以找到，加上侯程麟跟李多慧是戀人關係，代表李多慧不應該跟其他異性一起去遊樂園。"
+text = "解答：加強國際合作並制訂全球性的法律和政策來共同應對氣候變遷。
+詳解：這是最佳的答案，因為氣候變遷是一個全球性的問題，單靠任何一個國家無法有效應對。由於碳排放、環境污染等問題沒有國界，國際合作至關重要，因為一個國家單方面的努力可能會被其他國家的行為抵消。因此，制定全球性的政策和目標，並通過國際條約如《巴黎協定》來減少溫室氣體排放、推動可再生能源使用，是應對氣候變遷的最有效途徑。"
 
 [node name="cross" type="Button" parent="bg"]
 margin_left = 1789.0
@@ -307,6 +241,75 @@ margin_bottom = 536.0
 rect_scale = Vector2( 0.2, 0.2 )
 icon = ExtResource( 13 )
 flat = true
+
+[node name="Q" type="RichTextLabel" parent="bg"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -575.0
+margin_top = -167.0
+margin_right = 575.0
+margin_bottom = -16.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_colors/selection_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/normal_font = SubResource( 3 )
+custom_styles/normal = ExtResource( 7 )
+text = "隨著全球環境變化日益加劇，氣候變遷帶來的影響已經顯現在極端天氣事件增加、海平面上升和生態系統退化等方面，許多國家和地區已經開始積極推動減少碳排放、使用可再生能源以及改善能源效率等措施來應對這一危機。在這樣的背景下，你認為各國應該採取什麼樣的具體行動來進一步減緩氣候變遷，並確保對全球環境的正面影響？應該是加強國際合作來共同應對，還是每個國家都應該專注於自己的政策和發展？除此之外，我們應該如何在技術創新和環境保護之間找到平衡，確保經濟的可持續發展？"
+
+[node name="A" type="RichTextLabel" parent="bg"]
+margin_left = 390.0
+margin_top = 545.0
+margin_right = 940.0
+margin_bottom = 634.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_colors/selection_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/normal_font = SubResource( 4 )
+custom_styles/normal = SubResource( 6 )
+text = "A.加強國際合作並制訂全球性的法律和政策來共同應對氣候變遷。"
+
+[node name="B" type="RichTextLabel" parent="bg"]
+margin_left = 980.0
+margin_top = 545.0
+margin_right = 1530.0
+margin_bottom = 634.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_colors/selection_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/normal_font = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+text = "B.每個國家應該專注於根據本國的情況制訂自己的環保政策，無需國際統一規範。"
+
+[node name="C" type="RichTextLabel" parent="bg"]
+margin_left = 390.0
+margin_top = 650.0
+margin_right = 940.0
+margin_bottom = 739.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_colors/selection_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/normal_font = SubResource( 4 )
+custom_styles/normal = ExtResource( 7 )
+text = "C.技術創新應該優先，隨著科技的進步，自然會有解決氣候問題的方案。"
+
+[node name="D" type="RichTextLabel" parent="bg"]
+margin_left = 980.0
+margin_top = 650.0
+margin_right = 1530.0
+margin_bottom = 739.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_colors/selection_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/normal_font = SubResource( 4 )
+custom_styles/normal = ExtResource( 7 )
+text = "D.經濟發展應該放在首位，環境保護則可以通過未來的技術來解決。"
 
 [connection signal="pressed" from="bg/content" to="." method="_on_content_pressed"]
 [connection signal="pressed" from="bg/wave1" to="." method="_on_wave1_pressed"]
