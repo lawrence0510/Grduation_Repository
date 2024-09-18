@@ -1,19 +1,26 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=41 format=2]
 
-[ext_resource path="res://Pic/sea_bg.png" type="Texture" id=1]
-[ext_resource path="res://pic/框框.png" type="Texture" id=2]
+[ext_resource path="res://Pic/bc911.png" type="Texture" id=1]
+[ext_resource path="res://Pic/map.png" type="Texture" id=2]
 [ext_resource path="res://fonts/font1 - 複製 (9) - 複製.tres" type="DynamicFont" id=3]
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://fonts/個人資料.tres" type="DynamicFont" id=5]
 [ext_resource path="res://pic/B1.png" type="Texture" id=6]
 [ext_resource path="res://script/1.4.1.gd" type="Script" id=7]
-[ext_resource path="res://fonts/修改.tres" type="StyleBox" id=8]
 [ext_resource path="res://fonts/font1 - 複製 (10) - 複製.tres" type="DynamicFont" id=9]
 [ext_resource path="res://script/birth.gd" type="Script" id=10]
 [ext_resource path="res://fonts/b_enter.tres" type="StyleBox" id=11]
 [ext_resource path="res://script/school.gd" type="Script" id=12]
 [ext_resource path="res://script/phone.gd" type="Script" id=13]
 [ext_resource path="res://pic/delete1.png" type="Texture" id=14]
+[ext_resource path="res://Fonts/1.4normal.tres" type="StyleBox" id=15]
+[ext_resource path="res://Fonts/1.4hover.tres" type="StyleBox" id=16]
+
+[sub_resource type="DynamicFont" id=32]
+size = 30
+outline_size = 3
+use_filter = true
+font_data = ExtResource( 4 )
 
 [sub_resource type="StyleBoxFlat" id=6]
 draw_center = false
@@ -30,6 +37,12 @@ draw_center = false
 [sub_resource type="StyleBoxFlat" id=1]
 draw_center = false
 
+[sub_resource type="DynamicFont" id=33]
+size = 30
+outline_color = Color( 0.654902, 0.654902, 0.670588, 1 )
+use_filter = true
+font_data = ExtResource( 4 )
+
 [sub_resource type="DynamicFont" id=7]
 size = 25
 outline_size = 1
@@ -39,108 +52,10 @@ extra_spacing_top = -10
 extra_spacing_bottom = -8
 font_data = ExtResource( 4 )
 
-[sub_resource type="DynamicFont" id=8]
-size = 30
+[sub_resource type="DynamicFont" id=34]
+size = 40
 use_filter = true
-extra_spacing_top = -10
-extra_spacing_bottom = -5
 font_data = ExtResource( 4 )
-
-[sub_resource type="StyleBoxFlat" id=9]
-bg_color = Color( 1, 1, 1, 1 )
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color( 0, 0, 0, 1 )
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-expand_margin_left = 5.0
-expand_margin_right = 5.0
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
-
-[sub_resource type="StyleBoxFlat" id=10]
-bg_color = Color( 1, 1, 1, 1 )
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color( 0, 0, 0, 1 )
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-expand_margin_left = 5.0
-expand_margin_right = 5.0
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
-
-[sub_resource type="StyleBoxFlat" id=11]
-bg_color = Color( 1, 1, 1, 1 )
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color( 0, 0, 0, 1 )
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-expand_margin_left = 5.0
-expand_margin_right = 5.0
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
-
-[sub_resource type="StyleBoxFlat" id=12]
-bg_color = Color( 1, 1, 1, 1 )
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color( 0, 0, 0, 1 )
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-expand_margin_left = 5.0
-expand_margin_right = 5.0
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
-
-[sub_resource type="StyleBoxFlat" id=13]
-bg_color = Color( 1, 1, 1, 1 )
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color( 0, 0, 0, 1 )
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-expand_margin_left = 5.0
-expand_margin_right = 5.0
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
-
-[sub_resource type="StyleBoxFlat" id=14]
-bg_color = Color( 1, 1, 1, 1 )
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color( 0, 0, 0, 1 )
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-expand_margin_left = 5.0
-expand_margin_right = 5.0
-expand_margin_top = 5.0
-expand_margin_bottom = 5.0
 
 [sub_resource type="Theme" id=17]
 
@@ -272,39 +187,40 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -772.0
-margin_top = -500.0
-margin_right = -197.0
-margin_bottom = -66.0
+margin_left = -799.0
+margin_top = -559.0
+margin_right = -218.0
+margin_bottom = 12.0
 rect_scale = Vector2( 2.8, 2.3 )
 texture = ExtResource( 2 )
+expand = true
 
 [node name="大橫線" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
-position = Vector2( 333.565, 18.1947 )
+position = Vector2( 346.497, 74.3687 )
 scale = Vector2( -1.59461, 0.76087 )
-points = PoolVector2Array( -122, 100, 190, 100 )
+points = PoolVector2Array( -103.655, 100, 177.202, 100 )
 width = 1.0
 default_color = Color( 0.654902, 0.654902, 0.670588, 1 )
 
 [node name="左短線" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
-position = Vector2( 333.565, 18.1947 )
+position = Vector2( 346.497, 74.3687 )
 scale = Vector2( -1.59461, 0.76087 )
-points = PoolVector2Array( 48, 100, 190, 100 )
+points = PoolVector2Array( 48, 100, 189.297, 100 )
 width = 4.0
 default_color = Color( 0, 0, 0, 1 )
 
 [node name="personal" type="Button" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 33.0
-margin_top = 57.3478
-margin_right = 278.0
-margin_bottom = 96.3478
+margin_left = 46.0
+margin_top = 98.0
+margin_right = 270.0
+margin_bottom = 142.0
 rect_pivot_offset = Vector2( 354.143, 83.5218 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = SubResource( 32 )
 custom_styles/hover = SubResource( 6 )
 custom_styles/pressed = SubResource( 3 )
 custom_styles/focus = SubResource( 4 )
@@ -313,17 +229,17 @@ custom_styles/normal = SubResource( 1 )
 text = "個人資料"
 
 [node name="record" type="Button" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 279.643
-margin_top = 58.2609
-margin_right = 524.643
-margin_bottom = 97.2609
+margin_left = 272.857
+margin_top = 98.0
+margin_right = 517.857
+margin_bottom = 142.0
 rect_pivot_offset = Vector2( 354.143, 83.5218 )
 custom_colors/font_color_disabled = Color( 0.654902, 0.654902, 0.670588, 1 )
 custom_colors/font_color_focus = Color( 0.654902, 0.654902, 0.670588, 1 )
 custom_colors/font_color = Color( 0.654902, 0.654902, 0.670588, 1 )
 custom_colors/font_color_hover = Color( 0.654902, 0.654902, 0.670588, 1 )
 custom_colors/font_color_pressed = Color( 0.654902, 0.654902, 0.670588, 1 )
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = SubResource( 33 )
 custom_styles/hover = SubResource( 6 )
 custom_styles/pressed = SubResource( 3 )
 custom_styles/focus = SubResource( 4 )
@@ -332,97 +248,97 @@ custom_styles/normal = SubResource( 1 )
 text = "簽到記錄"
 
 [node name="直線" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
-position = Vector2( 311.779, 22.1078 )
+position = Vector2( 324.711, 78.2818 )
 scale = Vector2( -1.59461, 0.76087 )
-points = PoolVector2Array( 34, 110, 34, 480 )
+points = PoolVector2Array( 34, 110, 34, 400 )
 width = 0.5
 default_color = Color( 0, 0, 0, 1 )
 
 [node name="Label" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 30.0
-margin_top = 111.0
-margin_right = 258.0
-margin_bottom = 144.0
+margin_left = 55.7143
+margin_top = 152.609
+margin_right = 270.714
+margin_bottom = 192.609
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 7 )
 align = 1
 valign = 1
 
 [node name="人物" type="TextureRect" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 52.0
-margin_top = 161.0
-margin_right = 525.0
-margin_bottom = 689.0
+margin_left = 66.0714
+margin_top = 199.13
+margin_right = 566.071
+margin_bottom = 727.13
 rect_scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 6 )
 
 [node name="ageLabel" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 330.0
-margin_top = 114.0
-margin_right = 370.0
-margin_bottom = 128.0
+margin_left = 342.11
+margin_top = 170.87
+margin_right = 382.11
+margin_bottom = 184.87
 custom_colors/font_color = Color( 0, 0.494118, 1, 1 )
 custom_fonts/font = ExtResource( 5 )
 
 [node name="age" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 270.0
-margin_top = 114.0
-margin_right = 310.0
-margin_bottom = 126.0
+margin_left = 282.0
+margin_top = 169.566
+margin_right = 326.0
+margin_bottom = 184.566
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 5 )
 text = "年齡"
 
 [node name="右短線1" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
-position = Vector2( 393.922, 49.4991 )
+position = Vector2( 406.032, 110.716 )
 scale = Vector2( -1.59461, 0.76087 )
 points = PoolVector2Array( -80, 120, 80, 120 )
 width = 1.5
 default_color = Color( 0, 0, 0, 1 )
 
 [node name="生日" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 270.0
-margin_top = 154.0
-margin_right = 310.0
-margin_bottom = 168.0
+margin_left = 282.11
+margin_top = 218.261
+margin_right = 326.11
+margin_bottom = 233.261
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 5 )
 text = "生日"
 
 [node name="birthLabel" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 330.0
-margin_top = 154.0
-margin_right = 422.0
-margin_bottom = 168.0
+margin_left = 342.11
+margin_top = 219.565
+margin_right = 434.11
+margin_bottom = 233.565
 custom_colors/font_color = Color( 0, 0.494118, 1, 1 )
 custom_fonts/font = ExtResource( 5 )
 
 [node name="右短線2" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
-position = Vector2( 393.922, 58.6295 )
+position = Vector2( 406.032, 128.543 )
 scale = Vector2( -1.59461, 0.76087 )
 points = PoolVector2Array( -80, 160, 80, 160 )
 width = 1.5
 default_color = Color( 0, 0, 0, 1 )
 
 [node name="schoolLabel" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 330.0
-margin_top = 194.0
-margin_right = 410.0
-margin_bottom = 208.0
+margin_left = 342.11
+margin_top = 268.261
+margin_right = 422.11
+margin_bottom = 282.261
 custom_colors/font_color = Color( 0, 0.494118, 1, 1 )
 custom_fonts/font = ExtResource( 5 )
 
 [node name="學校" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 270.0
-margin_top = 194.0
-margin_right = 310.0
-margin_bottom = 208.0
+margin_left = 282.11
+margin_top = 266.957
+margin_right = 326.11
+margin_bottom = 281.957
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 5 )
 text = "學校"
 
 [node name="右短線3" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
-position = Vector2( 393.922, 96.8904 )
+position = Vector2( 406.032, 175.499 )
 rotation = 3.14159
 scale = Vector2( 1.59461, -0.76087 )
 points = PoolVector2Array( -80, 160, 80, 160 )
@@ -430,24 +346,24 @@ width = 1.5
 default_color = Color( 0, 0, 0, 1 )
 
 [node name="電話" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 270.0
-margin_top = 234.0
-margin_right = 310.0
-margin_bottom = 248.0
+margin_left = 282.11
+margin_top = 315.652
+margin_right = 326.11
+margin_bottom = 330.652
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 5 )
 text = "電話"
 
 [node name="phoneLabel" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 330.0
-margin_top = 234.0
-margin_right = 442.0
-margin_bottom = 248.0
+margin_left = 342.11
+margin_top = 316.957
+margin_right = 454.11
+margin_bottom = 330.957
 custom_colors/font_color = Color( 0, 0.494118, 1, 1 )
 custom_fonts/font = ExtResource( 5 )
 
 [node name="右短線4" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
-position = Vector2( 393.922, 136.89 )
+position = Vector2( 406.032, 224.194 )
 rotation = 3.14159
 scale = Vector2( 1.59461, -0.76087 )
 points = PoolVector2Array( -80, 160, 80, 160 )
@@ -455,81 +371,74 @@ width = 1.5
 default_color = Color( 0, 0, 0, 1 )
 
 [node name="信箱" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 270.0
-margin_top = 274.0
-margin_right = 310.0
-margin_bottom = 288.0
+margin_left = 282.11
+margin_top = 363.478
+margin_right = 326.11
+margin_bottom = 378.478
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 5 )
 text = "信箱"
 
 [node name="mailLabel" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 330.0
-margin_top = 274.0
-margin_right = 478.0
-margin_bottom = 288.0
+margin_left = 342.11
+margin_top = 364.782
+margin_right = 490.11
+margin_bottom = 378.782
 custom_colors/font_color = Color( 0, 0.494118, 1, 1 )
 custom_fonts/font = ExtResource( 5 )
 
-[node name="右短線5" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
-position = Vector2( 393.922, 58.6295 )
-scale = Vector2( -1.59461, 0.76087 )
-points = PoolVector2Array( -80, 160, 80, 160 )
-width = 1.5
-default_color = Color( 0, 0, 0, 1 )
-
 [node name="edit_birth_button" type="Button" parent="BackgroundPicture"]
-margin_left = 1538.0
-margin_top = 391.0
-margin_right = 1610.0
-margin_bottom = 431.0
+margin_left = 1527.0
+margin_top = 470.0
+margin_right = 1607.0
+margin_bottom = 531.0
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 1, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 8 )
-custom_styles/hover = SubResource( 9 )
-custom_styles/pressed = SubResource( 10 )
-custom_styles/focus = ExtResource( 8 )
-custom_styles/disabled = ExtResource( 8 )
-custom_styles/normal = ExtResource( 8 )
+custom_colors/font_color_hover = Color( 1, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 34 )
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 16 )
+custom_styles/focus = ExtResource( 16 )
+custom_styles/disabled = ExtResource( 15 )
+custom_styles/normal = ExtResource( 15 )
 text = "修改"
 
 [node name="edit_school_button" type="Button" parent="BackgroundPicture"]
-margin_left = 1538.0
-margin_top = 480.0
-margin_right = 1610.0
-margin_bottom = 520.0
+margin_left = 1527.0
+margin_top = 580.0
+margin_right = 1607.0
+margin_bottom = 641.0
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 1, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 8 )
-custom_styles/hover = SubResource( 11 )
-custom_styles/pressed = SubResource( 12 )
-custom_styles/focus = ExtResource( 8 )
-custom_styles/disabled = ExtResource( 8 )
-custom_styles/normal = ExtResource( 8 )
+custom_colors/font_color_hover = Color( 1, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 34 )
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 16 )
+custom_styles/focus = ExtResource( 16 )
+custom_styles/disabled = ExtResource( 15 )
+custom_styles/normal = ExtResource( 15 )
 text = "修改"
 
 [node name="edit_phone_button" type="Button" parent="BackgroundPicture"]
-margin_left = 1538.0
-margin_top = 571.0
-margin_right = 1610.0
-margin_bottom = 611.0
+margin_left = 1527.0
+margin_top = 690.0
+margin_right = 1607.0
+margin_bottom = 751.0
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 1, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 8 )
-custom_styles/hover = SubResource( 13 )
-custom_styles/pressed = SubResource( 14 )
-custom_styles/focus = ExtResource( 8 )
-custom_styles/disabled = ExtResource( 8 )
-custom_styles/normal = ExtResource( 8 )
+custom_colors/font_color_hover = Color( 1, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 34 )
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 16 )
+custom_styles/focus = ExtResource( 16 )
+custom_styles/disabled = ExtResource( 15 )
+custom_styles/normal = ExtResource( 15 )
 text = "修改"
 
 [node name="birth" type="WindowDialog" parent="BackgroundPicture"]
@@ -803,10 +712,10 @@ icon_align = 1
 [node name="HTTPRequest" type="HTTPRequest" parent="BackgroundPicture/phone"]
 
 [node name="cross" type="Button" parent="BackgroundPicture"]
-margin_left = 1789.0
-margin_top = 30.0
-margin_right = 2301.0
-margin_bottom = 536.0
+margin_left = 1795.0
+margin_top = 24.0
+margin_right = 2307.0
+margin_bottom = 530.0
 rect_scale = Vector2( 0.2, 0.2 )
 icon = ExtResource( 14 )
 flat = true
