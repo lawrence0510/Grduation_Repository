@@ -26,3 +26,6 @@ func _on_16_pressed():
 
 func _on_cross_pressed():
 	get_tree().change_scene("res://scene/1.4.0.tscn")
+
+func _on_cross2_pressed():
+	LoginDay.hide()

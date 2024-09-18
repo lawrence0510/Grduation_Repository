@@ -5,14 +5,22 @@ onready var vbox = $VBoxContainer
 
 # 定義包含多筆資料的列表
 var data_list = [
-	{"time": "09-01 10:30", "title": "測試標題1", "score": "85"},
-	{"time": "09-01 12:45", "title": "測試標題10", "score": "90"}
+	{"time_start": "18:30", "time_end": "19:30","correct": "9","play": "10", "score": "90%"},
+	{"time_start": "12:45", "time_end": "20:30","correct": "1","play": "2", "score": "50%"},
+	{"time_start": "18:30", "time_end": "19:30","correct": "9","play": "10", "score": "90%"}
 ]
 
 func _ready():
 	# 遍歷資料列表，生成每一行 Label
 	for data in data_list:
-		var text = data["time"] + "              " + data["title"] + "               " + data["score"]
+		var correct = data["correct"]
+		if correct.length() < 2:
+			correct = "0" + correct
+		
+		var play = data["play"]
+		if play.length() < 2:
+			play = "0" + play
+		var text = data["time_start"] + " ~ "+data["time_end"]+"             "+ correct +" / "+play + "                     " + data["score"]
 		create_label_r(text)
 
 func create_label_r(text):
@@ -25,15 +33,11 @@ func create_label_r(text):
 	var custom_font = DynamicFont.new()  # 建立一個 DynamicFont
 	var font_data = load("res://Fonts/NotoSansTC-VariableFont_wght.ttf")  # 使用正確的方式載入字體
 	custom_font.font_data = font_data
-	custom_font.size = 45  # 設定字體大小
-	custom_font.outline_size = 1
-	custom_font.outline_color = Color(0, 0, 0)
+	custom_font.size = 33  # 設定字體大小
 	
 	# 將字體應用到 Label
 	new_label.add_font_override("font", custom_font)
 	new_label.add_color_override("font_color", Color(0, 0, 0))  # 黑色
-	
-	# 設定 Label 的最小尺寸（寬度與高度）
-	new_label.rect_min_size = Vector2(200, 73)  
+  
 	
 	vbox.add_child(new_label)  # 將 Label 加入 VBoxContainer

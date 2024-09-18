@@ -167,7 +167,7 @@ corner_radius_top_right = 11
 corner_radius_bottom_right = 11
 corner_radius_bottom_left = 11
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D2" type="Node2D"]
 position = Vector2( -2, 0 )
 script = ExtResource( 7 )
 
@@ -386,9 +386,9 @@ custom_fonts/font = ExtResource( 5 )
 
 [node name="edit_birth_button" type="Button" parent="BackgroundPicture"]
 margin_left = 1552.0
-margin_top = 476.0
+margin_top = 458.0
 margin_right = 1602.0
-margin_bottom = 526.0
+margin_bottom = 508.0
 custom_styles/hover = SubResource( 35 )
 custom_styles/pressed = SubResource( 35 )
 custom_styles/focus = SubResource( 35 )
@@ -400,9 +400,9 @@ expand_icon = true
 
 [node name="edit_school_button" type="Button" parent="BackgroundPicture"]
 margin_left = 1552.0
-margin_top = 589.0
+margin_top = 571.0
 margin_right = 1602.0
-margin_bottom = 639.0
+margin_bottom = 621.0
 custom_styles/hover = SubResource( 35 )
 custom_styles/pressed = SubResource( 35 )
 custom_styles/focus = SubResource( 35 )
@@ -415,9 +415,9 @@ expand_icon = true
 
 [node name="edit_phone_button" type="Button" parent="BackgroundPicture"]
 margin_left = 1552.0
-margin_top = 690.0
+margin_top = 672.0
 margin_right = 1602.0
-margin_bottom = 740.0
+margin_bottom = 722.0
 custom_styles/hover = SubResource( 35 )
 custom_styles/pressed = SubResource( 35 )
 custom_styles/focus = SubResource( 35 )
