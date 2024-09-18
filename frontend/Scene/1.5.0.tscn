@@ -1,14 +1,15 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://fonts/1.5.1-1.tres" type="StyleBox" id=1]
+[ext_resource path="res://Fonts/1.5Pressed.tres" type="StyleBox" id=1]
 [ext_resource path="res://fonts/font9.tres" type="DynamicFont" id=2]
-[ext_resource path="res://fonts/1.5.1-2.tres" type="StyleBox" id=3]
 [ext_resource path="res://fonts/font8.tres" type="DynamicFont" id=4]
-[ext_resource path="res://pic/框框3.png" type="Texture" id=5]
-[ext_resource path="res://Pic/sea_bg.png" type="Texture" id=6]
+[ext_resource path="res://Pic/map.png" type="Texture" id=5]
+[ext_resource path="res://Pic/bc911.png" type="Texture" id=6]
 [ext_resource path="res://fonts/font0.tres" type="DynamicFont" id=7]
 [ext_resource path="res://script/1.5.0.gd" type="Script" id=8]
 [ext_resource path="res://pic/delete1.png" type="Texture" id=9]
+[ext_resource path="res://Fonts/1.5Normal.tres" type="StyleBox" id=10]
+[ext_resource path="res://Fonts/1.5hover.tres" type="StyleBox" id=11]
 
 [sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 20.0
@@ -35,52 +36,80 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -768.0
-margin_top = -519.0
-margin_right = -214.0
-margin_bottom = -69.0
+margin_left = -799.0
+margin_top = -580.0
+margin_right = -218.0
+margin_bottom = 40.0
 rect_scale = Vector2( 2.8, 2.3 )
 texture = ExtResource( 5 )
+expand = true
+
+[node name="大橫線" type="Line2D" parent="bg/TextureRect"]
+position = Vector2( 335.069, 62.6296 )
+scale = Vector2( -1.59461, 0.76087 )
+points = PoolVector2Array( -98, 100, 160, 100 )
+width = 1.0
+default_color = Color( 0.654902, 0.654902, 0.670588, 1 )
+
+[node name="短線" type="Line2D" parent="bg/TextureRect"]
+position = Vector2( 335.069, 62.6296 )
+scale = Vector2( -1.59461, 0.76087 )
+points = PoolVector2Array( 160, 100, 107, 100 )
+width = 4.0
+default_color = Color( 0, 0.345098, 1, 1 )
 
 [node name="content" type="Button" parent="bg"]
-margin_left = 310.0
-margin_top = 141.0
-margin_right = 560.0
-margin_bottom = 216.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+margin_left = 388.0
+margin_top = 193.0
+margin_right = 618.0
+margin_bottom = 268.0
+custom_colors/font_color_disabled = Color( 0, 0.345098, 1, 1 )
+custom_colors/font_color_focus = Color( 0, 0.345098, 1, 1 )
+custom_colors/font_color = Color( 0, 0.345098, 1, 1 )
+custom_colors/font_color_hover = Color( 0, 0.345098, 1, 1 )
+custom_colors/font_color_pressed = Color( 0, 0.345098, 1, 1 )
 custom_fonts/font = ExtResource( 4 )
-custom_styles/hover = ExtResource( 1 )
-custom_styles/pressed = ExtResource( 1 )
-custom_styles/focus = ExtResource( 1 )
-custom_styles/disabled = ExtResource( 1 )
-custom_styles/normal = ExtResource( 1 )
+custom_styles/hover = ExtResource( 10 )
+custom_styles/pressed = ExtResource( 10 )
+custom_styles/focus = ExtResource( 10 )
+custom_styles/disabled = ExtResource( 10 )
+custom_styles/normal = ExtResource( 10 )
 text = "故 事 內 容"
 
 [node name="wave1" type="Button" parent="bg"]
-margin_left = 585.0
-margin_top = 141.0
-margin_right = 835.0
-margin_bottom = 216.0
+margin_left = 616.0
+margin_top = 193.0
+margin_right = 846.0
+margin_bottom = 268.0
+custom_colors/font_color_disabled = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color_focus = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color_hover = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color_pressed = Color( 0.6, 0.6, 0.6, 1 )
 custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = ExtResource( 3 )
-custom_styles/pressed = ExtResource( 3 )
-custom_styles/focus = ExtResource( 3 )
-custom_styles/disabled = ExtResource( 3 )
-custom_styles/normal = ExtResource( 3 )
+custom_styles/hover = ExtResource( 11 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = ExtResource( 1 )
+custom_styles/disabled = ExtResource( 10 )
+custom_styles/normal = ExtResource( 10 )
 text = "wave 1"
 
 [node name="wave2" type="Button" parent="bg"]
-margin_left = 855.0
-margin_top = 141.0
-margin_right = 1105.0
-margin_bottom = 216.0
+margin_left = 844.0
+margin_top = 193.0
+margin_right = 1074.0
+margin_bottom = 268.0
+custom_colors/font_color_disabled = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color_focus = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color_hover = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color_pressed = Color( 0.6, 0.6, 0.6, 1 )
 custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = ExtResource( 3 )
-custom_styles/pressed = ExtResource( 3 )
-custom_styles/focus = ExtResource( 3 )
-custom_styles/disabled = ExtResource( 3 )
-custom_styles/normal = ExtResource( 3 )
+custom_styles/hover = ExtResource( 11 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = ExtResource( 1 )
+custom_styles/disabled = ExtResource( 10 )
+custom_styles/normal = ExtResource( 10 )
 text = "wave 2"
 
 [node name="wave3" type="Button" parent="bg"]
@@ -88,38 +117,37 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 165.0
-margin_top = -399.0
-margin_right = 415.0
-margin_bottom = -324.0
+margin_left = 112.0
+margin_top = -347.0
+margin_right = 342.0
+margin_bottom = -272.0
+custom_colors/font_color_disabled = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color_focus = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color_hover = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color_pressed = Color( 0.6, 0.6, 0.6, 1 )
 custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = ExtResource( 3 )
-custom_styles/pressed = ExtResource( 3 )
-custom_styles/focus = ExtResource( 3 )
-custom_styles/disabled = ExtResource( 3 )
-custom_styles/normal = ExtResource( 3 )
+custom_styles/hover = ExtResource( 11 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = ExtResource( 1 )
+custom_styles/disabled = ExtResource( 10 )
+custom_styles/normal = ExtResource( 10 )
 text = "wave 3"
 
 [node name="content2" type="RichTextLabel" parent="bg"]
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -665.0
-margin_top = -829.0
-margin_right = 714.0
-margin_bottom = -136.0
+anchor_bottom = 0.5
+margin_left = -550.0
+margin_top = -210.0
+margin_right = 550.0
+margin_bottom = 340.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = ExtResource( 7 )
 custom_styles/normal = SubResource( 1 )
-text = "我是侯程麟，李多慧是我的女朋友，我們之間的感情是真實且深厚的。我們認識多年，從朋友逐漸發展成為戀人。我們一起度過了無數美好的時光，無論是共同旅行、參加聚會，還是在日常生活中的點滴，她總是陪伴在我身邊。我們之間的交流無比順暢，彼此信任，分享生活中的喜怒哀樂。李多慧了解我所有的喜好和習慣，並且總是關心和支持我。她的家人和朋友也都認可我們的關係，經常一起聚會。她是我生活中最重要的人，我們的未來也充滿了共同的期待和計劃。我愛她，這是我們彼此之間不可否認的事實。
-
-我是侯程麟，李多慧是我的女朋友，我們之間的感情是真實且深厚的。我們認識多年，從朋友逐漸發展成為戀人。我們一起度過了無數美好的時光，無論是共同旅行、參加聚會，還是在日常生活中的點滴，她總是陪伴在我身邊。我們之間的交流無比順暢，彼此信任，分享生活中的喜怒哀樂。李多慧了解我所有的喜好和習慣，並且總是關心和支持我。她的家人和朋友也都認可我們的關係，經常一起聚會。她是我生活中最重要的人，我們的未來也充滿了共同的期待和計劃。我愛她，這是我們彼此之間不可否認的事實。
-
-我是侯程麟，李多慧是我的女朋友，我們之間的感情是真實且深厚的。我們認識多年，從朋友逐漸發展成為戀人。我們一起度過了無數美好的時光，無論是共同旅行、參加聚會，還是在日常生活中的點滴，她總是陪伴在我身邊。我們之間的交流無比順暢，彼此信任，分享生活中的喜怒哀樂。李多慧了解我所有的喜好和習慣，並且總是關心和支持我。她的家人和朋友也都認可我們的關係，經常一起聚會。她是我生活中最重要的人，我們的未來也充滿了共同的期待和計劃。我愛她，這是我們彼此之間不可否認的事實。
-
-我是侯程麟，李多慧是我的女朋友，我們之間的感情是真實且深厚的。我們認識多年，從朋友逐漸發展成為戀人。我們一起度過了無數美好的時光，無論是共同旅行、參加聚會，還是在日常生活中的點滴，她總是陪伴在我身邊。我們之間的交流無比順暢，彼此信任，分享生活中的喜怒哀樂。李多慧了解我所有的喜好和習慣，並且總是關心和支持我。她的家人和朋友也都認可我們的關係，經常一起聚會。她是我生活中最重要的人，我們的未來也充滿了共同的期待和計劃。我愛她，這是我們彼此之間不可否認的事實。"
+text = "我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔我是故事內容喔"
 
 [node name="cross" type="Button" parent="bg"]
 margin_left = 1789.0
@@ -131,16 +159,21 @@ icon = ExtResource( 9 )
 flat = true
 
 [node name="score" type="Button" parent="bg"]
-margin_left = 1400.0
-margin_top = 141.0
-margin_right = 1650.0
-margin_bottom = 216.0
+margin_left = 1300.0
+margin_top = 193.0
+margin_right = 1530.0
+margin_bottom = 268.0
+custom_colors/font_color_disabled = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color_focus = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color_hover = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color_pressed = Color( 0.6, 0.6, 0.6, 1 )
 custom_fonts/font = ExtResource( 2 )
-custom_styles/hover = ExtResource( 3 )
-custom_styles/pressed = ExtResource( 3 )
-custom_styles/focus = ExtResource( 3 )
-custom_styles/disabled = ExtResource( 3 )
-custom_styles/normal = ExtResource( 3 )
+custom_styles/hover = ExtResource( 11 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = ExtResource( 1 )
+custom_styles/disabled = ExtResource( 10 )
+custom_styles/normal = ExtResource( 10 )
 text = "score"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]

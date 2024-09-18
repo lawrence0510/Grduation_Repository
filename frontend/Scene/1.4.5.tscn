@@ -1,20 +1,15 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Pic/bc911.png" type="Texture" id=2]
 [ext_resource path="res://Pic/roll.png" type="Texture" id=3]
 [ext_resource path="res://script/ScrollContent.gd" type="Script" id=4]
+[ext_resource path="res://script/1.4.5.gd" type="Script" id=5]
 [ext_resource path="res://Fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://pic/delete1.png" type="Texture" id=7]
 
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0, 0, 0, 0.6 )
-
-[sub_resource type="DynamicFont" id=1]
-size = 50
-outline_size = 1
-outline_color = Color( 0, 0, 0, 1 )
-use_filter = true
-font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=5]
 size = 50
@@ -35,6 +30,7 @@ use_filter = true
 font_data = ExtResource( 6 )
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource( 5 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0
@@ -52,38 +48,24 @@ custom_styles/normal = SubResource( 2 )
 [node name="TextureRect" type="TextureRect" parent="TextureRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 8.0
-margin_top = -15.0
-margin_right = 8.0
-margin_bottom = -15.0
+margin_left = 42.0
+margin_top = 61.0
+margin_right = -78.0
+margin_bottom = -19.0
 texture = ExtResource( 3 )
 expand = true
 
-[node name="word" type="Label" parent="TextureRect/TextureRect"]
-visible = false
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -100.0
-margin_top = 84.0
-margin_right = 100.0
-margin_bottom = 157.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 1 )
-text = "答題記錄"
-
 [node name="Line2D" type="Line2D" parent="TextureRect/TextureRect"]
-position = Vector2( -207, -51 )
+position = Vector2( -278, -102 )
 points = PoolVector2Array( 600, 421, 1800, 421 )
 width = 2.0
 default_color = Color( 0, 0, 0, 1 )
 
 [node name="bar" type="Label" parent="TextureRect/TextureRect"]
-margin_left = 390.0
-margin_top = 291.0
-margin_right = 1593.0
-margin_bottom = 366.0
+margin_left = 319.0
+margin_top = 240.0
+margin_right = 1522.0
+margin_bottom = 315.0
 
 [node name="time" type="Label" parent="TextureRect/TextureRect/bar"]
 margin_right = 64.0
@@ -115,10 +97,10 @@ custom_fonts/font = SubResource( 3 )
 text = "分數"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="TextureRect/TextureRect"]
-margin_left = 390.0
-margin_top = 381.0
-margin_right = 1593.0
-margin_bottom = 804.0
+margin_left = 319.0
+margin_top = 330.0
+margin_right = 1522.0
+margin_bottom = 753.0
 script = ExtResource( 4 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TextureRect/TextureRect/ScrollContainer"]
@@ -319,4 +301,14 @@ text = "..."
 
 [node name="HTTPRequest" type="HTTPRequest" parent="TextureRect/TextureRect/ScrollContainer"]
 
+[node name="cross" type="Button" parent="TextureRect"]
+margin_left = 1795.0
+margin_top = 24.0
+margin_right = 2307.0
+margin_bottom = 530.0
+rect_scale = Vector2( 0.2, 0.2 )
+icon = ExtResource( 7 )
+flat = true
+
 [connection signal="request_completed" from="TextureRect/TextureRect/ScrollContainer/HTTPRequest" to="TextureRect/TextureRect/ScrollContainer" method="_on_HTTPRequest_request_completed"]
+[connection signal="pressed" from="TextureRect/cross" to="." method="_on_cross_pressed"]

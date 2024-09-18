@@ -629,7 +629,6 @@ align = 1
 valign = 1
 
 [node name="LoginDay" type="WindowDialog" parent="BackgroundPicture"]
-visible = true
 margin_right = 1920.0
 margin_bottom = 1080.0
 custom_styles/panel = SubResource( 37 )
