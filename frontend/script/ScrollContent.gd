@@ -9,7 +9,7 @@ var data_list = []
 
 func _ready():
 	# 用user_id找尋對應的history資料
-	var url = "http://nccumisreading.ddnsking.com:5001/History/get_history_from_user?user_id=" + str(GlobalVar.user_id)
+	var url = "http://nccumisreading.ddnsking.com:5001/History/get_history_from_user?user_id=" + str(2)
 	print("Request URL: " + url)
 	
 	var headers = ["Content-Type: application/json"]
@@ -45,16 +45,17 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			
 		# 刷新 UI，動態生成 Label
 		for data in data_list:
-			var text = data["time"] + "              " + data["title"] + "                  " + data["score"]
-			create_label_r(text)
+			var text = data["time"] + "             " + data["title"] + "                  " + data["score"]
+			create_button_r(text)
 	else:
 		print("Error parsing JSON: ", json.error_string)
 
-func create_label_r(text):
+func create_button_r(text):
 	vbox.set("custom_constants/separation", 10)
 	
-	var new_label = Label.new()  # 建立新的 Label
-	new_label.text = text  # 設定 Label 的文字
+	var new_button = Button.new()  # 建立新的 Button
+	new_button.text = text  # 設定 Button 的文字
+	new_button.align = Button.ALIGN_LEFT
 	
 	# 設定字體樣式
 	var custom_font = DynamicFont.new()  # 建立一個 DynamicFont
@@ -66,12 +67,25 @@ func create_label_r(text):
 	custom_font.outline_size = 1
 	custom_font.outline_color = Color(0, 0, 0)
 	
-	# 將字體應用到 Label
-	new_label.add_font_override("font", custom_font)
-	new_label.add_color_override("font_color", Color(0, 0, 0))  # 黑色
+	# 將字體應用到 Button
+	new_button.add_font_override("font", custom_font)
+	new_button.add_color_override("font_color", Color(0, 0, 0))  # 黑色
 	
-	 # 設定 Label 的位置，向右移動 100 單位
-	new_label.rect_min_size = Vector2(200, 73)  # 設定 Label 的大小
-	new_label.rect_position = Vector2(500, 100)  # 設定位置，X=100 讓它向右移動 100 單位
+	# 設定按鈕的背景為透明並移除邊框
+	var style_box = StyleBoxFlat.new()
+	style_box.bg_color = Color(0, 0, 0, 0)  # 完全透明的背景色
+	style_box.border_width_top = 0
+	style_box.border_width_bottom = 0
+	style_box.border_width_left = 0
+	style_box.border_width_right = 0
+	new_button.add_style_override("normal", style_box)
+	new_button.add_style_override("hover", style_box)
+	new_button.add_style_override("pressed", style_box)
+	
+	# 設定 Button 的按下事件
+	new_button.connect("pressed", self, "_on_button_pressed", [text])
+	vbox.add_child(new_button)  # 將 Button 加入 VBoxContainer
 
-	vbox.add_child(new_label)  # 將 Label 加入 VBoxContainer
+# 按鈕被按下時的處理函數
+func _on_button_pressed(text):
+	print("Button pressed with text: " + text)

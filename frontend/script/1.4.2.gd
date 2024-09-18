@@ -2,7 +2,7 @@ extends Node2D
 
 onready var button_r: Button = $"bg/框框/personal"
 onready var button_l: Button = $"bg/框框/record"
-onready var b16: Button = $"bg/框框/DayPanel/b16"
+onready var b16: Button = $"bg/框框/pic/DayPanel/b16"
 onready var LogDay: WindowDialog = $"bg/LogDay"
 
 func _ready() -> void:

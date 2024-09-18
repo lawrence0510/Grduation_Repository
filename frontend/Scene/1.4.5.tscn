@@ -177,8 +177,9 @@ text = "..."
 
 [node name="line2" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer"]
 visible = false
+margin_top = 84.0
 margin_right = 1203.0
-margin_bottom = 14.0
+margin_bottom = 98.0
 
 [node name="time" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line2"]
 margin_right = 200.0
