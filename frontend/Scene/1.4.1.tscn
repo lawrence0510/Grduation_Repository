@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://Pic/bc911.png" type="Texture" id=1]
 [ext_resource path="res://Pic/map.png" type="Texture" id=2]
@@ -7,14 +7,13 @@
 [ext_resource path="res://fonts/個人資料.tres" type="DynamicFont" id=5]
 [ext_resource path="res://pic/B1.png" type="Texture" id=6]
 [ext_resource path="res://script/1.4.1.gd" type="Script" id=7]
+[ext_resource path="res://Pic/pen.png" type="Texture" id=8]
 [ext_resource path="res://fonts/font1 - 複製 (10) - 複製.tres" type="DynamicFont" id=9]
 [ext_resource path="res://script/birth.gd" type="Script" id=10]
 [ext_resource path="res://fonts/b_enter.tres" type="StyleBox" id=11]
 [ext_resource path="res://script/school.gd" type="Script" id=12]
 [ext_resource path="res://script/phone.gd" type="Script" id=13]
 [ext_resource path="res://pic/delete1.png" type="Texture" id=14]
-[ext_resource path="res://Fonts/1.4normal.tres" type="StyleBox" id=15]
-[ext_resource path="res://Fonts/1.4hover.tres" type="StyleBox" id=16]
 
 [sub_resource type="DynamicFont" id=32]
 size = 30
@@ -52,10 +51,8 @@ extra_spacing_top = -10
 extra_spacing_bottom = -8
 font_data = ExtResource( 4 )
 
-[sub_resource type="DynamicFont" id=34]
-size = 40
-use_filter = true
-font_data = ExtResource( 4 )
+[sub_resource type="StyleBoxFlat" id=35]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [sub_resource type="Theme" id=17]
 
@@ -188,22 +185,22 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -799.0
-margin_top = -559.0
+margin_top = -580.0
 margin_right = -218.0
-margin_bottom = 12.0
+margin_bottom = 40.0
 rect_scale = Vector2( 2.8, 2.3 )
 texture = ExtResource( 2 )
 expand = true
 
 [node name="大橫線" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
-position = Vector2( 346.497, 74.3687 )
+position = Vector2( 346.497, 62.1948 )
 scale = Vector2( -1.59461, 0.76087 )
 points = PoolVector2Array( -103.655, 100, 177.202, 100 )
 width = 1.0
 default_color = Color( 0.654902, 0.654902, 0.670588, 1 )
 
 [node name="左短線" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
-position = Vector2( 346.497, 74.3687 )
+position = Vector2( 346.497, 62.1948 )
 scale = Vector2( -1.59461, 0.76087 )
 points = PoolVector2Array( 48, 100, 189.297, 100 )
 width = 4.0
@@ -211,9 +208,9 @@ default_color = Color( 0, 0, 0, 1 )
 
 [node name="personal" type="Button" parent="BackgroundPicture/BackgroundBoxPicture"]
 margin_left = 46.0
-margin_top = 98.0
+margin_top = 89.3044
 margin_right = 270.0
-margin_bottom = 142.0
+margin_bottom = 133.304
 rect_pivot_offset = Vector2( 354.143, 83.5218 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
@@ -230,9 +227,9 @@ text = "個人資料"
 
 [node name="record" type="Button" parent="BackgroundPicture/BackgroundBoxPicture"]
 margin_left = 272.857
-margin_top = 98.0
+margin_top = 89.3044
 margin_right = 517.857
-margin_bottom = 142.0
+margin_bottom = 133.304
 rect_pivot_offset = Vector2( 354.143, 83.5218 )
 custom_colors/font_color_disabled = Color( 0.654902, 0.654902, 0.670588, 1 )
 custom_colors/font_color_focus = Color( 0.654902, 0.654902, 0.670588, 1 )
@@ -287,7 +284,7 @@ margin_right = 326.0
 margin_bottom = 184.566
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 5 )
-text = "年齡"
+text = "Age"
 
 [node name="右短線1" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
 position = Vector2( 406.032, 110.716 )
@@ -388,58 +385,48 @@ custom_colors/font_color = Color( 0, 0.494118, 1, 1 )
 custom_fonts/font = ExtResource( 5 )
 
 [node name="edit_birth_button" type="Button" parent="BackgroundPicture"]
-margin_left = 1527.0
-margin_top = 470.0
-margin_right = 1607.0
-margin_bottom = 531.0
-custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color_focus = Color( 1, 0, 0, 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 1, 0, 0, 1 )
-custom_colors/font_color_pressed = Color( 1, 0, 0, 1 )
-custom_fonts/font = SubResource( 34 )
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 16 )
-custom_styles/focus = ExtResource( 16 )
-custom_styles/disabled = ExtResource( 15 )
-custom_styles/normal = ExtResource( 15 )
-text = "修改"
+margin_left = 1552.0
+margin_top = 476.0
+margin_right = 1602.0
+margin_bottom = 526.0
+custom_styles/hover = SubResource( 35 )
+custom_styles/pressed = SubResource( 35 )
+custom_styles/focus = SubResource( 35 )
+custom_styles/disabled = SubResource( 35 )
+custom_styles/normal = SubResource( 35 )
+icon = ExtResource( 8 )
+flat = true
+expand_icon = true
 
 [node name="edit_school_button" type="Button" parent="BackgroundPicture"]
-margin_left = 1527.0
-margin_top = 580.0
-margin_right = 1607.0
-margin_bottom = 641.0
-custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color_focus = Color( 1, 0, 0, 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 1, 0, 0, 1 )
-custom_colors/font_color_pressed = Color( 1, 0, 0, 1 )
-custom_fonts/font = SubResource( 34 )
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 16 )
-custom_styles/focus = ExtResource( 16 )
-custom_styles/disabled = ExtResource( 15 )
-custom_styles/normal = ExtResource( 15 )
-text = "修改"
+margin_left = 1552.0
+margin_top = 589.0
+margin_right = 1602.0
+margin_bottom = 639.0
+custom_styles/hover = SubResource( 35 )
+custom_styles/pressed = SubResource( 35 )
+custom_styles/focus = SubResource( 35 )
+custom_styles/disabled = SubResource( 35 )
+custom_styles/normal = SubResource( 35 )
+icon = ExtResource( 8 )
+flat = true
+icon_align = 1
+expand_icon = true
 
 [node name="edit_phone_button" type="Button" parent="BackgroundPicture"]
-margin_left = 1527.0
+margin_left = 1552.0
 margin_top = 690.0
-margin_right = 1607.0
-margin_bottom = 751.0
-custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color_focus = Color( 1, 0, 0, 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 1, 0, 0, 1 )
-custom_colors/font_color_pressed = Color( 1, 0, 0, 1 )
-custom_fonts/font = SubResource( 34 )
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 16 )
-custom_styles/focus = ExtResource( 16 )
-custom_styles/disabled = ExtResource( 15 )
-custom_styles/normal = ExtResource( 15 )
-text = "修改"
+margin_right = 1602.0
+margin_bottom = 740.0
+custom_styles/hover = SubResource( 35 )
+custom_styles/pressed = SubResource( 35 )
+custom_styles/focus = SubResource( 35 )
+custom_styles/disabled = SubResource( 35 )
+custom_styles/normal = SubResource( 35 )
+icon = ExtResource( 8 )
+flat = true
+icon_align = 1
+expand_icon = true
 
 [node name="birth" type="WindowDialog" parent="BackgroundPicture"]
 anchor_left = 0.5

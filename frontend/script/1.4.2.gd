@@ -2,8 +2,8 @@ extends Node2D
 
 onready var button_r: Button = $"bg/框框/personal"
 onready var button_l: Button = $"bg/框框/record"
-onready var b16: Button = $"bg/框框/pic/DayPanel/b16"
-onready var LogDay: WindowDialog = $"bg/LogDay"
+onready var b16: Button = $BackgroundPicture/BackgroundBoxPicture/DayPanel/b16
+onready var LoginDay: WindowDialog = $BackgroundPicture/LoginDay
 
 func _ready() -> void:
 	b16.connect("pressed", self, "_on_16_pressed")
@@ -22,7 +22,7 @@ func _on_record_pressed():
 	get_tree().change_scene("res://scene/1.4.2.tscn")
 
 func _on_16_pressed():
-	LogDay.popup_centered()
+	LoginDay.popup_centered()
 
 func _on_cross_pressed():
 	get_tree().change_scene("res://scene/1.4.0.tscn")

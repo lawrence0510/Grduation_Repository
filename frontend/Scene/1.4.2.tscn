@@ -1,22 +1,23 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://fonts/font6.tres" type="DynamicFont" id=1]
 [ext_resource path="res://script/1.4.2.gd" type="Script" id=2]
 [ext_resource path="res://fonts/font1 - 複製 (8) - 複製.tres" type="DynamicFont" id=3]
-[ext_resource path="res://pic/框框.png" type="Texture" id=4]
-[ext_resource path="res://fonts/個人資料.tres" type="DynamicFont" id=5]
+[ext_resource path="res://Pic/map.png" type="Texture" id=4]
+[ext_resource path="res://Pic/LoginDay.png" type="Texture" id=5]
 [ext_resource path="res://fonts/日期框.tres" type="StyleBox" id=6]
 [ext_resource path="res://Pic/bc911.png" type="Texture" id=7]
 [ext_resource path="res://fonts/日期按鈕.tres" type="StyleBox" id=8]
-[ext_resource path="res://fonts/上線.tres" type="StyleBox" id=9]
-[ext_resource path="res://fonts/答對字.tres" type="DynamicFont" id=10]
-[ext_resource path="res://fonts/font1 - 複製 (10) - 複製.tres" type="DynamicFont" id=11]
+[ext_resource path="res://Fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=9]
+[ext_resource path="res://script/LoginScroll.gd" type="Script" id=10]
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=12]
-[ext_resource path="res://fonts/答對.tres" type="StyleBox" id=13]
-[ext_resource path="res://fonts/上線字.tres" type="DynamicFont" id=14]
-[ext_resource path="res://fonts/關卡.tres" type="StyleBox" id=15]
 [ext_resource path="res://pic/delete1.png" type="Texture" id=16]
-[ext_resource path="res://Pic/color.jpg" type="Texture" id=17]
+
+[sub_resource type="DynamicFont" id=33]
+size = 30
+outline_color = Color( 0.654902, 0.654902, 0.670588, 1 )
+use_filter = true
+font_data = ExtResource( 12 )
 
 [sub_resource type="StyleBoxFlat" id=6]
 draw_center = false
@@ -33,7 +34,13 @@ draw_center = false
 [sub_resource type="StyleBoxFlat" id=1]
 draw_center = false
 
-[sub_resource type="StyleBoxFlat" id=7]
+[sub_resource type="DynamicFont" id=32]
+size = 30
+outline_size = 3
+use_filter = true
+font_data = ExtResource( 12 )
+
+[sub_resource type="StyleBoxFlat" id=36]
 draw_center = false
 border_width_left = 1
 border_width_top = 1
@@ -41,29 +48,36 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Theme" id=12]
-
-[sub_resource type="StyleBoxFlat" id=8]
+[sub_resource type="StyleBoxFlat" id=35]
 draw_center = false
 border_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Theme" id=9]
+[sub_resource type="StyleBoxFlat" id=37]
+bg_color = Color( 0, 0, 0, 0.764706 )
 
-[sub_resource type="StyleBoxFlat" id=10]
-bg_color = Color( 0.866667, 0.698039, 0.603922, 1 )
-
-[sub_resource type="DynamicFont" id=11]
-size = 60
+[sub_resource type="DynamicFont" id=38]
+size = 50
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
 font_data = ExtResource( 12 )
 
-[node name="Node2D2" type="Node2D"]
+[sub_resource type="DynamicFont" id=39]
+size = 30
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=40]
+size = 33
+use_filter = true
+font_data = ExtResource( 9 )
+
+[node name="Node2D" type="Node2D"]
 position = Vector2( -2, 0 )
 script = ExtResource( 2 )
 
-[node name="bg" type="TextureRect" parent="."]
+[node name="BackgroundPicture" type="TextureRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 1920.0
@@ -71,44 +85,45 @@ margin_bottom = 1080.0
 texture = ExtResource( 7 )
 expand = true
 
-[node name="框框" type="TextureRect" parent="bg"]
+[node name="BackgroundBoxPicture" type="TextureRect" parent="BackgroundPicture"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -772.0
-margin_top = -500.0
+margin_left = -799.0
+margin_top = -580.0
 margin_right = -218.0
-margin_bottom = -50.0
+margin_bottom = 40.0
 rect_scale = Vector2( 2.8, 2.3 )
 texture = ExtResource( 4 )
+expand = true
 
-[node name="大橫線" type="Line2D" parent="bg/框框"]
-position = Vector2( 333.565, 18.1947 )
+[node name="大橫線" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
+position = Vector2( 346.497, 62.1948 )
 scale = Vector2( -1.59461, 0.76087 )
-points = PoolVector2Array( -122, 100, 190, 100 )
-width = 2.0
+points = PoolVector2Array( -103.655, 100, 177.202, 100 )
+width = 1.0
 default_color = Color( 0.654902, 0.654902, 0.670588, 1 )
 
-[node name="右短線" type="Line2D" parent="bg/框框"]
-position = Vector2( 604.279, 18.1947 )
+[node name="左短線" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
+position = Vector2( 346.497, 62.1948 )
 scale = Vector2( -1.59461, 0.76087 )
-points = PoolVector2Array( 48, 100, 190, 100 )
+points = PoolVector2Array( 48, 100, -103, 100 )
 width = 4.0
 default_color = Color( 0, 0, 0, 1 )
 
-[node name="personal" type="Button" parent="bg/框框"]
-margin_left = 33.0
-margin_top = 57.3478
-margin_right = 278.0
-margin_bottom = 96.3478
+[node name="personal" type="Button" parent="BackgroundPicture/BackgroundBoxPicture"]
+margin_left = 46.0
+margin_top = 89.3044
+margin_right = 270.0
+margin_bottom = 133.304
 rect_pivot_offset = Vector2( 354.143, 83.5218 )
 custom_colors/font_color_disabled = Color( 0.654902, 0.654902, 0.670588, 1 )
 custom_colors/font_color_focus = Color( 0.654902, 0.654902, 0.670588, 1 )
 custom_colors/font_color = Color( 0.654902, 0.654902, 0.670588, 1 )
 custom_colors/font_color_hover = Color( 0.654902, 0.654902, 0.670588, 1 )
 custom_colors/font_color_pressed = Color( 0.654902, 0.654902, 0.670588, 1 )
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = SubResource( 33 )
 custom_styles/hover = SubResource( 6 )
 custom_styles/pressed = SubResource( 3 )
 custom_styles/focus = SubResource( 4 )
@@ -116,162 +131,160 @@ custom_styles/disabled = SubResource( 5 )
 custom_styles/normal = SubResource( 1 )
 text = "個人資料"
 
-[node name="record" type="Button" parent="bg/框框"]
-margin_left = 279.643
-margin_top = 58.2609
-margin_right = 524.643
-margin_bottom = 97.2609
+[node name="record" type="Button" parent="BackgroundPicture/BackgroundBoxPicture"]
+margin_left = 272.857
+margin_top = 89.3044
+margin_right = 517.857
+margin_bottom = 133.304
 rect_pivot_offset = Vector2( 354.143, 83.5218 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = SubResource( 32 )
 custom_styles/hover = SubResource( 6 )
-custom_styles/pressed = SubResource( 3 )
-custom_styles/focus = SubResource( 4 )
-custom_styles/disabled = SubResource( 5 )
-custom_styles/normal = SubResource( 1 )
+custom_styles/pressed = SubResource( 6 )
+custom_styles/focus = SubResource( 6 )
+custom_styles/disabled = SubResource( 6 )
+custom_styles/normal = SubResource( 6 )
 text = "簽到記錄"
 
-[node name="Label" type="Label" parent="bg/框框"]
+[node name="month" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
 margin_left = 259.0
-margin_top = 112.913
+margin_top = 152.478
 margin_right = 293.0
-margin_bottom = 132.913
+margin_bottom = 172.478
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
 text = "6 月"
 align = 1
 
-[node name="WeekPanel" type="Panel" parent="bg/框框"]
+[node name="WeekPanel" type="Panel" parent="BackgroundPicture/BackgroundBoxPicture"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -227.5
-margin_top = -83.0434
+margin_top = -132.174
 margin_right = 227.5
-margin_bottom = -43.0434
-custom_styles/panel = SubResource( 7 )
+margin_bottom = -102.174
+custom_styles/panel = SubResource( 36 )
 
-[node name="Line2D" type="Line2D" parent="bg/框框/WeekPanel"]
-points = PoolVector2Array( 65, 0, 65, 40 )
+[node name="Line2D" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture/WeekPanel"]
+points = PoolVector2Array( 65, 0, 65, 30 )
 width = 1.0
 default_color = Color( 0, 0, 0, 1 )
 
-[node name="Line2D2" type="Line2D" parent="bg/框框/WeekPanel"]
-points = PoolVector2Array( 130, 0, 130, 40 )
+[node name="Line2D2" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture/WeekPanel"]
+points = PoolVector2Array( 130, 0, 130, 30 )
 width = 1.0
 default_color = Color( 0, 0, 0, 1 )
 
-[node name="Line2D3" type="Line2D" parent="bg/框框/WeekPanel"]
-points = PoolVector2Array( 195, 0, 195, 40 )
+[node name="Line2D3" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture/WeekPanel"]
+points = PoolVector2Array( 195, 0, 195, 30 )
 width = 1.0
 default_color = Color( 0, 0, 0, 1 )
 
-[node name="Line2D4" type="Line2D" parent="bg/框框/WeekPanel"]
-points = PoolVector2Array( 260, 0, 260, 40 )
+[node name="Line2D4" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture/WeekPanel"]
+points = PoolVector2Array( 260, 0, 260, 30 )
 width = 1.0
 default_color = Color( 0, 0, 0, 1 )
 
-[node name="Line2D5" type="Line2D" parent="bg/框框/WeekPanel"]
-points = PoolVector2Array( 325, 0, 325, 40 )
+[node name="Line2D5" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture/WeekPanel"]
+points = PoolVector2Array( 325, 0, 325, 30 )
 width = 1.0
 default_color = Color( 0, 0, 0, 1 )
 
-[node name="Line2D6" type="Line2D" parent="bg/框框/WeekPanel"]
-points = PoolVector2Array( 390, 0, 390, 40 )
+[node name="Line2D6" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture/WeekPanel"]
+points = PoolVector2Array( 390, 0, 390, 30 )
 width = 1.0
 default_color = Color( 0, 0, 0, 1 )
 
-[node name="1" type="Label" parent="bg/框框/WeekPanel"]
+[node name="1" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/WeekPanel"]
+margin_top = -4.34781
 margin_right = 66.0
-margin_bottom = 40.0
+margin_bottom = 35.6522
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 3 )
 text = "星期一"
 align = 1
 valign = 1
 
-[node name="2" type="Label" parent="bg/框框/WeekPanel"]
+[node name="2" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/WeekPanel"]
 margin_left = 65.0
+margin_top = -4.34781
 margin_right = 131.0
-margin_bottom = 40.0
+margin_bottom = 35.6522
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 3 )
 text = "星期二"
 align = 1
 valign = 1
 
-[node name="3" type="Label" parent="bg/框框/WeekPanel"]
+[node name="3" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/WeekPanel"]
 margin_left = 130.0
+margin_top = -4.34781
 margin_right = 196.0
-margin_bottom = 40.0
+margin_bottom = 35.6522
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 3 )
 text = "星期三"
 align = 1
 valign = 1
 
-[node name="4" type="Label" parent="bg/框框/WeekPanel"]
+[node name="4" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/WeekPanel"]
 margin_left = 195.0
+margin_top = -4.34781
 margin_right = 261.0
-margin_bottom = 40.0
+margin_bottom = 35.6522
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 3 )
 text = "星期四"
 align = 1
 valign = 1
 
-[node name="5" type="Label" parent="bg/框框/WeekPanel"]
+[node name="5" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/WeekPanel"]
 margin_left = 260.0
+margin_top = -4.34781
 margin_right = 326.0
-margin_bottom = 40.0
+margin_bottom = 35.6522
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 3 )
 text = "星期五"
 align = 1
 valign = 1
 
-[node name="6" type="Label" parent="bg/框框/WeekPanel"]
+[node name="6" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/WeekPanel"]
 margin_left = 325.0
+margin_top = -4.34781
 margin_right = 391.0
-margin_bottom = 40.0
+margin_bottom = 35.6522
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 3 )
 text = "星期六"
 align = 1
 valign = 1
 
-[node name="7" type="Label" parent="bg/框框/WeekPanel"]
+[node name="7" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/WeekPanel"]
 margin_left = 390.0
+margin_top = -4.34781
 margin_right = 456.0
-margin_bottom = 40.0
+margin_bottom = 35.6522
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 3 )
 text = "星期日"
 align = 1
 valign = 1
 
-[node name="pic" type="TextureRect" parent="bg/框框"]
-margin_left = 217.5
-margin_top = 264.348
-margin_right = 523.5
-margin_bottom = 392.348
-theme = SubResource( 12 )
-texture = ExtResource( 17 )
-expand = true
+[node name="DayPanel" type="Panel" parent="BackgroundPicture/BackgroundBoxPicture"]
+margin_left = 66.2857
+margin_top = 220.74
+margin_right = 521.286
+margin_bottom = 420.739
+custom_styles/panel = SubResource( 35 )
 
-[node name="DayPanel" type="Panel" parent="bg/框框/pic"]
-margin_left = -165.5
-margin_top = -67.0868
-margin_right = 289.5
-margin_bottom = 132.913
-custom_styles/panel = SubResource( 8 )
-
-[node name="1" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="1" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 400.0
 margin_right = 440.0
 margin_bottom = 24.0
@@ -281,7 +294,7 @@ text = "1"
 align = 1
 valign = 1
 
-[node name="2" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="2" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 10.0
 margin_top = 35.0
 margin_right = 50.0
@@ -292,7 +305,7 @@ text = "2"
 align = 1
 valign = 1
 
-[node name="3" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="3" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 75.0
 margin_top = 35.0
 margin_right = 115.0
@@ -303,7 +316,7 @@ text = "3"
 align = 1
 valign = 1
 
-[node name="4" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="4" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 140.0
 margin_top = 35.0
 margin_right = 180.0
@@ -314,7 +327,7 @@ text = "4"
 align = 1
 valign = 1
 
-[node name="5" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="5" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 205.0
 margin_top = 35.0
 margin_right = 245.0
@@ -325,7 +338,7 @@ text = "5"
 align = 1
 valign = 1
 
-[node name="6" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="6" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 270.0
 margin_top = 35.0
 margin_right = 310.0
@@ -336,7 +349,7 @@ text = "6"
 align = 1
 valign = 1
 
-[node name="7" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="7" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 335.0
 margin_top = 35.0
 margin_right = 375.0
@@ -347,7 +360,7 @@ text = "7"
 align = 1
 valign = 1
 
-[node name="8" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="8" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 400.0
 margin_top = 35.0
 margin_right = 440.0
@@ -358,7 +371,7 @@ text = "8"
 align = 1
 valign = 1
 
-[node name="9" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="9" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 10.0
 margin_top = 70.0
 margin_right = 50.0
@@ -369,7 +382,7 @@ text = "9"
 align = 1
 valign = 1
 
-[node name="10" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="10" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 75.0
 margin_top = 70.0
 margin_right = 115.0
@@ -380,7 +393,7 @@ text = "10"
 align = 1
 valign = 1
 
-[node name="11" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="11" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 140.0
 margin_top = 70.0
 margin_right = 180.0
@@ -391,7 +404,7 @@ text = "11"
 align = 1
 valign = 1
 
-[node name="12" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="12" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 205.0
 margin_top = 70.0
 margin_right = 245.0
@@ -402,7 +415,7 @@ text = "12"
 align = 1
 valign = 1
 
-[node name="13" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="13" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 270.0
 margin_top = 70.0
 margin_right = 310.0
@@ -413,7 +426,7 @@ text = "13"
 align = 1
 valign = 1
 
-[node name="14" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="14" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 335.0
 margin_top = 70.0
 margin_right = 375.0
@@ -424,7 +437,7 @@ text = "14"
 align = 1
 valign = 1
 
-[node name="15" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="15" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 400.0
 margin_top = 70.0
 margin_right = 440.0
@@ -435,7 +448,7 @@ text = "15"
 align = 1
 valign = 1
 
-[node name="b16" type="Button" parent="bg/框框/pic/DayPanel"]
+[node name="b16" type="Button" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 9.07144
 margin_top = 105.348
 margin_right = 52.0714
@@ -452,7 +465,7 @@ custom_styles/disabled = ExtResource( 8 )
 custom_styles/normal = ExtResource( 8 )
 text = "16"
 
-[node name="17" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="17" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 75.0
 margin_top = 105.0
 margin_right = 115.0
@@ -463,7 +476,7 @@ text = "17"
 align = 1
 valign = 1
 
-[node name="18" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="18" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 140.0
 margin_top = 105.0
 margin_right = 180.0
@@ -474,7 +487,7 @@ text = "18"
 align = 1
 valign = 1
 
-[node name="19" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="19" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 205.0
 margin_top = 105.0
 margin_right = 245.0
@@ -485,7 +498,7 @@ text = "19"
 align = 1
 valign = 1
 
-[node name="20" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="20" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 270.0
 margin_top = 105.0
 margin_right = 310.0
@@ -496,7 +509,7 @@ text = "20"
 align = 1
 valign = 1
 
-[node name="21" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="21" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 335.0
 margin_top = 105.0
 margin_right = 375.0
@@ -507,7 +520,7 @@ text = "21"
 align = 1
 valign = 1
 
-[node name="22" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="22" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 400.0
 margin_top = 105.0
 margin_right = 440.0
@@ -518,7 +531,7 @@ text = "22"
 align = 1
 valign = 1
 
-[node name="23" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="23" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 10.0
 margin_top = 140.0
 margin_right = 50.0
@@ -529,7 +542,7 @@ text = "23"
 align = 1
 valign = 1
 
-[node name="24" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="24" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 75.0
 margin_top = 140.0
 margin_right = 115.0
@@ -540,7 +553,7 @@ text = "24"
 align = 1
 valign = 1
 
-[node name="25" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="25" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 140.0
 margin_top = 140.0
 margin_right = 180.0
@@ -551,7 +564,7 @@ text = "25"
 align = 1
 valign = 1
 
-[node name="26" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="26" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 205.0
 margin_top = 140.0
 margin_right = 245.0
@@ -562,7 +575,7 @@ text = "26"
 align = 1
 valign = 1
 
-[node name="27" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="27" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 270.0
 margin_top = 140.0
 margin_right = 310.0
@@ -573,7 +586,7 @@ text = "27"
 align = 1
 valign = 1
 
-[node name="28" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="28" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 335.0
 margin_top = 140.0
 margin_right = 375.0
@@ -584,7 +597,7 @@ text = "28"
 align = 1
 valign = 1
 
-[node name="29" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="29" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 400.0
 margin_top = 140.0
 margin_right = 440.0
@@ -595,7 +608,7 @@ text = "29"
 align = 1
 valign = 1
 
-[node name="30" type="Label" parent="bg/框框/pic/DayPanel"]
+[node name="30" type="Label" parent="BackgroundPicture/BackgroundBoxPicture/DayPanel"]
 margin_left = 10.0
 margin_top = 175.0
 margin_right = 50.0
@@ -606,205 +619,857 @@ text = "30"
 align = 1
 valign = 1
 
-[node name="LogDay" type="WindowDialog" parent="bg"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -401.0
-margin_top = -253.0
-margin_right = 530.0
-margin_bottom = 282.0
-theme = SubResource( 9 )
-custom_constants/close_h_ofs = 30
-custom_constants/close_v_ofs = -10
-custom_styles/panel = SubResource( 10 )
+[node name="LoginDay" type="WindowDialog" parent="BackgroundPicture"]
+visible = true
+margin_right = 1920.0
+margin_bottom = 1080.0
+custom_styles/panel = SubResource( 37 )
 
-[node name="文字" type="Label" parent="bg/LogDay"]
+[node name="TextureRect" type="TextureRect" parent="BackgroundPicture/LoginDay"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -58.5
-margin_top = -233.5
-margin_right = 58.5
-margin_bottom = -145.5
+margin_left = -527.0
+margin_top = -355.5
+margin_right = 527.0
+margin_bottom = 355.5
+texture = ExtResource( 5 )
+expand = true
+
+[node name="Day" type="Label" parent="BackgroundPicture/LoginDay/TextureRect"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -49.0
+margin_top = 94.0
+margin_right = 49.0
+margin_bottom = 167.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 38 )
+text = "6/16"
+
+[node name="左短線" type="Line2D" parent="BackgroundPicture/LoginDay/TextureRect"]
+position = Vector2( 346.497, 62.1948 )
+scale = Vector2( -1.59461, 0.76087 )
+points = PoolVector2Array( 80, 230, -300, 230 )
+width = 4.0
+default_color = Color( 0, 0, 0, 1 )
+
+[node name="bar" type="Label" parent="BackgroundPicture/LoginDay/TextureRect"]
+margin_left = 220.0
+margin_top = 162.0
+margin_right = 1423.0
+margin_bottom = 237.0
+
+[node name="time" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/bar"]
+margin_left = 10.0
+margin_top = 24.0
+margin_right = 130.0
+margin_bottom = 68.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 39 )
+text = "起訖時間"
+
+[node name="title" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/bar"]
+margin_left = 252.0
+margin_top = 24.0
+margin_right = 458.0
+margin_bottom = 68.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 39 )
+text = "答對 / 遊玩關卡"
+
+[node name="score" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/bar"]
+margin_left = 504.0
+margin_top = 23.0
+margin_right = 594.0
+margin_bottom = 67.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 39 )
+text = "答對率"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="BackgroundPicture/LoginDay/TextureRect"]
+margin_left = 221.0
+margin_top = 259.0
+margin_right = 830.0
+margin_bottom = 532.0
+script = ExtResource( 10 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer"]
+margin_right = 597.0
+margin_bottom = 392.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 40
+
+[node name="line1" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer"]
+margin_right = 597.0
+margin_bottom = 14.0
+
+[node name="time_start" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line1"]
+margin_left = 9.0
+margin_top = -5.0
+margin_right = 85.0
+margin_bottom = 44.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 11 )
-text = "6/16"
+custom_fonts/font = SubResource( 40 )
+text = "18:30"
 
-[node name="上" type="Line2D" parent="bg/LogDay"]
-position = Vector2( 471.922, 54.4991 )
-scale = Vector2( -1.59461, 0.76087 )
-points = PoolVector2Array( -250, 120, 250, 120 )
-width = 4.0
-default_color = Color( 0, 0, 0, 1 )
-
-[node name="左" type="Line2D" parent="bg/LogDay"]
-position = Vector2( 471.922, -10.5009 )
-scale = Vector2( -1.59461, 0.76087 )
-points = PoolVector2Array( 80, 120, 250, 120 )
-width = 2.0
-default_color = Color( 0, 0, 0, 1 )
-
-[node name="右" type="Line2D" parent="bg/LogDay"]
-position = Vector2( 471.922, -10.5009 )
-scale = Vector2( -1.59461, 0.76087 )
-points = PoolVector2Array( -80, 120, -250, 120 )
-width = 2.0
-default_color = Color( 0, 0, 0, 1 )
-
-[node name="上線時間" type="Label" parent="bg/LogDay"]
-margin_left = 96.0
-margin_top = 146.0
-margin_right = 236.0
-margin_bottom = 201.0
+[node name="time_to" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line1"]
+margin_left = 98.0
+margin_top = -5.0
+margin_right = 129.0
+margin_bottom = 44.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 11 )
-text = "上線時間"
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "~  "
 
-[node name="下線時間" type="Label" parent="bg/LogDay"]
-margin_left = 287.0
-margin_top = 146.0
-margin_right = 427.0
-margin_bottom = 201.0
+[node name="time_end" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line1"]
+margin_left = 130.0
+margin_top = -4.0
+margin_right = 206.0
+margin_bottom = 45.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 11 )
-text = "下線時間"
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "19:30"
 
-[node name="關卡" type="Label" parent="bg/LogDay"]
-margin_left = 473.0
-margin_top = 146.0
-margin_right = 713.0
-margin_bottom = 201.0
+[node name="correct" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line1"]
+margin_left = 296.0
+margin_top = -5.0
+margin_right = 313.0
+margin_bottom = 44.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 11 )
-text = "答對 / 遊玩關卡"
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "9"
 
-[node name="答對率" type="Label" parent="bg/LogDay"]
-margin_left = 752.0
-margin_top = 146.0
-margin_right = 857.0
-margin_bottom = 201.0
+[node name="slash" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line1"]
+margin_left = 316.0
+margin_top = -5.0
+margin_right = 333.0
+margin_bottom = 44.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 11 )
-text = "答對率"
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "/"
 
-[node name="下" type="Line2D" parent="bg/LogDay"]
-position = Vector2( 471.922, 109.499 )
-scale = Vector2( -1.59461, 0.76087 )
-points = PoolVector2Array( -250, 120, 250, 120 )
-width = 4.0
-default_color = Color( 0, 0, 0, 1 )
-
-[node name="上1" type="Label" parent="bg/LogDay"]
-margin_left = 96.0
-margin_top = 219.0
-margin_right = 236.0
-margin_bottom = 274.0
+[node name="play" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line1"]
+margin_left = 336.0
+margin_top = -5.0
+margin_right = 370.0
+margin_bottom = 44.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 14 )
-custom_styles/normal = ExtResource( 9 )
-text = "18 : 30"
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "10"
+
+[node name="score" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line1"]
+margin_left = 524.0
+margin_top = -5.0
+margin_right = 587.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "80%"
 align = 1
 valign = 1
 
-[node name="下1" type="Label" parent="bg/LogDay"]
-margin_left = 287.0
-margin_top = 219.0
-margin_right = 427.0
-margin_bottom = 274.0
+[node name="line2" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer"]
+margin_top = 54.0
+margin_right = 597.0
+margin_bottom = 68.0
+
+[node name="time_start" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line2"]
+margin_left = 9.0
+margin_top = -5.0
+margin_right = 85.0
+margin_bottom = 44.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 14 )
-custom_styles/normal = ExtResource( 9 )
-text = "19 : 30"
-align = 1
-valign = 1
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "18:30"
 
-[node name="答1" type="Label" parent="bg/LogDay"]
-margin_left = 752.0
-margin_top = 219.0
-margin_right = 857.0
-margin_bottom = 274.0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_fonts/font = ExtResource( 10 )
-custom_styles/normal = ExtResource( 13 )
-text = "90 %"
-align = 1
-valign = 1
-
-[node name="關1" type="Label" parent="bg/LogDay"]
-margin_left = 510.0
-margin_top = 219.0
-margin_right = 660.0
-margin_bottom = 274.0
+[node name="time_to" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line2"]
+margin_left = 98.0
+margin_top = -5.0
+margin_right = 129.0
+margin_bottom = 44.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 14 )
-custom_styles/normal = ExtResource( 15 )
-text = "9 / 10"
-align = 1
-valign = 1
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "~  "
 
-[node name="上2" type="Label" parent="bg/LogDay"]
-margin_left = 96.0
-margin_top = 294.0
-margin_right = 236.0
-margin_bottom = 349.0
+[node name="time_end" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line2"]
+margin_left = 130.0
+margin_top = -4.0
+margin_right = 206.0
+margin_bottom = 45.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 14 )
-custom_styles/normal = ExtResource( 9 )
-text = "20 : 00"
-align = 1
-valign = 1
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "19:30"
 
-[node name="下2" type="Label" parent="bg/LogDay"]
-margin_left = 287.0
-margin_top = 294.0
-margin_right = 427.0
-margin_bottom = 349.0
+[node name="correct" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line2"]
+margin_left = 296.0
+margin_top = -5.0
+margin_right = 313.0
+margin_bottom = 44.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 14 )
-custom_styles/normal = ExtResource( 9 )
-text = "20 : 10"
-align = 1
-valign = 1
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "9"
 
-[node name="答2" type="Label" parent="bg/LogDay"]
-margin_left = 752.0
-margin_top = 294.0
-margin_right = 857.0
-margin_bottom = 349.0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_fonts/font = ExtResource( 10 )
-custom_styles/normal = ExtResource( 13 )
-text = "100 %"
-align = 1
-valign = 1
-
-[node name="關2" type="Label" parent="bg/LogDay"]
-margin_left = 510.0
-margin_top = 294.0
-margin_right = 660.0
-margin_bottom = 349.0
+[node name="slash" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line2"]
+margin_left = 316.0
+margin_top = -5.0
+margin_right = 333.0
+margin_bottom = 44.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 14 )
-custom_styles/normal = ExtResource( 15 )
-text = "2 / 2"
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "/"
+
+[node name="play" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line2"]
+margin_left = 336.0
+margin_top = -5.0
+margin_right = 370.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "10"
+
+[node name="score" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line2"]
+margin_left = 524.0
+margin_top = -5.0
+margin_right = 587.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "80%"
 align = 1
 valign = 1
 
-[node name="cross" type="Button" parent="bg"]
-margin_left = 1789.0
-margin_top = 30.0
-margin_right = 2301.0
-margin_bottom = 536.0
+[node name="line3" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer"]
+margin_top = 108.0
+margin_right = 597.0
+margin_bottom = 122.0
+
+[node name="time_start" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line3"]
+margin_left = 9.0
+margin_top = -5.0
+margin_right = 85.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "18:30"
+
+[node name="time_to" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line3"]
+margin_left = 98.0
+margin_top = -5.0
+margin_right = 129.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "~  "
+
+[node name="time_end" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line3"]
+margin_left = 130.0
+margin_top = -4.0
+margin_right = 206.0
+margin_bottom = 45.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "19:30"
+
+[node name="correct" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line3"]
+margin_left = 296.0
+margin_top = -5.0
+margin_right = 313.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "9"
+
+[node name="slash" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line3"]
+margin_left = 316.0
+margin_top = -5.0
+margin_right = 333.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "/"
+
+[node name="play" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line3"]
+margin_left = 336.0
+margin_top = -5.0
+margin_right = 370.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "10"
+
+[node name="score" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line3"]
+margin_left = 524.0
+margin_top = -5.0
+margin_right = 587.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "80%"
+align = 1
+valign = 1
+
+[node name="line4" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer"]
+margin_top = 162.0
+margin_right = 597.0
+margin_bottom = 176.0
+
+[node name="time_start" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line4"]
+margin_left = 9.0
+margin_top = -5.0
+margin_right = 85.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "18:30"
+
+[node name="time_to" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line4"]
+margin_left = 98.0
+margin_top = -5.0
+margin_right = 129.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "~  "
+
+[node name="time_end" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line4"]
+margin_left = 130.0
+margin_top = -4.0
+margin_right = 206.0
+margin_bottom = 45.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "19:30"
+
+[node name="correct" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line4"]
+margin_left = 296.0
+margin_top = -5.0
+margin_right = 313.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "9"
+
+[node name="slash" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line4"]
+margin_left = 316.0
+margin_top = -5.0
+margin_right = 333.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "/"
+
+[node name="play" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line4"]
+margin_left = 336.0
+margin_top = -5.0
+margin_right = 370.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "10"
+
+[node name="score" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line4"]
+margin_left = 524.0
+margin_top = -5.0
+margin_right = 587.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "80%"
+align = 1
+valign = 1
+
+[node name="line5" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer"]
+margin_top = 216.0
+margin_right = 597.0
+margin_bottom = 230.0
+
+[node name="time_start" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line5"]
+margin_left = 9.0
+margin_top = -5.0
+margin_right = 85.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "18:30"
+
+[node name="time_to" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line5"]
+margin_left = 98.0
+margin_top = -5.0
+margin_right = 129.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "~  "
+
+[node name="time_end" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line5"]
+margin_left = 130.0
+margin_top = -4.0
+margin_right = 206.0
+margin_bottom = 45.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "19:30"
+
+[node name="correct" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line5"]
+margin_left = 296.0
+margin_top = -5.0
+margin_right = 313.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "9"
+
+[node name="slash" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line5"]
+margin_left = 316.0
+margin_top = -5.0
+margin_right = 333.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "/"
+
+[node name="play" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line5"]
+margin_left = 336.0
+margin_top = -5.0
+margin_right = 370.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "10"
+
+[node name="score" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line5"]
+margin_left = 524.0
+margin_top = -5.0
+margin_right = 587.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "80%"
+align = 1
+valign = 1
+
+[node name="line6" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer"]
+margin_top = 270.0
+margin_right = 597.0
+margin_bottom = 284.0
+
+[node name="time_start" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line6"]
+margin_left = 9.0
+margin_top = -5.0
+margin_right = 85.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "18:30"
+
+[node name="time_to" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line6"]
+margin_left = 98.0
+margin_top = -5.0
+margin_right = 129.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "~  "
+
+[node name="time_end" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line6"]
+margin_left = 130.0
+margin_top = -4.0
+margin_right = 206.0
+margin_bottom = 45.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "19:30"
+
+[node name="correct" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line6"]
+margin_left = 296.0
+margin_top = -5.0
+margin_right = 313.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "9"
+
+[node name="slash" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line6"]
+margin_left = 316.0
+margin_top = -5.0
+margin_right = 333.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "/"
+
+[node name="play" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line6"]
+margin_left = 336.0
+margin_top = -5.0
+margin_right = 370.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "10"
+
+[node name="score" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line6"]
+margin_left = 524.0
+margin_top = -5.0
+margin_right = 587.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "80%"
+align = 1
+valign = 1
+
+[node name="line7" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer"]
+margin_top = 324.0
+margin_right = 597.0
+margin_bottom = 338.0
+
+[node name="time_start" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line7"]
+margin_left = 9.0
+margin_top = -5.0
+margin_right = 85.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "18:30"
+
+[node name="time_to" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line7"]
+margin_left = 98.0
+margin_top = -5.0
+margin_right = 129.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "~  "
+
+[node name="time_end" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line7"]
+margin_left = 130.0
+margin_top = -4.0
+margin_right = 206.0
+margin_bottom = 45.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "19:30"
+
+[node name="correct" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line7"]
+margin_left = 296.0
+margin_top = -5.0
+margin_right = 313.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "9"
+
+[node name="slash" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line7"]
+margin_left = 316.0
+margin_top = -5.0
+margin_right = 333.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "/"
+
+[node name="play" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line7"]
+margin_left = 336.0
+margin_top = -5.0
+margin_right = 370.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "10"
+
+[node name="score" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line7"]
+margin_left = 524.0
+margin_top = -5.0
+margin_right = 587.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "80%"
+align = 1
+valign = 1
+
+[node name="line8" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer"]
+margin_top = 378.0
+margin_right = 597.0
+margin_bottom = 392.0
+
+[node name="time_start" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line8"]
+margin_left = 9.0
+margin_top = -5.0
+margin_right = 85.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "18:30"
+
+[node name="time_to" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line8"]
+margin_left = 98.0
+margin_top = -5.0
+margin_right = 129.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "~  "
+
+[node name="time_end" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line8"]
+margin_left = 130.0
+margin_top = -4.0
+margin_right = 206.0
+margin_bottom = 45.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "19:30"
+
+[node name="correct" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line8"]
+margin_left = 296.0
+margin_top = -5.0
+margin_right = 313.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "9"
+
+[node name="slash" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line8"]
+margin_left = 316.0
+margin_top = -5.0
+margin_right = 333.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "/"
+
+[node name="play" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line8"]
+margin_left = 336.0
+margin_top = -5.0
+margin_right = 370.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "10"
+
+[node name="score" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line8"]
+margin_left = 524.0
+margin_top = -5.0
+margin_right = 587.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "80%"
+align = 1
+valign = 1
+
+[node name="line9" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer"]
+visible = false
+margin_top = 432.0
+margin_right = 597.0
+margin_bottom = 446.0
+
+[node name="time_start" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line9"]
+margin_left = 9.0
+margin_top = -5.0
+margin_right = 85.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "55:30"
+
+[node name="time_to" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line9"]
+margin_left = 98.0
+margin_top = -5.0
+margin_right = 129.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "~  "
+
+[node name="time_end" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line9"]
+margin_left = 130.0
+margin_top = -4.0
+margin_right = 206.0
+margin_bottom = 45.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "19:30"
+
+[node name="correct" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line9"]
+margin_left = 296.0
+margin_top = -5.0
+margin_right = 313.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "9"
+
+[node name="slash" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line9"]
+margin_left = 316.0
+margin_top = -5.0
+margin_right = 333.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "/"
+
+[node name="play" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line9"]
+margin_left = 336.0
+margin_top = -5.0
+margin_right = 370.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "10"
+
+[node name="score" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/ScrollContainer/VBoxContainer/line9"]
+margin_left = 524.0
+margin_top = -5.0
+margin_right = 587.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 40 )
+text = "80%"
+align = 1
+valign = 1
+
+[node name="cross" type="Button" parent="BackgroundPicture"]
+margin_left = 1795.0
+margin_top = 24.0
+margin_right = 2307.0
+margin_bottom = 530.0
 rect_scale = Vector2( 0.2, 0.2 )
 icon = ExtResource( 16 )
 flat = true
 
-[connection signal="pressed" from="bg/框框/personal" to="." method="_on_personal_pressed"]
-[connection signal="pressed" from="bg/框框/record" to="." method="_on_record_pressed"]
-[connection signal="pressed" from="bg/框框/pic/DayPanel/b16" to="." method="_on_16_pressed"]
-[connection signal="pressed" from="bg/cross" to="." method="_on_cross_pressed"]
+[connection signal="pressed" from="BackgroundPicture/BackgroundBoxPicture/personal" to="." method="_on_personal_pressed"]
+[connection signal="pressed" from="BackgroundPicture/BackgroundBoxPicture/record" to="." method="_on_record_pressed"]
+[connection signal="pressed" from="BackgroundPicture/cross" to="." method="_on_cross_pressed"]
