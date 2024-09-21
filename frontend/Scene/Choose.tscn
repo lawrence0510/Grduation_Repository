@@ -146,6 +146,7 @@ custom_styles/normal = SubResource( 9 )
 text = "註冊完成"
 
 [node name="B1" type="Sprite" parent="bg/底色2"]
+visible = false
 position = Vector2( 849.5, 350 )
 texture = ExtResource( 10 )
 
@@ -158,6 +159,11 @@ texture = ExtResource( 2 )
 visible = false
 position = Vector2( 879.5, 355 )
 texture = ExtResource( 14 )
+
+[node name="B4" type="Sprite" parent="bg/底色2"]
+visible = false
+position = Vector2( 849.5, 350 )
+texture = ExtResource( 5 )
 
 [node name="G1" type="Sprite" parent="bg/底色2"]
 visible = false
@@ -180,7 +186,7 @@ custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = SubResource( 7 )
 custom_styles/disabled = ExtResource( 1 )
 custom_styles/normal = ExtResource( 1 )
-text = "B1"
+text = "Graves"
 script = ExtResource( 11 )
 
 [node name="BB2" type="Button" parent="bg/底色2"]
@@ -199,7 +205,7 @@ custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = SubResource( 7 )
 custom_styles/disabled = ExtResource( 1 )
 custom_styles/normal = ExtResource( 1 )
-text = "B2"
+text = "Harry"
 script = ExtResource( 12 )
 
 [node name="BB3" type="Button" parent="bg/底色2"]
@@ -218,7 +224,7 @@ custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = SubResource( 7 )
 custom_styles/disabled = ExtResource( 1 )
 custom_styles/normal = ExtResource( 1 )
-text = "B3"
+text = "Olaf"
 script = ExtResource( 13 )
 
 [node name="BG1" type="Button" parent="bg/底色2"]
@@ -237,7 +243,7 @@ custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = SubResource( 7 )
 custom_styles/disabled = ExtResource( 1 )
 custom_styles/normal = ExtResource( 1 )
-text = "G1"
+text = "Esther"
 script = ExtResource( 23 )
 
 [node name="BG2" type="Button" parent="bg/底色2"]
@@ -256,7 +262,7 @@ custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = SubResource( 7 )
 custom_styles/disabled = ExtResource( 1 )
 custom_styles/normal = ExtResource( 1 )
-text = "G2"
+text = "Lux"
 script = ExtResource( 24 )
 
 [node name="BG3" type="Button" parent="bg/底色2"]
@@ -275,7 +281,7 @@ custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = SubResource( 7 )
 custom_styles/disabled = ExtResource( 1 )
 custom_styles/normal = ExtResource( 1 )
-text = "G3"
+text = "Xayah"
 script = ExtResource( 25 )
 
 [node name="BG4" type="Button" parent="bg/底色2"]
@@ -294,7 +300,7 @@ custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = SubResource( 7 )
 custom_styles/disabled = ExtResource( 1 )
 custom_styles/normal = ExtResource( 1 )
-text = "G4"
+text = "Miakasa"
 script = ExtResource( 20 )
 
 [node name="BB4" type="Button" parent="bg/底色2"]
@@ -313,7 +319,7 @@ custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = SubResource( 7 )
 custom_styles/disabled = ExtResource( 1 )
 custom_styles/normal = ExtResource( 1 )
-text = "B4"
+text = "Garen"
 script = ExtResource( 21 )
 
 [node name="G2" type="Sprite" parent="bg/底色2"]
@@ -327,14 +333,8 @@ position = Vector2( 862.5, 341 )
 texture = ExtResource( 16 )
 
 [node name="G4" type="Sprite" parent="bg/底色2"]
-visible = false
 position = Vector2( 849.5, 350 )
 texture = ExtResource( 17 )
-
-[node name="B4" type="Sprite" parent="bg/底色2"]
-visible = false
-position = Vector2( 849.5, 350 )
-texture = ExtResource( 5 )
 
 [connection signal="pressed" from="bg/底色2/enter" to="." method="_on_enter_pressed"]
 [connection signal="pressed" from="bg/底色2/BB1" to="bg/底色2/BB1" method="_on_BB1_pressed"]
