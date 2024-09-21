@@ -1,10 +1,10 @@
 extends Node2D
 
-onready var age_label = $BackgroundPicture/BackgroundBoxPicture/ageLabel
-onready var birth_label = $BackgroundPicture/BackgroundBoxPicture/birthLabel
-onready var school_label = $BackgroundPicture/BackgroundBoxPicture/schoolLabel
-onready var phone_label = $BackgroundPicture/BackgroundBoxPicture/phoneLabel
-onready var mail_label = $BackgroundPicture/BackgroundBoxPicture/mailLabel
+onready var age_label = $BackgroundPicture/ageLabel
+onready var birth_label = $BackgroundPicture/birthLabel
+onready var school_label = $BackgroundPicture/schoolLabel
+onready var phone_label = $BackgroundPicture/phoneLabel
+onready var mail_label = $BackgroundPicture/mailLabel
 
 onready var edit_birth = $BackgroundPicture/edit_birth_button
 onready var edit_school = $BackgroundPicture/edit_school_button

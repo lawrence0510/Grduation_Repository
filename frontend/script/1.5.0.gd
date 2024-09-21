@@ -42,7 +42,7 @@ func _on_wave3_pressed():
 	get_tree().change_scene("res://scene/AnsRecord.3.tscn")
 
 func _on_cross_pressed():
-	get_tree().change_scene("res://scene/1.4.0.tscn")
+	get_tree().change_scene("res://scene/MainPage.tscn")
 
 func _on_score_pressed():
 	get_tree().change_scene("res://scene/AnsRecord.4.tscn")
