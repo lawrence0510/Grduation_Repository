@@ -737,7 +737,7 @@ class RandomArticle(Resource):
         if connection is not None:
             cursor = connection.cursor(dictionary=True)
             try:
-                article_id = random.randint(1, 1000)
+                article_id = random.randint(4598, 6000)
                 sql = """
                 SELECT a.article_id, a.article_title, a.article_content, q.question_grade, q.question_1, 
                     q.question1_choice1, q.question1_choice2, q.question1_choice3, q.question1_choice4, 
