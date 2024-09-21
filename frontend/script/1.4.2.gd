@@ -15,7 +15,7 @@ func _ready() -> void:
 		labels.append(label)
 	
 	# 定義要變成按鈕的label號碼，假設是 3, 11 和 28
-	var label_numbers = [6, 16, 16]
+	var label_numbers = [6, 16, 26]
 	
 	# 將這些指定的label變成button
 	for number in label_numbers:

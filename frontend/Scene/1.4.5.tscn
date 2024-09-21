@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Pic/bc911.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://script/1.4.5.gd" type="Script" id=5]
 [ext_resource path="res://Fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://pic/delete1.png" type="Texture" id=7]
+[ext_resource path="res://Fonts/record_line.tres" type="StyleBox" id=8]
 
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0, 0, 0, 0.6 )
@@ -26,6 +27,7 @@ font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=6]
 size = 50
+outline_color = Color( 0.74902, 0.67451, 0.67451, 1 )
 use_filter = true
 font_data = ExtResource( 6 )
 
@@ -114,6 +116,7 @@ custom_constants/separation = 70
 visible = false
 margin_right = 1203.0
 margin_bottom = 14.0
+custom_styles/normal = ExtResource( 8 )
 
 [node name="time" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line1"]
 margin_right = 200.0

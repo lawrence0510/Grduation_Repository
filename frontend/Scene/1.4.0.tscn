@@ -32,7 +32,7 @@ font_data = ExtResource( 5 )
 [sub_resource type="StyleBoxFlat" id=11]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
-[node name="Control" type="Control"]
+[node name="Control2" type="Control"]
 margin_right = 1925.0
 margin_bottom = 1079.0
 script = ExtResource( 2 )

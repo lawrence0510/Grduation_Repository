@@ -27,12 +27,12 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			var time = entry["time"].substr(5, 11)  # 只取 "MM-DD HH:MM" 部分
 			var title = entry.get("article_title", "未知標題")  # 使用 article_title，如果無則顯示“未知標題”
 			
-			# 處理標題：限制在12個中文字，超過則補「...」，少於則補空格
+			# 處理標題：限制在13個中文字，超過則補「...」，少於則補空格
 			var title_length = title.length()
-			if title_length > 12:
-				title = title.substr(0, 11) + "..."  # 截斷到11字並補上「...」
-			elif title_length < 12:
-				title = title.ljust(12)  # 如果不足12字，則補滿空格
+			if title_length > 13:
+				title = title.substr(0, 12) + "..."  # 截斷到11字並補上「...」
+			elif title_length < 13:
+				title = title.ljust(13)  # 如果不足13字，則補滿空格
 
 			var score = str(entry["total_score"])  # 抓取 total_score
 			
@@ -45,7 +45,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			
 		# 刷新 UI，動態生成 Label
 		for data in data_list:
-			var text = data["time"] + "             " + data["title"] + "                  " + data["score"]
+			var text = data["time"] + "              " + data["title"] + "                   " + data["score"]
 			create_button_r(text)
 	else:
 		print("Error parsing JSON: ", json.error_string)
@@ -64,24 +64,22 @@ func create_button_r(text):
 	font_data.font_path = "res://Fonts/NotoSansTC-VariableFont_wght.ttf"
 	custom_font.font_data = font_data
 	custom_font.size = 45  # 設定字體大小
-	custom_font.outline_size = 1
-	custom_font.outline_color = Color(0, 0, 0)
 	
 	# 將字體應用到 Button
 	new_button.add_font_override("font", custom_font)
 	new_button.add_color_override("font_color", Color(0, 0, 0))  # 黑色
+	new_button.add_color_override("font_color_hover", Color(0, 0, 205))
+	new_button.add_color_override("font_color_disabled", Color(0, 0, 0))
+	new_button.add_color_override("font_color_focus", Color(0, 0, 0))
+	new_button.add_color_override("font_color_pressed", Color(0, 0, 205))
 	
 	# 設定按鈕的背景為透明並移除邊框
-	var style_box = StyleBoxFlat.new()
-	style_box.bg_color = Color(0, 0, 0, 0)  # 完全透明的背景色
-	style_box.border_width_top = 0
-	style_box.border_width_bottom = 0
-	style_box.border_width_left = 0
-	style_box.border_width_right = 0
-	new_button.add_style_override("normal", style_box)
-	new_button.add_style_override("hover", style_box)
-	new_button.add_style_override("pressed", style_box)
-	
+	new_button.add_stylebox_override("normal", preload("res://Fonts/record_line.tres"))
+	new_button.add_stylebox_override("pressed", preload("res://Fonts/record_line.tres"))  
+	new_button.add_stylebox_override("focus", preload("res://Fonts/record_line.tres"))  
+	new_button.add_stylebox_override("disable", preload("res://Fonts/record_line.tres"))  
+	new_button.add_stylebox_override("hover", preload("res://Fonts/record_line.tres"))
+
 	# 設定 Button 的按下事件
 	new_button.connect("pressed", self, "_on_button_pressed", [text])
 	vbox.add_child(new_button)  # 將 Button 加入 VBoxContainer
@@ -89,3 +87,4 @@ func create_button_r(text):
 # 按鈕被按下時的處理函數
 func _on_button_pressed(text):
 	print("Button pressed with text: " + text)
+	get_tree().change_scene("res://scene/1.5.0.tscn")
