@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://Pic/bc911.png" type="Texture" id=1]
 [ext_resource path="res://Pic/map.png" type="Texture" id=2]
@@ -15,9 +15,36 @@
 [ext_resource path="res://script/phone.gd" type="Script" id=13]
 [ext_resource path="res://pic/delete1.png" type="Texture" id=14]
 
-[sub_resource type="DynamicFont" id=32]
-size = 30
-outline_size = 3
+[sub_resource type="DynamicFont" id=36]
+size = 45
+outline_size = 1
+outline_color = Color( 0, 0.494118, 1, 1 )
+use_filter = true
+extra_spacing_top = -10
+extra_spacing_bottom = -8
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=37]
+size = 55
+outline_size = 1
+use_filter = true
+extra_spacing_top = -10
+extra_spacing_bottom = -8
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 45
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+extra_spacing_top = -10
+extra_spacing_bottom = -8
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=33]
+size = 60
+outline_size = 1
+outline_color = Color( 0.654902, 0.654902, 0.670588, 1 )
 use_filter = true
 font_data = ExtResource( 4 )
 
@@ -36,19 +63,10 @@ draw_center = false
 [sub_resource type="StyleBoxFlat" id=1]
 draw_center = false
 
-[sub_resource type="DynamicFont" id=33]
-size = 30
-outline_color = Color( 0.654902, 0.654902, 0.670588, 1 )
+[sub_resource type="DynamicFont" id=32]
+size = 60
+outline_size = 5
 use_filter = true
-font_data = ExtResource( 4 )
-
-[sub_resource type="DynamicFont" id=7]
-size = 25
-outline_size = 1
-outline_color = Color( 0.4, 0.392157, 0.392157, 1 )
-use_filter = true
-extra_spacing_top = -10
-extra_spacing_bottom = -8
 font_data = ExtResource( 4 )
 
 [sub_resource type="StyleBoxFlat" id=35]
@@ -168,7 +186,6 @@ corner_radius_bottom_right = 11
 corner_radius_bottom_left = 11
 
 [node name="Node2D2" type="Node2D"]
-position = Vector2( -2, 0 )
 script = ExtResource( 7 )
 
 [node name="BackgroundPicture" type="TextureRect" parent="."]
@@ -192,44 +209,183 @@ rect_scale = Vector2( 2.8, 2.3 )
 texture = ExtResource( 2 )
 expand = true
 
-[node name="大橫線" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
-position = Vector2( 346.497, 62.1948 )
+[node name="直線" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
+position = Vector2( 324.711, 78.2818 )
 scale = Vector2( -1.59461, 0.76087 )
-points = PoolVector2Array( -103.655, 100, 177.202, 100 )
-width = 1.0
-default_color = Color( 0.654902, 0.654902, 0.670588, 1 )
-
-[node name="左短線" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
-position = Vector2( 346.497, 62.1948 )
-scale = Vector2( -1.59461, 0.76087 )
-points = PoolVector2Array( 48, 100, 189.297, 100 )
-width = 4.0
+points = PoolVector2Array( 34, 110, 34, 400 )
+width = 0.5
 default_color = Color( 0, 0, 0, 1 )
 
-[node name="personal" type="Button" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 46.0
-margin_top = 89.3044
-margin_right = 270.0
-margin_bottom = 133.304
-rect_pivot_offset = Vector2( 354.143, 83.5218 )
-custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 32 )
-custom_styles/hover = SubResource( 6 )
-custom_styles/pressed = SubResource( 3 )
-custom_styles/focus = SubResource( 4 )
-custom_styles/disabled = SubResource( 5 )
-custom_styles/normal = SubResource( 1 )
-text = "個人資料"
+[node name="人物" type="TextureRect" parent="BackgroundPicture/BackgroundBoxPicture"]
+margin_left = 66.0714
+margin_top = 199.13
+margin_right = 566.071
+margin_bottom = 727.13
+rect_scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 6 )
 
-[node name="record" type="Button" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 272.857
-margin_top = 89.3044
-margin_right = 517.857
-margin_bottom = 133.304
+[node name="右短線1" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
+position = Vector2( 406.032, 110.716 )
+scale = Vector2( -1.59461, 0.76087 )
+points = PoolVector2Array( -80, 120, 80, 120 )
+width = 1.5
+default_color = Color( 0, 0, 0, 1 )
+
+[node name="右短線2" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
+position = Vector2( 406.032, 128.543 )
+scale = Vector2( -1.59461, 0.76087 )
+points = PoolVector2Array( -80, 160, 80, 160 )
+width = 1.5
+default_color = Color( 0, 0, 0, 1 )
+
+[node name="右短線3" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
+position = Vector2( 406.032, 175.499 )
+rotation = 3.14159
+scale = Vector2( 1.59461, -0.76087 )
+points = PoolVector2Array( -80, 160, 80, 160 )
+width = 1.5
+default_color = Color( 0, 0, 0, 1 )
+
+[node name="右短線4" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
+position = Vector2( 406.032, 224.194 )
+rotation = 3.14159
+scale = Vector2( 1.59461, -0.76087 )
+points = PoolVector2Array( -80, 160, 80, 160 )
+width = 1.5
+default_color = Color( 0, 0, 0, 1 )
+
+[node name="mailLabel" type="Label" parent="BackgroundPicture"]
+margin_left = 1111.0
+margin_top = 785.0
+margin_right = 1415.0
+margin_bottom = 833.0
+custom_colors/font_color = Color( 0, 0.494118, 1, 1 )
+custom_fonts/font = SubResource( 36 )
+
+[node name="信箱" type="Label" parent="BackgroundPicture"]
+margin_left = 959.0
+margin_top = 779.0
+margin_right = 1081.0
+margin_bottom = 841.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "信 箱"
+
+[node name="信箱2" type="Label" parent="BackgroundPicture/信箱"]
+margin_right = 122.0
+margin_bottom = 62.0
+custom_fonts/font = SubResource( 37 )
+text = "信 箱"
+
+[node name="phoneLabel" type="Label" parent="BackgroundPicture"]
+margin_left = 1111.0
+margin_top = 680.0
+margin_right = 1341.0
+margin_bottom = 728.0
+custom_colors/font_color = Color( 0, 0.494118, 1, 1 )
+custom_fonts/font = SubResource( 36 )
+
+[node name="電話" type="Label" parent="BackgroundPicture"]
+margin_left = 959.0
+margin_top = 674.0
+margin_right = 1081.0
+margin_bottom = 736.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "電 話"
+
+[node name="電話2" type="Label" parent="BackgroundPicture/電話"]
+margin_right = 122.0
+margin_bottom = 62.0
+custom_fonts/font = SubResource( 37 )
+text = "電 話"
+
+[node name="schoolLabel" type="Label" parent="BackgroundPicture"]
+margin_left = 1111.0
+margin_top = 570.0
+margin_right = 1199.0
+margin_bottom = 618.0
+custom_colors/font_color = Color( 0, 0.494118, 1, 1 )
+custom_fonts/font = SubResource( 36 )
+
+[node name="學校" type="Label" parent="BackgroundPicture"]
+margin_left = 959.0
+margin_top = 564.0
+margin_right = 1081.0
+margin_bottom = 626.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "學 校"
+
+[node name="學校2" type="Label" parent="BackgroundPicture/學校"]
+margin_right = 122.0
+margin_bottom = 62.0
+custom_fonts/font = SubResource( 37 )
+text = "學 校"
+
+[node name="birthLabel" type="Label" parent="BackgroundPicture"]
+margin_left = 1111.0
+margin_top = 458.0
+margin_right = 1325.0
+margin_bottom = 506.0
+custom_colors/font_color = Color( 0, 0.494118, 1, 1 )
+custom_fonts/font = SubResource( 36 )
+
+[node name="生日" type="Label" parent="BackgroundPicture"]
+margin_left = 959.0
+margin_top = 452.0
+margin_right = 1081.0
+margin_bottom = 514.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "生 日"
+
+[node name="生日2" type="Label" parent="BackgroundPicture/生日"]
+margin_right = 122.0
+margin_bottom = 62.0
+custom_fonts/font = SubResource( 37 )
+text = "生 日"
+
+[node name="ageLabel" type="Label" parent="BackgroundPicture"]
+margin_left = 1111.0
+margin_top = 350.0
+margin_right = 1157.0
+margin_bottom = 398.0
+custom_colors/font_color = Color( 0, 0.494118, 1, 1 )
+custom_fonts/font = SubResource( 36 )
+
+[node name="age" type="Label" parent="BackgroundPicture"]
+margin_left = 959.0
+margin_top = 344.0
+margin_right = 1081.0
+margin_bottom = 406.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "年 齡"
+
+[node name="age2" type="Label" parent="BackgroundPicture/age"]
+margin_right = 122.0
+margin_bottom = 62.0
+custom_fonts/font = SubResource( 37 )
+text = "年 齡"
+
+[node name="Label" type="Label" parent="BackgroundPicture"]
+margin_left = 441.0
+margin_top = 308.0
+margin_right = 842.0
+margin_bottom = 375.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 7 )
+align = 1
+valign = 1
+
+[node name="record" type="Button" parent="BackgroundPicture"]
+margin_left = 919.0
+margin_top = 176.0
+margin_right = 1591.0
+margin_bottom = 264.0
 rect_pivot_offset = Vector2( 354.143, 83.5218 )
 custom_colors/font_color_disabled = Color( 0.654902, 0.654902, 0.670588, 1 )
 custom_colors/font_color_focus = Color( 0.654902, 0.654902, 0.670588, 1 )
@@ -242,147 +398,42 @@ custom_styles/pressed = SubResource( 3 )
 custom_styles/focus = SubResource( 4 )
 custom_styles/disabled = SubResource( 5 )
 custom_styles/normal = SubResource( 1 )
-text = "簽到記錄"
+text = "簽 到 記 錄"
 
-[node name="直線" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
-position = Vector2( 324.711, 78.2818 )
-scale = Vector2( -1.59461, 0.76087 )
-points = PoolVector2Array( 34, 110, 34, 400 )
-width = 0.5
-default_color = Color( 0, 0, 0, 1 )
-
-[node name="Label" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 55.7143
-margin_top = 152.609
-margin_right = 270.714
-margin_bottom = 192.609
+[node name="personal" type="Button" parent="BackgroundPicture"]
+margin_left = 346.0
+margin_top = 176.0
+margin_right = 917.0
+margin_bottom = 264.0
+rect_pivot_offset = Vector2( 354.143, 83.5218 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 7 )
-align = 1
-valign = 1
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 32 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 1 )
+text = "個 人 資 料"
 
-[node name="人物" type="TextureRect" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 66.0714
-margin_top = 199.13
-margin_right = 566.071
-margin_bottom = 727.13
-rect_scale = Vector2( 0.4, 0.4 )
-texture = ExtResource( 6 )
-
-[node name="ageLabel" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 342.11
-margin_top = 170.87
-margin_right = 382.11
-margin_bottom = 184.87
-custom_colors/font_color = Color( 0, 0.494118, 1, 1 )
-custom_fonts/font = ExtResource( 5 )
-
-[node name="age" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 282.0
-margin_top = 169.566
-margin_right = 326.0
-margin_bottom = 184.566
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 5 )
-text = "Age"
-
-[node name="右短線1" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
-position = Vector2( 406.032, 110.716 )
-scale = Vector2( -1.59461, 0.76087 )
-points = PoolVector2Array( -80, 120, 80, 120 )
-width = 1.5
-default_color = Color( 0, 0, 0, 1 )
-
-[node name="生日" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 282.11
-margin_top = 218.261
-margin_right = 326.11
-margin_bottom = 233.261
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 5 )
-text = "生日"
-
-[node name="birthLabel" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 342.11
-margin_top = 219.565
-margin_right = 434.11
-margin_bottom = 233.565
-custom_colors/font_color = Color( 0, 0.494118, 1, 1 )
-custom_fonts/font = ExtResource( 5 )
-
-[node name="右短線2" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
-position = Vector2( 406.032, 128.543 )
-scale = Vector2( -1.59461, 0.76087 )
-points = PoolVector2Array( -80, 160, 80, 160 )
-width = 1.5
-default_color = Color( 0, 0, 0, 1 )
-
-[node name="schoolLabel" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 342.11
-margin_top = 268.261
-margin_right = 422.11
-margin_bottom = 282.261
-custom_colors/font_color = Color( 0, 0.494118, 1, 1 )
-custom_fonts/font = ExtResource( 5 )
-
-[node name="學校" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 282.11
-margin_top = 266.957
-margin_right = 326.11
-margin_bottom = 281.957
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 5 )
-text = "學校"
-
-[node name="右短線3" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
-position = Vector2( 406.032, 175.499 )
+[node name="大橫線" type="Line2D" parent="BackgroundPicture"]
+position = Vector2( 1131.19, 103.048 )
 rotation = 3.14159
-scale = Vector2( 1.59461, -0.76087 )
-points = PoolVector2Array( -80, 160, 80, 160 )
-width = 1.5
-default_color = Color( 0, 0, 0, 1 )
+scale = Vector2( 4.46491, -1.75 )
+points = PoolVector2Array( -103.655, 100, 177.202, 100 )
+width = 1.0
+default_color = Color( 0.654902, 0.654902, 0.670588, 1 )
 
-[node name="電話" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 282.11
-margin_top = 315.652
-margin_right = 326.11
-margin_bottom = 330.652
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 5 )
-text = "電話"
-
-[node name="phoneLabel" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 342.11
-margin_top = 316.957
-margin_right = 454.11
-margin_bottom = 330.957
-custom_colors/font_color = Color( 0, 0.494118, 1, 1 )
-custom_fonts/font = ExtResource( 5 )
-
-[node name="右短線4" type="Line2D" parent="BackgroundPicture/BackgroundBoxPicture"]
-position = Vector2( 406.032, 224.194 )
+[node name="左短線" type="Line2D" parent="BackgroundPicture"]
+position = Vector2( 1131.19, 103.048 )
 rotation = 3.14159
-scale = Vector2( 1.59461, -0.76087 )
-points = PoolVector2Array( -80, 160, 80, 160 )
-width = 1.5
+scale = Vector2( 4.46491, -1.75 )
+points = PoolVector2Array( 48, 100, 177, 100 )
+width = 4.0
 default_color = Color( 0, 0, 0, 1 )
-
-[node name="信箱" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 282.11
-margin_top = 363.478
-margin_right = 326.11
-margin_bottom = 378.478
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 5 )
-text = "信箱"
-
-[node name="mailLabel" type="Label" parent="BackgroundPicture/BackgroundBoxPicture"]
-margin_left = 342.11
-margin_top = 364.782
-margin_right = 490.11
-margin_bottom = 378.782
-custom_colors/font_color = Color( 0, 0.494118, 1, 1 )
-custom_fonts/font = ExtResource( 5 )
 
 [node name="edit_birth_button" type="Button" parent="BackgroundPicture"]
 margin_left = 1552.0
@@ -709,8 +760,8 @@ flat = true
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
-[connection signal="pressed" from="BackgroundPicture/BackgroundBoxPicture/personal" to="." method="_on_personal_pressed"]
-[connection signal="pressed" from="BackgroundPicture/BackgroundBoxPicture/record" to="." method="_on_record_pressed"]
+[connection signal="pressed" from="BackgroundPicture/record" to="." method="_on_record_pressed"]
+[connection signal="pressed" from="BackgroundPicture/personal" to="." method="_on_personal_pressed"]
 [connection signal="pressed" from="BackgroundPicture/edit_birth_button" to="." method="_on_edit_birth_pressed"]
 [connection signal="pressed" from="BackgroundPicture/edit_school_button" to="." method="_on_edit_school_pressed"]
 [connection signal="pressed" from="BackgroundPicture/edit_phone_button" to="." method="_on_edit_phone_pressed"]

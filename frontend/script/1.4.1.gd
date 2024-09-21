@@ -35,7 +35,7 @@ func _on_personal_pressed():
 	get_tree().change_scene("res://scene/1.4.1.tscn")
 
 func _on_record_pressed():
-	get_tree().change_scene("res://scene/1.4.2.tscn")
+	get_tree().change_scene("res://scene/1.4.2_9.tscn")
 
 func _on_edit_birth_pressed():
 	birth.popup_centered()
