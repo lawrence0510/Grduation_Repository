@@ -10,9 +10,9 @@ onready var Failed: WindowDialog = $BackgroundPicture/Failed
 onready var http_request: HTTPRequest = $HTTPRequest
 onready var http_request2: HTTPRequest = $HTTPRequest2
 
+
 func _ready() -> void:
 	pass
-
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -79,6 +79,7 @@ func _on_GoogleButton_pressed():
 	var url = "http://nccumisreading.ddnsking.com:5001/User/google_login"
 	var headers = ["Content-Type: application/json"]
 	http_request2.request(url, headers, false, HTTPClient.METHOD_GET)
+	OS.shell_open(url)
 
 
 func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
