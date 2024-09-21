@@ -63,7 +63,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			
 			print("登入成功")
 			# 成功登入後切換場景
-			get_tree().change_scene("res://scene/1.4.0.tscn")
+			get_tree().change_scene("res://Scene/MainPage.tscn")
 		else:
 			print("解析 JSON 失敗")
 	else:
@@ -94,7 +94,7 @@ func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
 		print("================")
 
 		var response = JSON.parse(body_string)
-		print(response.error)
+		print(response)
 		if response.error == OK:
 			# 提取 user_id
 			var user_id = response.result["user_id"]
