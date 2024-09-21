@@ -107,7 +107,7 @@ func _on_record_pressed():
 	get_tree().change_scene("res://scene/1.4.2.tscn")
 
 func _on_cross_pressed():
-	get_tree().change_scene("res://scene/1.4.0.tscn")
+	get_tree().change_scene("res://scene/MainPage.tscn")
 
 func _on_cross2_pressed():
 	LoginDay.hide()

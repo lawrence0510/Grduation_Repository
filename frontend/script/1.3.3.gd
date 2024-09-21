@@ -43,7 +43,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 
 	if response_code == 200:
 		print("Password reset successful.")
-		get_tree().change_scene("res://scene/1.1.tscn")
+		get_tree().change_scene("res://scene/SignIn.tscn")
 	else:
 		print("Failed to reset password, response code: ", response_code)
 		error.show()

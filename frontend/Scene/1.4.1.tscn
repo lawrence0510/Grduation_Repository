@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://Pic/bc911.png" type="Texture" id=1]
 [ext_resource path="res://Pic/map.png" type="Texture" id=2]
@@ -19,14 +19,6 @@
 size = 45
 outline_size = 1
 outline_color = Color( 0, 0.494118, 1, 1 )
-use_filter = true
-extra_spacing_top = -10
-extra_spacing_bottom = -8
-font_data = ExtResource( 4 )
-
-[sub_resource type="DynamicFont" id=37]
-size = 55
-outline_size = 1
 use_filter = true
 extra_spacing_top = -10
 extra_spacing_bottom = -8
@@ -271,12 +263,6 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 5 )
 text = "信 箱"
 
-[node name="信箱2" type="Label" parent="BackgroundPicture/信箱"]
-margin_right = 122.0
-margin_bottom = 62.0
-custom_fonts/font = SubResource( 37 )
-text = "信 箱"
-
 [node name="phoneLabel" type="Label" parent="BackgroundPicture"]
 margin_left = 1111.0
 margin_top = 680.0
@@ -292,12 +278,6 @@ margin_right = 1081.0
 margin_bottom = 736.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 5 )
-text = "電 話"
-
-[node name="電話2" type="Label" parent="BackgroundPicture/電話"]
-margin_right = 122.0
-margin_bottom = 62.0
-custom_fonts/font = SubResource( 37 )
 text = "電 話"
 
 [node name="schoolLabel" type="Label" parent="BackgroundPicture"]
@@ -317,12 +297,6 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 5 )
 text = "學 校"
 
-[node name="學校2" type="Label" parent="BackgroundPicture/學校"]
-margin_right = 122.0
-margin_bottom = 62.0
-custom_fonts/font = SubResource( 37 )
-text = "學 校"
-
 [node name="birthLabel" type="Label" parent="BackgroundPicture"]
 margin_left = 1111.0
 margin_top = 458.0
@@ -340,12 +314,6 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 5 )
 text = "生 日"
 
-[node name="生日2" type="Label" parent="BackgroundPicture/生日"]
-margin_right = 122.0
-margin_bottom = 62.0
-custom_fonts/font = SubResource( 37 )
-text = "生 日"
-
 [node name="ageLabel" type="Label" parent="BackgroundPicture"]
 margin_left = 1111.0
 margin_top = 350.0
@@ -361,12 +329,6 @@ margin_right = 1081.0
 margin_bottom = 406.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 5 )
-text = "年 齡"
-
-[node name="age2" type="Label" parent="BackgroundPicture/age"]
-margin_right = 122.0
-margin_bottom = 62.0
-custom_fonts/font = SubResource( 37 )
 text = "年 齡"
 
 [node name="Label" type="Label" parent="BackgroundPicture"]

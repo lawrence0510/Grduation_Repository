@@ -47,7 +47,7 @@ func _on_edit_phone_pressed():
 	phone.popup_centered()
 
 func _on_cross_pressed():
-	get_tree().change_scene("res://scene/1.4.0.tscn")
+	get_tree().change_scene("res://scene/MainPage.tscn")
 
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):

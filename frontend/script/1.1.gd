@@ -22,7 +22,7 @@ func _process(delta: float) -> void:
 
 # 註冊ok
 func _on_register_pressed():
-	get_tree().change_scene("res://scene/1.2.1.tscn")
+	get_tree().change_scene("res://scene/Regist.tscn")
 
 # 登入ok
 func _on_enter_pressed():
@@ -72,7 +72,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 
 # 忘記密碼
 func _on_forget_pressed():
-	get_tree().change_scene("res://scene/1.3.1.tscn")
+	get_tree().change_scene("res://scene/Password.1.tscn")
 
 
 func _on_GoogleButton_pressed():
@@ -102,7 +102,7 @@ func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
 			
 			print("登入成功")
 			# 成功登入後切換場景
-			get_tree().change_scene("res://scene/1.4.0.tscn")
+			get_tree().change_scene("res://scene/MainPage.tscn")
 	else:
 		print("Google登入失敗")
 

@@ -18,23 +18,23 @@ func _process(delta: float) -> void:
 			get_tree().quit()
 
 func _on_content_pressed():
-	get_tree().change_scene("res://scene/1.5.0.tscn")
+	get_tree().change_scene("res://scene/AnsRecord.0.tscn")
 
 
 func _on_wave1_pressed():
-	get_tree().change_scene("res://scene/1.5.1.tscn")
+	get_tree().change_scene("res://scene/AnsRecord.1.tscn")
 
 
 func _on_wave2_pressed():
-	get_tree().change_scene("res://scene/1.5.2.tscn")
+	get_tree().change_scene("res://scene/AnsRecord.2.tscn")
 
 
 func _on_wave3_pressed():
-	get_tree().change_scene("res://scene/1.5.3.tscn")
+	get_tree().change_scene("res://scene/AnsRecord.3.tscn")
 
 
 func _on_cross_pressed():
 	get_tree().change_scene("res://scene/1.4.0.tscn")
 
 func _on_score_pressed():
-	get_tree().change_scene("res://scene/1.5.4.tscn")
+	get_tree().change_scene("res://scene/AnsRecord.4.tscn")

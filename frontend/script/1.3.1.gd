@@ -45,7 +45,7 @@ func _on_next_pressed():
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	
 	if response_code == 200:
-		get_tree().change_scene("res://scene/1.3.2.tscn")
+		get_tree().change_scene("res://scene/Password.2.tscn")
 	elif response_code == 404:
 		print("找不到該電子郵件地址，請檢查並重試。")
 		notice.hide()

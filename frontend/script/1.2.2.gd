@@ -12,7 +12,7 @@ func _process(delta: float) -> void:
 
 
 func _on_already_pressed():
-	get_tree().change_scene("res://scene/1.1.tscn")
+	get_tree().change_scene("res://scene/SignIn.tscn")
 
 func _on_enter_pressed():
-	get_tree().change_scene("res://scene/1.2.3.tscn")
+	get_tree().change_scene("res://scene/Choose.tscn")

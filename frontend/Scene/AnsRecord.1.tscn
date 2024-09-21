@@ -1,74 +1,63 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=19 format=2]
 
-[ext_resource path="res://fonts/詳解字.tres" type="DynamicFont" id=1]
-[ext_resource path="res://fonts/詳解.tres" type="StyleBox" id=2]
-[ext_resource path="res://Fonts/1.5Pressed.tres" type="StyleBox" id=3]
+[ext_resource path="res://Pic/bc911.png" type="Texture" id=1]
+[ext_resource path="res://pic/delete1.png" type="Texture" id=2]
+[ext_resource path="res://Pic/map.png" type="Texture" id=3]
 [ext_resource path="res://fonts/font9.tres" type="DynamicFont" id=4]
-[ext_resource path="res://fonts/font8.tres" type="DynamicFont" id=5]
-[ext_resource path="res://fonts/答案.tres" type="StyleBox" id=7]
-[ext_resource path="res://Fonts/1.5Normal.tres" type="StyleBox" id=8]
-[ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=9]
-[ext_resource path="res://Pic/map.png" type="Texture" id=10]
-[ext_resource path="res://Pic/bc911.png" type="Texture" id=11]
-[ext_resource path="res://script/1.5.2.gd" type="Script" id=12]
-[ext_resource path="res://pic/delete1.png" type="Texture" id=13]
-[ext_resource path="res://Fonts/1.5hover.tres" type="StyleBox" id=14]
+[ext_resource path="res://fonts/答案.tres" type="StyleBox" id=5]
+[ext_resource path="res://fonts/詳解.tres" type="StyleBox" id=6]
+[ext_resource path="res://fonts/詳解字.tres" type="DynamicFont" id=7]
+[ext_resource path="res://Fonts/1.5Pressed.tres" type="StyleBox" id=8]
+[ext_resource path="res://Fonts/1.5Normal.tres" type="StyleBox" id=9]
+[ext_resource path="res://fonts/font8.tres" type="DynamicFont" id=10]
+[ext_resource path="res://Fonts/1.5hover.tres" type="StyleBox" id=11]
+[ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=12]
+[ext_resource path="res://script/1.5.1.gd" type="Script" id=13]
 
 [sub_resource type="DynamicFont" id=1]
 size = 35
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
-font_data = ExtResource( 9 )
+font_data = ExtResource( 12 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 50
 outline_size = 1
-outline_color = Color( 1, 0, 0, 1 )
+outline_color = Color( 0.364706, 0.917647, 0.333333, 1 )
 use_filter = true
-font_data = ExtResource( 9 )
+font_data = ExtResource( 12 )
 
 [sub_resource type="DynamicFont" id=3]
 size = 30
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
-font_data = ExtResource( 9 )
+font_data = ExtResource( 12 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 25
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
-font_data = ExtResource( 9 )
-
-[sub_resource type="StyleBoxFlat" id=6]
-content_margin_left = 20.0
-content_margin_right = 20.0
-content_margin_top = 10.0
-content_margin_bottom = 10.0
-bg_color = Color( 0.364706, 0.917647, 0.333333, 1 )
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
+font_data = ExtResource( 12 )
 
 [sub_resource type="StyleBoxFlat" id=5]
 content_margin_left = 20.0
 content_margin_right = 20.0
 content_margin_top = 10.0
 content_margin_bottom = 20.0
-bg_color = Color( 1, 0.443137, 0.443137, 1 )
+bg_color = Color( 0.364706, 0.917647, 0.333333, 1 )
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
 [node name="Node2D" type="Node2D"]
-script = ExtResource( 12 )
+script = ExtResource( 13 )
 
 [node name="bg" type="TextureRect" parent="."]
 margin_right = 1920.0
 margin_bottom = 1080.0
-texture = ExtResource( 11 )
+texture = ExtResource( 1 )
 expand = true
 
 [node name="TextureRect" type="TextureRect" parent="bg"]
@@ -81,7 +70,7 @@ margin_top = -580.0
 margin_right = -218.0
 margin_bottom = 40.0
 rect_scale = Vector2( 2.8, 2.3 )
-texture = ExtResource( 10 )
+texture = ExtResource( 3 )
 expand = true
 
 [node name="大橫線" type="Line2D" parent="bg/TextureRect"]
@@ -92,9 +81,9 @@ width = 1.0
 default_color = Color( 0.654902, 0.654902, 0.670588, 1 )
 
 [node name="短線" type="Line2D" parent="bg/TextureRect"]
-position = Vector2( 328.283, 62.6296 )
+position = Vector2( 331.497, 62.6296 )
 scale = Vector2( -1.59461, 0.76087 )
-points = PoolVector2Array( 54, 100, 1, 100 )
+points = PoolVector2Array( 54, 100, 107, 100 )
 width = 4.0
 default_color = Color( 0, 0.345098, 1, 1 )
 
@@ -109,11 +98,11 @@ custom_colors/font_color = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color_hover = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color_pressed = Color( 0.6, 0.6, 0.6, 1 )
 custom_fonts/font = ExtResource( 4 )
-custom_styles/hover = ExtResource( 14 )
-custom_styles/pressed = ExtResource( 3 )
-custom_styles/focus = ExtResource( 3 )
-custom_styles/disabled = ExtResource( 8 )
-custom_styles/normal = ExtResource( 8 )
+custom_styles/hover = ExtResource( 11 )
+custom_styles/pressed = ExtResource( 8 )
+custom_styles/focus = ExtResource( 8 )
+custom_styles/disabled = ExtResource( 9 )
+custom_styles/normal = ExtResource( 9 )
 text = "故 事 內 容"
 
 [node name="wave1" type="Button" parent="bg"]
@@ -121,17 +110,17 @@ margin_left = 616.0
 margin_top = 193.0
 margin_right = 846.0
 margin_bottom = 268.0
-custom_colors/font_color_disabled = Color( 0.6, 0.6, 0.6, 1 )
-custom_colors/font_color_focus = Color( 0.6, 0.6, 0.6, 1 )
-custom_colors/font_color = Color( 0.6, 0.6, 0.6, 1 )
-custom_colors/font_color_hover = Color( 0.6, 0.6, 0.6, 1 )
-custom_colors/font_color_pressed = Color( 0.6, 0.6, 0.6, 1 )
-custom_fonts/font = ExtResource( 4 )
-custom_styles/hover = ExtResource( 14 )
-custom_styles/pressed = ExtResource( 3 )
-custom_styles/focus = ExtResource( 3 )
-custom_styles/disabled = ExtResource( 8 )
-custom_styles/normal = ExtResource( 8 )
+custom_colors/font_color_disabled = Color( 0, 0.345098, 1, 1 )
+custom_colors/font_color_focus = Color( 0, 0.345098, 1, 1 )
+custom_colors/font_color = Color( 0, 0.345098, 1, 1 )
+custom_colors/font_color_hover = Color( 0, 0.345098, 1, 1 )
+custom_colors/font_color_pressed = Color( 0, 0.345098, 1, 1 )
+custom_fonts/font = ExtResource( 10 )
+custom_styles/hover = ExtResource( 9 )
+custom_styles/pressed = ExtResource( 9 )
+custom_styles/focus = ExtResource( 9 )
+custom_styles/disabled = ExtResource( 9 )
+custom_styles/normal = ExtResource( 9 )
 text = "wave 1"
 
 [node name="wave2" type="Button" parent="bg"]
@@ -139,17 +128,17 @@ margin_left = 844.0
 margin_top = 193.0
 margin_right = 1074.0
 margin_bottom = 268.0
-custom_colors/font_color_disabled = Color( 0, 0.345098, 1, 1 )
-custom_colors/font_color_focus = Color( 0, 0.345098, 1, 1 )
-custom_colors/font_color = Color( 0, 0.345098, 1, 1 )
-custom_colors/font_color_hover = Color( 0, 0.345098, 1, 1 )
-custom_colors/font_color_pressed = Color( 0, 0.345098, 1, 1 )
-custom_fonts/font = ExtResource( 5 )
-custom_styles/hover = ExtResource( 8 )
+custom_colors/font_color_disabled = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color_focus = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color_hover = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color_pressed = Color( 0.6, 0.6, 0.6, 1 )
+custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 11 )
 custom_styles/pressed = ExtResource( 8 )
 custom_styles/focus = ExtResource( 8 )
-custom_styles/disabled = ExtResource( 8 )
-custom_styles/normal = ExtResource( 8 )
+custom_styles/disabled = ExtResource( 9 )
+custom_styles/normal = ExtResource( 9 )
 text = "wave 2"
 
 [node name="wave3" type="Button" parent="bg"]
@@ -167,11 +156,11 @@ custom_colors/font_color = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color_hover = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color_pressed = Color( 0.6, 0.6, 0.6, 1 )
 custom_fonts/font = ExtResource( 4 )
-custom_styles/hover = ExtResource( 14 )
-custom_styles/pressed = ExtResource( 3 )
-custom_styles/focus = ExtResource( 3 )
-custom_styles/disabled = ExtResource( 8 )
-custom_styles/normal = ExtResource( 8 )
+custom_styles/hover = ExtResource( 11 )
+custom_styles/pressed = ExtResource( 8 )
+custom_styles/focus = ExtResource( 8 )
+custom_styles/disabled = ExtResource( 9 )
+custom_styles/normal = ExtResource( 9 )
 text = "wave 3"
 
 [node name="score" type="Button" parent="bg"]
@@ -185,11 +174,11 @@ custom_colors/font_color = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color_hover = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color_pressed = Color( 0.6, 0.6, 0.6, 1 )
 custom_fonts/font = ExtResource( 4 )
-custom_styles/hover = ExtResource( 14 )
-custom_styles/pressed = ExtResource( 3 )
-custom_styles/focus = ExtResource( 3 )
-custom_styles/disabled = ExtResource( 8 )
-custom_styles/normal = ExtResource( 8 )
+custom_styles/hover = ExtResource( 11 )
+custom_styles/pressed = ExtResource( 8 )
+custom_styles/focus = ExtResource( 8 )
+custom_styles/disabled = ExtResource( 9 )
+custom_styles/normal = ExtResource( 9 )
 text = "score"
 
 [node name="回答" type="Label" parent="bg"]
@@ -212,26 +201,29 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -23.0
 margin_top = -254.0
-margin_right = 164.0
+margin_right = 127.0
 margin_bottom = -181.0
-custom_colors/font_color = Color( 1, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 1, 0, 0, 1 )
+custom_colors/font_color = Color( 0.364706, 0.917647, 0.333333, 1 )
+custom_colors/font_color_shadow = Color( 0.364706, 0.917647, 0.333333, 1 )
 custom_fonts/font = SubResource( 2 )
-text = "不正確 X"
+text = "正確 ✓"
 
 [node name="details" type="RichTextLabel" parent="bg"]
-margin_left = 385.0
-margin_top = 764.0
-margin_right = 1535.0
-margin_bottom = 935.0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -575.0
+margin_top = -316.0
+margin_right = 575.0
+margin_bottom = -145.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/normal_font = ExtResource( 1 )
-custom_styles/normal = ExtResource( 2 )
-text = "解答：加強國際合作並制訂全球性的法律和政策來共同應對氣候變遷。
-詳解：這是最佳的答案，因為氣候變遷是一個全球性的問題，單靠任何一個國家無法有效應對。由於碳排放、環境污染等問題沒有國界，國際合作至關重要，因為一個國家單方面的努力可能會被其他國家的行為抵消。因此，制定全球性的政策和目標，並通過國際條約如《巴黎協定》來減少溫室氣體排放、推動可再生能源使用，是應對氣候變遷的最有效途徑。"
+custom_fonts/normal_font = ExtResource( 7 )
+custom_styles/normal = ExtResource( 6 )
+text = "詳解：這些選擇都反映了當今社會對科技進步和隱私、倫理問題的不同觀點。選擇哪個答案取決於你對科技風險與創新潛力之間權衡的態度。"
 
 [node name="cross" type="Button" parent="bg"]
 margin_left = 1789.0
@@ -239,7 +231,7 @@ margin_top = 30.0
 margin_right = 2301.0
 margin_bottom = 536.0
 rect_scale = Vector2( 0.2, 0.2 )
-icon = ExtResource( 13 )
+icon = ExtResource( 2 )
 flat = true
 
 [node name="Q" type="RichTextLabel" parent="bg"]
@@ -256,8 +248,8 @@ custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 3 )
-custom_styles/normal = ExtResource( 7 )
-text = "隨著全球環境變化日益加劇，氣候變遷帶來的影響已經顯現在極端天氣事件增加、海平面上升和生態系統退化等方面，許多國家和地區已經開始積極推動減少碳排放、使用可再生能源以及改善能源效率等措施來應對這一危機。在這樣的背景下，你認為各國應該採取什麼樣的具體行動來進一步減緩氣候變遷，並確保對全球環境的正面影響？應該是加強國際合作來共同應對，還是每個國家都應該專注於自己的政策和發展？除此之外，我們應該如何在技術創新和環境保護之間找到平衡，確保經濟的可持續發展？"
+custom_styles/normal = ExtResource( 5 )
+text = "你認為在這樣的背景下，我們是否應該更多地關注科技發展對倫理和隱私的影響，特別是在涉及人工智慧決策、自動化系統管理和數據隱私保護的方面，並且在未來，我們是否應該優先制定更加嚴格的政策來確保這些技術的發展不會對人類的基本權利和自由造成潛在的威脅或不利影響？"
 
 [node name="A" type="RichTextLabel" parent="bg"]
 margin_left = 390.0
@@ -269,8 +261,9 @@ custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
-custom_styles/normal = SubResource( 6 )
-text = "A.加強國際合作並制訂全球性的法律和政策來共同應對氣候變遷。"
+custom_styles/normal = ExtResource( 5 )
+text = "A.是的，我認為我們應該更加關注科技發展對倫理和隱私的影響。
+隨著科技的快速發展，特別是在人工智慧和自動化領域，確保人類基本權利和隱私不受侵害是至關重要的。我們應該制定更嚴格的政策來保障這些權利。"
 
 [node name="B" type="RichTextLabel" parent="bg"]
 margin_left = 980.0
@@ -283,7 +276,8 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
-text = "B.每個國家應該專注於根據本國的情況制訂自己的環保政策，無需國際統一規範。"
+text = "B.我部分同意，但科技進步的速度不應受到過多限制。
+科技的快速發展帶來了許多好處，但我們也需要在推動創新與保護個人隱私之間找到平衡，確保不過度限制科技的進步。"
 
 [node name="C" type="RichTextLabel" parent="bg"]
 margin_left = 390.0
@@ -295,8 +289,9 @@ custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
-custom_styles/normal = ExtResource( 7 )
-text = "C.技術創新應該優先，隨著科技的進步，自然會有解決氣候問題的方案。"
+custom_styles/normal = ExtResource( 5 )
+text = "C.不，我認為科技發展的重點應該放在推動創新，而非擔心隱私問題。
+科技發展是人類進步的核心推動力，過度關注隱私和倫理問題可能會減緩創新。我們應更專注於技術的潛力。"
 
 [node name="D" type="RichTextLabel" parent="bg"]
 margin_left = 980.0
@@ -308,8 +303,9 @@ custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
-custom_styles/normal = ExtResource( 7 )
-text = "D.經濟發展應該放在首位，環境保護則可以通過未來的技術來解決。"
+custom_styles/normal = ExtResource( 5 )
+text = "D.我不確定，因為科技發展的影響取決於具體情況。
+科技發展對倫理和隱私的影響可能因行業和應用領域而異。因此，我認為需要根據具體情況來判斷是否應該關注這些問題。"
 
 [connection signal="pressed" from="bg/content" to="." method="_on_content_pressed"]
 [connection signal="pressed" from="bg/wave1" to="." method="_on_wave1_pressed"]

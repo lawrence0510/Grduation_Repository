@@ -57,14 +57,14 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	if response_code == 201:
 		print("註冊成功")
 		# 成功註冊後切換場景
-		get_tree().change_scene("res://scene/1.2.3.tscn")
+		get_tree().change_scene("res://scene/Choose.tscn")
 	else:
 		Failed.popup_centered()
 		print("註冊失敗，請檢查輸入資料")
 		
 #返回
 func _on_back_pressed():
-	get_tree().change_scene("res://scene/1.1.tscn")
+	get_tree().change_scene("res://scene/SignIn.tscn")
 
 func _on_OKButton_pressed():
 	Failed.hide()

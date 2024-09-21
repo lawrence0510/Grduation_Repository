@@ -37,7 +37,7 @@ func _on_next_pressed():
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	if response_code == 200:
 		show_error_message("驗證成功")
-		get_tree().change_scene("res://scene/1.3.3.tscn")
+		get_tree().change_scene("res://scene/Password.3.tscn")
 	elif response_code == 400:
 		show_error_message("驗證碼已過期，請重新請求一個新的驗證碼。")
 		four.show()

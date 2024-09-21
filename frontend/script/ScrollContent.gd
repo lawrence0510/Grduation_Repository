@@ -87,4 +87,4 @@ func create_button_r(text):
 # 按鈕被按下時的處理函數
 func _on_button_pressed(text):
 	print("Button pressed with text: " + text)
-	get_tree().change_scene("res://scene/1.5.0.tscn")
+	get_tree().change_scene("res://scene/AnsRecord.0.tscn")

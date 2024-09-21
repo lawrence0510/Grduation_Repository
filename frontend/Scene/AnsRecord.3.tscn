@@ -1,32 +1,32 @@
 [gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://Fonts/1.5Normal.tres" type="StyleBox" id=1]
-[ext_resource path="res://fonts/font9.tres" type="DynamicFont" id=2]
-[ext_resource path="res://Fonts/1.5Pressed.tres" type="StyleBox" id=3]
-[ext_resource path="res://fonts/font8.tres" type="DynamicFont" id=4]
-[ext_resource path="res://Pic/map.png" type="Texture" id=5]
-[ext_resource path="res://Pic/bc911.png" type="Texture" id=6]
-[ext_resource path="res://script/1.5.3.gd" type="Script" id=7]
-[ext_resource path="res://fonts/詳解字.tres" type="DynamicFont" id=8]
-[ext_resource path="res://fonts/詳解.tres" type="StyleBox" id=9]
-[ext_resource path="res://fonts/答案字.tres" type="DynamicFont" id=10]
+[ext_resource path="res://Pic/bc911.png" type="Texture" id=1]
+[ext_resource path="res://pic/delete1.png" type="Texture" id=2]
+[ext_resource path="res://Pic/map.png" type="Texture" id=3]
+[ext_resource path="res://fonts/答案字.tres" type="DynamicFont" id=4]
+[ext_resource path="res://fonts/font9.tres" type="DynamicFont" id=5]
+[ext_resource path="res://fonts/詳解.tres" type="StyleBox" id=6]
+[ext_resource path="res://fonts/詳解字.tres" type="DynamicFont" id=7]
+[ext_resource path="res://Fonts/1.5Pressed.tres" type="StyleBox" id=8]
+[ext_resource path="res://Fonts/1.5Normal.tres" type="StyleBox" id=9]
+[ext_resource path="res://fonts/font8.tres" type="DynamicFont" id=10]
 [ext_resource path="res://Fonts/1.5hover.tres" type="StyleBox" id=11]
-[ext_resource path="res://pic/delete1.png" type="Texture" id=12]
-[ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=13]
+[ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=12]
+[ext_resource path="res://script/1.5.3.gd" type="Script" id=13]
 
 [sub_resource type="DynamicFont" id=1]
 size = 35
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
-font_data = ExtResource( 13 )
+font_data = ExtResource( 12 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 60
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true
-font_data = ExtResource( 13 )
+font_data = ExtResource( 12 )
 
 [sub_resource type="StyleBoxFlat" id=4]
 content_margin_left = 20.0
@@ -52,12 +52,12 @@ corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
 [node name="Node2D" type="Node2D"]
-script = ExtResource( 7 )
+script = ExtResource( 13 )
 
 [node name="bg" type="TextureRect" parent="."]
 margin_right = 1920.0
 margin_bottom = 1080.0
-texture = ExtResource( 6 )
+texture = ExtResource( 1 )
 expand = true
 
 [node name="TextureRect" type="TextureRect" parent="bg"]
@@ -70,7 +70,7 @@ margin_top = -580.0
 margin_right = -218.0
 margin_bottom = 40.0
 rect_scale = Vector2( 2.8, 2.3 )
-texture = ExtResource( 5 )
+texture = ExtResource( 3 )
 expand = true
 
 [node name="大橫線" type="Line2D" parent="bg/TextureRect"]
@@ -97,12 +97,12 @@ custom_colors/font_color_focus = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color_hover = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color_pressed = Color( 0.6, 0.6, 0.6, 1 )
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = ExtResource( 5 )
 custom_styles/hover = ExtResource( 11 )
-custom_styles/pressed = ExtResource( 3 )
-custom_styles/focus = ExtResource( 3 )
-custom_styles/disabled = ExtResource( 1 )
-custom_styles/normal = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 8 )
+custom_styles/focus = ExtResource( 8 )
+custom_styles/disabled = ExtResource( 9 )
+custom_styles/normal = ExtResource( 9 )
 text = "故 事 內 容"
 
 [node name="wave1" type="Button" parent="bg"]
@@ -115,12 +115,12 @@ custom_colors/font_color_focus = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color_hover = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color_pressed = Color( 0.6, 0.6, 0.6, 1 )
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = ExtResource( 5 )
 custom_styles/hover = ExtResource( 11 )
-custom_styles/pressed = ExtResource( 3 )
-custom_styles/focus = ExtResource( 3 )
-custom_styles/disabled = ExtResource( 1 )
-custom_styles/normal = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 8 )
+custom_styles/focus = ExtResource( 8 )
+custom_styles/disabled = ExtResource( 9 )
+custom_styles/normal = ExtResource( 9 )
 text = "wave 1"
 
 [node name="wave2" type="Button" parent="bg"]
@@ -133,12 +133,12 @@ custom_colors/font_color_focus = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color_hover = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color_pressed = Color( 0.6, 0.6, 0.6, 1 )
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = ExtResource( 5 )
 custom_styles/hover = ExtResource( 11 )
-custom_styles/pressed = ExtResource( 3 )
-custom_styles/focus = ExtResource( 3 )
-custom_styles/disabled = ExtResource( 1 )
-custom_styles/normal = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 8 )
+custom_styles/focus = ExtResource( 8 )
+custom_styles/disabled = ExtResource( 9 )
+custom_styles/normal = ExtResource( 9 )
 text = "wave 2"
 
 [node name="wave3" type="Button" parent="bg"]
@@ -155,12 +155,12 @@ custom_colors/font_color_focus = Color( 0, 0.345098, 1, 1 )
 custom_colors/font_color = Color( 0, 0.345098, 1, 1 )
 custom_colors/font_color_hover = Color( 0, 0.345098, 1, 1 )
 custom_colors/font_color_pressed = Color( 0, 0.345098, 1, 1 )
-custom_fonts/font = ExtResource( 4 )
-custom_styles/hover = ExtResource( 1 )
-custom_styles/pressed = ExtResource( 1 )
-custom_styles/focus = ExtResource( 1 )
-custom_styles/disabled = ExtResource( 1 )
-custom_styles/normal = ExtResource( 1 )
+custom_fonts/font = ExtResource( 10 )
+custom_styles/hover = ExtResource( 9 )
+custom_styles/pressed = ExtResource( 9 )
+custom_styles/focus = ExtResource( 9 )
+custom_styles/disabled = ExtResource( 9 )
+custom_styles/normal = ExtResource( 9 )
 text = "wave 3"
 
 [node name="score" type="Button" parent="bg"]
@@ -173,12 +173,12 @@ custom_colors/font_color_focus = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color_hover = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color_pressed = Color( 0.6, 0.6, 0.6, 1 )
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = ExtResource( 5 )
 custom_styles/hover = ExtResource( 11 )
-custom_styles/pressed = ExtResource( 3 )
-custom_styles/focus = ExtResource( 3 )
-custom_styles/disabled = ExtResource( 1 )
-custom_styles/normal = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 8 )
+custom_styles/focus = ExtResource( 8 )
+custom_styles/disabled = ExtResource( 9 )
+custom_styles/normal = ExtResource( 9 )
 text = "score"
 
 [node name="details" type="RichTextLabel" parent="bg"]
@@ -190,8 +190,8 @@ custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/normal_font = ExtResource( 8 )
-custom_styles/normal = ExtResource( 9 )
+custom_fonts/normal_font = ExtResource( 7 )
+custom_styles/normal = ExtResource( 6 )
 text = "詳解：
 正確答案是：「侯程麟」。
 在這段故事中，敘述者以第一人稱「我」來描述他與女朋友李多慧之間的感情和生活細節。從故事中可以得知：敘述者的名字是「侯程麟」、敘述者的女朋友是「李多慧」、他們之間的關係是真實且深厚的，並且有許多共同的回憶和計劃。題目中問的是「李多慧的男朋友是誰？」，由於整個故事都是以侯程麟的角度來敘述，所以可以得出結論，李多慧的男朋友就是侯程麟本人。因此，正確答案應該是「侯程麟」。
@@ -204,7 +204,7 @@ margin_top = 30.0
 margin_right = 2301.0
 margin_bottom = 536.0
 rect_scale = Vector2( 0.2, 0.2 )
-icon = ExtResource( 12 )
+icon = ExtResource( 2 )
 flat = true
 
 [node name="得分" type="Label" parent="bg"]
@@ -242,7 +242,7 @@ custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/normal_font = ExtResource( 10 )
+custom_fonts/normal_font = ExtResource( 4 )
 custom_styles/normal = SubResource( 4 )
 text = "這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D"
 
@@ -255,7 +255,7 @@ custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/normal_font = ExtResource( 10 )
+custom_fonts/normal_font = ExtResource( 4 )
 custom_styles/normal = SubResource( 3 )
 bbcode_enabled = true
 bbcode_text = "請問李多慧的男朋友是誰?"
