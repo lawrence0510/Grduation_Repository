@@ -1,79 +1,153 @@
-from docx import Document
+import mysql.connector
+from mysql.connector import Error
+import os
+from dotenv import load_dotenv
+from datetime import datetime, timedelta
 import json
 
-# 讀取 Word 文件
-doc = Document("/Users/kunhaowu/Desktop/College/code projects/Grduation_Repository/教科書題目/國文/四上國文閱讀_題目&詳解_1卷.docx")
-all_text = []
+load_dotenv()
 
-for para in doc.paragraphs:
-    all_text.append(para.text.strip())
+# 建立資料庫連接
+def create_db_connection():
+    try:
+        connection = mysql.connector.connect(
+            host=os.getenv('DATABASE_HOST'),
+            user=os.getenv('DATABASE_USER'),
+            password=os.getenv('DATABASE_PASSWORD'),
+            database=os.getenv('DATABASE_NAME')
+        )
+        return connection
+    except Error as e:
+        print(f"Error: '{e}'")
+        return None
 
-# 處理每個段落的資料並依照規則進行拆分
-results = []
+def get_question1_answer(json_data):
+    answer_key = f"question1_choice{json_data['question1_answer']}"
+    return json_data.get(answer_key, '')
+def get_question2_answer(json_data):
+    answer_key = f"question2_choice{json_data['question2_answer']}"
+    return json_data.get(answer_key, '')
+def get_question3_answer(json_data):
+    answer_key = f"question3_choice{json_data['question3_answer']}"
+    return json_data.get(answer_key, '')
 
-for i in range(0, len(all_text), 4):
-    # 第1個元素處理
-    article_data = {}
-    first_element = all_text[i]
-    
-    # article_title: 第一個字到第一個\n之前
-    article_title_end_idx = first_element.find("\n")
-    article_data['article_title'] = first_element[:article_title_end_idx]
-    
-    # article_content: 第一個\n到ˉ或\u3000為止
-    content_start_idx = article_title_end_idx + 1
-    content_end_idx = min(first_element.find("（ˉ）", content_start_idx), first_element.find("\u3000", content_start_idx))
-    article_data['article_content'] = first_element[content_start_idx:content_end_idx]
-    
-    # 處理問題和選項
-    def extract_question_and_choices(text, question_num):
-        question_start_idx = text.find(f'{question_num}？')
-        if question_start_idx == -1:
-            return "", "", "", "", ""
-        
-        # 找到選項之間的分隔符號（ˉ或\u3000）
-        choice_1_start = text.find("ˉ", question_start_idx) + 1
-        choice_2_start = text.find("ˉ", choice_1_start) + 1
-        choice_3_start = text.find("ˉ", choice_2_start) + 1
-        choice_4_start = text.find("ˉ", choice_3_start) + 1
-        choice_end = text.find("。", choice_4_start)
-        
-        question = text[question_start_idx+len(f'{question_num}？'):choice_1_start-1].strip()
-        choice1 = text[choice_1_start:choice_2_start-1].strip()
-        choice2 = text[choice_2_start:choice_3_start-1].strip()
-        choice3 = text[choice_3_start:choice_4_start-1].strip()
-        choice4 = text[choice_4_start:choice_end].strip()
-        
-        return question, choice1, choice2, choice3, choice4
-    
-    article_data['question_1'], article_data['question1_choice1'], article_data['question1_choice2'], \
-    article_data['question1_choice3'], article_data['question1_choice4'] = extract_question_and_choices(first_element, '１')
-    
-    article_data['question_2'], article_data['question2_choice1'], article_data['question2_choice2'], \
-    article_data['question2_choice3'], article_data['question2_choice4'] = extract_question_and_choices(first_element, '２')
-    
-    article_data['question_3'], article_data['question3_choice1'], article_data['question3_choice2'], \
-    article_data['question3_choice3'], article_data['question3_choice4'] = extract_question_and_choices(first_element, '３')
-    
-    # 第2個元素處理，只取數字，並將數字放入相應的答案中
-    second_element = all_text[i + 1]
-    numbers = [s for s in second_element if s.isdigit()]
+def get_max_article_id(connection):
+    cursor = connection.cursor()
+    cursor.execute("SELECT MAX(article_id) FROM `Article`")
+    result = cursor.fetchone()
+    max_id = result[0] if result[0] is not None else 0
+    cursor.close()
+    return max_id
 
-    if len(numbers) == 2:
-        print("此題只有兩個選項")
-    elif len(numbers) == 4:
-        numbers = numbers[:-1]  # 捨棄最後一個數字
-    print(numbers)
-    article_data['question1_answer'] = numbers[0] if len(numbers) > 0 else None
-    article_data['question2_answer'] = numbers[1] if len(numbers) > 1 else None
-    article_data['question3_answer'] = numbers[2] if len(numbers) > 2 else None
-    
-    # 第3個元素是空格，跳過
-    
-    # 將處理完的數據加入results
-    results.append(article_data)
-    print(results)
-    exit
+def get_max_question_id(connection):
+    cursor = connection.cursor()
+    cursor.execute("SELECT MAX(question_id) FROM `Question`")
+    result = cursor.fetchone()
+    max_question_id = result[0] if result[0] is not None else 0
+    cursor.close()
+    return max_question_id
 
-# 打印結果
-print(json.dumps(results, ensure_ascii=False, indent=4))
+# 插入資料的函數
+def insert_article(json_data, article_category, article_grade):
+    connection = create_db_connection()
+    if connection is None:
+        return
+    
+    try:
+        cursor = connection.cursor()
+
+        # 計算 article_expired_day 為今天日期 + 60 天
+        article_expired_day = (datetime.now() + timedelta(days=60)).strftime('%Y-%m-%d')
+
+        # 插入到 Article 表格
+        article_sql = """
+        INSERT INTO Article (article_id, article_title, article_link, article_category, article_content, article_grade, article_pass, article_expired_day, article_note, check_time)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, CURDATE())
+        """
+
+        article_id = get_max_article_id(connection) + 1
+
+        cursor.execute(article_sql, (
+            article_id,
+            json_data['article_title'], 
+            '',  # article_link 留空
+            article_category, 
+            json_data['article_content'], 
+            article_grade, 
+            1,  # article_pass = 1
+            article_expired_day,  # 設定為今天 + 60 天
+            ''  # article_note 留空
+        ))
+
+        # 根據 question3_answer 找到對應的選項內容
+        question1_final_answer = get_question1_answer(json_data)
+        question2_final_answer = get_question2_answer(json_data)
+        question3_final_answer = get_question3_answer(json_data)
+
+        question_id = get_max_question_id(connection) + 1
+
+        # 插入到 Question 表格
+        question_sql = """
+                                    INSERT INTO `Question`(
+                                        `question_id`, `article_id`, `question_grade`, `question_1`, `question1_choice1`, 
+                                        `question1_choice2`, `question1_choice3`, `question1_choice4`, 
+                                        `question1_answer`, `question1_explanation`, `question_2`, 
+                                        `question2_choice1`, `question2_choice2`, `question2_choice3`, 
+                                        `question2_choice4`, `question2_answer`, `question2_explanation`, 
+                                        `question3`, `question3_answer`
+                                    ) VALUES (
+                                        %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
+                                    )
+                                    """
+
+        # 處理 None 值顯式替換為 None
+        cursor.execute(question_sql, (
+            question_id,
+            article_id,
+            article_grade, 
+            json_data['question_1'], 
+            json_data['question1_choice1'], 
+            json_data['question1_choice2'], 
+            json_data['question1_choice3'], 
+            json_data['question1_choice4'], 
+            question1_final_answer, 
+            '',
+            json_data['question_2'], 
+            json_data['question2_choice1'], 
+            json_data['question2_choice2'], 
+            json_data['question2_choice3'], 
+            json_data['question2_choice4'], 
+            question2_final_answer, 
+            '',
+            json_data['question_3'], 
+            question3_final_answer  # 插入對應的 question3_answer 內容
+        ))
+
+        # 提交更改
+        connection.commit()
+
+        print("資料插入成功")
+
+    except Error as e:
+        print(f"Error: '{e}'")
+        connection.rollback()
+    
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+
+# 循環輸入 JSON 資料
+categories = "Chinese"
+age = 15
+
+json_data = {}
+
+
+
+
+
+
+
+
+insert_article(json_data, categories, age)
