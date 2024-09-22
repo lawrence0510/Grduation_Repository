@@ -1,7 +1,15 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Dialog/InputHistory.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Dialog/AIResponse.gd" type="Script" id=2]
+[ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 50
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 3 )
 
 [node name="AIResponse" type="VBoxContainer"]
 margin_right = 253.0
@@ -9,4 +17,6 @@ margin_bottom = 42.0
 script = ExtResource( 2 )
 
 [node name="responseHistory" parent="." instance=ExtResource( 1 )]
+margin_bottom = 225.0
+custom_fonts/font = SubResource( 1 )
 autowrap = true
