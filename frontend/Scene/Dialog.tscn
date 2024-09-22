@@ -173,6 +173,9 @@ margin_bottom = 870.0
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
+[node name="Timer" type="Timer" parent="."]
+
 [connection signal="text_entered" from="MarginContainer/VBoxContainer/InputArea/MarginContainer/Input" to="." method="_on_Input_text_entered"]
 [connection signal="text_entered" from="MarginContainer/VBoxContainer/InputArea/MarginContainer/Input" to="MarginContainer/VBoxContainer/InputArea/MarginContainer/Input" method="_on_Input_text_entered"]
 [connection signal="request_completed" from="HTTPRequest" to="CommandProcessor" method="_on_HTTPRequest_request_completed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
