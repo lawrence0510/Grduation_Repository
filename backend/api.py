@@ -108,6 +108,10 @@ get_login_record_parser.add_argument(
     'user_id', type=int, required=True, help='使用者id'
 )
 
+follow_up_parser = reqparse.RequestParser()
+follow_up_parser.add_argument('user_id', type=int, required=True, help='使用者id')
+follow_up_parser.add_argument('user_input', type=str, required=True, help='使用者輸入問題')
+
 history_parser = reqparse.RequestParser()
 history_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
 history_parser.add_argument('article_id', type=int, required=True, help='文章ID')
@@ -1247,6 +1251,119 @@ class GetRateFromAnswers(Resource):
                 cursor.close()
                 connection.close()
 
+@openAI_ns.route('/follow_up_question')
+class FollowUpQuestion(Resource):
+    @openAI_ns.expect(follow_up_parser)
+    def post(self):
+        '''追問問題並解答：輸入使用者id會去找最近一筆歷史紀錄，藉由這筆歷史紀錄去找原文和問題以及正確答案'''
+        args = follow_up_parser.parse_args()
+        user_id = args['user_id']
+        user_input = args['user_input']
+
+        connection = create_db_connection()
+        if connection is not None:
+            cursor = connection.cursor(dictionary=True)
+            try:
+                sql = """
+                SELECT h.article_id, h.q1_user_answer, h.q2_user_answer, h.q3_user_answer, 
+                       h.q3_score_1, h.q3_score_2, h.q3_score_3,
+                       a.article_title, a.article_content, q.question_grade, q.question_1, 
+                       q.question1_choice1, q.question1_choice2, q.question1_choice3, q.question1_choice4, 
+                       q.question1_answer, q.question1_explanation, q.question_2, q.question2_choice1, 
+                       q.question2_choice2, q.question2_choice3, q.question2_choice4, q.question2_answer, 
+                       q.question2_explanation, q.question3, q.question3_answer
+                FROM History AS h
+                JOIN Article AS a ON h.article_id = a.article_id
+                JOIN Question AS q ON a.article_id = q.article_id
+                WHERE h.user_id = %s 
+                ORDER BY h.time DESC 
+                LIMIT 1;
+                """
+                cursor.execute(sql, (user_id,))
+                record = cursor.fetchone()
+
+                if record:
+                    # 取得數據
+                    article_title = record['article_title']
+                    article_content = record['article_content']
+                    question_1 = record['question_1']
+                    question1_choice1 = record['question1_choice1']
+                    question1_choice2 = record['question1_choice2']
+                    question1_choice3 = record['question1_choice3']
+                    question1_choice4 = record['question1_choice4']
+                    question1_answer = record['question1_answer']
+                    question1_explanation = record['question1_explanation']
+                    question_2 = record['question_2']
+                    question2_choice1 = record['question2_choice1']
+                    question2_choice2 = record['question2_choice2']
+                    question2_choice3 = record['question2_choice3']
+                    question2_choice4 = record['question2_choice4']
+                    question2_answer = record['question2_answer']
+                    question2_explanation = record['question2_explanation']
+                    question_3 = record['question3']
+                    question3_answer = record['question3_answer']
+
+                    q1_user_answer = record['q1_user_answer']
+                    q2_user_answer = record['q2_user_answer']
+                    q3_user_answer = record['q3_user_answer']
+                    q3_score_1 = record['q3_score_1']
+                    q3_score_2 = record['q3_score_2']
+                    q3_score_3 = record['q3_score_3']
+
+                    # 組裝 prompt message
+                    prompt_message = (
+                        f"以下是一篇文章的內容以及三個問題的題幹和標準答案：\n"
+                        f"標題：{article_title}\n"
+                        f"內容：{article_content}\n"
+                        f"問題1：{question_1}\n"
+                        f"問題1的四個選項：1. {question1_choice1} 2. {question1_choice2} 3. {question1_choice3} 4. {question1_choice4}\n"
+                        f"問題1的正確答案是：{question1_answer}，原因為：{question1_explanation}\n"
+                        f"而我問題1的回答是：{q1_user_answer}\n"
+                        f"問題2：{question_2}\n"
+                        f"問題2的四個選項：1. {question2_choice1} 2. {question2_choice2} 3. {question2_choice3} 4. {question2_choice4}\n"
+                        f"問題2的正確答案是：{question2_answer}，原因為：{question2_explanation}\n"
+                        f"而我問題2的回答是：{q2_user_answer}\n"
+                        f"問題3：{question_3}\n"
+                        f"標準答案是：{question3_answer}\n"
+                        f"而我問題3的回答是：{q3_user_answer}\n"
+                        f"我在正確度滿分五分得到：{q3_score_1}、完整度滿分五分得到：{q3_score_2}、語言表達清晰度得到：{q3_score_3}\n"
+                        f"我有些關於以上題目的問題想問，問題如下，請你解釋：{user_input}\n"
+                    )
+
+                    client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+                    try:
+                        response = client.chat.completions.create(
+                            model="gpt-3.5-turbo",
+                            messages=[
+                                {"role": "system", "content": "你是一名專門幫學生解答疑惑的解題老師。"},
+                                {"role": "user", "content": prompt_message}
+                            ],
+                        )
+                        response_str = str(response)
+
+                        start_token = "content='"
+                        end_token = "', role='assistant'"
+
+                        start_index = response_str.find(start_token) + len(start_token)
+                        end_index = response_str.find(end_token, start_index)
+
+                        content = response_str[start_index:end_index]
+
+                        # 返回提取出的 content
+                        return {"message": content}, 200
+
+                    except Exception as e:
+                        return {"error": str(e)}, 500
+                else:
+                    return {"error": "No history or article record found"}, 404
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+
 
 # History api區
 history_ns = api.namespace('History', description='與歷史紀錄操作之相關api')
@@ -1289,13 +1406,15 @@ class RecordHistory(Resource):
 
         try:
             new_history_id = get_max_history_id(connection) + 1
-            question_id = args['article_id']
+            article_id = args['article_id']
             time_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
             cursor = connection.cursor(dictionary=True)
             cursor.execute(
-                f"SELECT * FROM `Question` WHERE question_id = {question_id};")
+                f"SELECT * FROM `Question` WHERE article_id = {article_id};")
             question_data = cursor.fetchone()
+
+            question_id = question_data['question_id']
 
             q1_correct_answer = question_data['question1_answer']
             q2_correct_answer = question_data['question2_answer']
