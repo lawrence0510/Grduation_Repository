@@ -732,7 +732,7 @@ class DataList(Resource):
 @article_ns.route('/get_random_uncheck_article')
 class RandomArticle(Resource):
     def get(self):
-        '''隨機選取1到1000範圍內且article_pass為NULL的文章'''
+        '''隨機選取4598到6000範圍內且article_pass為NULL的文章'''
         connection = create_db_connection()
         if connection is not None:
             cursor = connection.cursor(dictionary=True)
