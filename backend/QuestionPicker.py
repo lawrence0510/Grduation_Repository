@@ -139,30 +139,31 @@ def insert_article(json_data, article_category, article_grade):
 
 # 循環輸入 JSON 資料
 categories = "Social"
-age = 13
+age = 15
 
 json_data = {
-    "article_title": "慈濟志工的慈善理念",
-    "article_content": "慈濟是臺灣最大的慈善團體，慈濟志工在發送物資或紅包給低收入戶或災民時，總是用雙手奉上，避免受贈者有『被救濟』的感覺。他們稱災民為『感恩戶』，認為這代表『感恩讓我們有機會付出』。慈濟的理念是『人人一律平等』，並不因為施予救濟而感到自己更高級，災民僅是暫時處於困境。",
-    "question_1": "慈濟志工發放物資給災民的主要目的是什麼？",
-    "question1_choice1": "協助實現災民理想",
-    "question1_choice2": "平撫心理創傷",
-    "question1_choice3": "維持基本生存",
-    "question1_choice4": "促進災民自我發展",
-    "question_2": "慈濟志工為何要向災民致謝？",
-    "question2_choice1": "救濟物資供應充足",
-    "question2_choice2": "維護災民心理尊嚴",
-    "question2_choice3": "志工從事救災有高回報",
-    "question2_choice4": "災民有回報義務",
-    "question_3": "面對災民，國中生應如何表現出正確的態度？",
-    "question3_choice1": "待成年後再幫助他人",
-    "question3_choice2": "不關我們的事",
-    "question3_choice3": "加入志工行列",
-    "question3_choice4": "節省零用錢捐助慈善機構",
-    "question1_answer": "3",
-    "question2_answer": "2",
-    "question3_answer": "4"
+    "article_title": "贖罪券與宗教改革",
+    "article_content": "「錢幣叮噹投進捐獻箱，靈魂應聲出煉獄！」是十六世紀的一句行銷口號，天主教教會以此遊說信徒捐獻，信徒深信購買教會的贖罪券可以為自己或旁人買到更多希望。",
+    "question_1": "西元1517年，批評贖罪券並提出《九十五條論綱》的是下列何人？",
+    "question1_choice1": "喀爾文",
+    "question1_choice2": "羅耀拉",
+    "question1_choice3": "亨利八世",
+    "question1_choice4": "馬丁路德",
+    "question_2": "此人之所以能快速將其神學觀點散布至德意志地區，擴張宗教改革的影響力，應該歸因於下列何者？",
+    "question2_choice1": "印刷術",
+    "question2_choice2": "德語《聖經》",
+    "question2_choice3": "信而得救",
+    "question2_choice4": "預選說",
+    "question_3": "天主教教會面對宗教改革的聲浪，卻能成功贏回部分信徒的信心，該怎麼描述天主教教會的改革？",
+    "question3_choice1": "教義上堅持教宗的權威，實務上接受改革",
+    "question3_choice2": "教務上堅持贖罪券公用，教義上廢除教宗",
+    "question3_choice3": "教義上接受因信而稱義，實務上堅持傳統",
+    "question3_choice4": "教務上出現耶穌會改革，教義上廢除教宗",
+    "question1_answer": "4",
+    "question2_answer": "1",
+    "question3_answer": "1"
 }
+
 
 
 
