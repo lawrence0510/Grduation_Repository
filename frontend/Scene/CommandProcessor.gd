@@ -7,7 +7,7 @@ func process_command(input: String):
 	
 	# 建立 POST 請求的資料
 	var data = {
-		"user_id": 15,
+		"user_id": 2,
 #		"user_input": input,
 		"article_category": "story"
 	}

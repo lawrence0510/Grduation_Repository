@@ -4,13 +4,8 @@ func set_text(input: String):
 	$responseHistory.text = "AI助手 :  \n" + input
 
 
-func _on_responseHistory_resized():
-	var responseLength = $responseHistory.text.length()
-	print("長度", responseLength)
-	while responseLength > 30:
-		responseLength - 30
-		print("計算過的長度")
-		print(responseLength)
+#func _on_responseHistory_resized():
+
 	#while 
 	#if $responseHistory.text.length() > 44:
 	#	print($responseHistory.text)

@@ -39,6 +39,15 @@ func _on_Input_text_entered(new_text):
 		return
 
 	var input_response = InputResponse.instance()
+	#每30個char去換行一次
+	var index = 35
+	while new_text.length() > index:
+		new_text = new_text.insert(index, "\n")
+		print("計算過的長度: ", index)
+		print(new_text, "\n")
+
+		index  = index + 35
+	print("最後結果", new_text)
 	input_response.set_text(new_text)
 	add_response_to_game(input_response)
 	checkUserInput = 1
@@ -64,7 +73,24 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		var json = JSON.parse(body.get_string_from_utf8())
 		#print(json.result.message)
 		var ai_response = AIResponse.instance()
-		ai_response.set_text(json.result[0].article_content.substr(0, 100))
+		
+		#responseLength: 回傳內容的長度
+		var responseLength = json.result[0].article_content.substr(0, 100).length()
+		#response: 回傳內容
+		var response = json.result[0].article_content.substr(0, 100)
+		print("長度", responseLength)
+		print("內容", response)
+		
+		#每30個char去換行一次
+		var index = 30
+		while responseLength > index:
+			response = response.insert(index, "\n")
+			print("計算過的長度: ", index)
+			print(response, "\n")
+
+			index  = index + 30
+		print("最後結果", response)
+		ai_response.set_text(response)
 		add_response_to_game(ai_response)
 	else:
 		print("error")
