@@ -134,7 +134,7 @@ margin_right = 1800.0
 margin_bottom = 722.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/separation = 12
+custom_constants/separation = 20
 
 [node name="InputArea" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
 margin_top = 772.0
@@ -144,8 +144,8 @@ rect_min_size = Vector2( 50, 50 )
 custom_styles/panel = SubResource( 5 )
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/InputArea"]
-margin_left = 2.0
-margin_top = 2.0
+margin_left = 6.0
+margin_top = 6.0
 margin_right = 1838.0
 margin_bottom = 86.0
 custom_constants/margin_right = 10
@@ -156,7 +156,7 @@ custom_constants/margin_bottom = 2
 [node name="Input" type="LineEdit" parent="MarginContainer/VBoxContainer/InputArea/MarginContainer"]
 margin_left = 10.0
 margin_top = 2.0
-margin_right = 1826.0
+margin_right = 1822.0
 margin_bottom = 82.0
 rect_min_size = Vector2( 0, 80 )
 custom_colors/cursor_color = Color( 0, 0, 0, 1 )

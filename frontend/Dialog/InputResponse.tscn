@@ -5,11 +5,16 @@
 [ext_resource path="res://Fonts/font1 - 複製 (8) - 複製 - 複製.tres" type="DynamicFont" id=3]
 
 [node name="InputResponse" type="VBoxContainer"]
-margin_right = 253.0
-margin_bottom = 42.0
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -253.0
+margin_top = -43.5
+margin_bottom = 43.5
 script = ExtResource( 2 )
 
 [node name="InputHistory" parent="." instance=ExtResource( 1 )]
-margin_bottom = 225.0
+margin_bottom = 87.0
 custom_fonts/font = ExtResource( 3 )
 autowrap = true

@@ -11,12 +11,14 @@ onready var history_rows = $MarginContainer/VBoxContainer/textArea/MarginContain
 onready var scroll = $MarginContainer/VBoxContainer/textArea/MarginContainer/ScrollContainer
 onready var scrollbar = scroll.get_v_scrollbar()
 
+#用以確認用戶是否已經輸入, 不能連續發問，要等到回復之後才能問下一句
+var checkUserInput = 0
 
 func _ready():
 	scrollbar.connect("changed", self, "handle_scrollbar_changed")
 	max_scroll_length = scrollbar.max_value
 	var starting_message = Response.instance()
-	starting_message.text = "Hello challenger, if there's anything you want to ask me?"
+	starting_message.text = "冒險者您好, 關於這些問題有沒有什麼要問我的阿~"
 	add_response_to_game(starting_message)
 	
 	#設定我等待ai回應時間
@@ -31,12 +33,15 @@ func handle_scrollbar_changed():
 		scroll.scroll_vertical = max_scroll_length
 
 func _on_Input_text_entered(new_text):
+	if checkUserInput == 1:
+		return
 	if new_text.empty():
 		return
-	var input_response = InputResponse.instance()
 
+	var input_response = InputResponse.instance()
 	input_response.set_text(new_text)
 	add_response_to_game(input_response)
+	checkUserInput = 1
 	#控制回復
 	var ai_response_text = command_processor.process_command(new_text)
 	#$Timer.start()
@@ -53,6 +58,7 @@ func add_response_to_game(response: Control):
 #	add_response_to_game(ai_response)
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
+	checkUserInput = checkUserInput - 1
 	print(response_code)
 	if(response_code == 200):
 		var json = JSON.parse(body.get_string_from_utf8())
