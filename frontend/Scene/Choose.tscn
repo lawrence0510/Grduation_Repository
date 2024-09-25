@@ -300,7 +300,7 @@ custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = SubResource( 7 )
 custom_styles/disabled = ExtResource( 1 )
 custom_styles/normal = ExtResource( 1 )
-text = "Miakasa"
+text = "Mikasa"
 script = ExtResource( 20 )
 
 [node name="BB4" type="Button" parent="bg/底色2"]
@@ -336,6 +336,8 @@ texture = ExtResource( 16 )
 position = Vector2( 849.5, 350 )
 texture = ExtResource( 17 )
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
 [connection signal="pressed" from="bg/底色2/enter" to="." method="_on_enter_pressed"]
 [connection signal="pressed" from="bg/底色2/BB1" to="bg/底色2/BB1" method="_on_BB1_pressed"]
 [connection signal="pressed" from="bg/底色2/BB2" to="bg/底色2/BB2" method="_on_BB2_pressed"]
@@ -345,3 +347,4 @@ texture = ExtResource( 17 )
 [connection signal="pressed" from="bg/底色2/BG3" to="bg/底色2/BG3" method="_on_BG3_pressed"]
 [connection signal="pressed" from="bg/底色2/BG4" to="bg/底色2/BG4" method="_on_BG4_pressed"]
 [connection signal="pressed" from="bg/底色2/BB4" to="bg/底色2/BB4" method="_on_BG5_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

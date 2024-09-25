@@ -56,8 +56,21 @@ func _on_enter_pressed():
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	if response_code == 201:
 		print("註冊成功")
+		var body_string = body.get_string_from_utf8()
+		print(body_string)
+		var response = JSON.parse(body_string)
+		if response.error == OK:
+			# 提取 user_id
+			var user_id = response.result["user_id"]
+			print("User ID: ", user_id)
+			
+			# 將 user_id 存入 GlobalVar
+			GlobalVar.user_id = user_id
+			
+			get_tree().change_scene("res://scene/Choose.tscn")
+		else:
+			print("解析 JSON 失敗")
 		# 成功註冊後切換場景
-		get_tree().change_scene("res://scene/Choose.tscn")
 	else:
 		Failed.popup_centered()
 		print("註冊失敗，請檢查輸入資料")

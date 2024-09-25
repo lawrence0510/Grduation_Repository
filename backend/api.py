@@ -206,7 +206,7 @@ class RegisterUser(Resource):
                 cursor.execute(sql, (new_user_id, user_name, encrypted_password,
                                user_school, user_birthday, user_email, user_phone, datetime.now().date()))
                 connection.commit()
-                return {"message": "User registered successfully"}, 201
+                return {"message": "User registered successfully", "user_id": new_user_id}, 201
             except Error as e:
                 return {"error": str(e)}, 500
             finally:
