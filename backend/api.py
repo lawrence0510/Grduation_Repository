@@ -1,4 +1,6 @@
 # 標準庫
+from datetime import date, datetime
+from flask_restx import Resource
 from datetime import datetime, timedelta
 from decimal import Decimal
 import hashlib
@@ -52,13 +54,15 @@ user_parser.add_argument('user_name', type=str, required=True, help='使用者�
 user_parser.add_argument('user_password', type=str,
                          required=True, help='使用者密碼')
 user_parser.add_argument('user_school', type=str, required=True, help='使用者學校')
-user_parser.add_argument('user_birthday', type=str, required=True, help='使用者生日 (YYYY-MM-DD)')
+user_parser.add_argument('user_birthday', type=str,
+                         required=True, help='使用者生日 (YYYY-MM-DD)')
 user_parser.add_argument('user_email', type=str,
                          required=True, help='使用者email')
 user_parser.add_argument('user_phone', type=str, required=True, help='使用者電話')
 
 login_parser = reqparse.RequestParser()
-login_parser.add_argument('user_email', type=str, required=True, help='使用者電子郵件')
+login_parser.add_argument('user_email', type=str,
+                          required=True, help='使用者電子郵件')
 login_parser.add_argument('user_password', type=str,
                           required=True, help='使用者密碼')
 
@@ -66,7 +70,8 @@ user_id_parser = reqparse.RequestParser()
 user_id_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
 
 email_reset_parser = reqparse.RequestParser()
-email_reset_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
+email_reset_parser.add_argument(
+    'user_id', type=int, required=True, help='使用者ID')
 email_reset_parser.add_argument(
     'new_email', type=str, required=True, help='使用者新email')
 
@@ -77,18 +82,22 @@ password_reset_parser.add_argument(
     'new_password', type=str, required=True, help='使用者新密碼')
 
 phone_reset_parser = reqparse.RequestParser()
-phone_reset_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
+phone_reset_parser.add_argument(
+    'user_id', type=int, required=True, help='使用者ID')
 phone_reset_parser.add_argument(
     'new_phone', type=str, required=True, help='使用者新電話號碼')
 
 school_reset_parser = reqparse.RequestParser()
-school_reset_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
+school_reset_parser.add_argument(
+    'user_id', type=int, required=True, help='使用者ID')
 school_reset_parser.add_argument(
     'new_school', type=str, required=True, help='新學校名稱')
 
 birthday_reset_parser = reqparse.RequestParser()
-birthday_reset_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
-birthday_reset_parser.add_argument('new_birthday', type=str , required=True, help='新生日')
+birthday_reset_parser.add_argument(
+    'user_id', type=int, required=True, help='使用者ID')
+birthday_reset_parser.add_argument(
+    'new_birthday', type=str, required=True, help='新生日')
 
 article_upload_parser = reqparse.RequestParser()
 article_upload_parser.add_argument('file', type=FileStorage, location='files',
@@ -111,16 +120,21 @@ get_login_record_parser.add_argument(
 )
 
 character_image_upload_parser = reqparse.RequestParser()
-character_image_upload_parser.add_argument('character_name', type=str, required=True, help='角色名稱')
-character_image_upload_parser.add_argument('image', type=FileStorage, location='files', required=True, help='上傳的圖片檔案')
+character_image_upload_parser.add_argument(
+    'character_name', type=str, required=True, help='角色名稱')
+character_image_upload_parser.add_argument(
+    'image', type=FileStorage, location='files', required=True, help='上傳的圖片檔案')
 
 enemy_image_upload_parser = reqparse.RequestParser()
-enemy_image_upload_parser.add_argument('enemy_category', type=int, required=True, help='敵人類別')
-enemy_image_upload_parser.add_argument('image', type=FileStorage, location='files', required=True, help='上傳的圖片檔案')
+enemy_image_upload_parser.add_argument(
+    'enemy_category', type=int, required=True, help='敵人類別')
+enemy_image_upload_parser.add_argument(
+    'image', type=FileStorage, location='files', required=True, help='上傳的圖片檔案')
 
 follow_up_parser = reqparse.RequestParser()
 follow_up_parser.add_argument('user_id', type=int, required=True, help='使用者id')
-follow_up_parser.add_argument('user_input', type=str, required=True, help='使用者輸入問題')
+follow_up_parser.add_argument(
+    'user_input', type=str, required=True, help='使用者輸入問題')
 
 history_parser = reqparse.RequestParser()
 history_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
@@ -139,37 +153,60 @@ history_parser.add_argument('q3_score_3', type=int,
                             required=True, help='第三題評分3')
 
 random_article_parser = reqparse.RequestParser()
-random_article_parser.add_argument('user_id', type=int,required=True,help='使用者ID')
-random_article_parser.add_argument('article_category', type=str, required=True,help='文章類別')
+random_article_parser.add_argument(
+    'user_id', type=int, required=True, help='使用者ID')
+random_article_parser.add_argument(
+    'article_category', type=str, required=True, help='文章類別')
 
 test_article_parser = reqparse.RequestParser()
-test_article_parser.add_argument('article_pass', type=int, required=True, help='測試結果(1 => 成功, 0 => 錯誤)')
-test_article_parser.add_argument('article_note', type=str, required=False, help='測試備註')
-test_article_parser.add_argument('article_id', type=int, required=True, help='文章帳號')
-test_article_parser.add_argument('article_title', type=str, required=True, help='文章標題')
-test_article_parser.add_argument('article_content', type=str, required=True, help='文章內文')
+test_article_parser.add_argument(
+    'article_pass', type=int, required=True, help='測試結果(1 => 成功, 0 => 錯誤)')
+test_article_parser.add_argument(
+    'article_note', type=str, required=False, help='測試備註')
+test_article_parser.add_argument(
+    'article_id', type=int, required=True, help='文章帳號')
+test_article_parser.add_argument(
+    'article_title', type=str, required=True, help='文章標題')
+test_article_parser.add_argument(
+    'article_content', type=str, required=True, help='文章內文')
 
 # Question 1
-test_article_parser.add_argument('question_1', type=str, required=True, help='問題 1')
-test_article_parser.add_argument('question1_choice1', type=str, required=True, help='問題 1 選項 A')
-test_article_parser.add_argument('question1_choice2', type=str, required=True, help='問題 1 選項 B')
-test_article_parser.add_argument('question1_choice3', type=str, required=True, help='問題 1 選項 C')
-test_article_parser.add_argument('question1_choice4', type=str, required=True, help='問題 1 選項 D')
-test_article_parser.add_argument('question1_answer', type=str, required=True, help='問題 1 答案')
-test_article_parser.add_argument('question1_explanation', type=str, required=True, help='問題 1 詳解')
+test_article_parser.add_argument(
+    'question_1', type=str, required=True, help='問題 1')
+test_article_parser.add_argument(
+    'question1_choice1', type=str, required=True, help='問題 1 選項 A')
+test_article_parser.add_argument(
+    'question1_choice2', type=str, required=True, help='問題 1 選項 B')
+test_article_parser.add_argument(
+    'question1_choice3', type=str, required=True, help='問題 1 選項 C')
+test_article_parser.add_argument(
+    'question1_choice4', type=str, required=True, help='問題 1 選項 D')
+test_article_parser.add_argument(
+    'question1_answer', type=str, required=True, help='問題 1 答案')
+test_article_parser.add_argument(
+    'question1_explanation', type=str, required=True, help='問題 1 詳解')
 
 # Question 2
-test_article_parser.add_argument('question_2', type=str, required=True, help='問題 2')
-test_article_parser.add_argument('question2_choice1', type=str, required=True, help='問題 2 選項 A')
-test_article_parser.add_argument('question2_choice2', type=str, required=True, help='問題 2 選項 B')
-test_article_parser.add_argument('question2_choice3', type=str, required=True, help='問題 2 選項 C')
-test_article_parser.add_argument('question2_choice4', type=str, required=True, help='問題 2 選項 D')
-test_article_parser.add_argument('question2_answer', type=str, required=True, help='問題 2 答案')
-test_article_parser.add_argument('question2_explanation', type=str, required=True, help='問題 2 詳解')
+test_article_parser.add_argument(
+    'question_2', type=str, required=True, help='問題 2')
+test_article_parser.add_argument(
+    'question2_choice1', type=str, required=True, help='問題 2 選項 A')
+test_article_parser.add_argument(
+    'question2_choice2', type=str, required=True, help='問題 2 選項 B')
+test_article_parser.add_argument(
+    'question2_choice3', type=str, required=True, help='問題 2 選項 C')
+test_article_parser.add_argument(
+    'question2_choice4', type=str, required=True, help='問題 2 選項 D')
+test_article_parser.add_argument(
+    'question2_answer', type=str, required=True, help='問題 2 答案')
+test_article_parser.add_argument(
+    'question2_explanation', type=str, required=True, help='問題 2 詳解')
 
 # Question 3
-test_article_parser.add_argument('question3', type=str, required=True, help='問題 3')
-test_article_parser.add_argument('question3_answer', type=str, required=True, help='問題 3 答案')
+test_article_parser.add_argument(
+    'question3', type=str, required=True, help='問題 3')
+test_article_parser.add_argument(
+    'question3_answer', type=str, required=True, help='問題 3 答案')
 
 # User api區
 user_ns = api.namespace('User', description='與使用者操作相關之api')
@@ -214,10 +251,13 @@ class RegisterUser(Resource):
                 connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
-        
+
+
 image_parser = reqparse.RequestParser()
 image_parser.add_argument('user_id', type=int, required=True, help='user id')
-image_parser.add_argument('character_id', type=int, required=True, help='character id')
+image_parser.add_argument('character_id', type=int,
+                          required=True, help='character id')
+
 
 @user_ns.route('/image_register')
 class ImageRegister(Resource):
@@ -245,6 +285,7 @@ class ImageRegister(Resource):
                 connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
+
 
 @user_ns.route('/normal_login')
 class LoginUser(Resource):
@@ -382,6 +423,7 @@ def authorize():
     else:
         return {"error": "Unable to connect to the database"}, 500
 
+
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
@@ -393,7 +435,9 @@ app.config['MAIL_DEFAULT_SENDER'] = ('Reading King', 'reading@gmail.com')
 mail = Mail(app)
 
 verification_code_parser = reqparse.RequestParser()
-verification_code_parser.add_argument('user_email', type=str, required=True, help='使用者 email')
+verification_code_parser.add_argument(
+    'user_email', type=str, required=True, help='使用者 email')
+
 
 @user_ns.route('/send_verification_code')
 class SendVerificationCode(Resource):
@@ -403,27 +447,31 @@ class SendVerificationCode(Resource):
         args = verification_code_parser.parse_args()
         user_email = args['user_email']
         # 生成 6 位隨機驗證碼
-        verification_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+        verification_code = ''.join(random.choices(
+            string.ascii_uppercase + string.digits, k=6))
 
         # 將驗證碼存入資料庫
         connection = create_db_connection()
         if connection is not None:
             try:
                 cursor = connection.cursor()
-                cursor.execute("SELECT user_id FROM User WHERE user_email = %s", (user_email,))
+                cursor.execute(
+                    "SELECT user_id FROM User WHERE user_email = %s", (user_email,))
                 user = cursor.fetchone()
 
                 if user:
                     user_id = user[0]
 
-                    cursor.execute("SELECT COALESCE(MAX(id), 0) + 1 FROM VerificationCodes")
+                    cursor.execute(
+                        "SELECT COALESCE(MAX(id), 0) + 1 FROM VerificationCodes")
                     new_id = cursor.fetchone()[0]
 
                     sql = """
                     INSERT INTO VerificationCodes (id, user_id, verification_code, created_at)
                     VALUES (%s, %s, %s, %s)
                     """
-                    cursor.execute(sql, (new_id, user_id, verification_code, datetime.now()))
+                    cursor.execute(
+                        sql, (new_id, user_id, verification_code, datetime.now()))
                     connection.commit()
 
                     try:
@@ -444,9 +492,13 @@ class SendVerificationCode(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+
 verification_code_check_parser = reqparse.RequestParser()
-verification_code_check_parser.add_argument('user_email', type=str, required=True, help='使用者 email')
-verification_code_check_parser.add_argument('verification_code', type=str, required=True, help='驗證碼')
+verification_code_check_parser.add_argument(
+    'user_email', type=str, required=True, help='使用者 email')
+verification_code_check_parser.add_argument(
+    'verification_code', type=str, required=True, help='驗證碼')
+
 
 @user_ns.route('/check_verification_code')
 class CheckVerificationCode(Resource):
@@ -461,7 +513,8 @@ class CheckVerificationCode(Resource):
         if connection is not None:
             try:
                 cursor = connection.cursor()
-                cursor.execute("SELECT user_id FROM User WHERE user_email = %s", (user_email,))
+                cursor.execute(
+                    "SELECT user_id FROM User WHERE user_email = %s", (user_email,))
                 user = cursor.fetchone()
 
                 if user:
@@ -497,7 +550,8 @@ class CheckVerificationCode(Resource):
                 connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
-        
+
+
 @user_ns.route('/logout')
 class LogoutUser(Resource):
     def post(self):
@@ -505,9 +559,6 @@ class LogoutUser(Resource):
         session.pop('user_id', None)
         return {"message": "You have been logged out."}, 200
 
-
-from flask_restx import Resource
-from datetime import date, datetime
 
 @user_ns.route('/get_user_from_id')
 class GetUserFromID(Resource):
@@ -634,6 +685,7 @@ class SchoolReset(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+
 @user_ns.route('/reset_birthday')
 class BirthdayReset(Resource):
     @user_ns.expect(birthday_reset_parser)
@@ -649,7 +701,7 @@ class BirthdayReset(Resource):
                 cursor = connection.cursor()
                 update_sql = "UPDATE `User` SET `user_birthday` = %s WHERE `user_id` = %s"
                 cursor.execute(update_sql, (new_birthday, user_id))
-                
+
                 if cursor.rowcount == 0:
                     return {"message": "User not found"}, 404
                 else:
@@ -663,6 +715,7 @@ class BirthdayReset(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+
 @user_ns.route('/get_login_record')
 class GetLoginRecord(Resource):
     @user_ns.expect(get_login_record_parser)
@@ -675,11 +728,11 @@ class GetLoginRecord(Resource):
         if connection is not None:
             try:
                 cursor = connection.cursor(dictionary=True)
-                
+
                 # 執行 SQL 查詢，查詢所有符合條件的記錄
                 sql = "SELECT login_time FROM `LoginRecord` WHERE user_id = %s;"
                 cursor.execute(sql, (user_id,))
-                
+
                 # 使用 fetchall 來抓取多行結果
                 login_records = cursor.fetchall()
 
@@ -703,7 +756,8 @@ class GetLoginRecord(Resource):
                     connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
-        
+
+
 # Article api區
 article_ns = api.namespace('Article', description='與文章操作相關之api')
 
@@ -734,6 +788,7 @@ class DataList(Resource):
             finally:
                 cursor.close()
                 connection.close()
+
 
 @article_ns.route('/get_random_unseen_article')
 class DataList(Resource):
@@ -773,6 +828,7 @@ class DataList(Resource):
                 cursor.close()
                 connection.close()
 
+
 @article_ns.route('/get_random_uncheck_article')
 class RandomArticle(Resource):
     def get(self):
@@ -803,7 +859,8 @@ class RandomArticle(Resource):
                 return {"error": str(e)}, 500
             finally:
                 cursor.close()
-                connection.close()            
+                connection.close()
+
 
 @article_ns.route('/submit_article_fixed')
 class SubmitArticleFixed(Resource):
@@ -811,14 +868,14 @@ class SubmitArticleFixed(Resource):
     def post(self):
         '''提交文章檢查結果'''
         args = test_article_parser.parse_args()
-        
+
         # 提取所有提交的參數
         check = args['article_pass']
         note = args['article_note']
         article_id = args['article_id']
         article_title = args['article_title']
         article_content = args['article_content']
-        
+
         # Question 1
         question_1 = args['question_1']
         question1_choice1 = args['question1_choice1']
@@ -853,7 +910,8 @@ class SubmitArticleFixed(Resource):
                 SET article_pass = %s, article_note = %s, check_time = %s, article_title = %s, article_content = %s
                 WHERE article_id = %s;
                 """
-                cursor.execute(sql_article, (check, note, check_time, article_title, article_content, article_id))
+                cursor.execute(sql_article, (check, note, check_time,
+                               article_title, article_content, article_id))
 
                 # 更新問題表的相關數據
                 sql_question = """
@@ -864,9 +922,9 @@ class SubmitArticleFixed(Resource):
                 question3 = %s, question3_answer = %s
                 WHERE article_id = %s;
                 """
-                cursor.execute(sql_question, (question_1, question1_choice1, question1_choice2, question1_choice3, question1_choice4, 
-                                              question1_answer, question1_explanation, question_2, question2_choice1, question2_choice2, 
-                                              question2_choice3, question2_choice4, question2_answer, question2_explanation, 
+                cursor.execute(sql_question, (question_1, question1_choice1, question1_choice2, question1_choice3, question1_choice4,
+                                              question1_answer, question1_explanation, question_2, question2_choice1, question2_choice2,
+                                              question2_choice3, question2_choice4, question2_answer, question2_explanation,
                                               question3, question3_answer, article_id))
 
                 connection.commit()
@@ -878,6 +936,7 @@ class SubmitArticleFixed(Resource):
                 connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
+
 
 @article_ns.route('/upload_articles')
 class UploadArticles(Resource):
@@ -1018,6 +1077,7 @@ class UploadPanSciArticles(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+
 # OpenAI api區
 openAI_ns = api.namespace(
     'OpenAI', description='與openai操作相關之api，‼️此區皆為付費區，需測試請先洽Lawrence‼️')
@@ -1042,14 +1102,15 @@ class GetQuestionsFromArticle(Resource):
                         sql_check = "SELECT 1 FROM `Question` WHERE `article_id` = %s"
                         cursor.execute(sql_check, (article_id,))
                         if cursor.fetchone():
-                            print('文章編號: '+ str(article_id) + '已存在於資料庫中，跳過')
+                            print('文章編號: ' + str(article_id) + '已存在於資料庫中，跳過')
                             continue
                         sql = "SELECT `article_content` FROM `Article` WHERE `article_id` = %s"
                         cursor.execute(sql, (article_id,))
                         article = cursor.fetchone()
                         if article:
                             article = article['article_content']
-                            client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+                            client = OpenAI(
+                                api_key=os.getenv('OPENAI_API_KEY'))
 
                             try:
                                 prompt = f"""
@@ -1087,21 +1148,24 @@ class GetQuestionsFromArticle(Resource):
                                 response = client.chat.completions.create(
                                     model="gpt-3.5-turbo",
                                     messages=[
-                                    {"role": "system",
-                                    "content": "你是一名專門在閱讀文章後產生問題給學生回答的得力助手。"},
-                                    {"role": "user", "content": prompt}]
+                                        {"role": "system",
+                                         "content": "你是一名專門在閱讀文章後產生問題給學生回答的得力助手。"},
+                                        {"role": "user", "content": prompt}]
                                 )
                                 response_text = str(response)
                                 start_pattern = "ChatCompletionMessage(content='{"
                                 end_pattern = "', role='assistant'"
-                                start = response_text.find(start_pattern) + len(start_pattern) - 1
+                                start = response_text.find(
+                                    start_pattern) + len(start_pattern) - 1
                                 end = response_text.find(end_pattern)
                                 substring = response_text[start:end]
-                                noenter = substring.replace("\\n", "").replace("\n", "").replace("\\", "")
+                                noenter = substring.replace("\\n", "").replace(
+                                    "\n", "").replace("\\", "")
                                 if '"answer3"' in noenter:
                                     answer3_index = noenter.find('"answer3"')
                                     if noenter[answer3_index - 1] != ',' and noenter[answer3_index - 2] != ',' and noenter[answer3_index - 3] != ',' and noenter[answer3_index - 4] != ',' and noenter[answer3_index - 5] != ',' and noenter[answer3_index - 6] != ',':
-                                        noenter = noenter[:answer3_index] + ',' + noenter[answer3_index:]
+                                        noenter = noenter[:answer3_index] + \
+                                            ',' + noenter[answer3_index:]
                                 try:
                                     content_json = json.loads(noenter)
                                 except json.JSONDecodeError as e:
@@ -1175,7 +1239,7 @@ class GetQuestionsFromArticle(Resource):
             finally:
                 cursor.close()
                 connection.close()
-        return {'status': '指示總數： ' + str(article_id_end  - article_id_start + 1) + ' 錯誤總數：' + str(error) + ' 成功率： ' + str((1 - (error)/(article_id_end  - article_id_start + 1))*100) + '%'}, 200
+        return {'status': '指示總數： ' + str(article_id_end - article_id_start + 1) + ' 錯誤總數：' + str(error) + ' 成功率： ' + str((1 - (error)/(article_id_end - article_id_start + 1))*100) + '%'}, 200
 
 
 @openAI_ns.route('/get_rate_from_answers')
@@ -1291,6 +1355,7 @@ class GetRateFromAnswers(Resource):
                 cursor.close()
                 connection.close()
 
+
 @openAI_ns.route('/follow_up_question')
 class FollowUpQuestion(Resource):
     @openAI_ns.expect(follow_up_parser)
@@ -1356,17 +1421,22 @@ class FollowUpQuestion(Resource):
                         f"標題：{article_title}\n"
                         f"內容：{article_content}\n"
                         f"問題1：{question_1}\n"
-                        f"問題1的四個選項：1. {question1_choice1} 2. {question1_choice2} 3. {question1_choice3} 4. {question1_choice4}\n"
-                        f"問題1的正確答案是：{question1_answer}，原因為：{question1_explanation}\n"
+                        f"問題1的四個選項：1. {question1_choice1} 2. {question1_choice2} 3. {
+                            question1_choice3} 4. {question1_choice4}\n"
+                        f"問題1的正確答案是：{question1_answer}，原因為：{
+                            question1_explanation}\n"
                         f"而我問題1的回答是：{q1_user_answer}\n"
                         f"問題2：{question_2}\n"
-                        f"問題2的四個選項：1. {question2_choice1} 2. {question2_choice2} 3. {question2_choice3} 4. {question2_choice4}\n"
-                        f"問題2的正確答案是：{question2_answer}，原因為：{question2_explanation}\n"
+                        f"問題2的四個選項：1. {question2_choice1} 2. {question2_choice2} 3. {
+                            question2_choice3} 4. {question2_choice4}\n"
+                        f"問題2的正確答案是：{question2_answer}，原因為：{
+                            question2_explanation}\n"
                         f"而我問題2的回答是：{q2_user_answer}\n"
                         f"問題3：{question_3}\n"
                         f"標準答案是：{question3_answer}\n"
                         f"而我問題3的回答是：{q3_user_answer}\n"
-                        f"我在正確度滿分五分得到：{q3_score_1}、完整度滿分五分得到：{q3_score_2}、語言表達清晰度得到：{q3_score_3}\n"
+                        f"我在正確度滿分五分得到：{q3_score_1}、完整度滿分五分得到：{
+                            q3_score_2}、語言表達清晰度得到：{q3_score_3}\n"
                         f"我有些關於以上題目的問題想問，問題如下，請你解釋：{user_input}\n"
                     )
 
@@ -1384,7 +1454,8 @@ class FollowUpQuestion(Resource):
                         start_token = "content='"
                         end_token = "', role='assistant'"
 
-                        start_index = response_str.find(start_token) + len(start_token)
+                        start_index = response_str.find(
+                            start_token) + len(start_token)
                         end_index = response_str.find(end_token, start_index)
 
                         content = response_str[start_index:end_index]
@@ -1488,6 +1559,7 @@ class RecordHistory(Resource):
             if connection:
                 connection.close()
 
+
 @history_ns.route('/get_history_from_user')
 class GetHistoryFromUser(Resource):
     @history_ns.expect(user_id_parser)
@@ -1538,9 +1610,12 @@ class GetHistoryFromUser(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+
 character_ns = api.namespace('Character', description='與角色操作相關之api')
 character_id_parser = reqparse.RequestParser()
-character_id_parser.add_argument('character_id', type=str, required=True, help='角色id')
+character_id_parser.add_argument(
+    'character_id', type=str, required=True, help='角色id')
+
 
 @character_ns.route('/get_character_from_id')
 class GetCharacterFromID(Resource):
@@ -1562,7 +1637,8 @@ class GetCharacterFromID(Resource):
                     # 檢查角色中是否有二進制的圖片數據
                     if 'character_image' in character:
                         # 將二進制圖片數據轉換為 base64 字符串
-                        character['character_image'] = base64.b64encode(character['character_image']).decode('utf-8')
+                        character['character_image'] = base64.b64encode(
+                            character['character_image']).decode('utf-8')
 
                     return character, 200
                 else:
@@ -1574,7 +1650,8 @@ class GetCharacterFromID(Resource):
                 connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
- 
+
+
 @character_ns.route('/upload_character_image')
 class UploadCharacterImage(Resource):
     @character_ns.expect(character_image_upload_parser)
@@ -1606,9 +1683,12 @@ class UploadCharacterImage(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+
 enemy_ns = api.namespace('Enemy', description='與敵人操作相關之api')
 enemy_category_parser = reqparse.RequestParser()
-enemy_category_parser.add_argument('enemy_category', type=int, required=True, help='敵人編號(100a的100)')
+enemy_category_parser.add_argument(
+    'enemy_category', type=int, required=True, help='敵人編號(100a的100)')
+
 
 @enemy_ns.route('/get_enemy_from_id')
 class GetEnemyFromID(Resource):
@@ -1631,7 +1711,8 @@ class GetEnemyFromID(Resource):
                         # 檢查角色中是否有二進制的圖片數據
                         if 'enemy_image' in enemy and enemy['enemy_image']:
                             # 將二進制圖片數據轉換為 base64 字符串
-                            enemy['enemy_image'] = base64.b64encode(enemy['enemy_image']).decode('utf-8')
+                            enemy['enemy_image'] = base64.b64encode(
+                                enemy['enemy_image']).decode('utf-8')
 
                     return enemies, 200
                 else:
@@ -1643,7 +1724,8 @@ class GetEnemyFromID(Resource):
                 connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
- 
+
+
 @enemy_ns.route('/upload_enemy_image')
 class UploadEnemyImage(Resource):
     @enemy_ns.expect(enemy_image_upload_parser)
@@ -1675,9 +1757,13 @@ class UploadEnemyImage(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+
 shortquestion_ns = api.namespace('Shortquestion', description='與短題目操作相關之api')
 shortquestion_age_parser = reqparse.RequestParser()
-shortquestion_age_parser.add_argument('shortquestion_age', type=int, required=True, help='短題目年齡適合問題')
+shortquestion_age_parser.add_argument(
+    'shortquestion_age', type=int, required=True, help='短題目年齡適合問題')
+
+
 @shortquestion_ns.route('/get_shortquestion_from_age')
 class GetShortQuestionFromAge(Resource):
     @shortquestion_ns.expect(shortquestion_age_parser)
@@ -1691,7 +1777,7 @@ class GetShortQuestionFromAge(Resource):
             try:
                 cursor = connection.cursor(dictionary=True)
                 sql = "SELECT * FROM ShortQuestion WHERE shortquestion_age BETWEEN %s - 1 AND %s + 1 LIMIT 4"
-                cursor.execute(sql, (shortquestion_age,shortquestion_age))
+                cursor.execute(sql, (shortquestion_age, shortquestion_age))
                 shortquestions = cursor.fetchall()
 
                 if shortquestions:
@@ -1705,9 +1791,6 @@ class GetShortQuestionFromAge(Resource):
                 connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
-
-
-
 
 
 if __name__ == '__main__':

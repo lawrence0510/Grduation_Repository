@@ -14,6 +14,17 @@ onready var birth: WindowDialog = $BackgroundPicture/birth
 onready var school: WindowDialog = $BackgroundPicture/school
 onready var phone: WindowDialog = $BackgroundPicture/phone
 
+onready var B1 = $BackgroundPicture/BackgroundBoxPicture/B1
+onready var B2 = $BackgroundPicture/BackgroundBoxPicture/B2
+onready var B3 = $BackgroundPicture/BackgroundBoxPicture/B3
+onready var B4 = $BackgroundPicture/BackgroundBoxPicture/B4
+onready var G1 = $BackgroundPicture/BackgroundBoxPicture/G1
+onready var G2 = $BackgroundPicture/BackgroundBoxPicture/G2
+onready var G3 = $BackgroundPicture/BackgroundBoxPicture/G3
+onready var G4 = $BackgroundPicture/BackgroundBoxPicture/G4
+
+onready var character_name = $BackgroundPicture/Label
+
 onready var http_request: HTTPRequest = $HTTPRequest
 
 func _ready() -> void:
@@ -104,6 +115,40 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			mail_label.text = json.result.user_email
 		else:
 			mail_label.text = "未提供郵件"
+		
+		var character_id = json.result.character_id
+		if character_id == 1:
+			B1.visible = true
+			character_name.visible = true
+			character_name.text = "Graves"
+		if character_id == 2:
+			B2.visible = true
+			character_name.visible = true
+			character_name.text = "Harry"
+		if character_id == 3:
+			B3.visible = true
+			character_name.visible = true
+			character_name.text = "Olaf"
+		if character_id == 4:
+			B4.visible = true
+			character_name.visible = true
+			character_name.text = "Garen"
+		if character_id == 5:
+			G1.visible = true
+			character_name.visible = true
+			character_name.text = "Esther"
+		if character_id == 6:
+			G2.visible = true
+			character_name.visible = true
+			character_name.text = "Lux"
+		if character_id == 7:
+			G3.visible = true
+			character_name.visible = true
+			character_name.text = "Xayah"
+		if character_id == 8:
+			G4.visible = true
+			character_name.visible = true
+			character_name.text = "Mikasa"
 	else:
 		print("Request failed with response code: ", response_code)
 
