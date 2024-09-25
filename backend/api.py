@@ -1645,6 +1645,36 @@ class UploadEnemyImage(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+shortquestion_ns = api.namespace('Shortquestion', description='與短題目操作相關之api')
+shortquestion_age_parser = reqparse.RequestParser()
+shortquestion_age_parser.add_argument('shortquestion_age', type=int, required=True, help='短題目年齡適合問題')
+@shortquestion_ns.route('/get_shortquestion_from_age')
+class GetShortQuestionFromAge(Resource):
+    @shortquestion_ns.expect(shortquestion_age_parser)
+    def get(self):
+        '''根據age獲取隨機shortquestion'''
+        args = shortquestion_age_parser.parse_args()
+        shortquestion_age = args['shortquestion_age']
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor(dictionary=True)
+                sql = "SELECT * FROM ShortQuestion WHERE shortquestion_age BETWEEN %s - 1 AND %s + 1 LIMIT 4"
+                cursor.execute(sql, (shortquestion_age,shortquestion_age))
+                shortquestions = cursor.fetchall()
+
+                if shortquestions:
+                    return shortquestions, 200
+                else:
+                    return {"error": "Enemy not found"}, 404
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
 
 
 

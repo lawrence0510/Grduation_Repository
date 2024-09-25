@@ -1,9 +1,5 @@
 extends Control
 
-var c_name1 = "B1"
-var c_name2 = "B2"
-
-
 func _ready():
 	pass # Replace with function body.
 
