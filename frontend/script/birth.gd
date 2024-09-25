@@ -1,9 +1,9 @@
 extends WindowDialog
 
-onready var b_enter: Button = $b_enter
-onready var year: LineEdit = $YearLineEdit
-onready var month: LineEdit = $MonthLineEdit
-onready var day: LineEdit = $DayLineEdit
+onready var b_enter: Button = $TextureRect/b_enter
+onready var year: LineEdit = $TextureRect/YearLineEdit
+onready var month: LineEdit = $TextureRect/MonthLineEdit
+onready var day: LineEdit = $TextureRect/DayLineEdit
 onready var http_request: HTTPRequest = $HTTPRequest
 
 func _on_b_enter_pressed():

@@ -106,3 +106,12 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			mail_label.text = "未提供郵件"
 	else:
 		print("Request failed with response code: ", response_code)
+
+func _on_cross2_pressed():
+	birth.hide()
+
+func _on_cross3_pressed():
+	school.hide()
+
+func _on_cross4_pressed():
+	phone.hide()

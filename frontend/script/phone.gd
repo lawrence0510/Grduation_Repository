@@ -1,7 +1,7 @@
 extends WindowDialog
 
-onready var p_enter: Button = $p_enter
-onready var phone: LineEdit = $PhoneLineEdit
+onready var p_enter: Button = $TextureRect/p_enter
+onready var phone: LineEdit = $TextureRect/PhoneLineEdit
 onready var http_request: HTTPRequest = $HTTPRequest
 
 # 當按鈕被按下時執行
