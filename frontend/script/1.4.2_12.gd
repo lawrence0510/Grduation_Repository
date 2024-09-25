@@ -116,4 +116,4 @@ func _on_last_pressed():
 	get_tree().change_scene("res://scene/1.4.2_11.tscn")
 
 func _on_next_pressed():
-	pass
+	get_tree().change_scene("res://scene/1.4.2_1.tscn")

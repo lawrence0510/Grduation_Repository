@@ -10,12 +10,12 @@ onready var Day: Label = LoginDay.get_node("TextureRect/Day")
 
 func _ready() -> void:
 	# 初始化30個Label節點，假設它們的命名是 label_1, label_2, ..., label_30
-	for i in range(1, 32):
+	for i in range(1, 33):
 		var label = get_node("BackgroundPicture/DayPanel/" + str(i)) 
 		labels.append(label)
 	
 	# 定義要變成按鈕的label號碼，假設是 3, 11 和 28
-	var label_numbers = [6, 16, 26]
+	var label_numbers = [2, 12, 22]
 	
 	# 將這些指定的label變成button
 	for number in label_numbers:
@@ -113,8 +113,7 @@ func _on_cross2_pressed():
 	LoginDay.hide()
 
 func _on_last_pressed():
-	pass
+	get_tree().change_scene("res://scene/1.4.2_1.tscn")
 
 func _on_next_pressed():
-	get_tree().change_scene("res://scene/1.4.2_7.tscn")
-
+	get_tree().change_scene("res://scene/1.4.2_3.tscn")

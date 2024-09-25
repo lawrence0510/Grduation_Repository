@@ -606,14 +606,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -43.5
+margin_left = -80.0
 margin_top = -242.0
-margin_right = 43.5
+margin_right = 70.0
 margin_bottom = -179.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 7 )
-text = "6 月"
+text = "2024/6"
 align = 1
 
 [node name="cross" type="Button" parent="BackgroundPicture"]
@@ -664,9 +664,9 @@ custom_styles/normal = SubResource( 6 )
 text = "簽 到 記 錄"
 
 [node name="last" type="Button" parent="BackgroundPicture"]
-margin_left = 816.0
+margin_left = 811.0
 margin_top = 300.0
-margin_right = 876.0
+margin_right = 871.0
 margin_bottom = 360.0
 custom_styles/hover = SubResource( 42 )
 custom_styles/pressed = SubResource( 42 )
@@ -677,9 +677,9 @@ icon = ExtResource( 5 )
 expand_icon = true
 
 [node name="next" type="Button" parent="BackgroundPicture"]
-margin_left = 1045.0
+margin_left = 1050.0
 margin_top = 300.0
-margin_right = 1105.0
+margin_right = 1110.0
 margin_bottom = 360.0
 custom_styles/hover = SubResource( 42 )
 custom_styles/pressed = SubResource( 42 )
