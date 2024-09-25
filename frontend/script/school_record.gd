@@ -89,8 +89,8 @@ func _on_chinese_pressed() -> void:
 	get_tree().change_scene("res://scene/1.4.5.tscn")
 
 func _on_society_pressed() -> void:
-	pass # Replace with function body.
+	get_tree().change_scene("res://scene/1.4.5.tscn")
 
 func _on_nature_pressed() -> void:
-	pass
+	get_tree().change_scene("res://scene/1.4.5.tscn")
 
