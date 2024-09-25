@@ -1421,22 +1421,17 @@ class FollowUpQuestion(Resource):
                         f"標題：{article_title}\n"
                         f"內容：{article_content}\n"
                         f"問題1：{question_1}\n"
-                        f"問題1的四個選項：1. {question1_choice1} 2. {question1_choice2} 3. {
-                            question1_choice3} 4. {question1_choice4}\n"
-                        f"問題1的正確答案是：{question1_answer}，原因為：{
-                            question1_explanation}\n"
+                        f"問題1的四個選項：1. {question1_choice1} 2. {question1_choice2} 3. {question1_choice3} 4. {question1_choice4}\n"
+                        f"問題1的正確答案是：{question1_answer}，原因為：{question1_explanation}\n"
                         f"而我問題1的回答是：{q1_user_answer}\n"
                         f"問題2：{question_2}\n"
-                        f"問題2的四個選項：1. {question2_choice1} 2. {question2_choice2} 3. {
-                            question2_choice3} 4. {question2_choice4}\n"
-                        f"問題2的正確答案是：{question2_answer}，原因為：{
-                            question2_explanation}\n"
+                        f"問題2的四個選項：1. {question2_choice1} 2. {question2_choice2} 3. {question2_choice3} 4. {question2_choice4}\n"
+                        f"問題2的正確答案是：{question2_answer}，原因為：{question2_explanation}\n"
                         f"而我問題2的回答是：{q2_user_answer}\n"
                         f"問題3：{question_3}\n"
                         f"標準答案是：{question3_answer}\n"
                         f"而我問題3的回答是：{q3_user_answer}\n"
-                        f"我在正確度滿分五分得到：{q3_score_1}、完整度滿分五分得到：{
-                            q3_score_2}、語言表達清晰度得到：{q3_score_3}\n"
+                        f"我在正確度滿分五分得到：{q3_score_1}、完整度滿分五分得到：{q3_score_2}、語言表達清晰度得到：{q3_score_3}\n"
                         f"我有些關於以上題目的問題想問，問題如下，請你解釋：{user_input}\n"
                     )
 
