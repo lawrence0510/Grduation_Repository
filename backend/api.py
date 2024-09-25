@@ -214,7 +214,37 @@ class RegisterUser(Resource):
                 connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
+        
+image_parser = reqparse.RequestParser()
+image_parser.add_argument('user_id', type=int, required=True, help='user id')
+image_parser.add_argument('character_id', type=int, required=True, help='character id')
 
+@user_ns.route('/image_register')
+class ImageRegister(Resource):
+    @user_ns.expect(image_parser)
+    def post(self):
+        '''加入角色id'''
+        args = image_parser.parse_args()
+        user_id = args['user_id']
+        character_id = args['character_id']
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                sql = """
+                UPDATE User SET character_id = %s WHERE user_id = %s
+                """
+                cursor.execute(sql, (character_id, user_id))
+                connection.commit()
+                return {"message": "Image registered successfully"}, 201
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
 
 @user_ns.route('/normal_login')
 class LoginUser(Resource):
