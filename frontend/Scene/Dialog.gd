@@ -20,9 +20,9 @@ func _ready():
 	add_response_to_game(starting_message)
 	
 	#設定我等待ai回應時間
-	$Timer.wait_time = 0.2
+	#$Timer.wait_time = 0.5
 	#只等一次
-	$Timer.one_shot = true
+	#$Timer.one_shot = true
 
 #追蹤新輸入文字，自動下拉對話視窗
 func handle_scrollbar_changed():
@@ -39,15 +39,27 @@ func _on_Input_text_entered(new_text):
 	add_response_to_game(input_response)
 	#控制回復
 	var ai_response_text = command_processor.process_command(new_text)
-	$Timer.start()
+	#$Timer.start()
 
 
 func add_response_to_game(response: Control):
 	history_rows.add_child(response)
 
 #在等待兩秒之後, 把ai的回應設給ai_response這個node的文字, 再把那個node加到history_rows裡面
-func _on_Timer_timeout():
-	print("timeout")
-	var ai_response = AIResponse.instance()
-	ai_response.set_text(GlobalVar.aiResponse)
-	add_response_to_game(ai_response)
+#func _on_Timer_timeout():
+#	print("timeout")
+#	var ai_response = AIResponse.instance()
+#	ai_response.set_text(GlobalVar.aiResponse)
+#	add_response_to_game(ai_response)
+
+func _on_HTTPRequest_request_completed(result, response_code, headers, body):
+	print(response_code)
+	if(response_code == 200):
+		var json = JSON.parse(body.get_string_from_utf8())
+		print(json.result.message)
+		var ai_response = AIResponse.instance()
+		ai_response.set_text(json.result.message)
+		add_response_to_game(ai_response)
+	else:
+		print("error")
+	
