@@ -15,7 +15,7 @@ func _ready() -> void:
 		labels.append(label)
 	
 	# 定義要變成按鈕的label號碼，假設是 3, 11 和 28
-	var label_numbers = [6, 16, 26]
+	var label_numbers = [4, 14, 24]
 	
 	# 將這些指定的label變成button
 	for number in label_numbers:
@@ -113,8 +113,7 @@ func _on_cross2_pressed():
 	LoginDay.hide()
 
 func _on_last_pressed():
-	pass
+	get_tree().change_scene("res://scene/1.4.2_3.tscn")
 
 func _on_next_pressed():
-	get_tree().change_scene("res://scene/1.4.2_7.tscn")
-
+	get_tree().change_scene("res://scene/1.4.2_5.tscn")
