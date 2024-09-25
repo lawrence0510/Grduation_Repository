@@ -24,22 +24,12 @@ func _on_enter_pressed():
 	var user_id = GlobalVar.user_id
 	var character_id = 8
 
-	if(B1).visible:
-		character_id = 1
-	if(B2).visible:
-		character_id = 2
-	if(B3).visible:
-		character_id = 3
-	if(B4).visible:
-		character_id = 4
-	if(G1).visible:
-		character_id = 5
-	if(G2).visible:
-		character_id = 6
-	if(G3).visible:
-		character_id = 7
-	if(G4).visible:
-		character_id = 8
+	var nodes = [B1, B2, B3, B4, G1, G2, G3, G4]
+
+	for i in range(nodes.size()):
+		if nodes[i].visible:
+			character_id = i + 1
+			break
 	
 	print("character_id: " + str(character_id))
 	
