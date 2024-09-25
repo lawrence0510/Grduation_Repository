@@ -64,7 +64,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		var json = JSON.parse(body.get_string_from_utf8())
 		#print(json.result.message)
 		var ai_response = AIResponse.instance()
-		ai_response.set_text(json.result[0].question3_answer)
+		ai_response.set_text(json.result[0].article_content.substr(0, 100))
 		add_response_to_game(ai_response)
 	else:
 		print("error")
