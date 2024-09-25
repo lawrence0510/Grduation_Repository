@@ -2,17 +2,19 @@ extends Node
 onready var http_request: HTTPRequest = $"../HTTPRequest"
 
 func process_command(input: String):
-	var url = "http://140.119.19.145:5001/OpenAI/follow_up_question"
+#	var url = "http://140.119.19.145:5001/OpenAI/follow_up_question"
+	var url = "http://140.119.19.145:5001/Article/get_random_unseen_article"
 	
 	# 建立 POST 請求的資料
 	var data = {
 		"user_id": 15,
-		"user_input": input,
+#		"user_input": input,
+		"article_category": "story"
 	}
 	# 將資料轉換為 JSON 格式
 	var json_data = JSON.print(data)
 	var headers = ["Content-Type: application/json"]
-	http_request.request(url, headers, true, HTTPClient.METHOD_POST, json_data)
+	http_request.request(url, headers, true, HTTPClient.METHOD_GET, json_data)
 	print("in the request")
 
 
