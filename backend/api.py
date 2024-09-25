@@ -6,6 +6,7 @@ import json
 import os
 import random
 import string
+import base64
 
 # 第三方庫
 import pandas as pd
@@ -109,9 +110,13 @@ get_login_record_parser.add_argument(
     'user_id', type=int, required=True, help='使用者id'
 )
 
-image_upload_parser = reqparse.RequestParser()
-image_upload_parser.add_argument('character_name', type=str, required=True, help='角色名稱')
-image_upload_parser.add_argument('image', type=FileStorage, location='files', required=True, help='上傳的圖片檔案')
+character_image_upload_parser = reqparse.RequestParser()
+character_image_upload_parser.add_argument('character_name', type=str, required=True, help='角色名稱')
+character_image_upload_parser.add_argument('image', type=FileStorage, location='files', required=True, help='上傳的圖片檔案')
+
+enemy_image_upload_parser = reqparse.RequestParser()
+enemy_image_upload_parser.add_argument('enemy_category', type=int, required=True, help='敵人類別')
+enemy_image_upload_parser.add_argument('image', type=FileStorage, location='files', required=True, help='上傳的圖片檔案')
 
 follow_up_parser = reqparse.RequestParser()
 follow_up_parser.add_argument('user_id', type=int, required=True, help='使用者id')
@@ -737,36 +742,6 @@ class DataList(Resource):
             finally:
                 cursor.close()
                 connection.close()
-@article_ns.route('/upload_character_image')
-class UploadCharacterImage(Resource):
-    @article_ns.expect(image_upload_parser)
-    def post(self):
-        '''上傳角色圖片並儲存到資料庫'''
-        args = image_upload_parser.parse_args()
-        character_name = args['character_name']
-        uploaded_image = args['image']
-
-        image_data = uploaded_image.read()
-
-        connection = create_db_connection()
-        if connection is not None:
-            try:
-                cursor = connection.cursor()
-                # 插入圖片與角色名稱到資料庫
-                sql = """
-                INSERT INTO `Character` (character_name, character_image)
-                VALUES (%s, %s)
-                """
-                cursor.execute(sql, (character_name, image_data))
-                connection.commit()
-                return {"message": "Image uploaded successfully"}, 201
-            except Error as e:
-                return {"error": str(e)}, 500
-            finally:
-                cursor.close()
-                connection.close()
-        else:
-            return {"error": "Unable to connect to the database"}, 500
 
 @article_ns.route('/get_random_uncheck_article')
 class RandomArticle(Resource):
@@ -1532,6 +1507,147 @@ class GetHistoryFromUser(Resource):
                 connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
+
+character_ns = api.namespace('Character', description='與角色操作相關之api')
+character_id_parser = reqparse.RequestParser()
+character_id_parser.add_argument('character_id', type=str, required=True, help='角色id')
+
+@character_ns.route('/get_character_from_id')
+class GetCharacterFromID(Resource):
+    @character_ns.expect(character_id_parser)
+    def get(self):
+        '''根據 character_id 獲取角色資料'''
+        args = character_id_parser.parse_args()
+        character_id = args['character_id']
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor(dictionary=True)
+                sql = "SELECT * FROM `Character` WHERE character_id = %s"
+                cursor.execute(sql, (character_id,))
+                character = cursor.fetchone()
+
+                if character:
+                    # 檢查角色中是否有二進制的圖片數據
+                    if 'character_image' in character:
+                        # 將二進制圖片數據轉換為 base64 字符串
+                        character['character_image'] = base64.b64encode(character['character_image']).decode('utf-8')
+
+                    return character, 200
+                else:
+                    return {"error": "Character not found"}, 404
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+ 
+@character_ns.route('/upload_character_image')
+class UploadCharacterImage(Resource):
+    @character_ns.expect(character_image_upload_parser)
+    def post(self):
+        '''上傳角色圖片並儲存到資料庫'''
+        args = character_image_upload_parser.parse_args()
+        character_name = args['character_name']
+        uploaded_image = args['image']
+
+        image_data = uploaded_image.read()
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                # 插入圖片與角色名稱到資料庫
+                sql = """
+                INSERT INTO `Character` (character_name, character_image)
+                VALUES (%s, %s)
+                """
+                cursor.execute(sql, (character_name, image_data))
+                connection.commit()
+                return {"message": "Image uploaded successfully"}, 201
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+
+enemy_ns = api.namespace('Enemy', description='與敵人操作相關之api')
+enemy_category_parser = reqparse.RequestParser()
+enemy_category_parser.add_argument('enemy_category', type=int, required=True, help='敵人編號(100a的100)')
+
+@enemy_ns.route('/get_enemy_from_id')
+class GetEnemyFromID(Resource):
+    @enemy_ns.expect(enemy_category_parser)
+    def get(self):
+        '''根據 enemy_category 獲取敵人資料'''
+        args = enemy_category_parser.parse_args()
+        enemy_category = args['enemy_category']
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor(dictionary=True)
+                sql = "SELECT * FROM Enemy WHERE enemy_category = %s"
+                cursor.execute(sql, (enemy_category,))
+                enemies = cursor.fetchall()  # 使用 fetchall 獲取所有資料
+
+                if enemies:
+                    for enemy in enemies:
+                        # 檢查角色中是否有二進制的圖片數據
+                        if 'enemy_image' in enemy and enemy['enemy_image']:
+                            # 將二進制圖片數據轉換為 base64 字符串
+                            enemy['enemy_image'] = base64.b64encode(enemy['enemy_image']).decode('utf-8')
+
+                    return enemies, 200
+                else:
+                    return {"error": "Enemy not found"}, 404
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+ 
+@enemy_ns.route('/upload_enemy_image')
+class UploadEnemyImage(Resource):
+    @enemy_ns.expect(enemy_image_upload_parser)
+    def post(self):
+        '''上傳角色圖片並儲存到資料庫'''
+        args = enemy_image_upload_parser.parse_args()
+        enemy_category = args['enemy_category']
+        uploaded_image = args['image']
+
+        image_data = uploaded_image.read()
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                # 插入圖片與角色名稱到資料庫
+                sql = """
+                INSERT INTO `Enemy` (enemy_category, enemy_image)
+                VALUES (%s, %s)
+                """
+                cursor.execute(sql, (enemy_category, image_data))
+                connection.commit()
+                return {"message": "Image uploaded successfully"}, 201
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+
+
+
+
 
 
 if __name__ == '__main__':
