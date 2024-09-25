@@ -20,6 +20,7 @@ from authlib.integrations.flask_client import OAuth
 from tqdm import tqdm
 from openai import OpenAI
 from dotenv import load_dotenv
+from werkzeug.datastructures import FileStorage
 
 
 app = Flask(__name__)
@@ -107,6 +108,10 @@ get_login_record_parser = reqparse.RequestParser()
 get_login_record_parser.add_argument(
     'user_id', type=int, required=True, help='使用者id'
 )
+
+image_upload_parser = reqparse.RequestParser()
+image_upload_parser.add_argument('character_name', type=str, required=True, help='角色名稱')
+image_upload_parser.add_argument('image', type=FileStorage, location='files', required=True, help='上傳的圖片檔案')
 
 follow_up_parser = reqparse.RequestParser()
 follow_up_parser.add_argument('user_id', type=int, required=True, help='使用者id')
@@ -732,6 +737,36 @@ class DataList(Resource):
             finally:
                 cursor.close()
                 connection.close()
+@article_ns.route('/upload_character_image')
+class UploadCharacterImage(Resource):
+    @article_ns.expect(image_upload_parser)
+    def post(self):
+        '''上傳角色圖片並儲存到資料庫'''
+        args = image_upload_parser.parse_args()
+        character_name = args['character_name']
+        uploaded_image = args['image']
+
+        image_data = uploaded_image.read()
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                # 插入圖片與角色名稱到資料庫
+                sql = """
+                INSERT INTO `Character` (character_name, character_image)
+                VALUES (%s, %s)
+                """
+                cursor.execute(sql, (character_name, image_data))
+                connection.commit()
+                return {"message": "Image uploaded successfully"}, 201
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
 
 @article_ns.route('/get_random_uncheck_article')
 class RandomArticle(Resource):
