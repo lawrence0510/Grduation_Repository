@@ -12,24 +12,12 @@ var button_path_array = ["BattleBackground/Option_A",
 						 "BattleBackground/Option_D"]
 var enemy_death_effect = preload("res://Enemy/EnemyDeathEffect.tscn")
 var health_bar = load("res://UserSystem/HealthBar.tscn").instance()
-						
+var button_pressed = ""
+var right_button = ""
 
 ## 載入這個場景(Wave 2)後，馬上
-func _ready() -> void:
-	#拿題目
-	var url = "http://140.119.19.145:5001/Article/get_random_unseen_article"
-	
-	# 建立 POST 請求的資料
-	var data = {
-		"user_id": GlobalVar.user_id,
-		"article_category": "story",
-	}
-	
-	var json_data = JSON.print(data)
-	var headers = ["Content-Type: application/json"]
-	# 發送HTTP GET請求
-	http_request.request(url, headers, true, HTTPClient.METHOD_GET, json_data)
-	
+func _ready() -> void:	
+	full_story_scene.setStory(GlobalVar.story)
 	$BattleBackground/Question.add_child(health_bar) ## 因為畫面前後的關係，所以把節點放在Question的底下
 	health_bar.init_health_value(GlobalVar.global_player_health) ## 設定玩家血量
 	full_story_scene.set_visible(false) ## 隱藏全文
@@ -45,7 +33,15 @@ func _ready() -> void:
 	$BattleBackground/Option_B.text = "B. " + GlobalVar.question2[3]
 	$BattleBackground/Option_C.text = "C. " + GlobalVar.question2[4]
 	$BattleBackground/Option_D.text = "D. " + GlobalVar.question2[5]
-	
+	var question2_answer = GlobalVar.question2[1]
+	if question2_answer == GlobalVar.question2[2]:
+		right_button = "A"
+	elif question2_answer == GlobalVar.question2[3]:
+		right_button = "B"
+	elif question2_answer == GlobalVar.question2[4]:
+		right_button = "C"
+	elif question2_answer == GlobalVar.question2[5]:
+		right_button = "D"
 
 ## 查看全文button按下去
 func _on_OpenStoryButton_pressed() -> void:
@@ -60,18 +56,19 @@ func _on_PauseButton_pressed() -> void:
 ## 4個選項按下去
 ## 先複製StyleBox再用Override改顏色 才不會全部button都變色
 func _on_Option_A_pressed() -> void:
+	button_pressed = "A"
 	change_button_color("BattleBackground/Option_A")
 
-
 func _on_Option_B_pressed() -> void:
+	button_pressed = "B"
 	change_button_color("BattleBackground/Option_B")
 
-
 func _on_Option_C_pressed() -> void:
+	button_pressed = "C"
 	change_button_color("BattleBackground/Option_C")
 
-
 func _on_Option_D_pressed() -> void:
+	button_pressed = "D"
 	change_button_color("BattleBackground/Option_D")
 
 
@@ -79,7 +76,7 @@ func _on_Option_D_pressed() -> void:
 func change_button_color(button_path: String) -> void:
 	var new_stylebox = get_node(button_path).get_stylebox("normal").duplicate() ## 複製StyleBox
 	
-	if(true): ## 這裡的條件之後要改成"答案是否正確?"
+	if(right_button == button_pressed): ## 這裡的條件之後要改成"答案是否正確?"
 		new_stylebox.bg_color = Color(0.16, 0.64, 0.25)
 		attack_animation.visible = true ## 顯示攻擊特效
 		attack_animation.play() ## 播放攻擊特效
@@ -122,9 +119,3 @@ func _on_AttackAnimation_animation_finished() -> void:
 	$BattleBackground/Question/Enemy.queue_free() ## 敵人消失
 	var effect = enemy_death_effect.instance() ## 生成敵人死亡動畫
 	get_tree().current_scene.add_child(effect) ## 播放敵人死亡動畫
-
-
-func _on_HTTPRequest_request_completed(result, response_code, headers, body):
-	var json = JSON.parse(body.get_string_from_utf8())
-	print(json.result[0].article_content)
-	full_story_scene.setStory(json.result[0].article_content)

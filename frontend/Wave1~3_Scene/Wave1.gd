@@ -12,6 +12,8 @@ var button_path_array = ["BattleBackground/Option_A",
 						 "BattleBackground/Option_D"]
 var enemy_death_effect = preload("res://Enemy/EnemyDeathEffect.tscn")
 var health_bar = load("res://UserSystem/HealthBar.tscn").instance()
+var button_pressed = ""
+var right_button = ""
 
 
 ## 載入這個場景(Wave 1)後，馬上
@@ -52,15 +54,19 @@ func _on_PauseButton_pressed() -> void:
 ## 4個選項按下去
 ## 先複製StyleBox再用Override改顏色 才不會全部button都變色
 func _on_Option_A_pressed() -> void:
+	button_pressed = "A"
 	change_button_color("BattleBackground/Option_A")
 
 func _on_Option_B_pressed() -> void:
+	button_pressed = "B"
 	change_button_color("BattleBackground/Option_B")
 
 func _on_Option_C_pressed() -> void:
+	button_pressed = "C"
 	change_button_color("BattleBackground/Option_C")
 
 func _on_Option_D_pressed() -> void:
+	button_pressed = "D"
 	change_button_color("BattleBackground/Option_D")
 	
 
@@ -68,7 +74,7 @@ func _on_Option_D_pressed() -> void:
 func change_button_color(button_path: String) -> void:
 	var new_stylebox = get_node(button_path).get_stylebox("normal").duplicate() ## 複製StyleBox
 	
-	if(true): ## 這裡的條件之後要改成"答案是否正確?"
+	if(right_button == button_pressed): ## 這裡的條件之後要改成"答案是否正確?"
 		new_stylebox.bg_color = Color(0.16, 0.64, 0.25) ## 正確選項改成綠色
 		attack_animation.visible = true ## 顯示攻擊特效
 		attack_animation.play() ## 播放攻擊特效
@@ -117,13 +123,21 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
 
 	full_story_scene.setStory(json.result[0].article_content)
+	GlobalVar.story = json.result[0].article_content
 	$BattleBackground/Question.text = json.result[0].question_1
 	$BattleBackground/Option_A.text = "A. " + json.result[0].question1_choice1
 	$BattleBackground/Option_B.text = "B. " + json.result[0].question1_choice2
 	$BattleBackground/Option_C.text = "C. " + json.result[0].question1_choice3
 	$BattleBackground/Option_D.text = "D. " + json.result[0].question1_choice4
-	#正確答案
-	#$BattleBackground/Option_D.text = "D. " + json.result[0].question1_answer
+	var question1_answer = json.result[0].question1_answer
+	if question1_answer == json.result[0].question1_choice1:
+		right_button = "A"
+	elif question1_answer == json.result[0].question1_choice2:
+		right_button = "B"
+	elif question1_answer == json.result[0].question1_choice3:
+		right_button = "C"
+	elif question1_answer == json.result[0].question1_choice4:
+		right_button = "D"
 
 	#先記錄wave2, 3的問題、答案
 	GlobalVar.question2.append(json.result[0].question_2)

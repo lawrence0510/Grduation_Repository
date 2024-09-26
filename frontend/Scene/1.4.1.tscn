@@ -408,9 +408,9 @@ custom_fonts/font = ExtResource( 5 )
 text = "年 齡"
 
 [node name="Label" type="Label" parent="BackgroundPicture"]
-margin_left = 441.0
+margin_left = 348.0
 margin_top = 308.0
-margin_right = 842.0
+margin_right = 914.0
 margin_bottom = 375.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )

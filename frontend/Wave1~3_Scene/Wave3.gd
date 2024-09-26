@@ -12,21 +12,7 @@ var health_bar = load("res://UserSystem/HealthBar.tscn").instance()
 
 ## 載入這個場景(Wave 3)後，馬上
 func _ready() -> void:
-	#拿題目
-	var url = "http://140.119.19.145:5001/Article/get_random_unseen_article"
-	
-	# 建立 POST 請求的資料
-	var data = {
-		"user_id": GlobalVar.user_id,
-		"article_category": "story",
-	}
-	
-	var json_data = JSON.print(data)
-	var headers = ["Content-Type: application/json"]
-	# 發送HTTP GET請求
-	http_request.request(url, headers, true, HTTPClient.METHOD_GET, json_data)
-	
-	
+	full_story_scene.setStory(GlobalVar.story)
 	$BattleBackground/Question.add_child(health_bar) ## 因為畫面前後的關係，所以把節點放在Question的底下
 	health_bar.init_health_value(GlobalVar.global_player_health) ## 設定玩家血量
 	full_story_scene.set_visible(false) ## 隱藏全文

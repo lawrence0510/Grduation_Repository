@@ -314,7 +314,6 @@ icon_align = 1
 expand_icon = true
 
 [node name="FullStory" parent="BattleBackground" instance=ExtResource( 7 )]
-visible = false
 
 [node name="PauseScene" parent="BattleBackground" instance=ExtResource( 8 )]
 visible = false

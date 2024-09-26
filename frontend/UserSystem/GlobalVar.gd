@@ -7,6 +7,8 @@ var user_email: String = "" ## 玩家帳號
 
 var user_id: int ##玩家id
 
+var story = ""
+
 #用以記錄wave2的問題、答案(格式為: 問題, answer, option1, option2, option3, option4)
 var question2 = []
 
