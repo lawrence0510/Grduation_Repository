@@ -5,6 +5,7 @@ onready var full_story_scene = $BattleBackground/FullStory
 onready var pause_scene = $BattleBackground/PauseScene
 onready var attack_animation
 onready var http_request: HTTPRequest = $HTTPRequest
+onready var enemy_image = $BattleBackground/Question/Enemy
 
 var button_path_array = ["BattleBackground/Option_A", 
 						 "BattleBackground/Option_B",
@@ -17,6 +18,7 @@ var right_button = ""
 
 ## 載入這個場景(Wave 2)後，馬上
 func _ready() -> void:	
+	enemy_image.texture = GlobalVar.images[1]
 	full_story_scene.setStory(GlobalVar.story)
 	$BattleBackground/Question.add_child(health_bar) ## 因為畫面前後的關係，所以把節點放在Question的底下
 	health_bar.init_health_value(GlobalVar.global_player_health) ## 設定玩家血量

@@ -8,10 +8,12 @@ onready var line_edit = $BattleBackground/LineEdit
 onready var http_request: HTTPRequest = $HTTPRequest
 var enemy_death_effect = preload("res://Enemy/EnemyDeathEffect.tscn")
 var health_bar = load("res://UserSystem/HealthBar.tscn").instance()
+onready var enemy_image = $BattleBackground/Question/Enemy
 
 
 ## 載入這個場景(Wave 3)後，馬上
 func _ready() -> void:
+	enemy_image.texture = GlobalVar.images[2]
 	full_story_scene.setStory(GlobalVar.story)
 	$BattleBackground/Question.add_child(health_bar) ## 因為畫面前後的關係，所以把節點放在Question的底下
 	health_bar.init_health_value(GlobalVar.global_player_health) ## 設定玩家血量
