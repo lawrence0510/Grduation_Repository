@@ -81,9 +81,6 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		var responseLength = json.result.message.length()
 		#response: 回傳內容
 		var response = json.result.message
-
-		
-		#我想要事先把response裡面所有\n刪除
 			
 		#每40個char去換行一次
 		var index = 40
