@@ -1,7 +1,7 @@
 extends VBoxContainer
 
 func set_text(input: String):
-	$responseHistory.text = "AI助手 :  \n" + input
+	$responseHistory.text = " AI助手 :  \n" + input
 
 
 #func _on_responseHistory_resized():

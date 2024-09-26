@@ -41,12 +41,18 @@ func _on_Input_text_entered(new_text):
 	var input_response = InputResponse.instance()
 	#每30個char去換行一次
 	var index = 35
-	while new_text.length() > index:
-		new_text = new_text.insert(index, "\n")
-		print("計算過的長度: ", index)
-		print(new_text, "\n")
-
-		index  = index + 35
+	if new_text.length() <= 35:
+		new_text = new_text.insert(new_text.length(), "      ")
+	else:
+		while new_text.length() > index:
+			new_text = new_text.insert(index, "      \n")
+			print("計算過的長度: ", index)
+			print(new_text, "\n")
+			
+			#因為前面有增加空格, 所以index加的長度需要比index原本的長度再+6
+			index  = index + 42
+		new_text = new_text.insert(new_text.length(), "      ")
+		
 	print("最後結果", new_text)
 	input_response.set_text(new_text)
 	add_response_to_game(input_response)
@@ -71,24 +77,27 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	print(response_code)
 	if(response_code == 200):
 		var json = JSON.parse(body.get_string_from_utf8())
-		#print(json.result.message)
+		print(json.result.message)
 		var ai_response = AIResponse.instance()
 		
 		#responseLength: 回傳內容的長度
-		var responseLength = json.result[0].article_content.substr(0, 100).length()
+		var responseLength = json.result.message.length()
 		#response: 回傳內容
-		var response = json.result[0].article_content.substr(0, 100)
+		var response = json.result.message
 		print("長度", responseLength)
 		print("內容", response)
 		
 		#每30個char去換行一次
-		var index = 30
+		var index = 40
+		response = response.insert(0, "      ")
 		while responseLength > index:
-			response = response.insert(index, "\n")
+			if response[responseLength + 1] != '\n':
+				response = response.insert(index, "\n      ")
+
 			print("計算過的長度: ", index)
 			print(response, "\n")
 
-			index  = index + 30
+			index  = index + 40
 		print("最後結果", response)
 		ai_response.set_text(response)
 		add_response_to_game(ai_response)
