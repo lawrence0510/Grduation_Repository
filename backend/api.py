@@ -1433,6 +1433,7 @@ class FollowUpQuestion(Resource):
                         f"而我問題3的回答是：{q3_user_answer}\n"
                         f"我在正確度滿分五分得到：{q3_score_1}、完整度滿分五分得到：{q3_score_2}、語言表達清晰度得到：{q3_score_3}\n"
                         f"我有些關於以上題目的問題想問，問題如下，請你解釋：{user_input}\n"
+                        f"回傳時，請不要換行，也不要出現斜線n的換行符號"
                     )
 
                     client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
