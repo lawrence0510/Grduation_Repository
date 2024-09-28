@@ -17,9 +17,9 @@ var base_score_per_question = 10  # 每題基本分數
 var question_start_time = 0  # 記錄答題開始時間
 
 # 第一組題目
-var question_content = "牛頓的第一運動定律稱為什麼？"
-var options = ["慣性定律", "引力定律", "運動定律", "相對論"]
-var correct_answer = options[0] 
+var question_content = "地球的最大的洋是什麼？"
+var options = ["印度洋", "大西洋", "太平洋", "阿拉斯加海灣"]
+var correct_answer = options[2] 
 
 # 預載入正確的 StyleBox 資源
 var default_stylebox = preload("res://Fonts/battle_hover.tres")
@@ -33,24 +33,23 @@ func _process(delta: float) -> void:
 			get_tree().quit()
 
 func _ready():
-	# 創建 Timer 並開始倒數
+	 # 從全域變數中讀取玩家和對手的分數
+	var player_score = GlobalVar.player_score
+	var opponent_score = GlobalVar.opponent_score
+
+	# 設置分數條的當前分數，避免初始化時從0開始
+	$Background/player_score/score.value = player_score
+	$Background/oppo_score/score2.value = opponent_score
+	
+	# 顯示玩家和對手的分數
+	$Background/player_score/word.text = str(player_score)
+	$Background/oppo_score/word.text = str(opponent_score)
+	
+	# 開始倒數計時器
 	setup_timer()
-	setup_delay_timer()  # 設置延遲跳題的 Timer
-	# 設置第一組題目文本
+	setup_delay_timer()
 	load_question(question_content, options)
-	# 連接按鈕的 pressed 信號
 	connect_buttons()
-	
-	# 設置玩家計分區塊的分數條
-	$Background/player_score/score.max_value = max_score  # 設置最大分數
-	$Background/player_score/score.value = current_score_1  # 初始化分數條為0
-	
-	# 設置對手計分區塊的分數條
-	$Background/oppo_score/score2.max_value = max_score  # 設置最大分數
-	$Background/oppo_score/score2.value = current_score_2  # 初始化分數條為0
-	
-	# 顯示當前分數
-	update_score_display()
 
 # 設置 Timer
 func setup_timer():
@@ -79,11 +78,11 @@ func _on_timeout():
 		update_countdown_label()
 	else:
 		# 當倒數時間為 0，跳轉到下一題
-		get_tree().change_scene("res://Scene/Battle_2.tscn")
+		get_tree().change_scene("res://Scene/Battle_5.tscn")
 
 func _on_delay_timeout():
 	# 當延遲的2秒結束後，跳到下一題
-	get_tree().change_scene("res://Scene/Battle_2.tscn")
+	get_tree().change_scene("res://Scene/Battle_5.tscn")
 
 func _on_Timer_timeout():
 	$Background/TextureProgress.value += 1
@@ -136,48 +135,57 @@ func check_all_answered():
 
 # 根據基礎分數和剩餘時間加分
 func add_score():
-	# 加上每題的基礎分數10分
-	target_score_1 += base_score_per_question
-	target_score_2 += base_score_per_question  # 同樣為對手計分區塊加分
-	
-	# 計算根據剩餘時間加上的分數
-	target_score_1 += countdown_time  # 剩餘時間直接作為加分
-	target_score_2 += countdown_time  # 對手計分區塊同樣加上剩餘時間
+	 # 讀取全域變數中的當前分數
+	var previous_score_1 = GlobalVar.player_score
+	var previous_score_2 = GlobalVar.opponent_score
+
+	# 新題目分數計算
+	var new_score_1 = base_score_per_question + countdown_time
+	var new_score_2 = base_score_per_question + countdown_time
+
+	# 累加分數
+	target_score_1 = previous_score_1 + new_score_1
+	target_score_2 = previous_score_2 + new_score_2
 
 	# 確保分數不超過最大分數
 	target_score_1 = clamp(target_score_1, 0, max_score)
 	target_score_2 = clamp(target_score_2, 0, max_score)
 
-	# 將分數儲存到全域變數
+	# 更新全域變數 GlobalVar
 	GlobalVar.player_score = target_score_1
 	GlobalVar.opponent_score = target_score_2
-	
+
+	# 平滑更新分數條
 	smooth_update_score()
 
 func smooth_update_score():
-	# 使用Tween來平滑更新玩家分數條
-	var tween_1 =  $Background/player_score/Tween  # 獲取玩家的 Tween 節點
+	var tween_1 = $Background/player_score/Tween
+	var tween_2 = $Background/oppo_score/Tween
+	
+	# 更新玩家分數條
 	if tween_1.is_active():
-		tween_1.stop_all()  # 停止所有當前動畫
-	tween_1.interpolate_property($Background/player_score/score, "value", current_score_1, target_score_1, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)  # 速度改為0.3秒
+		tween_1.stop_all()
+	tween_1.interpolate_property($Background/player_score/score, "value", 
+		$Background/player_score/score.value, target_score_1, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween_1.start()
-	current_score_1 = target_score_1  # 更新目前的分數顯示
 
-	# 使用Tween來平滑更新對手分數條
-	var tween_2 =  $Background/oppo_score/Tween  # 獲取對手的 Tween 節點
+	# 更新對手分數條
 	if tween_2.is_active():
-		tween_2.stop_all()  # 停止所有當前動畫
-	tween_2.interpolate_property($Background/oppo_score/score2, "value", current_score_2, target_score_2, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)  # 速度改為0.3秒
+		tween_2.stop_all()
+	tween_2.interpolate_property($Background/oppo_score/score2, "value", 
+		$Background/oppo_score/score2.value, target_score_2, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween_2.start()
-	current_score_2 = target_score_2  # 更新目前的分數顯示
 
-	# 更新目前分數顯示
+	# 更新分數顯示
 	update_score_display()
 
 # 更新分數顯示及紅色分數條B
 func update_score_display():
-	$Background/player_score/word.text = str(current_score_1)  # 顯示玩家計分區塊的目前分數
-	$Background/oppo_score/word.text = str(current_score_2)  # 顯示對手計分區塊的目前分數
+	# 顯示玩家計分區塊的目前分數
+	$Background/player_score/word.text = str(target_score_1)
+	
+	# 顯示對手計分區塊的目前分數
+	$Background/oppo_score/word.text = str(target_score_2)
 
 # 應用答案的按鈕樣式
 func apply_style(button_path: String, stylebox, is_correct: bool):

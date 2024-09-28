@@ -17,3 +17,7 @@ var question2 = []
 var question3 = []
 
 var aiResponse = ""
+
+var player_score = 0
+
+var opponent_score = 0
