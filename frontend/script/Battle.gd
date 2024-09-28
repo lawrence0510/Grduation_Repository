@@ -3,12 +3,14 @@ extends Node2D
 # 倒數初始時間
 var countdown_time = 10
 var countdown_timer : Timer
-var delay_timer : Timer  # 新增一個用於延遲跳題的 Timer
+var delay_timer : Timer  # 用於延遲跳題的 Timer
 var opponent_timer : Timer  # 用於對手答題的 Timer
 var button_paths = ["Background/Options1", "Background/Options2", "Background/Options3", "Background/Options4"]
 var opponent_button_paths = ["Background/op_Options1", "Background/op_Options2", "Background/op_Options3", "Background/op_Options4"]
 var all_answered = false  # 用於追蹤兩個人是否已經答完題目
 var opponent_answered = false  # 用來追蹤對手是否答題
+var player_answered = false  # 用來追蹤玩家是否答題
+var opponent_pending_answer = null  # 儲存對手的答案但不立即呈現（只在對手比玩家早答題時使用）
 
 # 分數機制
 var max_score = 100  # 最大分數
@@ -66,6 +68,9 @@ func setup_timer():
 	countdown_timer.start()
 	update_countdown_label()
 
+func _on_Timer_timeout():
+	$Background/TextureProgress.value += 1
+
 # 設置對手答題的 Timer
 func setup_opponent_timer():
 	opponent_timer = Timer.new()
@@ -87,9 +92,6 @@ func setup_delay_timer():
 func update_countdown_label():
 	$Background/countdown_label.text = str(countdown_time)
 
-func _on_Timer_timeout():
-	$Background/TextureProgress.value += 1
-
 # 每秒更新倒數邏輯
 func _on_timeout():
 	if countdown_time > 0:
@@ -98,9 +100,17 @@ func _on_timeout():
 	else:
 		# 當倒數時間為 0，跳轉到下一題
 		get_tree().change_scene("res://Scene/Battle_2.tscn")
+		# 確保在場景切換前，存儲當前分數到全局變數
+		GlobalVar.player_score = current_score_1
+		GlobalVar.opponent_score = current_score_2
+
+		# 跳轉到下一個場景
+		get_tree().change_scene("res://Scene/Battle_2.tscn")
 
 func _on_delay_timeout():
-	# 當延遲的2秒結束後，跳到下一題
+	get_tree().set_meta("player_score", current_score_1)
+	get_tree().set_meta("opponent_score", current_score_2)
+	
 	get_tree().change_scene("res://Scene/Battle_2.tscn")
 
 # 對手答題邏輯
@@ -118,10 +128,20 @@ func _on_opponent_answer():
 	if selected_answer == correct_answer:
 		print("Opponent chose correct answer")  # 調試訊息
 		add_opponent_score()
-		apply_opponent_style(opponent_button_paths[random_index], correct_stylebox, true)
+		$Background/opponent/correct.show()  # 對手答對顯示
 	else:
 		print("Opponent chose incorrect answer")  # 調試訊息
-		apply_opponent_style(opponent_button_paths[random_index], incorrect_stylebox, false)
+		$Background/opponent/incorrect.show()  # 對手答錯顯示
+
+	# 如果玩家已經答題，立即顯示對手的按鈕效果
+	if player_answered:
+		apply_opponent_style(opponent_button_paths[random_index], correct_stylebox if selected_answer == correct_answer else incorrect_stylebox, selected_answer == correct_answer)
+	else:
+		# 玩家還沒答題，暫存對手的答案
+		opponent_pending_answer = {
+			"button_path": opponent_button_paths[random_index],
+			"is_correct": selected_answer == correct_answer
+		}
 
 	# 禁用其他對手按鈕
 	disable_other_buttons(opponent_button_paths[random_index], opponent_button_paths)
@@ -143,18 +163,29 @@ func connect_buttons():
 	for path in button_paths:
 		get_node(path).connect("pressed", self, "_on_button_pressed", [path])
 
-# 按下的按鈕行為
+# 玩家按下的按鈕行為
 func _on_button_pressed(button_path: String):
+	if player_answered:
+		return  # 如果玩家已經答題，則忽略
+
+	player_answered = true  # 玩家已經答題
 	var selected_answer = get_node(button_path + "/content").text
 	# 檢查選擇的答案是否正確
 	if selected_answer == correct_answer:
 		print("Player chose correct answer")  # 答案正確
 		add_score()  # 加分
 		apply_player_style(button_path, correct_stylebox, true)  # 顯示玩家正確樣式
+		$Background/Player/correct.show()
 	else:
 		print("Player chose incorrect answer")  # 答案錯誤
 		apply_player_style(button_path, incorrect_stylebox, false)  # 顯示玩家錯誤樣式
+		$Background/Player/incorrect.show()
 	
+	# 如果對手比玩家先答題，現在顯示對手的按鈕效果
+	if opponent_pending_answer != null:
+		apply_opponent_style(opponent_pending_answer["button_path"], correct_stylebox if opponent_pending_answer["is_correct"] else incorrect_stylebox, opponent_pending_answer["is_correct"])
+		opponent_pending_answer = null  # 清除對手的暫存狀態
+
 	# 禁用其他按鈕
 	disable_other_buttons(button_path, button_paths)
 
@@ -163,9 +194,10 @@ func _on_button_pressed(button_path: String):
 
 # 檢查是否所有選項已經被回答
 func check_all_answered():
-	if opponent_answered and delay_timer.is_stopped():
-		# 雙方都答完題目，啟動3秒延遲跳題
-		delay_timer.start()
+	if player_answered and opponent_answered:
+		# 玩家和對手都已經答題，啟動3秒延遲跳題
+		if delay_timer.is_stopped():
+			delay_timer.start()
 
 # 根據基礎分數和剩餘時間加分
 func add_opponent_score():
@@ -224,6 +256,7 @@ func apply_player_style(button_path: String, stylebox, is_correct: bool):
 	button.get_node("player_incorrect").visible = not is_correct
 
 # 適用於對手的按鈕樣式應用
+# 如果玩家已經答題，對手按鈕樣式會有變化
 func apply_opponent_style(button_path: String, stylebox, is_correct: bool):
 	var button = get_node(button_path)
 	# 更新對手的按鈕樣式
@@ -234,3 +267,4 @@ func apply_opponent_style(button_path: String, stylebox, is_correct: bool):
 	# 顯示對手的正確或錯誤圖標
 	button.get_node("oppo_correct").visible = is_correct
 	button.get_node("oppo_incorrect").visible = not is_correct
+

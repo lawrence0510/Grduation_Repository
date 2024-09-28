@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Fonts/battle_hover.tres" type="StyleBox" id=2]
@@ -13,6 +13,8 @@
 [ext_resource path="res://Pic/time3.png" type="Texture" id=11]
 [ext_resource path="res://Pic/battle.png" type="Texture" id=12]
 [ext_resource path="res://Pic/score.png" type="Texture" id=13]
+[ext_resource path="res://Pic/x.png" type="Texture" id=14]
+[ext_resource path="res://Pic/v.png" type="Texture" id=15]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.921569, 0.92549, 1, 0.513726 )
@@ -51,14 +53,21 @@ extra_spacing_space = 2
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=6]
-size = 30
-outline_size = 1
-outline_color = Color( 1, 1, 1, 0.627451 )
+size = 60
+outline_size = 3
+outline_color = Color( 1, 0, 0, 1 )
 use_filter = true
 extra_spacing_space = 2
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=7]
+size = 30
+outline_size = 1
+outline_color = Color( 1, 1, 1, 0.627451 )
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=8]
 size = 50
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
@@ -66,20 +75,12 @@ use_filter = true
 extra_spacing_space = 2
 font_data = ExtResource( 1 )
 
-[sub_resource type="StyleBoxFlat" id=8]
+[sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 0.584314, 0.584314, 0.584314, 0.615686 )
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
-
-[sub_resource type="DynamicFont" id=9]
-size = 60
-outline_size = 3
-outline_color = Color( 1, 0, 0, 1 )
-use_filter = true
-extra_spacing_space = 2
-font_data = ExtResource( 1 )
 
 [sub_resource type="StyleBoxFlat" id=10]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
@@ -154,6 +155,24 @@ custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 3 )
 text = "吳堃豪"
 
+[node name="correct" type="TextureRect" parent="Background/opponent"]
+visible = false
+margin_left = 393.0
+margin_top = 130.0
+margin_right = 473.0
+margin_bottom = 210.0
+texture = ExtResource( 15 )
+expand = true
+
+[node name="incorrect" type="TextureRect" parent="Background/opponent"]
+visible = false
+margin_left = 393.0
+margin_top = 130.0
+margin_right = 473.0
+margin_bottom = 210.0
+texture = ExtResource( 14 )
+expand = true
+
 [node name="Player" type="Panel" parent="Background"]
 anchor_left = 1.0
 anchor_top = 0.5
@@ -184,6 +203,24 @@ custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 3 )
 text = "許馨文"
 
+[node name="correct" type="TextureRect" parent="Background/Player"]
+visible = false
+margin_left = -26.0
+margin_top = 130.0
+margin_right = 54.0
+margin_bottom = 210.0
+texture = ExtResource( 15 )
+expand = true
+
+[node name="incorrect" type="TextureRect" parent="Background/Player"]
+visible = false
+margin_left = -26.0
+margin_top = 130.0
+margin_right = 54.0
+margin_bottom = 210.0
+texture = ExtResource( 14 )
+expand = true
+
 [node name="Topic" type="Label" parent="Background"]
 anchor_left = 0.5
 anchor_top = 0.5
@@ -201,330 +238,10 @@ align = 1
 valign = 1
 autowrap = true
 
-[node name="Options1" type="Button" parent="Background"]
-margin_left = 543.0
-margin_top = 393.0
-margin_right = 1363.0
-margin_bottom = 533.0
-mouse_default_cursor_shape = 2
-custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
-custom_colors/font_color_focus = Color( 1, 1, 1, 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
-custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
-custom_fonts/font = SubResource( 6 )
-custom_styles/hover = ExtResource( 3 )
-custom_styles/pressed = ExtResource( 3 )
-custom_styles/disabled = ExtResource( 2 )
-custom_styles/normal = ExtResource( 2 )
-clip_text = true
-icon_align = 1
-
-[node name="content" type="Label" parent="Background/Options1"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -280.0
-margin_top = -70.0
-margin_right = 280.0
-margin_bottom = 70.0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_fonts/font = SubResource( 6 )
-align = 1
-valign = 1
-autowrap = true
-clip_text = true
-
-[node name="oppo_correct" type="TextureRect" parent="Background/Options1"]
-visible = false
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = 37.0
-margin_top = -35.0
-margin_right = 107.0
-margin_bottom = 35.0
-texture = ExtResource( 6 )
-expand = true
-
-[node name="oppo_incorrect" type="TextureRect" parent="Background/Options1"]
-visible = false
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = 37.0
-margin_top = -35.0
-margin_right = 107.0
-margin_bottom = 35.0
-texture = ExtResource( 7 )
-expand = true
-
-[node name="player_correct" type="TextureRect" parent="Background/Options1"]
-visible = false
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -107.0
-margin_top = -35.0
-margin_right = -37.0
-margin_bottom = 35.0
-texture = ExtResource( 6 )
-expand = true
-
-[node name="player_incorrect" type="TextureRect" parent="Background/Options1"]
-visible = false
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -107.0
-margin_top = -35.0
-margin_right = -37.0
-margin_bottom = 35.0
-texture = ExtResource( 7 )
-expand = true
-
-[node name="Options2" type="Button" parent="Background"]
-margin_left = 543.0
-margin_top = 561.0
-margin_right = 1363.0
-margin_bottom = 701.0
-mouse_default_cursor_shape = 2
-custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 7 )
-custom_styles/hover = SubResource( 8 )
-custom_styles/pressed = SubResource( 8 )
-custom_styles/disabled = ExtResource( 2 )
-custom_styles/normal = ExtResource( 2 )
-
-[node name="content" type="Label" parent="Background/Options2"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -280.0
-margin_top = -70.0
-margin_right = 280.0
-margin_bottom = 70.0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_fonts/font = SubResource( 6 )
-align = 1
-valign = 1
-autowrap = true
-clip_text = true
-
-[node name="oppo_correct" type="TextureRect" parent="Background/Options2"]
-visible = false
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = 37.0
-margin_top = -35.0
-margin_right = 107.0
-margin_bottom = 35.0
-texture = ExtResource( 6 )
-expand = true
-
-[node name="oppo_incorrect" type="TextureRect" parent="Background/Options2"]
-visible = false
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = 37.0
-margin_top = -35.0
-margin_right = 107.0
-margin_bottom = 35.0
-texture = ExtResource( 7 )
-expand = true
-
-[node name="player_correct" type="TextureRect" parent="Background/Options2"]
-visible = false
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -107.0
-margin_top = -35.0
-margin_right = -37.0
-margin_bottom = 35.0
-texture = ExtResource( 6 )
-expand = true
-
-[node name="player_incorrect" type="TextureRect" parent="Background/Options2"]
-visible = false
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -107.0
-margin_top = -35.0
-margin_right = -37.0
-margin_bottom = 35.0
-texture = ExtResource( 7 )
-expand = true
-
-[node name="Options3" type="Button" parent="Background"]
-margin_left = 543.0
-margin_top = 730.0
-margin_right = 1363.0
-margin_bottom = 870.0
-mouse_default_cursor_shape = 2
-custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 7 )
-custom_styles/hover = SubResource( 8 )
-custom_styles/pressed = SubResource( 8 )
-custom_styles/disabled = ExtResource( 2 )
-custom_styles/normal = ExtResource( 2 )
-
-[node name="content" type="Label" parent="Background/Options3"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -280.0
-margin_top = -70.0
-margin_right = 280.0
-margin_bottom = 70.0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_fonts/font = SubResource( 6 )
-align = 1
-valign = 1
-autowrap = true
-clip_text = true
-
-[node name="oppo_correct" type="TextureRect" parent="Background/Options3"]
-visible = false
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = 37.0
-margin_top = -35.0
-margin_right = 107.0
-margin_bottom = 35.0
-texture = ExtResource( 6 )
-expand = true
-
-[node name="oppo_incorrect" type="TextureRect" parent="Background/Options3"]
-visible = false
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = 37.0
-margin_top = -35.0
-margin_right = 107.0
-margin_bottom = 35.0
-texture = ExtResource( 7 )
-expand = true
-
-[node name="player_correct" type="TextureRect" parent="Background/Options3"]
-visible = false
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -107.0
-margin_top = -35.0
-margin_right = -37.0
-margin_bottom = 35.0
-texture = ExtResource( 6 )
-expand = true
-
-[node name="player_incorrect" type="TextureRect" parent="Background/Options3"]
-visible = false
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -107.0
-margin_top = -35.0
-margin_right = -37.0
-margin_bottom = 35.0
-texture = ExtResource( 7 )
-expand = true
-
-[node name="Options4" type="Button" parent="Background"]
-margin_left = 543.0
-margin_top = 898.0
-margin_right = 1363.0
-margin_bottom = 1038.0
-mouse_default_cursor_shape = 2
-custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 7 )
-custom_styles/hover = SubResource( 8 )
-custom_styles/pressed = SubResource( 8 )
-custom_styles/disabled = ExtResource( 2 )
-custom_styles/normal = ExtResource( 2 )
-
-[node name="content" type="Label" parent="Background/Options4"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -280.0
-margin_top = -70.0
-margin_right = 280.0
-margin_bottom = 70.0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_fonts/font = SubResource( 6 )
-align = 1
-valign = 1
-autowrap = true
-
-[node name="oppo_correct" type="TextureRect" parent="Background/Options4"]
-visible = false
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = 37.0
-margin_top = -35.0
-margin_right = 107.0
-margin_bottom = 35.0
-texture = ExtResource( 6 )
-expand = true
-
-[node name="oppo_incorrect" type="TextureRect" parent="Background/Options4"]
-visible = false
-anchor_top = 0.5
-anchor_bottom = 0.5
-margin_left = 37.0
-margin_top = -35.0
-margin_right = 107.0
-margin_bottom = 35.0
-texture = ExtResource( 7 )
-expand = true
-
-[node name="player_correct" type="TextureRect" parent="Background/Options4"]
-visible = false
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -107.0
-margin_top = -35.0
-margin_right = -37.0
-margin_bottom = 35.0
-texture = ExtResource( 6 )
-expand = true
-
-[node name="player_incorrect" type="TextureRect" parent="Background/Options4"]
-visible = false
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -107.0
-margin_top = -35.0
-margin_right = -37.0
-margin_bottom = 35.0
-texture = ExtResource( 7 )
-expand = true
+[node name="Timer" type="Timer" parent="Background"]
+process_mode = 0
+wait_time = 0.1
+autostart = true
 
 [node name="TextureProgress" type="TextureProgress" parent="Background"]
 anchor_left = 0.5
@@ -551,7 +268,7 @@ margin_bottom = 184.0
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 1, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 1, 0, 0, 1 )
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 6 )
 text = "10"
 align = 1
 valign = 1
@@ -559,10 +276,226 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Timer" type="Timer" parent="Background"]
-process_mode = 0
-wait_time = 0.1
-autostart = true
+[node name="op_Options1" type="Button" parent="Background"]
+margin_left = 543.0
+margin_top = 393.0
+margin_right = 1363.0
+margin_bottom = 533.0
+mouse_default_cursor_shape = 2
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color_focus = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 7 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
+clip_text = true
+icon_align = 1
+
+[node name="content" type="Label" parent="Background/op_Options1"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -280.0
+margin_top = -70.0
+margin_right = 280.0
+margin_bottom = 70.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 7 )
+align = 1
+valign = 1
+autowrap = true
+clip_text = true
+
+[node name="oppo_correct" type="TextureRect" parent="Background/op_Options1"]
+visible = false
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 37.0
+margin_top = -35.0
+margin_right = 107.0
+margin_bottom = 35.0
+texture = ExtResource( 6 )
+expand = true
+
+[node name="oppo_incorrect" type="TextureRect" parent="Background/op_Options1"]
+visible = false
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 37.0
+margin_top = -35.0
+margin_right = 107.0
+margin_bottom = 35.0
+texture = ExtResource( 7 )
+expand = true
+
+[node name="op_Options2" type="Button" parent="Background"]
+margin_left = 543.0
+margin_top = 561.0
+margin_right = 1363.0
+margin_bottom = 701.0
+mouse_default_cursor_shape = 2
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 9 )
+custom_styles/pressed = SubResource( 9 )
+custom_styles/disabled = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
+
+[node name="content" type="Label" parent="Background/op_Options2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -280.0
+margin_top = -70.0
+margin_right = 280.0
+margin_bottom = 70.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 7 )
+align = 1
+valign = 1
+autowrap = true
+clip_text = true
+
+[node name="oppo_correct" type="TextureRect" parent="Background/op_Options2"]
+visible = false
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 37.0
+margin_top = -35.0
+margin_right = 107.0
+margin_bottom = 35.0
+texture = ExtResource( 6 )
+expand = true
+
+[node name="oppo_incorrect" type="TextureRect" parent="Background/op_Options2"]
+visible = false
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 37.0
+margin_top = -35.0
+margin_right = 107.0
+margin_bottom = 35.0
+texture = ExtResource( 7 )
+expand = true
+
+[node name="op_Options3" type="Button" parent="Background"]
+margin_left = 543.0
+margin_top = 730.0
+margin_right = 1363.0
+margin_bottom = 870.0
+mouse_default_cursor_shape = 2
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 9 )
+custom_styles/pressed = SubResource( 9 )
+custom_styles/disabled = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
+
+[node name="content" type="Label" parent="Background/op_Options3"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -280.0
+margin_top = -70.0
+margin_right = 280.0
+margin_bottom = 70.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 7 )
+align = 1
+valign = 1
+autowrap = true
+clip_text = true
+
+[node name="oppo_correct" type="TextureRect" parent="Background/op_Options3"]
+visible = false
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 37.0
+margin_top = -35.0
+margin_right = 107.0
+margin_bottom = 35.0
+texture = ExtResource( 6 )
+expand = true
+
+[node name="oppo_incorrect" type="TextureRect" parent="Background/op_Options3"]
+visible = false
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 37.0
+margin_top = -35.0
+margin_right = 107.0
+margin_bottom = 35.0
+texture = ExtResource( 7 )
+expand = true
+
+[node name="op_Options4" type="Button" parent="Background"]
+margin_left = 543.0
+margin_top = 898.0
+margin_right = 1363.0
+margin_bottom = 1038.0
+mouse_default_cursor_shape = 2
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 9 )
+custom_styles/pressed = SubResource( 9 )
+custom_styles/disabled = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
+
+[node name="content" type="Label" parent="Background/op_Options4"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -280.0
+margin_top = -70.0
+margin_right = 280.0
+margin_bottom = 70.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 7 )
+align = 1
+valign = 1
+autowrap = true
+
+[node name="oppo_correct" type="TextureRect" parent="Background/op_Options4"]
+visible = false
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 37.0
+margin_top = -35.0
+margin_right = 107.0
+margin_bottom = 35.0
+texture = ExtResource( 6 )
+expand = true
+
+[node name="oppo_incorrect" type="TextureRect" parent="Background/op_Options4"]
+visible = false
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 37.0
+margin_top = -35.0
+margin_right = 107.0
+margin_bottom = 35.0
+texture = ExtResource( 7 )
+expand = true
 
 [node name="oppo_score" type="Label" parent="Background"]
 anchor_top = 1.0
@@ -662,8 +595,249 @@ valign = 1
 
 [node name="Tween" type="Tween" parent="Background/player_score"]
 
+[node name="Options1" type="Button" parent="Background"]
+margin_left = 543.0
+margin_top = 393.0
+margin_right = 1363.0
+margin_bottom = 533.0
+mouse_default_cursor_shape = 2
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color_focus = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 7 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
+clip_text = true
+icon_align = 1
+
+[node name="content" type="Label" parent="Background/Options1"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -280.0
+margin_top = -70.0
+margin_right = 280.0
+margin_bottom = 70.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 7 )
+align = 1
+valign = 1
+autowrap = true
+clip_text = true
+
+[node name="player_correct" type="TextureRect" parent="Background/Options1"]
+visible = false
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -107.0
+margin_top = -35.0
+margin_right = -37.0
+margin_bottom = 35.0
+texture = ExtResource( 6 )
+expand = true
+
+[node name="player_incorrect" type="TextureRect" parent="Background/Options1"]
+visible = false
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -107.0
+margin_top = -35.0
+margin_right = -37.0
+margin_bottom = 35.0
+texture = ExtResource( 7 )
+expand = true
+
+[node name="Options2" type="Button" parent="Background"]
+margin_left = 543.0
+margin_top = 561.0
+margin_right = 1363.0
+margin_bottom = 701.0
+mouse_default_cursor_shape = 2
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 9 )
+custom_styles/pressed = SubResource( 9 )
+custom_styles/disabled = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
+
+[node name="content" type="Label" parent="Background/Options2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -280.0
+margin_top = -70.0
+margin_right = 280.0
+margin_bottom = 70.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 7 )
+align = 1
+valign = 1
+autowrap = true
+clip_text = true
+
+[node name="player_correct" type="TextureRect" parent="Background/Options2"]
+visible = false
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -107.0
+margin_top = -35.0
+margin_right = -37.0
+margin_bottom = 35.0
+texture = ExtResource( 6 )
+expand = true
+
+[node name="player_incorrect" type="TextureRect" parent="Background/Options2"]
+visible = false
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -107.0
+margin_top = -35.0
+margin_right = -37.0
+margin_bottom = 35.0
+texture = ExtResource( 7 )
+expand = true
+
+[node name="Options3" type="Button" parent="Background"]
+margin_left = 543.0
+margin_top = 730.0
+margin_right = 1363.0
+margin_bottom = 870.0
+mouse_default_cursor_shape = 2
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 9 )
+custom_styles/pressed = SubResource( 9 )
+custom_styles/disabled = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
+
+[node name="content" type="Label" parent="Background/Options3"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -280.0
+margin_top = -70.0
+margin_right = 280.0
+margin_bottom = 70.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 7 )
+align = 1
+valign = 1
+autowrap = true
+clip_text = true
+
+[node name="player_correct" type="TextureRect" parent="Background/Options3"]
+visible = false
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -107.0
+margin_top = -35.0
+margin_right = -37.0
+margin_bottom = 35.0
+texture = ExtResource( 6 )
+expand = true
+
+[node name="player_incorrect" type="TextureRect" parent="Background/Options3"]
+visible = false
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -107.0
+margin_top = -35.0
+margin_right = -37.0
+margin_bottom = 35.0
+texture = ExtResource( 7 )
+expand = true
+
+[node name="Options4" type="Button" parent="Background"]
+margin_left = 543.0
+margin_top = 898.0
+margin_right = 1363.0
+margin_bottom = 1038.0
+mouse_default_cursor_shape = 2
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 9 )
+custom_styles/pressed = SubResource( 9 )
+custom_styles/disabled = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
+
+[node name="content" type="Label" parent="Background/Options4"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -280.0
+margin_top = -70.0
+margin_right = 280.0
+margin_bottom = 70.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 7 )
+align = 1
+valign = 1
+autowrap = true
+
+[node name="player_correct" type="TextureRect" parent="Background/Options4"]
+visible = false
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -107.0
+margin_top = -35.0
+margin_right = -37.0
+margin_bottom = 35.0
+texture = ExtResource( 6 )
+expand = true
+
+[node name="player_incorrect" type="TextureRect" parent="Background/Options4"]
+visible = false
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -107.0
+margin_top = -35.0
+margin_right = -37.0
+margin_bottom = 35.0
+texture = ExtResource( 7 )
+expand = true
+
+[connection signal="timeout" from="Background/Timer" to="." method="_on_Timer_timeout"]
+[connection signal="pressed" from="Background/op_Options1" to="." method="_on_op_Options1_pressed"]
+[connection signal="pressed" from="Background/op_Options2" to="." method="_on_op_Options2_pressed"]
+[connection signal="pressed" from="Background/op_Options3" to="." method="_on_op_Options3_pressed"]
+[connection signal="pressed" from="Background/op_Options4" to="." method="_on_op_Options4_pressed"]
 [connection signal="pressed" from="Background/Options1" to="." method="_on_Options1_pressed"]
 [connection signal="pressed" from="Background/Options2" to="." method="_on_Options2_pressed"]
 [connection signal="pressed" from="Background/Options3" to="." method="_on_Options3_pressed"]
 [connection signal="pressed" from="Background/Options4" to="." method="_on_Options4_pressed"]
-[connection signal="timeout" from="Background/Timer" to="." method="_on_Timer_timeout"]
