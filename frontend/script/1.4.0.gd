@@ -32,3 +32,6 @@ func _on_white_news_pressed():
 
 func _on_white_player_pressed():
 	get_tree().change_scene("res://scene/1.4.1.tscn")
+
+func _on_pk_hover_pressed():
+	get_tree().change_scene("res://scene/Battle_0.tscn")
