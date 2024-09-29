@@ -246,49 +246,49 @@ default_color = Color( 0, 0, 0, 1 )
 
 [node name="B1" type="Sprite" parent="BackgroundPicture/BackgroundBoxPicture"]
 visible = false
-position = Vector2( 159.643, 278.696 )
+position = Vector2( 160, 300 )
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 21 )
 
 [node name="B2" type="Sprite" parent="BackgroundPicture/BackgroundBoxPicture"]
 visible = false
-position = Vector2( 163.929, 287.391 )
+position = Vector2( 160, 300 )
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 3 )
 
 [node name="B3" type="Sprite" parent="BackgroundPicture/BackgroundBoxPicture"]
 visible = false
-position = Vector2( 165.714, 282.174 )
+position = Vector2( 160, 300 )
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 17 )
 
 [node name="B4" type="Sprite" parent="BackgroundPicture/BackgroundBoxPicture"]
 visible = false
-position = Vector2( 164.286, 276.087 )
+position = Vector2( 160, 300 )
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 6 )
 
 [node name="G1" type="Sprite" parent="BackgroundPicture/BackgroundBoxPicture"]
 visible = false
-position = Vector2( 162.5, 271.739 )
+position = Vector2( 160, 300 )
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 16 )
 
 [node name="G2" type="Sprite" parent="BackgroundPicture/BackgroundBoxPicture"]
 visible = false
-position = Vector2( 166.429, 273.913 )
+position = Vector2( 160, 300 )
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 18 )
 
 [node name="G3" type="Sprite" parent="BackgroundPicture/BackgroundBoxPicture"]
 visible = false
-position = Vector2( 166.429, 279.565 )
+position = Vector2( 160, 300 )
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 19 )
 
 [node name="G4" type="Sprite" parent="BackgroundPicture/BackgroundBoxPicture"]
 visible = false
-position = Vector2( 166.429, 279.565 )
+position = Vector2( 160, 300 )
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 20 )
 
@@ -408,10 +408,10 @@ custom_fonts/font = ExtResource( 5 )
 text = "年 齡"
 
 [node name="Label" type="Label" parent="BackgroundPicture"]
-margin_left = 348.0
-margin_top = 293.0
-margin_right = 914.0
-margin_bottom = 360.0
+margin_left = 321.0
+margin_top = 318.0
+margin_right = 887.0
+margin_bottom = 385.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
