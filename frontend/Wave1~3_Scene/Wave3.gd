@@ -25,6 +25,12 @@ func _ready() -> void:
 	
 	#設定題目
 	$BattleBackground/Question.text = GlobalVar.question3[0]
+
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
+		# 如果遊戲當前是全螢幕模式，則退出全螢幕
+		if OS.window_fullscreen:
+			get_tree().quit()
 	
 ## 查看全文button按下去
 func _on_OpenStoryButton_pressed() -> void:

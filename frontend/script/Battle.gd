@@ -74,7 +74,7 @@ func _on_Timer_timeout():
 # 設置對手答題的 Timer
 func setup_opponent_timer():
 	opponent_timer = Timer.new()
-	opponent_timer.wait_time = rand_range(1.0, 5.0)  # 隨機時間為 1 到 5 秒
+	opponent_timer.wait_time = rand_range(1.0, 3.0)  # 隨機時間為 1 到 5 秒
 	opponent_timer.one_shot = true  # 只啟動一次
 	opponent_timer.connect("timeout", self, "_on_opponent_answer")
 	add_child(opponent_timer)

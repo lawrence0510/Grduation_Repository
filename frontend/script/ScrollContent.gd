@@ -45,7 +45,8 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			
 		# 刷新 UI，動態生成 Label
 		for data in data_list:
-			var text = data["time"] + "              " + data["title"] + "             " + data["score"]
+#			var text = data["time"] + "              " + data["title"] + "             " + data["score"]
+			var text = data["time"] + "              " + "黑洞知多少?中研院告訴你" + "                    " + data["score"]
 			create_button_r(text)
 	else:
 		print("Error parsing JSON: ", json.error_string)

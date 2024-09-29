@@ -125,17 +125,17 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 6 )
-text = "2024-12-01 13:14"
+text = "2-01 13:14"
 
 [node name="topic" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line1"]
-margin_left = 420.0
-margin_right = 970.0
+margin_left = 367.0
+margin_right = 917.0
 margin_bottom = 73.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 6 )
-text = "探討生成式人工智慧於會計業文字客服之應用"
+text = "黑洞知多少？中研院告訴你"
 clip_text = true
 
 [node name="score" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line1"]
@@ -151,8 +151,8 @@ align = 1
 valign = 1
 
 [node name="point" type="Label" parent="TextureRect/TextureRect/ScrollContainer/VBoxContainer/line1"]
-margin_left = 970.0
-margin_right = 1006.0
+margin_left = 932.0
+margin_right = 968.0
 margin_bottom = 73.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )

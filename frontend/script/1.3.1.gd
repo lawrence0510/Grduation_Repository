@@ -55,3 +55,5 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		notice.hide()
 		error.show()
 		
+func _on_Back_pressed():
+	get_tree().change_scene("res://Scene/SignIn.tscn")

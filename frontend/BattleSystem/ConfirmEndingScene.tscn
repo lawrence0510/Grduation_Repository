@@ -61,7 +61,9 @@ margin_top = -206.5
 margin_right = 439.0
 margin_bottom = -15.5
 custom_fonts/font = ExtResource( 1 )
-text = "確定要離開戰鬥嗎?"
+text = "確定要離開戰鬥嗎?
+離開戰鬥將不會留下答題記錄"
+align = 1
 
 [node name="ConfirmEndingButton" type="Button" parent="."]
 anchor_top = 0.5
