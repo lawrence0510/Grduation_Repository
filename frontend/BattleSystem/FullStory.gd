@@ -6,4 +6,4 @@ func _on_CloseStoryButton_pressed() -> void:
 	set_visible(false) ## 隱藏全文
 
 func setStory(story: String):
-	$RichTextLabel.text = story
+	$ScrollContainer/Label.text += story

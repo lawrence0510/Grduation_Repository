@@ -41,7 +41,8 @@ func _on_LineEdit_text_entered(new_text: String) -> void:
 	if(true): ## 這裡的條件之後要改成"答案是否正確?"
 		attack_animation.visible = true
 		attack_animation.play()
-		health_bar.damaged(30) ## 玩家扣血測試
+		$BattleBackground/ChangeLevelTimer.start()
+#		health_bar.damaged(30) ## 玩家正確率太低時要扣血
 	line_edit.editable = false
 
 
@@ -57,3 +58,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
 	print(json.result[0].article_content)
 	full_story_scene.setStory(json.result[0].article_content)
+
+
+func _on_ChangeLevelTimer_timeout() -> void:
+	get_tree().change_scene("res://BattleSystem/AnswerAndDescription.tscn")

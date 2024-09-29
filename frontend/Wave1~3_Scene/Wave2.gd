@@ -82,10 +82,10 @@ func change_button_color(button_path: String) -> void:
 		new_stylebox.bg_color = Color(0.16, 0.64, 0.25)
 		attack_animation.visible = true ## 顯示攻擊特效
 		attack_animation.play() ## 播放攻擊特效
-		health_bar.damaged(30) ## 玩家扣血測試
 
 	else:
 		new_stylebox.bg_color = Color(0.71, 0.15, 0.15)
+		health_bar.damaged(30) ## 玩家扣血測試
 		
 	get_node(button_path).add_stylebox_override("hover", new_stylebox) ## button變色
 	get_node(button_path).add_stylebox_override("normal", new_stylebox) ## button變色

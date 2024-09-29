@@ -78,9 +78,9 @@ func change_button_color(button_path: String) -> void:
 		new_stylebox.bg_color = Color(0.16, 0.64, 0.25)
 		attack_animation.visible = true
 		attack_animation.play()
-		health_bar.damaged(30)
 	else:
 		new_stylebox.bg_color = Color(0.71, 0.15, 0.15)
+		health_bar.damaged(30)
 
 	get_node(button_path).add_stylebox_override("hover", new_stylebox)
 	get_node(button_path).add_stylebox_override("normal", new_stylebox)
