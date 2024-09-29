@@ -148,7 +148,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="Node2D2" type="Node2D"]
+[node name="Node2D3" type="Node2D"]
 scale = Vector2( 1, 1.00142 )
 script = ExtResource( 1 )
 

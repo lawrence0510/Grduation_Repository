@@ -192,11 +192,8 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = ExtResource( 7 )
 custom_styles/normal = ExtResource( 6 )
-text = "詳解：
-正確答案是：「侯程麟」。
-在這段故事中，敘述者以第一人稱「我」來描述他與女朋友李多慧之間的感情和生活細節。從故事中可以得知：敘述者的名字是「侯程麟」、敘述者的女朋友是「李多慧」、他們之間的關係是真實且深厚的，並且有許多共同的回憶和計劃。題目中問的是「李多慧的男朋友是誰？」，由於整個故事都是以侯程麟的角度來敘述，所以可以得出結論，李多慧的男朋友就是侯程麟本人。因此，正確答案應該是「侯程麟」。
-
-你的回答「這我」在口語上是正確的，但具體而言，應該寫出你的名字來回答問題，因此正確答案是「侯程麟」。"
+text = "正解： 黑洞的本體是全黑的且其距離非常遙遠，導致其尺寸在觀測上看起來非常小。
+解釋： 此回答準確地指出了觀測黑洞的主要困難，並且提供了詳細的解釋，讓讀者更容易理解為什麼黑洞這麼難以觀測。"
 
 [node name="cross" type="Button" parent="bg"]
 margin_left = 1789.0
@@ -231,7 +228,7 @@ margin_right = 44.0
 margin_bottom = -163.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 2 )
-text = "40"
+text = "90"
 
 [node name="A" type="RichTextLabel" parent="bg"]
 margin_left = 912.0
@@ -244,7 +241,7 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = ExtResource( 4 )
 custom_styles/normal = SubResource( 4 )
-text = "這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D這我 :D"
+text = "黑洞觀測的困難主要源於其尺寸和距離。儘管黑洞周圍的物質會發出強烈的電磁波，但黑洞本身是全黑的，讓我們難以直接觀測到。此外，像人馬座 A* 和 M87 黑洞，儘管實際上比太陽大，但由於它們距離我們非常遙遠，從地球的角度看來，它們的陰影尺寸非常小，這使得觀測變得更加複雜。"
 
 [node name="Q" type="RichTextLabel" parent="bg"]
 margin_left = 301.0
@@ -257,9 +254,7 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = ExtResource( 4 )
 custom_styles/normal = SubResource( 3 )
-bbcode_enabled = true
-bbcode_text = "請問李多慧的男朋友是誰?"
-text = "請問李多慧的男朋友是誰?"
+text = "為什麼黑洞觀測如此困難？"
 
 [connection signal="pressed" from="bg/content" to="." method="_on_content_pressed"]
 [connection signal="pressed" from="bg/wave1" to="." method="_on_wave1_pressed"]

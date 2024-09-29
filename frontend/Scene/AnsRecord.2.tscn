@@ -230,8 +230,8 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = ExtResource( 7 )
 custom_styles/normal = ExtResource( 6 )
-text = "解答：加強國際合作並制訂全球性的法律和政策來共同應對氣候變遷。
-詳解：這是最佳的答案，因為氣候變遷是一個全球性的問題，單靠任何一個國家無法有效應對。由於碳排放、環境污染等問題沒有國界，國際合作至關重要，因為一個國家單方面的努力可能會被其他國家的行為抵消。因此，制定全球性的政策和目標，並通過國際條約如《巴黎協定》來減少溫室氣體排放、推動可再生能源使用，是應對氣候變遷的最有效途徑。"
+text = "解答：提高了黑洞影像的解析度
+詳解：格陵蘭望遠鏡的加入能夠有效提升照片的解析度，讓科學家獲得更真實的黑洞影像，為未來的研究打下基礎。"
 
 [node name="cross" type="Button" parent="bg"]
 margin_left = 1789.0
@@ -257,7 +257,7 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 3 )
 custom_styles/normal = ExtResource( 5 )
-text = "隨著全球環境變化日益加劇，氣候變遷帶來的影響已經顯現在極端天氣事件增加、海平面上升和生態系統退化等方面，許多國家和地區已經開始積極推動減少碳排放、使用可再生能源以及改善能源效率等措施來應對這一危機。在這樣的背景下，你認為各國應該採取什麼樣的具體行動來進一步減緩氣候變遷，並確保對全球環境的正面影響？應該是加強國際合作來共同應對，還是每個國家都應該專注於自己的政策和發展？除此之外，我們應該如何在技術創新和環境保護之間找到平衡，確保經濟的可持續發展？"
+text = "格陵蘭望遠鏡在這次黑洞觀測中的主要貢獻是什麼？"
 
 [node name="A" type="RichTextLabel" parent="bg"]
 margin_left = 390.0
@@ -270,7 +270,7 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
 custom_styles/normal = SubResource( 6 )
-text = "A.加強國際合作並制訂全球性的法律和政策來共同應對氣候變遷。"
+text = "A) 提高了黑洞影像的解析度"
 
 [node name="B" type="RichTextLabel" parent="bg"]
 margin_left = 980.0
@@ -283,7 +283,7 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
-text = "B.每個國家應該專注於根據本國的情況制訂自己的環保政策，無需國際統一規範。"
+text = "B) 提供更多的觀測波段"
 
 [node name="C" type="RichTextLabel" parent="bg"]
 margin_left = 390.0
@@ -296,7 +296,7 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
 custom_styles/normal = ExtResource( 5 )
-text = "C.技術創新應該優先，隨著科技的進步，自然會有解決氣候問題的方案。"
+text = "C) 增加了觀測站的數量"
 
 [node name="D" type="RichTextLabel" parent="bg"]
 margin_left = 980.0
@@ -309,7 +309,7 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
 custom_styles/normal = ExtResource( 5 )
-text = "D.經濟發展應該放在首位，環境保護則可以通過未來的技術來解決。"
+text = "D) 減少了觀測的時間"
 
 [connection signal="pressed" from="bg/content" to="." method="_on_content_pressed"]
 [connection signal="pressed" from="bg/wave1" to="." method="_on_wave1_pressed"]

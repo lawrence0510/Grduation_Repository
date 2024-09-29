@@ -223,7 +223,7 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = ExtResource( 7 )
 custom_styles/normal = ExtResource( 6 )
-text = "詳解：這些選擇都反映了當今社會對科技進步和隱私、倫理問題的不同觀點。選擇哪個答案取決於你對科技風險與創新潛力之間權衡的態度。"
+text = "詳解：此次公布的黑洞照片不僅是為了研究 M87 黑洞的特性，同時也是為了驗證愛因斯坦的廣義相對論。這張照片提供了我們對於黑洞存在的直接證據。"
 
 [node name="cross" type="Button" parent="bg"]
 margin_left = 1789.0
@@ -249,7 +249,7 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 3 )
 custom_styles/normal = ExtResource( 5 )
-text = "你認為在這樣的背景下，我們是否應該更多地關注科技發展對倫理和隱私的影響，特別是在涉及人工智慧決策、自動化系統管理和數據隱私保護的方面，並且在未來，我們是否應該優先制定更加嚴格的政策來確保這些技術的發展不會對人類的基本權利和自由造成潛在的威脅或不利影響？"
+text = "此次黑洞照片的公布主要是為了驗證哪一項理論？"
 
 [node name="A" type="RichTextLabel" parent="bg"]
 margin_left = 390.0
@@ -262,8 +262,7 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
 custom_styles/normal = ExtResource( 5 )
-text = "A.是的，我認為我們應該更加關注科技發展對倫理和隱私的影響。
-隨著科技的快速發展，特別是在人工智慧和自動化領域，確保人類基本權利和隱私不受侵害是至關重要的。我們應該制定更嚴格的政策來保障這些權利。"
+text = "A) 量子力學"
 
 [node name="B" type="RichTextLabel" parent="bg"]
 margin_left = 980.0
@@ -276,8 +275,7 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
-text = "B.我部分同意，但科技進步的速度不應受到過多限制。
-科技的快速發展帶來了許多好處，但我們也需要在推動創新與保護個人隱私之間找到平衡，確保不過度限制科技的進步。"
+text = "B) 廣義相對論"
 
 [node name="C" type="RichTextLabel" parent="bg"]
 margin_left = 390.0
@@ -290,8 +288,7 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
 custom_styles/normal = ExtResource( 5 )
-text = "C.不，我認為科技發展的重點應該放在推動創新，而非擔心隱私問題。
-科技發展是人類進步的核心推動力，過度關注隱私和倫理問題可能會減緩創新。我們應更專注於技術的潛力。"
+text = "C) 特殊相對論"
 
 [node name="D" type="RichTextLabel" parent="bg"]
 margin_left = 980.0
@@ -304,8 +301,7 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
 custom_styles/normal = ExtResource( 5 )
-text = "D.我不確定，因為科技發展的影響取決於具體情況。
-科技發展對倫理和隱私的影響可能因行業和應用領域而異。因此，我認為需要根據具體情況來判斷是否應該關注這些問題。"
+text = "D) 牛頓運動定律"
 
 [connection signal="pressed" from="bg/content" to="." method="_on_content_pressed"]
 [connection signal="pressed" from="bg/wave1" to="." method="_on_wave1_pressed"]
