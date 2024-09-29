@@ -23,9 +23,9 @@ var target_score_2 = 0  # 對手計分區塊的目標分數
 var base_score_per_question = 10  # 每題基本分數
 
 # 第二組題目
-var question_content = "地球的最大的洋是什麼？"
-var options = ["印度洋", "大西洋", "太平洋", "阿拉斯加海灣"]
-var correct_answer = options[2]
+var question_content = "哪一種元素是所有有機化合物的基礎？"
+var options = ["碳", "氫", "氧", "氮"]
+var correct_answer = options[0]
 
 # 預載入正確的 StyleBox 資源
 var default_stylebox = preload("res://Fonts/battle_hover.tres")

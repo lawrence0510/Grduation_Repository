@@ -23,9 +23,9 @@ var target_score_2 = 0  # 對手計分區塊的目標分數
 var base_score_per_question = 10  # 每題基本分數
 
 # 第二組題目
-var question_content = "電子帶有什麼電荷？"
-var options = ["正電", "負電", "無電", "雙電"]
-var correct_answer = options[1]
+var question_content = "美國獨立宣言是在什麼年份簽署的？"
+var options = ["1776年", "1787年", "1492年", "1607年"]
+var correct_answer = options[0]
 
 # 預載入正確的 StyleBox 資源
 var default_stylebox = preload("res://Fonts/battle_hover.tres")

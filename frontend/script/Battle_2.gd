@@ -23,9 +23,9 @@ var target_score_2 = 0  # 對手計分區塊的目標分數
 var base_score_per_question = 10  # 每題基本分數
 
 # 第二組題目
-var question_content = "愛因斯坦提出的著名公式是？"
-var options = ["E = mc²", "F = ma", "V = IR", "p = mv"]
-var correct_answer = options[0]
+var question_content = "人體內哪一個器官主要負責過濾血液？"
+var options = ["心臟", "肺", "腎臟", "肝臟"]
+var correct_answer = options[2]
 
 # 預載入正確的 StyleBox 資源
 var default_stylebox = preload("res://Fonts/battle_hover.tres")
