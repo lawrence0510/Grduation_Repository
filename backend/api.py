@@ -795,23 +795,42 @@ class DataList(Resource):
 class DataList(Resource):
     @user_ns.expect(random_article_parser)
     def get(self):
-        '''根據使用者id以及所選的類別找出此使用者還沒看過的文章'''
+        '''根據使用者id以及所選的類別找出此使用者還沒看過且年齡適合的文章'''
         args = random_article_parser.parse_args()
         user_id = args['user_id']
         article_category = args['article_category']
         connection = create_db_connection()
+
         if connection is not None:
             cursor = connection.cursor(dictionary=True)
             try:
-                sql = """SELECT a.article_id, a.article_title, a.article_content, q.question_grade, q.question_1, 
-                    q.question1_choice1, q.question1_choice2, q.question1_choice3, q.question1_choice4, 
-                    q.question1_answer, q.question1_explanation, q.question_2, q.question2_choice1, 
-                    q.question2_choice2, q.question2_choice3, q.question2_choice4, q.question2_answer, 
-                    q.question2_explanation, q.question3, q.question3_answer
+                # 1. 查詢使用者的生日，並根據現在的時間計算年齡
+                cursor.execute(
+                    "SELECT user_birthday FROM User WHERE user_id = %s", (user_id,))
+                result = cursor.fetchone()
+
+                if not result:
+                    return {"error": "User not found"}, 404
+
+                user_birthday = result['user_birthday']
+                today = datetime.today()
+                user_age = today.year - user_birthday.year - \
+                    ((today.month, today.day) <
+                     (user_birthday.month, user_birthday.day))
+                user_age = min(user_age, 15)
+                print(user_age)
+                # 2. 查詢使用者還沒看過的文章，且文章年齡適合
+                sql = """
+                    SELECT a.article_id, a.article_title, a.article_content, q.question_grade, q.question_1, 
+                        q.question1_choice1, q.question1_choice2, q.question1_choice3, q.question1_choice4, 
+                        q.question1_answer, q.question1_explanation, q.question_2, q.question2_choice1, 
+                        q.question2_choice2, q.question2_choice3, q.question2_choice4, q.question2_answer, 
+                        q.question2_explanation, q.question3, q.question3_answer
                     FROM Article AS a
                     JOIN Question AS q ON a.article_id = q.article_id
                     WHERE a.article_category = %s
                     AND a.article_pass = 1
+                    AND a.article_grade = %s  -- 確保文章適合當前年齡
                     AND NOT EXISTS (
                         SELECT 1
                         FROM History h
@@ -819,15 +838,22 @@ class DataList(Resource):
                         AND h.user_id = %s
                     )
                     ORDER BY RAND()
-                    LIMIT 1;"""
-                cursor.execute(sql, (article_category, user_id))
+                    LIMIT 1;
+                """
+                cursor.execute(sql, (article_category, user_age, user_id))
                 article = cursor.fetchall()
-                return jsonify(article)
+
+                if article:
+                    return jsonify(article)
+                else:
+                    return {"message": "No unseen articles found for this user"}, 404
             except Error as e:
                 return {"error": str(e)}, 500
             finally:
                 cursor.close()
                 connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
 
 
 @article_ns.route('/get_random_uncheck_article')
@@ -1422,17 +1448,22 @@ class FollowUpQuestion(Resource):
                         f"標題：{article_title}\n"
                         f"內容：{article_content}\n"
                         f"問題1：{question_1}\n"
-                        f"問題1的四個選項：1. {question1_choice1} 2. {question1_choice2} 3. {question1_choice3} 4. {question1_choice4}\n"
-                        f"問題1的正確答案是：{question1_answer}，原因為：{question1_explanation}\n"
+                        f"問題1的四個選項：1. {question1_choice1} 2. {question1_choice2} 3. {
+                            question1_choice3} 4. {question1_choice4}\n"
+                        f"問題1的正確答案是：{question1_answer}，原因為：{
+                            question1_explanation}\n"
                         f"而我問題1的回答是：{q1_user_answer}\n"
                         f"問題2：{question_2}\n"
-                        f"問題2的四個選項：1. {question2_choice1} 2. {question2_choice2} 3. {question2_choice3} 4. {question2_choice4}\n"
-                        f"問題2的正確答案是：{question2_answer}，原因為：{question2_explanation}\n"
+                        f"問題2的四個選項：1. {question2_choice1} 2. {question2_choice2} 3. {
+                            question2_choice3} 4. {question2_choice4}\n"
+                        f"問題2的正確答案是：{question2_answer}，原因為：{
+                            question2_explanation}\n"
                         f"而我問題2的回答是：{q2_user_answer}\n"
                         f"問題3：{question_3}\n"
                         f"標準答案是：{question3_answer}\n"
                         f"而我問題3的回答是：{q3_user_answer}\n"
-                        f"我在正確度滿分五分得到：{q3_score_1}、完整度滿分五分得到：{q3_score_2}、語言表達清晰度得到：{q3_score_3}\n"
+                        f"我在正確度滿分五分得到：{q3_score_1}、完整度滿分五分得到：{
+                            q3_score_2}、語言表達清晰度得到：{q3_score_3}\n"
                         f"我有些關於以上題目的問題想問，問題如下，請你解釋：{user_input}\n"
                         f"回傳時，請不要換行，也不要出現斜線n的換行符號"
                     )
@@ -1456,9 +1487,9 @@ class FollowUpQuestion(Resource):
                         end_index = response_str.find(end_token, start_index)
 
                         content = response_str[start_index:end_index]
+                        cleaned_content = content.replace("\n", "")
 
-                        # 返回提取出的 content
-                        return {"message": content}, 200
+                        return {"message": cleaned_content}, 200
 
                     except Exception as e:
                         return {"error": str(e)}, 500
@@ -1764,14 +1795,23 @@ compete_ns = api.namespace('Compete', description='與對戰操作相關之api')
 match_parser = reqparse.RequestParser()
 match_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
 insert_record_parser = reqparse.RequestParser()
-insert_record_parser.add_argument('user1_id', type=int, required=True, help='使用者1的ID')
-insert_record_parser.add_argument('user2_id', type=int, required=True, help='使用者2的ID')
-insert_record_parser.add_argument('question1_id', type=int, required=True, help='第一個問題ID')
-insert_record_parser.add_argument('question2_id', type=int, required=True, help='第二個問題ID')
-insert_record_parser.add_argument('question3_id', type=int, required=True, help='第三個問題ID')
-insert_record_parser.add_argument('question4_id', type=int, required=True, help='第四個問題ID')
-insert_record_parser.add_argument('user1_score', type=int, required=True, help='使用者1的得分')
-insert_record_parser.add_argument('user2_score', type=int, required=True, help='使用者2的得分')
+insert_record_parser.add_argument(
+    'user1_id', type=int, required=True, help='使用者1的ID')
+insert_record_parser.add_argument(
+    'user2_id', type=int, required=True, help='使用者2的ID')
+insert_record_parser.add_argument(
+    'question1_id', type=int, required=True, help='第一個問題ID')
+insert_record_parser.add_argument(
+    'question2_id', type=int, required=True, help='第二個問題ID')
+insert_record_parser.add_argument(
+    'question3_id', type=int, required=True, help='第三個問題ID')
+insert_record_parser.add_argument(
+    'question4_id', type=int, required=True, help='第四個問題ID')
+insert_record_parser.add_argument(
+    'user1_score', type=int, required=True, help='使用者1的得分')
+insert_record_parser.add_argument(
+    'user2_score', type=int, required=True, help='使用者2的得分')
+
 
 @compete_ns.route('/match_user')
 class MatchUser(Resource):
@@ -1786,14 +1826,17 @@ class MatchUser(Resource):
                 cursor = connection.cursor()
 
                 # 1. 查詢使用者年齡，若年齡大於15則視為15
-                cursor.execute("SELECT user_birthday FROM User WHERE user_id = %s", (user_id,))
+                cursor.execute(
+                    "SELECT user_birthday FROM User WHERE user_id = %s", (user_id,))
                 result = cursor.fetchone()
                 if not result:
                     return {"error": "User not found"}, 404
 
                 user_birthday = result[0]
                 today = datetime.today()
-                user_age = today.year - user_birthday.year - ((today.month, today.day) < (user_birthday.month, user_birthday.day))
+                user_age = today.year - user_birthday.year - \
+                    ((today.month, today.day) <
+                     (user_birthday.month, user_birthday.day))
                 user_age = min(user_age, 15)
 
                 # 2. 檢查是否有年齡匹配的使用者
@@ -1810,18 +1853,21 @@ class MatchUser(Resource):
                     question_set = match[1]  # 匹配對手的題目集
 
                     # 3. 刪除匹配到的對手
-                    cursor.execute("DELETE FROM WaitingQueue WHERE user_id = %s", (matched_user_id,))
+                    cursor.execute(
+                        "DELETE FROM WaitingQueue WHERE user_id = %s", (matched_user_id,))
                     connection.commit()
 
                     # 4. 返回匹配成功和題目集
                     return {
                         "message": "Match found",
                         "opponent_id": matched_user_id,
-                        "questions": json.loads(question_set)  # 將 JSON 題目集轉為 Python 字典
+                        # 將 JSON 題目集轉為 Python 字典
+                        "questions": json.loads(question_set)
                     }, 200
                 else:
                     # 5. 檢查當前使用者是否已經在等待隊列中
-                    cursor.execute("SELECT question_set FROM WaitingQueue WHERE user_id = %s", (user_id,))
+                    cursor.execute(
+                        "SELECT question_set FROM WaitingQueue WHERE user_id = %s", (user_id,))
                     existing_record = cursor.fetchone()
 
                     if existing_record:
@@ -1870,6 +1916,7 @@ class MatchUser(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+
 @compete_ns.route('/insert_compete_record')
 class InsertCompeteRecord(Resource):
     @compete_ns.expect(insert_record_parser)
@@ -1892,7 +1939,8 @@ class InsertCompeteRecord(Resource):
                 INSERT INTO Compete (user1_id, user2_jd, question1_id, question2_id, question3_id, question4_id, user1_score, user2_score, compete_time)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, NOW())
                 """
-                cursor.execute(sql, (user1_id, user2_id, question1_id, question2_id, question3_id, question4_id, user1_score, user2_score))
+                cursor.execute(sql, (user1_id, user2_id, question1_id, question2_id,
+                               question3_id, question4_id, user1_score, user2_score))
                 connection.commit()
 
                 return {"message": "Compete record inserted successfully", "compete_id": cursor.lastrowid}, 201
@@ -1903,6 +1951,7 @@ class InsertCompeteRecord(Resource):
                 connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)
