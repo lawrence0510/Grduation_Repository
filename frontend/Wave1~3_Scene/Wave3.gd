@@ -67,4 +67,4 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 
 
 func _on_ChangeLevelTimer_timeout() -> void:
-	get_tree().change_scene("res://BattleSystem/AnswerAndDescription.tscn")
+	get_tree().change_scene("res://Scene/MainPage.tscn")

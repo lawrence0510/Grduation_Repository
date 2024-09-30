@@ -69,21 +69,25 @@ scroll_horizontal_enabled = false
 
 [node name="Label" type="Label" parent="ScrollContainer"]
 margin_right = 1100.0
-margin_bottom = 558.0
+margin_bottom = 762.0
 rect_min_size = Vector2( 1100, 400 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
 text = "Wave 1
-回答正確
-(A) BMI = 體重/身高(公尺)平方
+Q. 哪一個地震事件是日本史上死亡人數最高的地震？
+B.  1923 關東大地震
+回答正確！
 -----
 Wave 2
-回答正確
-(C) 
-
+Q. 何者帶來了大森房吉的逝世？
+B. 因避難不及
+回答錯誤！正確答案為：(C) 因病逝
 -----
 Wave 3
-"
+Q. 為什麼當時台灣的傳統建築較不耐震？
+A. qq
+參考答案：因當時的建築多使用木材、磚瓦和石材作為主要建材，易在地震中開裂或倒塌。"
+autowrap = true
 
 [node name="FinishButton" type="Button" parent="."]
 margin_left = 1021.0
