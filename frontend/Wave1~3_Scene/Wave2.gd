@@ -5,6 +5,7 @@ onready var full_story_scene = $BattleBackground/FullStory
 onready var pause_scene = $BattleBackground/PauseScene
 onready var attack_animation
 onready var http_request: HTTPRequest = $HTTPRequest
+onready var enemy_image = $BattleBackground/Question/Enemy
 
 var button_path_array = ["BattleBackground/Option_A", 
 						 "BattleBackground/Option_B",
@@ -17,6 +18,7 @@ var right_button = ""
 
 ## 載入這個場景(Wave 2)後，馬上
 func _ready() -> void:	
+	enemy_image.texture = GlobalVar.images[1]
 	full_story_scene.setStory(GlobalVar.story)
 	$BattleBackground/Question.add_child(health_bar) ## 因為畫面前後的關係，所以把節點放在Question的底下
 	health_bar.init_health_value(GlobalVar.global_player_health) ## 設定玩家血量
@@ -80,10 +82,10 @@ func change_button_color(button_path: String) -> void:
 		new_stylebox.bg_color = Color(0.16, 0.64, 0.25)
 		attack_animation.visible = true ## 顯示攻擊特效
 		attack_animation.play() ## 播放攻擊特效
-		health_bar.damaged(30) ## 玩家扣血測試
 
 	else:
 		new_stylebox.bg_color = Color(0.71, 0.15, 0.15)
+		health_bar.damaged(30) ## 玩家扣血測試
 		
 	get_node(button_path).add_stylebox_override("hover", new_stylebox) ## button變色
 	get_node(button_path).add_stylebox_override("normal", new_stylebox) ## button變色

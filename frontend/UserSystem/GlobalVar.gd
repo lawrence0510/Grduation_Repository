@@ -9,6 +9,7 @@ var user_id: int ##玩家id
 
 var story = ""
 
+var images = ""
 #用以記錄wave2的問題、答案(格式為: 問題, answer, option1, option2, option3, option4)
 var question2 = []
 
@@ -16,3 +17,7 @@ var question2 = []
 var question3 = []
 
 var aiResponse = ""
+
+var player_score = 0
+
+var opponent_score = 0

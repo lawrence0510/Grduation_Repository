@@ -312,7 +312,7 @@ margin_right = 490.0
 margin_bottom = 161.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 2 )
-text = "Gamil"
+text = "Gmail"
 
 [node name="MailLineEdit" type="LineEdit" parent="BackgroundPicture/BackgroundControl"]
 margin_left = 400.0

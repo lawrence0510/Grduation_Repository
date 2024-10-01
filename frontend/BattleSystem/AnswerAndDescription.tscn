@@ -1,0 +1,114 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Fonts/noto_sans_32.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Textures/AnswerAndDescriptionBG.png" type="Texture" id=2]
+[ext_resource path="res://Fonts/noto_sans_48.tres" type="DynamicFont" id=3]
+[ext_resource path="res://BattleSystem/AnswerAndDescription.gd" type="Script" id=4]
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.278431, 0.819608, 0.184314, 1 )
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.203922, 0.666667, 0.121569, 1 )
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.211765, 0.752941, 0.117647, 1 )
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.294118, 0.709804, 0.94902, 1 )
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.0470588, 0.635294, 0.972549, 1 )
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0, 0.635294, 1, 1 )
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 411.0
+margin_top = 277.0
+margin_right = -397.0
+margin_bottom = -300.0
+scroll_horizontal_enabled = false
+
+[node name="Label" type="Label" parent="ScrollContainer"]
+margin_right = 1100.0
+margin_bottom = 762.0
+rect_min_size = Vector2( 1100, 400 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "Wave 1
+Q. 哪一個地震事件是日本史上死亡人數最高的地震？
+B.  1923 關東大地震
+回答正確！
+-----
+Wave 2
+Q. 何者帶來了大森房吉的逝世？
+B. 因避難不及
+回答錯誤！正確答案為：(C) 因病逝
+-----
+Wave 3
+Q. 為什麼當時台灣的傳統建築較不耐震？
+A. qq
+參考答案：因當時的建築多使用木材、磚瓦和石材作為主要建材，易在地震中開裂或倒塌。"
+autowrap = true
+
+[node name="FinishButton" type="Button" parent="."]
+margin_left = 1021.0
+margin_top = 793.0
+margin_right = 1271.0
+margin_bottom = 883.0
+custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/normal = SubResource( 1 )
+text = "完成"
+
+[node name="AskButton" type="Button" parent="."]
+margin_left = 613.0
+margin_top = 795.0
+margin_right = 923.0
+margin_bottom = 885.0
+custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = SubResource( 5 )
+custom_styles/pressed = SubResource( 6 )
+custom_styles/normal = SubResource( 2 )
+text = "前往追問畫面"
+
+[connection signal="pressed" from="AskButton" to="." method="_on_AskButton_pressed"]

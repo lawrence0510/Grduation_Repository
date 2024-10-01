@@ -47,3 +47,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	else:
 		print("Failed to reset password, response code: ", response_code)
 		error.show()
+
+
+func _on_Back_pressed():
+	get_tree().change_scene("res://Scene/SignIn.tscn")

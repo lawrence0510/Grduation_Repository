@@ -3,30 +3,31 @@ extends Node2D
 # 倒數初始時間
 var countdown_time = 10
 var countdown_timer : Timer
-var button_path_array = ["Background/Options1", 
-						 "Background/Options2", 
-						 "Background/Options3", 
-						 "Background/Options4"]
+var delay_timer : Timer  # 用於延遲跳題的 Timer
+var opponent_timer : Timer  # 用於對手答題的 Timer
+var button_paths = ["Background/Options1", "Background/Options2", "Background/Options3", "Background/Options4"]
+var opponent_button_paths = ["Background/op_Options1", "Background/op_Options2", "Background/op_Options3", "Background/op_Options4"]
+var all_answered = false  # 用於追蹤兩個人是否已經答完題目
+var opponent_answered = false  # 用來追蹤對手是否答題
+var player_answered = false  # 用來追蹤玩家是否答題
+var opponent_pending_answer = null  # 儲存對手的答案但不立即呈現（只在對手比玩家早答題時使用）
+
+# 分數機制
+var max_score = 100  # 最大分數
+var current_score_1 = 0  # 玩家計分區塊的當前分數
+var target_score_1 = 0  # 玩家計分區塊的目標分數（用來平滑過渡）
+var current_score_2 = 0  # 對手計分區塊的當前分數
+var target_score_2 = 0  # 對手計分區塊的目標分數（用來平滑過渡）
+var base_score_per_question = 10  # 每題基本分數
+var question_start_time = 0  # 記錄答題開始時間
 
 # 第一組題目
-var shortquestion_content = "電子帶有什麼電荷？"
-var shortquestion_option1 = "正電"
-var shortquestion_option2 = "負電"
-var shortquestion_option3 = "無電"
-var shortquestion_option4 = "雙電"
-var answer = shortquestion_option2  # 正確答案是"負電"
-
-# 第二組題目
-var new_question_content = "哪一個是地球最長的山脈？"
-var new_question_option1 = "喜馬拉雅山"
-var new_question_option2 = "洛磯山"
-var new_question_option3 = "安第斯山"
-var new_question_option4 = "阿爾卑斯山"
-var new_answer = new_question_option3  # 正確答案是"安第斯山"
+var question_content = "牛頓的第一運動定律主要講述什麼？"
+var options = ["物體會保持靜止或等速運動", "物體總是加速", "物體只在外力作用下移動", "物體的運動和能量無關"]
+var correct_answer = options[0]
 
 # 預載入正確的 StyleBox 資源
 var default_stylebox = preload("res://Fonts/battle_hover.tres")
-var a_stylebox = preload("res://Fonts/123.tres")
 var correct_stylebox = preload("res://Fonts/correct.tres")
 var incorrect_stylebox = preload("res://Fonts/incorrect.tres")
 
@@ -37,7 +38,29 @@ func _process(delta: float) -> void:
 			get_tree().quit()
 
 func _ready():
-	# 創建一個 Timer 並設置為每秒倒數一次
+	# 創建 Timer 並開始倒數
+	setup_timer()
+	setup_delay_timer()  # 設置延遲跳題的 Timer
+	setup_opponent_timer()  # 設置對手答題 Timer
+	
+	# 設置第一組題目文本
+	load_question(question_content, options)
+	# 連接按鈕的 pressed 信號
+	connect_buttons()
+	
+	# 設置玩家計分區塊的分數條
+	$Background/player_score/score.max_value = max_score  # 設置最大分數
+	$Background/player_score/score.value = current_score_1  # 初始化分數條為0
+	
+	# 設置對手計分區塊的分數條
+	$Background/oppo_score/score2.max_value = max_score  # 設置最大分數
+	$Background/oppo_score/score2.value = current_score_2  # 初始化分數條為0
+	
+	# 顯示當前分數
+	update_score_display()
+
+# 設置 Timer
+func setup_timer():
 	countdown_timer = Timer.new()
 	countdown_timer.wait_time = 1.0  # 每秒更新一次
 	countdown_timer.connect("timeout", self, "_on_timeout")
@@ -45,19 +68,29 @@ func _ready():
 	countdown_timer.start()
 	update_countdown_label()
 
-	# 設置第一組題目文本
-	load_question(shortquestion_content, shortquestion_option1, shortquestion_option2, shortquestion_option3, shortquestion_option4)
+func _on_Timer_timeout():
+	$Background/TextureProgress.value += 1
 
-	# 連接按鈕的 pressed 信號
-	$Background/Options1.connect("pressed", self, "_on_Option1_pressed")
-	$Background/Options2.connect("pressed", self, "_on_Option2_pressed")
-	$Background/Options3.connect("pressed", self, "_on_Option3_pressed")
-	$Background/Options4.connect("pressed", self, "_on_Option4_pressed")
+# 設置對手答題的 Timer
+func setup_opponent_timer():
+	opponent_timer = Timer.new()
+	opponent_timer.wait_time = rand_range(1.0, 3.0)  # 隨機時間為 1 到 5 秒
+	opponent_timer.one_shot = true  # 只啟動一次
+	opponent_timer.connect("timeout", self, "_on_opponent_answer")
+	add_child(opponent_timer)
+	opponent_timer.start()  # 啟動對手答題 Timer
+	print("Opponent will answer in " + str(opponent_timer.wait_time) + " seconds.")  # 調試訊息
+
+# 設置延遲跳題的 Timer
+func setup_delay_timer():
+	delay_timer = Timer.new()
+	delay_timer.wait_time = 3.0  # 設置為3秒
+	delay_timer.connect("timeout", self, "_on_delay_timeout")
+	add_child(delay_timer)
 
 # 更新倒數 Label
 func update_countdown_label():
-	var label = $Background/countdown_label
-	label.text = str(countdown_time)
+	$Background/countdown_label.text = str(countdown_time)
 
 # 每秒更新倒數邏輯
 func _on_timeout():
@@ -65,145 +98,173 @@ func _on_timeout():
 		countdown_time -= 1
 		update_countdown_label()
 	else:
-		# 當倒數結束時，清空題目並載入新題目
-		load_new_question()
+		# 當倒數時間為 0，跳轉到下一題
+		get_tree().change_scene("res://Scene/Battle_2.tscn")
+		# 確保在場景切換前，存儲當前分數到全局變數
+		GlobalVar.player_score = current_score_1
+		GlobalVar.opponent_score = current_score_2
 
-func _on_Timer_timeout():
-	$Background/TextureProgress.value +=1
+		# 跳轉到下一個場景
+		get_tree().change_scene("res://Scene/Battle_2.tscn")
 
-## 按下的按鈕行為
-func _on_Option1_pressed() -> void:
-	check_answer("Background/Options1", "content")
+func _on_delay_timeout():
+	get_tree().set_meta("player_score", current_score_1)
+	get_tree().set_meta("opponent_score", current_score_2)
+	
+	get_tree().change_scene("res://Scene/Battle_2.tscn")
 
-func _on_Option2_pressed() -> void:
-	check_answer("Background/Options2", "content")
-
-func _on_Option3_pressed() -> void:
-	check_answer("Background/Options3", "content")
-
-func _on_Option4_pressed() -> void:
-	check_answer("Background/Options4", "content")
-
-## 檢查答案
-func check_answer(button_path: String, label_name: String) -> void:
-	var button = get_node(button_path)
-	var button_label = button.get_node(label_name)  # 根據傳入的 label_name 找到按鈕下的 Label
-
-	if button_label == null:
-		print("Label not found under path:", button_path, "/", label_name)
-		return
-
-	var selected_answer = button_label.text
-
+# 對手答題邏輯
+func _on_opponent_answer():
+	if opponent_answered:
+		return  # 避免重複答題
+	opponent_answered = true  # 設定對手已經答題
+	print("Opponent is answering...")  # 調試訊息
+	
+	# 隨機選擇一個答案
+	var random_index = randi() % opponent_button_paths.size()
+	var selected_answer = get_node(opponent_button_paths[random_index] + "/content").text
+	
 	# 檢查選擇的答案是否正確
-	if selected_answer == answer:
-		print("correct")  # 答案正確時回傳 "correct"
-		apply_correct_button_style(button_path)  # 顯示正確圖案
+	if selected_answer == correct_answer:
+		print("Opponent chose correct answer")  # 調試訊息
+		add_opponent_score()
+		$Background/opponent/correct.show()  # 對手答對顯示
 	else:
-		print("incorrect")  # 答案錯誤時回傳 "incorrect"
-		apply_incorrect_button_style(button_path)  # 顯示錯誤圖案
+		print("Opponent chose incorrect answer")  # 調試訊息
+		$Background/opponent/incorrect.show()  # 對手答錯顯示
+
+	# 如果玩家已經答題，立即顯示對手的按鈕效果
+	if player_answered:
+		apply_opponent_style(opponent_button_paths[random_index], correct_stylebox if selected_answer == correct_answer else incorrect_stylebox, selected_answer == correct_answer)
+	else:
+		# 玩家還沒答題，暫存對手的答案
+		opponent_pending_answer = {
+			"button_path": opponent_button_paths[random_index],
+			"is_correct": selected_answer == correct_answer
+		}
+
+	# 禁用其他對手按鈕
+	disable_other_buttons(opponent_button_paths[random_index], opponent_button_paths)
+
+	# 檢查是否所有選項都已經被按下
+	check_all_answered()
+
+# 加載題目和選項
+func load_question(content, options):
+	$Background/Topic.text = content
+	for i in range(button_paths.size()):
+		get_node(button_paths[i] + "/content").text = options[i]
+
+	for i in range(opponent_button_paths.size()):
+		get_node(opponent_button_paths[i] + "/content").text = options[i]
+
+# 連接所有選項按鈕
+func connect_buttons():
+	for path in button_paths:
+		get_node(path).connect("pressed", self, "_on_button_pressed", [path])
+
+# 玩家按下的按鈕行為
+func _on_button_pressed(button_path: String):
+	if player_answered:
+		return  # 如果玩家已經答題，則忽略
+
+	player_answered = true  # 玩家已經答題
+	var selected_answer = get_node(button_path + "/content").text
+	# 檢查選擇的答案是否正確
+	if selected_answer == correct_answer:
+		print("Player chose correct answer")  # 答案正確
+		add_score()  # 加分
+		apply_player_style(button_path, correct_stylebox, true)  # 顯示玩家正確樣式
+		$Background/Player/correct.show()
+	else:
+		print("Player chose incorrect answer")  # 答案錯誤
+		apply_player_style(button_path, incorrect_stylebox, false)  # 顯示玩家錯誤樣式
+		$Background/Player/incorrect.show()
+	
+	# 如果對手比玩家先答題，現在顯示對手的按鈕效果
+	if opponent_pending_answer != null:
+		apply_opponent_style(opponent_pending_answer["button_path"], correct_stylebox if opponent_pending_answer["is_correct"] else incorrect_stylebox, opponent_pending_answer["is_correct"])
+		opponent_pending_answer = null  # 清除對手的暫存狀態
 
 	# 禁用其他按鈕
-	disable_other_buttons(button_path)
+	disable_other_buttons(button_path, button_paths)
 
-## 應用正確答案的按鈕樣式，顯示 correct 圖案
-func apply_correct_button_style(button_path: String) -> void:
+	# 檢查是否所有選項都已經被按下
+	check_all_answered()
+
+# 檢查是否所有選項已經被回答
+func check_all_answered():
+	if player_answered and opponent_answered:
+		# 玩家和對手都已經答題，啟動3秒延遲跳題
+		if delay_timer.is_stopped():
+			delay_timer.start()
+
+# 根據基礎分數和剩餘時間加分
+func add_opponent_score():
+	target_score_2 += base_score_per_question
+	target_score_2 += countdown_time  # 對手計分區塊加上剩餘時間
+	target_score_2 = clamp(target_score_2, 0, max_score)
+	GlobalVar.opponent_score = target_score_2
+	smooth_update_score()
+
+func add_score():
+	target_score_1 += base_score_per_question
+	target_score_1 += countdown_time  # 玩家計分區塊加上剩餘時間
+	target_score_1 = clamp(target_score_1, 0, max_score)
+	GlobalVar.player_score = target_score_1
+	smooth_update_score()
+
+func smooth_update_score():
+	# 使用Tween來平滑更新玩家分數條
+	var tween_1 =  $Background/player_score/Tween
+	if tween_1.is_active():
+		tween_1.stop_all()
+	tween_1.interpolate_property($Background/player_score/score, "value", current_score_1, target_score_1, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween_1.start()
+	current_score_1 = target_score_1
+
+	# 使用Tween來平滑更新對手分數條
+	var tween_2 =  $Background/oppo_score/Tween
+	if tween_2.is_active():
+		tween_2.stop_all()
+	tween_2.interpolate_property($Background/oppo_score/score2, "value", current_score_2, target_score_2, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween_2.start()
+	current_score_2 = target_score_2
+	update_score_display()
+
+# 更新分數顯示
+func update_score_display():
+	$Background/player_score/word.text = str(current_score_1)
+	$Background/oppo_score/word.text = str(current_score_2)
+
+# 禁用其他選項按鈕
+func disable_other_buttons(correct_path: String, paths: Array):
+	for path in paths:
+		if path != correct_path:
+			get_node(path).disabled = true
+
+# 適用於玩家的按鈕樣式應用
+func apply_player_style(button_path: String, stylebox, is_correct: bool):
 	var button = get_node(button_path)
-	
-	# 獲取按鈕中的正確與錯誤圖案
-	var player_correct = button.get_node("player_correct")  # 假設 player_correct 是正確圖案的節點
-	var player_incorrect = button.get_node("player_incorrect")  # 假設 player_incorrect 是錯誤圖案的節點
-	
-	# 顯示正確圖案並隱藏錯誤圖案
-	if player_correct != null:
-		player_correct.visible = true
-	if player_incorrect != null:
-		player_incorrect.visible = false
-	
-	# 更新按鈕樣式
-	button.add_stylebox_override("normal", correct_stylebox)
-	button.add_stylebox_override("hover", correct_stylebox)
-	button.add_stylebox_override("pressed", correct_stylebox)
-	button.add_stylebox_override("focus", correct_stylebox)
+	# 更新玩家的按鈕樣式
+	button.add_stylebox_override("normal", stylebox)
+	button.add_stylebox_override("hover", stylebox)
+	button.add_stylebox_override("pressed", stylebox)
+	button.add_stylebox_override("focus", stylebox)
+	# 顯示玩家的正確或錯誤圖標
+	button.get_node("player_correct").visible = is_correct
+	button.get_node("player_incorrect").visible = not is_correct
 
-## 應用錯誤答案的按鈕樣式，顯示 incorrect 圖案
-func apply_incorrect_button_style(button_path: String) -> void:
+# 適用於對手的按鈕樣式應用
+# 如果玩家已經答題，對手按鈕樣式會有變化
+func apply_opponent_style(button_path: String, stylebox, is_correct: bool):
 	var button = get_node(button_path)
-	
-	# 獲取按鈕中的正確與錯誤圖案
-	var player_correct = button.get_node("player_correct")
-	var player_incorrect = button.get_node("player_incorrect")
-	
-	# 顯示錯誤圖案並隱藏正確圖案
-	if player_correct != null:
-		player_correct.visible = false
-	if player_incorrect != null:
-		player_incorrect.visible = true
-	
-	# 更新按鈕樣式
-	button.add_stylebox_override("normal", incorrect_stylebox)
-	button.add_stylebox_override("hover", incorrect_stylebox)
-	button.add_stylebox_override("pressed", incorrect_stylebox)
-	button.add_stylebox_override("focus", incorrect_stylebox)
+	# 更新對手的按鈕樣式
+	button.add_stylebox_override("normal", stylebox)
+	button.add_stylebox_override("hover", stylebox)
+	button.add_stylebox_override("pressed", stylebox)
+	button.add_stylebox_override("focus", stylebox)
+	# 顯示對手的正確或錯誤圖標
+	button.get_node("oppo_correct").visible = is_correct
+	button.get_node("oppo_incorrect").visible = not is_correct
 
-## Disable其他button 
-## 防止玩家按到2個以上
-func disable_other_buttons(button_path: String) -> void:
-	match button_path:
-		"Background/Options1":
-			button_path_array.remove(0)
-		"Background/Options2":
-			button_path_array.remove(1)
-		"Background/Options3":
-			button_path_array.remove(2)
-		"Background/Options4":
-			button_path_array.remove(3)
-	
-	for button_path in button_path_array:
-		get_node(button_path).disabled = true
-
-## 加載題目和選項
-func load_question(content, option1, option2, option3, option4):
-	$Background/Topic.text = content
-	$Background/Options1/content.text = option1
-	$Background/Options2/content.text = option2
-	$Background/Options3/content.text = option3
-	$Background/Options4/content.text = option4
-
-## 重置所有按鈕狀態
-func reset_buttons():
-	for path in button_path_array:
-		var button = get_node(path)
-		var player_correct = button.get_node("player_correct")
-		var player_incorrect = button.get_node("player_incorrect")
-		player_correct.hide()
-		
-
-		# 重置按鈕樣式
-		button.add_stylebox_override("normal", default_stylebox)
-		button.add_stylebox_override("hover", a_stylebox)
-		button.add_stylebox_override("pressed", a_stylebox)
-
-		# 允許再次點擊按鈕
-		button.disabled = false
-
-## 加載新題目，並重新開始倒數計時
-func load_new_question():
-	# 重置按鈕狀態
-	reset_buttons()
-
-	# 重設新題目和選項
-	shortquestion_content = new_question_content
-	shortquestion_option1 = new_question_option1
-	shortquestion_option2 = new_question_option2
-	shortquestion_option3 = new_question_option3
-	shortquestion_option4 = new_question_option4
-	answer = new_answer
-
-	# 加載新的題目和選項
-	load_question(shortquestion_content, shortquestion_option1, shortquestion_option2, shortquestion_option3, shortquestion_option4)
-	
-	# 重置倒數計時
-	countdown_time = 10
-	update_countdown_label()
-	countdown_timer.start()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=2]
+[gd_scene load_steps=78 format=2]
 
 [ext_resource path="res://Fonts/noto_sans_48.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Fonts/noto_sans_64.tres" type="DynamicFont" id=2]
@@ -55,7 +55,6 @@
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt12.png" type="Texture" id=53]
 [ext_resource path="res://AttackAnimation/Spark/spark8.png" type="Texture" id=54]
 [ext_resource path="res://AttackAnimation/Spark/spark1.png" type="Texture" id=55]
-[ext_resource path="res://Enemy/Enemy1.png" type="Texture" id=56]
 
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.886275, 0.941176, 0.933333, 1 )
@@ -257,7 +256,6 @@ text = "查看全文 ▼"
 [node name="Enemy" type="Sprite" parent="BattleBackground/Question"]
 position = Vector2( -487, 221 )
 scale = Vector2( 0.562963, 0.521898 )
-texture = ExtResource( 56 )
 
 [node name="Option_A" type="Button" parent="BattleBackground"]
 margin_left = 45.0

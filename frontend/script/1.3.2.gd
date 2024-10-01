@@ -57,3 +57,6 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 func show_error_message(message: String) -> void:
 	# 顯示錯誤訊息給使用者，例如透過一個標籤或彈出視窗
 	print(message)
+
+func _on_Back_pressed():
+	get_tree().change_scene("res://Scene/SignIn.tscn")

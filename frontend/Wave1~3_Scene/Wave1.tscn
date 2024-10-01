@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=2]
+[gd_scene load_steps=78 format=2]
 
 [ext_resource path="res://Fonts/noto_sans_48.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Fonts/noto_sans_64.tres" type="DynamicFont" id=2]
@@ -55,7 +55,6 @@
 [ext_resource path="res://AttackAnimation/Spark/spark4.png" type="Texture" id=53]
 [ext_resource path="res://AttackAnimation/Spark/spark8.png" type="Texture" id=54]
 [ext_resource path="res://AttackAnimation/Spark/spark1.png" type="Texture" id=55]
-[ext_resource path="res://Enemy/Enemy1.png" type="Texture" id=56]
 
 [sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 0.886275, 0.941176, 0.933333, 1 )
@@ -255,7 +254,6 @@ text = "查看全文 ▼"
 [node name="Enemy" type="Sprite" parent="BattleBackground/Question"]
 position = Vector2( -487, 221 )
 scale = Vector2( 0.562963, 0.521898 )
-texture = ExtResource( 56 )
 
 [node name="Option_A" type="Button" parent="BattleBackground"]
 margin_left = 45.0
@@ -314,6 +312,7 @@ icon_align = 1
 expand_icon = true
 
 [node name="FullStory" parent="BattleBackground" instance=ExtResource( 7 )]
+visible = false
 
 [node name="PauseScene" parent="BattleBackground" instance=ExtResource( 8 )]
 visible = false
@@ -331,6 +330,8 @@ animation = "Spark"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
+[node name="HTTPRequest2" type="HTTPRequest" parent="."]
+
 [connection signal="pressed" from="BattleBackground/PauseButton" to="." method="_on_PauseButton_pressed"]
 [connection signal="pressed" from="BattleBackground/Question/OpenStoryButton" to="." method="_on_OpenStoryButton_pressed"]
 [connection signal="pressed" from="BattleBackground/Option_A" to="." method="_on_Option_A_pressed"]
@@ -340,3 +341,4 @@ animation = "Spark"
 [connection signal="timeout" from="BattleBackground/ChangeLevelTimer" to="." method="_on_ChangeLevelTimer_timeout"]
 [connection signal="animation_finished" from="BattleBackground/AttackAnimation" to="." method="_on_AttackAnimation_animation_finished"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
+[connection signal="request_completed" from="HTTPRequest2" to="." method="_on_HTTPRequest2_request_completed"]

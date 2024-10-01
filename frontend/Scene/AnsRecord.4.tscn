@@ -211,7 +211,7 @@ custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = ExtResource( 6 )
 custom_styles/normal = SubResource( 4 )
 text = "總評：
-我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評我是總評"
+回答清晰且完整，但可以再提供更多具體的觀測技術或歷史背景以強化論述。"
 
 [node name="cross" type="Button" parent="bg"]
 margin_left = 1789.0
@@ -246,7 +246,7 @@ margin_right = 44.0
 margin_bottom = -163.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 2 )
-text = "87"
+text = "85"
 
 [node name="correct" type="Label" parent="bg"]
 margin_left = 355.0
@@ -274,7 +274,7 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 6 )
-text = "40"
+text = "90"
 align = 1
 
 [node name="correct_detail" type="RichTextLabel" parent="bg"]
@@ -288,7 +288,7 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 7 )
 custom_styles/normal = SubResource( 3 )
-text = "請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?"
+text = "所有問題及回答均準確反映文章的主要內容與細節。"
 
 [node name="Completeness" type="Label" parent="bg"]
 margin_left = 784.0
@@ -334,7 +334,7 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 7 )
 custom_styles/normal = SubResource( 3 )
-text = "請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?"
+text = "選擇題和問答題提供了足夠的資訊，但可以考慮增加更多上下文背景，以便更深入了解黑洞觀測的背景與挑戰。"
 
 [node name="clarity" type="Label" parent="bg"]
 margin_left = 1210.0
@@ -362,7 +362,7 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 6 )
-text = "100"
+text = "90"
 align = 1
 
 [node name="clsr_detail" type="RichTextLabel" parent="bg"]
@@ -376,7 +376,7 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 7 )
 custom_styles/normal = SubResource( 3 )
-text = "請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?請問李多慧的男朋友是誰?"
+text = "表達方式簡潔明瞭，易於理解，無重大語言錯誤，建議在某些部分增加細節以增強說服力。"
 
 [connection signal="pressed" from="bg/content" to="." method="_on_content_pressed"]
 [connection signal="pressed" from="bg/wave1" to="." method="_on_wave1_pressed"]
