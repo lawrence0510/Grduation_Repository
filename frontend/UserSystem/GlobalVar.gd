@@ -16,3 +16,5 @@ var question2 = []
 var question3 = []
 
 var aiResponse = ""
+
+var article_id = 0

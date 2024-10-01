@@ -26,6 +26,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			# 抓取時間的月、日、時、分
 			var time = entry["time"].substr(5, 11)  # 只取 "MM-DD HH:MM" 部分
 			var title = entry.get("article_title", "未知標題")  # 使用 article_title，如果無則顯示“未知標題”
+			var id = entry["article_id"]
 			
 			# 處理標題：限制在13個中文字，超過則補「...」，少於則補空格
 			var title_length = title.length()
@@ -40,17 +41,18 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			data_list.append({
 				"time": time,
 				"title": title,
-				"score": score
+				"score": score,
+				"id": id
 			})
 			
 		# 刷新 UI，動態生成 Label
 		for data in data_list:
 			var text = data["time"] + "              " + data["title"] + "             " + data["score"]
-			create_button_r(text)
+			create_button_r(text, data["id"])
 	else:
 		print("Error parsing JSON: ", json.error_string)
 
-func create_button_r(text):
+func create_button_r(text, id):
 	vbox.set("custom_constants/separation", 10)
 	
 	var new_button = Button.new()  # 建立新的 Button
@@ -81,10 +83,11 @@ func create_button_r(text):
 	new_button.add_stylebox_override("hover", preload("res://Fonts/record_line.tres"))
 
 	# 設定 Button 的按下事件
-	new_button.connect("pressed", self, "_on_button_pressed", [text])
+	new_button.connect("pressed", self, "_on_button_pressed", [id])
 	vbox.add_child(new_button)  # 將 Button 加入 VBoxContainer
 
 # 按鈕被按下時的處理函數
 func _on_button_pressed(text):
-	print("Button pressed with text: " + text)
+	GlobalVar.article_id = text
+	print(GlobalVar.article_id)
 	get_tree().change_scene("res://scene/AnsRecord.0.tscn")
