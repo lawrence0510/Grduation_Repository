@@ -123,44 +123,42 @@ func _on_AttackAnimation_animation_finished() -> void:
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
 
-#	full_story_scene.setStory(json.result[0].article_content)
+	var story = json.result[0].article_content
 
 	#設定文章
-	var sen = "文字文字文字文。字文字文字文字文字。文字文字文字文字文字文字文字文字文字文字文字文字文字文。字文字文字文字文字。文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字。文字文字文字文文字文字文字文。字文字文字文字文字字文文字文字文字文。字文字文字文字文字。文字文字文字文字文字文字文字文字文字文字文字文字字文字文字"
 	GlobalVar.story = json.result[0].article_content
 	
 	#修改文章格式
-	#每55個字元就換行一次
-	var index = 55
-	#設定左邊的留白
-	sen = sen.insert(0, "      ")
-	while sen.length() > index:
-		
-		
-		sen = sen.insert(index, "\n      ")
-		index  = index + 55
-
-	
 	#跑過每個字元看有沒有句號
 	var i = 0
 	#用來記錄句號數量
 	var pExist = 0
-	while sen.length() > i:
-		print(i)
-		if sen[i] == "。":
+	#紀錄距離上一次換行過了幾個字元
+	var distance = 0
+	#設定左邊的留白
+	story = story.insert(0, "      ")
+	while story.length() > i:
+		distance = distance + 1
+		if story[i] == "。":
 			pExist = pExist + 1
 		
 		#如果有三個句號，要換段落
 		if pExist == 3:
-			sen = sen.insert(i + 1, "\n\n      ")
+			story = story.insert(i + 1, "\n\n      ||")
 			pExist = 0
-
+			distance = 0
+		
+		#經過了55個字元要換行
+		if distance == 55:
+			story = story.insert(i + 1, "\n      --")
+			pExist = 0
+			distance = 0
 		i = i + 1
+	
 	print("字元數", i)
 	
-	
 
-	full_story_scene.setStory(sen)
+	full_story_scene.setStory(story)
 	
 	$BattleBackground/Question.text = json.result[0].question_1
 	$BattleBackground/Option_A.text = "A. " + json.result[0].question1_choice1
