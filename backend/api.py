@@ -1581,6 +1581,51 @@ class RecordHistory(Resource):
         finally:
             if connection:
                 connection.close()
+history_id_parser = reqparse.RequestParser()
+history_id_parser.add_argument(
+    'history_id', type=int, required=True, help='歷史紀錄id')
+@history_ns.route('/get_history_with_article')
+class GetHistoryWithArticle(Resource):
+    @history_ns.expect(history_id_parser)
+    def get(self):
+        '''根據 history_id 獲取歷史資料並包括對應的文章資料'''
+        args = history_id_parser.parse_args()
+        history_id = args['history_id']
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor(dictionary=True)
+                
+                # 使用 JOIN 將 History 和 Article 表聯結
+                cursor.execute("""
+                    SELECT H.*, A.*
+                    FROM History H
+                    JOIN Article A ON H.article_id = A.article_id
+                    WHERE H.history_id = %s
+                """, (history_id,))
+                
+                result = cursor.fetchone()
+
+                if result:
+                    for key, value in result.items():
+                        if isinstance(value, Decimal):
+                            result[key] = str(value)  # 轉成字串
+                        elif isinstance(value, datetime):
+                            result[key] = value.strftime("%Y-%m-%d %H:%M:%S")
+                        elif isinstance(value, date):
+                            result[key] = value.strftime("%Y-%m-%d")
+                    return result, 200
+                else:
+                    return {"error": "History or Article not found"}, 404
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+
 
 
 @history_ns.route('/get_history_from_user')
