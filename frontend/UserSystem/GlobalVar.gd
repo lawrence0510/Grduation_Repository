@@ -17,4 +17,4 @@ var question3 = []
 
 var aiResponse = ""
 
-var article_id = 0
+var history_id = 0

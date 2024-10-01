@@ -26,7 +26,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			# 抓取時間的月、日、時、分
 			var time = entry["time"].substr(5, 11)  # 只取 "MM-DD HH:MM" 部分
 			var title = entry.get("article_title", "未知標題")  # 使用 article_title，如果無則顯示“未知標題”
-			var id = entry["article_id"]
+			var id = entry["history_id"]
 			
 			# 處理標題：限制在13個中文字，超過則補「...」，少於則補空格
 			var title_length = title.length()
@@ -88,6 +88,6 @@ func create_button_r(text, id):
 
 # 按鈕被按下時的處理函數
 func _on_button_pressed(text):
-	GlobalVar.article_id = text
-	print(GlobalVar.article_id)
+	GlobalVar.history_id = text
+	print("History_id: " + str(GlobalVar.history_id))
 	get_tree().change_scene("res://scene/AnsRecord.0.tscn")
