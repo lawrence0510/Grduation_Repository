@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Pic/Free-Horizontal-2D-Game-Backgrounds-2.jpg" type="Texture" id=1]
 [ext_resource path="res://Fonts/font1 - 複製 (8) - 複製 - 複製.tres" type="DynamicFont" id=2]
@@ -47,15 +47,6 @@ corner_radius_bottom_left = 50
 [sub_resource type="StyleBoxEmpty" id=8]
 
 [sub_resource type="StyleBoxEmpty" id=6]
-
-[sub_resource type="DynamicFont" id=11]
-size = 30
-outline_color = Color( 0, 0, 0, 1 )
-use_filter = true
-font_data = ExtResource( 6 )
-
-[sub_resource type="StyleBoxFlat" id=12]
-bg_color = Color( 0, 0, 0, 0 )
 
 [node name="Result_page" type="Control"]
 anchor_right = 1.0
@@ -184,32 +175,8 @@ margin_bottom = 870.0
 
 [node name="Timer" type="Timer" parent="."]
 
-[node name="finish" type="Button" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 792.0
-margin_top = 399.0
-margin_right = 882.0
-margin_bottom = 443.0
-mouse_default_cursor_shape = 2
-custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 11 )
-custom_styles/hover = SubResource( 12 )
-custom_styles/pressed = SubResource( 12 )
-custom_styles/focus = SubResource( 12 )
-custom_styles/disabled = SubResource( 12 )
-custom_styles/normal = SubResource( 12 )
-text = "回首頁"
-
 [connection signal="text_entered" from="MarginContainer/VBoxContainer/InputArea/MarginContainer/Input" to="." method="_on_Input_text_entered"]
 [connection signal="text_entered" from="MarginContainer/VBoxContainer/InputArea/MarginContainer/Input" to="MarginContainer/VBoxContainer/InputArea/MarginContainer/Input" method="_on_Input_text_entered"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
 [connection signal="request_completed" from="HTTPRequest" to="CommandProcessor" method="_on_HTTPRequest_request_completed"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
-[connection signal="pressed" from="finish" to="." method="_on_finish_pressed"]

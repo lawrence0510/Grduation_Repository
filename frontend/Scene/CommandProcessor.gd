@@ -7,8 +7,6 @@ func process_command(input: String):
 	# 建立 POST 請求的資料
 	var data = {
 		"user_id": 2,
-		#之後要改成下面的
-		#"user_id": GlobalVar.user_id,
 		"user_input": input,
 	}
 	# 將資料轉換為 JSON 格式

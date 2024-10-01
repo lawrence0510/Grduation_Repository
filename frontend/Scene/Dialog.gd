@@ -94,6 +94,4 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		add_response_to_game(ai_response)
 	else:
 		print("error")
-
-func _on_finish_pressed():
-	get_tree().change_scene("res://Scene/MainPage.tscn")
+	
