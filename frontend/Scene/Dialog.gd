@@ -42,14 +42,14 @@ func _on_Input_text_entered(new_text):
 	#每30個char去換行一次
 	var index = 35
 	if new_text.length() <= 35:
-		new_text = new_text.insert(new_text.length(), "      ")
+		new_text = new_text.insert(new_text.length(), "        ")
 	else:
 		while new_text.length() > index:
-			new_text = new_text.insert(index, "      \n")
+			new_text = new_text.insert(index, "        \n")
 			
 			#因為前面有增加空格, 所以index加的長度需要比index原本的長度再+6
-			index  = index + 42
-		new_text = new_text.insert(new_text.length(), "      ")
+			index  = index + 44
+		new_text = new_text.insert(new_text.length(), "        ")
 		
 	input_response.set_text(new_text)
 	add_response_to_game(input_response)
@@ -88,7 +88,6 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		
 		while responseLength > index:
 			response = response.insert(index, "\n      ")
-
 			index  = index + 40
 
 		ai_response.set_text(response)
