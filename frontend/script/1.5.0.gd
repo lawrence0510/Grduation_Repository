@@ -96,9 +96,9 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			"question2_explanation": json.result.question2_explanation,
 			"question3": json.result.question3,
 			"question3_answer": json.result.question3_answer,
-			"question3_explanation1": json.result.question3_explanation1,
-			"question3_explanation2": json.result.question3_explanation2,
-			"question3_explanation3": json.result.question3_explanation3,
+			"q3_explanation1": json.result.q3_explanation1,
+			"q3_explanation2": json.result.q3_explanation2,
+			"q3_explanation3": json.result.q3_explanation3,
 		}
 		
 		$bg/content2.text = GlobalVar.history_data["article_content"]
