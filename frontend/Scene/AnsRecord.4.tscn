@@ -210,8 +210,7 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = ExtResource( 6 )
 custom_styles/normal = SubResource( 4 )
-text = "總評：
-回答清晰且完整，但可以再提供更多具體的觀測技術或歷史背景以強化論述。"
+text = "="
 
 [node name="cross" type="Button" parent="bg"]
 margin_left = 1789.0

@@ -1,21 +1,24 @@
 extends Node2D
 
-onready var content: Button = $bg/content
-onready var wave1: Button = $bg/wave1
-onready var wave2: Button = $bg/wave2
-onready var wave3: Button = $bg/wave3
-onready var score: Button = $bg/score
-onready var question3: RichTextLabel = $bg/Q
-onready var answer3: RichTextLabel = $bg/A
-onready var explanation3: RichTextLabel = $bg/details
-onready var score3: Label = $"bg/XX score"
+onready var aicomment: RichTextLabel = $bg/details
+onready var score1: Label = $bg/correct/correct_score
+onready var score2: Label = $bg/Completeness/com_score
+onready var score3: Label = $bg/clarity/clar_score
+onready var explanation1: RichTextLabel = $bg/correct_detail
+onready var explanation2: RichTextLabel = $bg/com_detail
+onready var explanation3: RichTextLabel = $bg/clsr_detail
+onready var total_score: Label = $"bg/XX score"
 
 func _ready() -> void:
-	score3.text = str(GlobalVar.history_data["q3_total_score"]) + "/15"
-	question3.text = GlobalVar.history_data["question3"]
-	answer3.text = GlobalVar.history_data["q3_user_answer"]
-	explanation3.text = "標準答案： " + GlobalVar.history_data["question3_answer"] + "\n答題評價： " + GlobalVar.history_data["q3_aicomment"]
-
+	aicomment.text = "總評： " + GlobalVar.history_data["q3_aicomment"]
+	total_score.text = str(GlobalVar.history_data["total_score"]) + "/10"
+	score1.text = str(GlobalVar.history_data["q3_score_1"]) + "/5"
+	score2.text = str(GlobalVar.history_data["q3_score_2"]) + "/5"
+	score3.text = str(GlobalVar.history_data["q3_score_3"]) + "/5"
+	explanation1.text = GlobalVar.history_data["q3_explanation1"]
+	explanation2.text = GlobalVar.history_data["q3_explanation2"]
+	explanation3.text = GlobalVar.history_data["q3_explanation3"]
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
