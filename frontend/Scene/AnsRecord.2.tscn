@@ -214,10 +214,11 @@ margin_left = -23.0
 margin_top = -254.0
 margin_right = 164.0
 margin_bottom = -181.0
-custom_colors/font_color = Color( 1, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 1, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 2 )
-text = "不正確 X"
+text = "test"
 
 [node name="details" type="RichTextLabel" parent="bg"]
 margin_left = 385.0

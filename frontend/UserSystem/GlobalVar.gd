@@ -19,6 +19,6 @@ var question3 = []
 
 var aiResponse = ""
 
-var history_id = 1
+var history_id = 5
 
 var history_data = {}

@@ -11,6 +11,7 @@ onready var optionb: RichTextLabel = $bg/B
 onready var optionc: RichTextLabel = $bg/C
 onready var optiond: RichTextLabel = $bg/D
 onready var detail: RichTextLabel = $bg/details
+onready var iscorrect: Label = $"bg/(in)correct"
 
 func _ready() -> void:
 	question1.text = GlobalVar.history_data["question_1"]
@@ -19,6 +20,16 @@ func _ready() -> void:
 	optionc.text = "C. " + GlobalVar.history_data["question1_choice3"]
 	optiond.text = "D. " + GlobalVar.history_data["question1_choice4"]
 	detail.text = GlobalVar.history_data["question1_explanation"]
+	if GlobalVar.history_data["q1_is_correct"] == 1:
+		iscorrect.text = "正確 ✓"
+		iscorrect.add_color_override("font_color", Color8(93, 234, 85))
+		iscorrect.add_color_override("shadow_color", Color8(93, 234, 85))
+		iscorrect.add_color_override("outline_color", Color8(93, 234, 85))
+	else:
+		iscorrect.text = "不正確 X"
+		iscorrect.add_color_override("font_color", Color8(255, 113, 113))
+		iscorrect.add_color_override("shadow_color", Color8(255, 113, 113))
+		iscorrect.add_color_override("outline_color", Color8(255, 113, 113))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
