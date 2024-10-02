@@ -22,7 +22,7 @@ func _on_white_record_pressed():
 	get_tree().change_scene("res://scene/1.4.3.tscn")
 
 func _on_white_school_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene("res://Scene/textbook_selection.tscn")
 
 func _on_white_story_pressed():
 	GlobalVar.current_category = 'story'

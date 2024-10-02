@@ -12,4 +12,4 @@ func _process(delta: float) -> void:
 			get_tree().quit()
 
 func _on_cross_pressed():
-	get_tree().change_scene("res://scene/1.4.4.tscn")	
+	get_tree().change_scene("res://scene/1.4.3.tscn")	
