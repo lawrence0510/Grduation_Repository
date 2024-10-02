@@ -839,7 +839,7 @@ class DataList(Resource):
                     JOIN Question AS q ON a.article_id = q.article_id
                     WHERE a.article_category = %s
                     AND a.article_pass = 1
-                    AND a.article_grade = %s  -- 確保文章適合當前年齡
+                    AND a.article_grade <= %s  -- 確保文章適合當前年齡
                     AND NOT EXISTS (
                         SELECT 1
                         FROM History h

@@ -27,7 +27,7 @@ func _ready() -> void:
 	var data = {
 #		"user_id": GlobalVar.user_id,
 		"user_id": 15,
-		"article_category": "story",
+		"article_category": GlobalVar.current_category,
 	}
 	
 	var json_data = JSON.print(data)
