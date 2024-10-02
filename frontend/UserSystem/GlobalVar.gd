@@ -23,4 +23,4 @@ var history_id = 5
 
 var history_data = {}
 
-var current_category = "story"
+var current_category = "Chinese"

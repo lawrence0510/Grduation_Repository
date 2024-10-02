@@ -86,11 +86,14 @@ func _on_ScrollContainer_gui_input(event: InputEvent) -> void:
 
 ## 按下各關卡圖片
 func _on_chinese_pressed() -> void:
+	GlobalVar.current_category = "Chinese"
 	get_tree().change_scene("res://scene/1.4.5.tscn")
 
 func _on_society_pressed() -> void:
+	GlobalVar.current_category = "Social"
 	get_tree().change_scene("res://scene/1.4.5.tscn")
 
 func _on_nature_pressed() -> void:
+	GlobalVar.current_category = "Science"
 	get_tree().change_scene("res://scene/1.4.5.tscn")
 

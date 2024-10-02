@@ -128,7 +128,7 @@ def insert_data_to_db(data):
         for row in data:
             article_title = row['Title']
             article_link = row['URL']
-            article_category = row['Category']
+            article_category = 'news'
             article_content = row['Content']
             article_expired_day = (datetime.now() + timedelta(days=60)).strftime('%Y-%m-%d')
 

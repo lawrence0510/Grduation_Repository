@@ -18,39 +18,50 @@ func _ready():
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	print("Response Code: ", response_code)
-	var json = JSON.parse(body.get_string_from_utf8())
-	if json.error == OK:
-		var response_data = json.result  # 解析回傳資料
-		data_list.clear()  # 清空 data_list 以重新填入新資料
-		for entry in response_data:
-			# 抓取時間的月、日、時、分
-			var time = entry["time"].substr(5, 11)  # 只取 "MM-DD HH:MM" 部分
-			var title = entry.get("article_title", "未知標題")  # 使用 article_title，如果無則顯示“未知標題”
-			var id = entry["history_id"]
-			
-			# 處理標題：限制在13個中文字，超過則補「...」，少於則補空格
-			var title_length = title.length()
-			if title_length > 13:
-				title = title.substr(0, 12) + "..."  # 截斷到11字並補上「...」
-			elif title_length < 13:
-				title = title.ljust(13)  # 如果不足13字，則補滿空格
 
-			var score = str(entry["total_score"])  # 抓取 total_score
-			
-			# 將資料加入 data_list
-			data_list.append({
-				"time": time,
-				"title": title,
-				"score": score,
-				"id": id
-			})
-			
-		# 刷新 UI，動態生成 Label
-		for data in data_list:
-			var text = data["time"] + "              " + data["title"] + "             " + data["score"]
-			create_button_r(text, data["id"])
+	# 檢查 HTTP 狀態碼
+	if response_code == 200:
+		var json = JSON.parse(body.get_string_from_utf8())
+		if json.error == OK:
+			var response_data = json.result  # 解析回傳資料
+			data_list.clear()  # 清空 data_list 以重新填入新資料
+			if response_data.size() == 0:
+				return
+
+			for entry in response_data:
+				# 處理每一筆資料
+				var time = entry["time"].substr(5, 11)  # 只取 "MM-DD HH:MM" 部分
+				var title = entry.get("article_title", "未知標題")  # 使用 article_title，如果無則顯示“未知標題”
+				var id = entry["history_id"]
+				
+				# 處理標題：限制在13個中文字，超過則補「...」，少於則補空格
+				var title_length = title.length()
+				if title_length > 13:
+					title = title.substr(0, 12) + "..."  # 截斷到11字並補上「...」
+				elif title_length < 13:
+					title = title.ljust(13)  # 如果不足13字，則補滿空格
+
+				var score = str(entry["total_score"])  # 抓取 total_score
+				
+				# 將資料加入 data_list
+				data_list.append({
+					"time": time,
+					"title": title,
+					"score": score,
+					"id": id
+				})
+				
+			# 刷新 UI，動態生成 Label
+			for data in data_list:
+				var text = data["time"] + "              " + data["title"] + "             " + data["score"]
+				create_button_r(text, data["id"])
+		else:
+			print("Error parsing JSON: ", json.error_string)
+	elif response_code == 404:
+		create_button_r("在" + GlobalVar.current_category + "類別中未找到任何作答紀錄", 0)
 	else:
-		print("Error parsing JSON: ", json.error_string)
+		print("Request failed with response code: ", response_code)
+
 
 func create_button_r(text, id):
 	vbox.set("custom_constants/separation", 10)
@@ -85,6 +96,8 @@ func create_button_r(text, id):
 	# 設定 Button 的按下事件
 	new_button.connect("pressed", self, "_on_button_pressed", [id])
 	vbox.add_child(new_button)  # 將 Button 加入 VBoxContainer
+	if(id == 0):
+		new_button.disabled = true
 
 # 按鈕被按下時的處理函數
 func _on_button_pressed(text):
