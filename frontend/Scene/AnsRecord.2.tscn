@@ -230,8 +230,6 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = ExtResource( 7 )
 custom_styles/normal = ExtResource( 6 )
-text = "解答：提高了黑洞影像的解析度
-詳解：格陵蘭望遠鏡的加入能夠有效提升照片的解析度，讓科學家獲得更真實的黑洞影像，為未來的研究打下基礎。"
 
 [node name="cross" type="Button" parent="bg"]
 margin_left = 1789.0
@@ -257,7 +255,6 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 3 )
 custom_styles/normal = ExtResource( 5 )
-text = "格陵蘭望遠鏡在這次黑洞觀測中的主要貢獻是什麼？"
 
 [node name="A" type="RichTextLabel" parent="bg"]
 margin_left = 390.0
@@ -270,7 +267,6 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
 custom_styles/normal = SubResource( 6 )
-text = "A) 提高了黑洞影像的解析度"
 
 [node name="B" type="RichTextLabel" parent="bg"]
 margin_left = 980.0
@@ -283,7 +279,6 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
-text = "B) 提供更多的觀測波段"
 
 [node name="C" type="RichTextLabel" parent="bg"]
 margin_left = 390.0
@@ -296,7 +291,6 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
 custom_styles/normal = ExtResource( 5 )
-text = "C) 增加了觀測站的數量"
 
 [node name="D" type="RichTextLabel" parent="bg"]
 margin_left = 980.0
@@ -309,7 +303,6 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
 custom_styles/normal = ExtResource( 5 )
-text = "D) 減少了觀測的時間"
 
 [connection signal="pressed" from="bg/content" to="." method="_on_content_pressed"]
 [connection signal="pressed" from="bg/wave1" to="." method="_on_wave1_pressed"]

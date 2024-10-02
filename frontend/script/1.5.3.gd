@@ -4,11 +4,15 @@ onready var content: Button = $bg/content
 onready var wave1: Button = $bg/wave1
 onready var wave2: Button = $bg/wave2
 onready var wave3: Button = $bg/wave3
-onready var detail: WindowDialog = $"bg/detail"
 onready var score: Button = $bg/score
+onready var question3: RichTextLabel = $bg/Q
+onready var answer3: RichTextLabel = $bg/A
+onready var explanation3: RichTextLabel = $bg/details
 
 func _ready() -> void:
-	pass
+	question3.text = GlobalVar.history_data["question3"]
+	answer3.text = GlobalVar.history_data["q3_user_answer"]
+	explanation3.text = "標準答案： " + GlobalVar.history_data["question3_answer"] + "\n答題評價： " + GlobalVar.history_data["q3_aicomment"]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

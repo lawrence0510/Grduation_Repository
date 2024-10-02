@@ -223,7 +223,6 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = ExtResource( 7 )
 custom_styles/normal = ExtResource( 6 )
-text = "詳解：此次公布的黑洞照片不僅是為了研究 M87 黑洞的特性，同時也是為了驗證愛因斯坦的廣義相對論。這張照片提供了我們對於黑洞存在的直接證據。"
 
 [node name="cross" type="Button" parent="bg"]
 margin_left = 1789.0
@@ -249,7 +248,6 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 3 )
 custom_styles/normal = ExtResource( 5 )
-text = "此次黑洞照片的公布主要是為了驗證哪一項理論？"
 
 [node name="A" type="RichTextLabel" parent="bg"]
 margin_left = 390.0
@@ -262,7 +260,6 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
 custom_styles/normal = ExtResource( 5 )
-text = "A) 量子力學"
 
 [node name="B" type="RichTextLabel" parent="bg"]
 margin_left = 980.0
@@ -275,7 +272,6 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
-text = "B) 廣義相對論"
 
 [node name="C" type="RichTextLabel" parent="bg"]
 margin_left = 390.0
@@ -288,7 +284,6 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
 custom_styles/normal = ExtResource( 5 )
-text = "C) 特殊相對論"
 
 [node name="D" type="RichTextLabel" parent="bg"]
 margin_left = 980.0
@@ -301,7 +296,6 @@ custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
 custom_styles/normal = ExtResource( 5 )
-text = "D) 牛頓運動定律"
 
 [connection signal="pressed" from="bg/content" to="." method="_on_content_pressed"]
 [connection signal="pressed" from="bg/wave1" to="." method="_on_wave1_pressed"]

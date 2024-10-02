@@ -68,6 +68,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			"q3_score_2": json.result.q3_score_2,
 			"q3_score_3": json.result.q3_score_3,
 			"q3_total_score": json.result.q3_total_score,
+			"q3_aicomment": json.result.q3_aicomment,
 			"total_score": json.result.total_score,
 			"article_title": json.result.article_title,
 			"article_link": json.result.article_link,
@@ -97,7 +98,6 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			"question3_answer": json.result.question3_answer
 		}
 		
-		# 例如將文章內容顯示在某個UI元素中
 		$bg/content2.text = GlobalVar.history_data["article_content"]
 	else:
 		print("Error parsing JSON: ", json.error_string)

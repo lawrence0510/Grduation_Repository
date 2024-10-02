@@ -10,9 +10,15 @@ onready var optiona: RichTextLabel = $bg/A
 onready var optionb: RichTextLabel = $bg/B
 onready var optionc: RichTextLabel = $bg/C
 onready var optiond: RichTextLabel = $bg/D
+onready var detail: RichTextLabel = $bg/details
 
 func _ready() -> void:
-	question1.text = GlobalVar.history_data
+	question1.text = GlobalVar.history_data["question_1"]
+	optiona.text = "A. " + GlobalVar.history_data["question1_choice1"]
+	optionb.text = "B. " + GlobalVar.history_data["question1_choice2"]
+	optionc.text = "C. " + GlobalVar.history_data["question1_choice3"]
+	optiond.text = "D. " + GlobalVar.history_data["question1_choice4"]
+	detail.text = GlobalVar.history_data["question1_explanation"]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

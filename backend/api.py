@@ -146,6 +146,9 @@ history_parser.add_argument(
     'q2_user_answer', type=str, required=True, help='第二題使用者答案')
 history_parser.add_argument(
     'q3_user_answer', type=str, required=True, help='第三題使用者答案')
+history_parser.add_argument(
+    'q3_aicomment', type=str, required=True, help='第三題AI評價'
+)
 history_parser.add_argument('q3_score_1', type=int,
                             required=True, help='第三題評分1')
 history_parser.add_argument('q3_score_2', type=int,
@@ -1553,6 +1556,7 @@ class RecordHistory(Resource):
             q1_correct_answer = question_data['question1_answer']
             q2_correct_answer = question_data['question2_answer']
             q3_correct_answer = question_data['question3_answer']
+            q3_aicomment = args['q3_aicomment']
 
             q1_is_correct = int(args['q1_user_answer'] == q1_correct_answer)
             q2_is_correct = int(args['q2_user_answer'] == q2_correct_answer)
@@ -1564,13 +1568,13 @@ class RecordHistory(Resource):
                  * 0.26 + args['q3_score_3'] * 0.28)
 
             insert_query = """
-            INSERT INTO `History`(`history_id`, `user_id`, `article_id`, `question_id`, `time`, `q1_user_answer`, `q1_correct_answer`, `q1_is_correct`, `q2_user_answer`, `q2_correct_answer`, `q2_is_correct`, `q3_user_answer`, `q3_correct_answer`, `q3_score_1`, `q3_score_2`, `q3_score_3`, `q3_total_score`, `total_score`)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO `History`(`history_id`, `user_id`, `article_id`, `question_id`, `time`, `q1_user_answer`, `q1_correct_answer`, `q1_is_correct`, `q2_user_answer`, `q2_correct_answer`, `q2_is_correct`, `q3_user_answer`, `q3_correct_answer`, `q3_aicomment`, `q3_score_1`, `q3_score_2`, `q3_score_3`, `q3_total_score`, `total_score`)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
             cursor.execute(insert_query, (
                 new_history_id, args['user_id'], args['article_id'], question_id, time_now,
                 args['q1_user_answer'], q1_correct_answer, q1_is_correct, args['q2_user_answer'], q2_correct_answer, q2_is_correct,
-                args['q3_user_answer'], q3_correct_answer, args['q3_score_1'], args['q3_score_2'], args['q3_score_3'],
+                args['q3_user_answer'], q3_correct_answer, q3_aicomment, args['q3_score_1'], args['q3_score_2'], args['q3_score_3'],
                 args['q3_total_score'], total_score
             ))
             connection.commit()
