@@ -31,6 +31,47 @@ func _ready() -> void:
 		iscorrect.add_color_override("font_color", Color8(255, 113, 113))
 		iscorrect.add_color_override("shadow_color", Color8(255, 113, 113))
 		iscorrect.add_color_override("outline_color", Color8(255, 113, 113))
+	
+	var right_answer = GlobalVar.history_data["question2_answer"]
+
+	if(GlobalVar.history_data["question2_choice1"] == right_answer):
+		#正確答案是A
+		optiona.add_color_override("BG_color", Color8(93, 233, 85))
+	else:
+		optiona.add_color_override("BG_color", Color8(225, 225, 225))
+		
+	if(GlobalVar.history_data["question2_choice2"] == right_answer):
+		#正確答案是B
+		optionb.add_color_override("BG_color", Color8(93, 233, 85))
+	else:
+		optionb.add_color_override("BG_color", Color8(225, 225, 225))
+		
+	if(GlobalVar.history_data["question2_choice3"] == right_answer):
+		#正確答案是C
+		optionc.add_color_override("BG_color", Color8(93, 233, 85))
+	else:
+		optionc.add_color_override("BG_color", Color8(225, 225, 225))
+		
+	if(GlobalVar.history_data["question2_choice4"] == right_answer):
+		#正確答案是D
+		optiond.add_color_override("BG_color", Color8(93, 233, 85))
+	else:
+		optiond.add_color_override("BG_color", Color8(225, 225, 225))
+	
+	#使用者有選錯的情況（變紅色格子）	
+	if GlobalVar.history_data["q2_is_correct"] == 0:
+		if(GlobalVar.history_data["q2_user_answer"] == GlobalVar.history_data["question2_choice1"]):
+			#使用者選擇A且A是錯的
+			optiona.add_color_override("BG_color", Color8(255, 113, 113))
+		elif(GlobalVar.history_data["q2_user_answer"] == GlobalVar.history_data["question2_choice2"]):
+			#使用者選擇B且B是錯的
+			optionb.add_color_override("BG_color", Color8(255, 113, 113))
+		elif(GlobalVar.history_data["q2_user_answer"] == GlobalVar.history_data["question2_choice3"]):
+			#使用者選擇C且C是錯的
+			optionc.add_color_override("BG_color", Color8(255, 113, 113))
+		elif(GlobalVar.history_data["q2_user_answer"] == GlobalVar.history_data["question2_choice4"]):
+			#使用者選擇D且D是錯的
+			optiond.add_color_override("BG_color", Color8(255, 113, 113)) 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
