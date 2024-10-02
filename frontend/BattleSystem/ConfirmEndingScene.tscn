@@ -93,4 +93,5 @@ custom_styles/pressed = SubResource( 5 )
 custom_styles/normal = SubResource( 6 )
 text = "取消"
 
+[connection signal="pressed" from="ConfirmEndingButton" to="." method="_on_ConfirmEndingButton_pressed"]
 [connection signal="pressed" from="CancelButton" to="." method="_on_CancelButton_pressed"]
