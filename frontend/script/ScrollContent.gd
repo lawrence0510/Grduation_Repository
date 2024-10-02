@@ -9,7 +9,7 @@ var data_list = []
 
 func _ready():
 	# 用user_id找尋對應的history資料
-	var url = "http://nccumisreading.ddnsking.com:5001/History/get_history_from_user?user_id=" + str(2)
+	var url = "http://nccumisreading.ddnsking.com:5001/History/get_history_from_user?user_id=" + str(2) + "&article_category=" + GlobalVar.current_category
 	print("Request URL: " + url)
 	
 	var headers = ["Content-Type: application/json"]

@@ -1637,22 +1637,24 @@ class GetAllDataWithHistoryID(Resource):
             return {"error": "Unable to connect to the database"}, 500
 
 
-
+gethistory_id_parser = reqparse.RequestParser()
+gethistory_id_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
+gethistory_id_parser.add_argument('article_category', type=str, required=True, help='文章類別')
 @history_ns.route('/get_history_from_user')
 class GetHistoryFromUser(Resource):
-    @history_ns.expect(user_id_parser)
+    @history_ns.expect(gethistory_id_parser)
     def get(self):
-        '''根據 user_id 獲取歷史資料'''
-        args = user_id_parser.parse_args()
+        '''根據 user_id 獲取歷史資料並篩選 article_category'''
+        args = gethistory_id_parser.parse_args()
         user_id = args['user_id']
+        article_category = args['article_category']
 
         connection = create_db_connection()
         if connection is not None:
             try:
                 cursor = connection.cursor(dictionary=True)
-                # 查找對應的 user_id 的歷史資料
-                sql = "SELECT * FROM `History` WHERE `user_id` = %s"
-                cursor.execute(sql, (user_id,))
+                sql = "SELECT h.*, a.article_title FROM `History` h JOIN `Article` a ON h.article_id = a.article_id WHERE h.user_id = %s AND a.article_category = %s;"
+                cursor.execute(sql, (user_id,article_category))
                 histories = cursor.fetchall()
 
                 if histories:
@@ -1666,17 +1668,6 @@ class GetHistoryFromUser(Resource):
                         for key in history:
                             if isinstance(history[key], Decimal):
                                 history[key] = str(history[key])
-
-                        article_id = history.get('article_id')
-                        if article_id:
-                            article_sql = "SELECT `article_title` FROM `Article` WHERE `article_id` = %s"
-                            cursor.execute(article_sql, (article_id,))
-                            article = cursor.fetchone()
-                            if article:
-                                history['article_title'] = article['article_title']
-                            else:
-                                history['article_title'] = "Unknown Title"
-
                     return histories, 200
                 else:
                     return {"error": "No history found for the user"}, 404
@@ -1687,6 +1678,7 @@ class GetHistoryFromUser(Resource):
                 connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
+
 
 
 character_ns = api.namespace('Character', description='與角色操作相關之api')

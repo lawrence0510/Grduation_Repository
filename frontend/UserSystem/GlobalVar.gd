@@ -22,3 +22,5 @@ var aiResponse = ""
 var history_id = 5
 
 var history_data = {}
+
+var current_category = "story"
