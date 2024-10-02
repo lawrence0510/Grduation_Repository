@@ -5,9 +5,14 @@ onready var wave1: Button = $bg/wave1
 onready var wave2: Button = $bg/wave2
 onready var wave3: Button = $bg/wave3
 onready var score: Button = $bg/score
+onready var question1: RichTextLabel = $bg/Q
+onready var optiona: RichTextLabel = $bg/A
+onready var optionb: RichTextLabel = $bg/B
+onready var optionc: RichTextLabel = $bg/C
+onready var optiond: RichTextLabel = $bg/D
 
 func _ready() -> void:
-	pass
+	question1.text = GlobalVar.history_data
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
