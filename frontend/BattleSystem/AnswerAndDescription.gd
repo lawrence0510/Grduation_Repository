@@ -9,3 +9,7 @@ func _process(delta: float) -> void:
 		# 如果遊戲當前是全螢幕模式，則退出全螢幕
 		if OS.window_fullscreen:
 			get_tree().quit()
+
+
+func _on_FinishButton_pressed():
+	get_tree().change_scene("res://Scene/MainPage.tscn")

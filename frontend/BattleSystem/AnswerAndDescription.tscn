@@ -111,4 +111,5 @@ custom_styles/pressed = SubResource( 6 )
 custom_styles/normal = SubResource( 2 )
 text = "前往追問畫面"
 
+[connection signal="pressed" from="FinishButton" to="." method="_on_FinishButton_pressed"]
 [connection signal="pressed" from="AskButton" to="." method="_on_AskButton_pressed"]
