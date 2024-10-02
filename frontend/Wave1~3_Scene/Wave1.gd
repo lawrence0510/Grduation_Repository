@@ -5,6 +5,8 @@ onready var full_story_scene = $BattleBackground/FullStory
 onready var pause_scene = $BattleBackground/PauseScene
 onready var attack_animation
 onready var http_request: HTTPRequest = $HTTPRequest
+onready var http_request2: HTTPRequest = $HTTPRequest2
+onready var enemy_image = $BattleBackground/Question/Enemy
 
 var button_path_array = ["BattleBackground/Option_A", 
 						 "BattleBackground/Option_B",
@@ -14,7 +16,7 @@ var enemy_death_effect = preload("res://Enemy/EnemyDeathEffect.tscn")
 var health_bar = load("res://UserSystem/HealthBar.tscn").instance()
 var button_pressed = ""
 var right_button = ""
-
+var enemy_images = []
 
 ## 載入這個場景(Wave 1)後，馬上
 func _ready() -> void:
@@ -32,6 +34,13 @@ func _ready() -> void:
 	var headers = ["Content-Type: application/json"]
 	# 發送HTTP GET請求
 	http_request.request(url, headers, true, HTTPClient.METHOD_GET, json_data)
+	
+	var enemy_url = "http://nccumisreading.ddnsking.com:5001/Enemy/get_enemy_from_id"
+	var random = RandomNumberGenerator.new()
+	random.randomize()
+	var category_id = str(random.randi_range(1, 200))  # 生成 1 到 200 的隨機數字作為 category
+	print("category_id: " + str(category_id))
+	http_request2.request(enemy_url + "?enemy_category=" + category_id)
 	
 	$BattleBackground/Question.add_child(health_bar) ## 因為畫面前後的關係，所以把節點放在Question的底下
 	health_bar.init_health_value(health_bar.health_value) ## 設定玩家血量
@@ -184,3 +193,40 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	GlobalVar.question2.append(json.result[0].question2_choice4)
 	
 	GlobalVar.question3.append(json.result[0].question3)
+func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
+	# 檢查 HTTP 回應碼是否為 200
+	if response_code == 200:
+		var json = JSON.parse(body.get_string_from_utf8())
+		for enemy_data in json.result:
+			var base64_string = enemy_data.enemy_image
+			var image_texture = decode_base64_image(base64_string)
+			enemy_images.append(image_texture)
+			print("appended")
+			enemy_image.texture = enemy_images[0]  # 顯示第一張圖片
+			GlobalVar.images = enemy_images  # 保存圖片到 GlobalVar 中
+	else:
+		# 如果回應碼不是 200，重新發送請求
+		print("Response not 200, retrying...")
+		request_enemy_image()
+
+func request_enemy_image() -> void:
+	var random = RandomNumberGenerator.new()
+	random.randomize()
+	var category_id = str(random.randi_range(1, 200))  # 生成 1 到 200 的隨機數字作為 category
+	print("category_id: " + category_id)
+	var enemy_url = "http://nccumisreading.ddnsking.com:5001/Enemy/get_enemy_from_id"
+	http_request2.request(enemy_url + "?enemy_category=" + category_id)
+
+## 將 Base64 字串解碼並轉換為 ImageTexture
+func decode_base64_image(base64_string: String) -> ImageTexture:
+	var image = Image.new()
+	var byte_data = decode_base64(base64_string)
+	var error = image.load_png_from_buffer(byte_data)
+	if error == OK:
+		var texture = ImageTexture.new()
+		texture.create_from_image(image)
+		return texture
+	else:
+		return null
+func decode_base64(data: String) -> PoolByteArray:
+	return Marshalls.base64_to_raw(data)
