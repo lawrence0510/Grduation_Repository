@@ -83,12 +83,12 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			
 			# 將評分結果存入 GlobalVar.wave_data
 			GlobalVar.wave_data["q3_aicomment"] = rate_result["總評"]
-			GlobalVar.wave_data["q3_score_1"] = rate_result["正確度得分"]
-			GlobalVar.wave_data["q3_explanation1"] = rate_result["正確度評分理由"]
-			GlobalVar.wave_data["q3_score_2"] = rate_result["完整度得分"]
-			GlobalVar.wave_data["q3_explanation2"] = rate_result["完整度評分理由"]
-			GlobalVar.wave_data["q3_score_3"] = rate_result["語言表達清晰度得分"]
-			GlobalVar.wave_data["q3_explanation3"] = rate_result["語言表達清晰度評分理由"]
+			GlobalVar.wave_data["q3_score_1"] = rate_result["語意得分"]
+			GlobalVar.wave_data["q3_explanation1"] = rate_result["語意評分理由"]
+			GlobalVar.wave_data["q3_score_2"] = rate_result["語用得分"]
+			GlobalVar.wave_data["q3_explanation2"] = rate_result["語用評分理由"]
+			GlobalVar.wave_data["q3_score_3"] = rate_result["語法得分"]
+			GlobalVar.wave_data["q3_explanation3"] = rate_result["語法評分理由"]
 			
 			print("評分完畢: ", GlobalVar.wave_data)
 			

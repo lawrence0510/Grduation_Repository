@@ -289,7 +289,7 @@ custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 4 )
 custom_styles/normal = SubResource( 5 )
-text = "正確度"
+text = "語意"
 align = 1
 
 [node name="correct_score" type="Label" parent="bg/correct"]
@@ -329,7 +329,7 @@ custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 4 )
 custom_styles/normal = SubResource( 5 )
-text = "完整度"
+text = "語用"
 align = 1
 
 [node name="com_score" type="Label" parent="bg/Completeness"]
@@ -373,7 +373,7 @@ custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 4 )
 custom_styles/normal = SubResource( 5 )
-text = "語言表達清晰度"
+text = "語法"
 align = 1
 
 [node name="clar_score" type="Label" parent="bg/clarity"]
