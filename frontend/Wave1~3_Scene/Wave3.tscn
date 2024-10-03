@@ -197,7 +197,6 @@ margin_bottom = 650.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
 custom_styles/normal = SubResource( 6 )
-text = "請問這關背景人物的男朋友是誰?"
 align = 1
 valign = 1
 autowrap = true

@@ -236,9 +236,6 @@ margin_bottom = 650.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
 custom_styles/normal = SubResource( 4 )
-text = "請問這關背景人物
-會在多久之後
-跟侯程麟結婚?"
 align = 1
 valign = 1
 autowrap = true
@@ -267,7 +264,6 @@ custom_fonts/font = ExtResource( 1 )
 custom_styles/hover = SubResource( 6 )
 custom_styles/disabled = SubResource( 10 )
 custom_styles/normal = SubResource( 3 )
-text = "A. 1天"
 icon_align = 1
 expand_icon = true
 
@@ -281,7 +277,6 @@ custom_fonts/font = ExtResource( 1 )
 custom_styles/hover = SubResource( 7 )
 custom_styles/disabled = SubResource( 11 )
 custom_styles/normal = SubResource( 3 )
-text = "B. 1個禮拜"
 icon_align = 1
 expand_icon = true
 
@@ -295,7 +290,6 @@ custom_fonts/font = ExtResource( 1 )
 custom_styles/hover = SubResource( 8 )
 custom_styles/disabled = SubResource( 12 )
 custom_styles/normal = SubResource( 3 )
-text = "C. 1個月"
 icon_align = 1
 expand_icon = true
 
@@ -309,7 +303,6 @@ custom_fonts/font = ExtResource( 1 )
 custom_styles/hover = SubResource( 9 )
 custom_styles/disabled = SubResource( 13 )
 custom_styles/normal = SubResource( 3 )
-text = "D. 一年"
 icon_align = 1
 expand_icon = true
 

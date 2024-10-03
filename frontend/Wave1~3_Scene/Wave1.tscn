@@ -236,7 +236,6 @@ margin_bottom = 650.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
 custom_styles/normal = SubResource( 9 )
-text = "請問這關的背景人物是誰?"
 align = 1
 valign = 1
 autowrap = true
@@ -265,7 +264,6 @@ custom_fonts/font = ExtResource( 1 )
 custom_styles/hover = SubResource( 12 )
 custom_styles/disabled = SubResource( 26 )
 custom_styles/normal = SubResource( 3 )
-text = "A. 金玟池"
 icon_align = 1
 expand_icon = true
 
@@ -279,7 +277,6 @@ custom_fonts/font = ExtResource( 1 )
 custom_styles/hover = SubResource( 11 )
 custom_styles/disabled = SubResource( 27 )
 custom_styles/normal = SubResource( 3 )
-text = "B. 全智賢"
 icon_align = 1
 expand_icon = true
 
@@ -293,7 +290,6 @@ custom_fonts/font = ExtResource( 1 )
 custom_styles/hover = SubResource( 13 )
 custom_styles/disabled = SubResource( 28 )
 custom_styles/normal = SubResource( 3 )
-text = "C. 范玉欣"
 icon_align = 1
 expand_icon = true
 
@@ -307,7 +303,6 @@ custom_fonts/font = ExtResource( 1 )
 custom_styles/hover = SubResource( 14 )
 custom_styles/disabled = SubResource( 29 )
 custom_styles/normal = SubResource( 3 )
-text = "D. 姜諧潾"
 icon_align = 1
 expand_icon = true
 
