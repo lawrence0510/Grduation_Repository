@@ -252,6 +252,8 @@ one_shot = true
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
+[node name="HTTPRequest2" type="HTTPRequest" parent="."]
+
 [connection signal="pressed" from="BattleBackground/PauseButton" to="." method="_on_PauseButton_pressed"]
 [connection signal="pressed" from="BattleBackground/Question/OpenStoryButton" to="." method="_on_OpenStoryButton_pressed"]
 [connection signal="text_entered" from="BattleBackground/LineEdit" to="." method="_on_LineEdit_text_entered"]
