@@ -65,18 +65,22 @@ func _on_PauseButton_pressed() -> void:
 ## 先複製StyleBox再用Override改顏色 才不會全部button都變色
 func _on_Option_A_pressed() -> void:
 	button_pressed = "A"
+	GlobalVar.wave_data.append($BattleBackground/Option_A.text.substr(3, $BattleBackground/Option_A.text.length() - 3))
 	change_button_color("BattleBackground/Option_A")
 
 func _on_Option_B_pressed() -> void:
 	button_pressed = "B"
+	GlobalVar.wave_data.append($BattleBackground/Option_B.text.substr(3, $BattleBackground/Option_B.text.length() - 3))
 	change_button_color("BattleBackground/Option_B")
 
 func _on_Option_C_pressed() -> void:
 	button_pressed = "C"
+	GlobalVar.wave_data.append($BattleBackground/Option_C.text.substr(3, $BattleBackground/Option_C.text.length() - 3))
 	change_button_color("BattleBackground/Option_C")
 
 func _on_Option_D_pressed() -> void:
 	button_pressed = "D"
+	GlobalVar.wave_data.append($BattleBackground/Option_D.text.substr(3, $BattleBackground/Option_D.text.length() - 3))
 	change_button_color("BattleBackground/Option_D")
 	
 
@@ -88,10 +92,10 @@ func change_button_color(button_path: String) -> void:
 		new_stylebox.bg_color = Color(0.16, 0.64, 0.25) ## 正確選項改成綠色
 		attack_animation.visible = true ## 顯示攻擊特效
 		attack_animation.play() ## 播放攻擊特效
-		health_bar.damaged(30) ## 玩家扣血測試
 
 	else:
 		new_stylebox.bg_color = Color(0.71, 0.15, 0.15)
+		health_bar.damaged(30) ## 玩家扣血測試
 		
 	get_node(button_path).add_stylebox_override("hover", new_stylebox) ## button變色
 	get_node(button_path).add_stylebox_override("normal", new_stylebox) ## button變色
@@ -133,7 +137,11 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
 
 	var story = json.result[0].article_content
+	
+	GlobalVar.wave_data.append(GlobalVar.user_id)
+	GlobalVar.wave_data.append(json.result[0].article_id)
 
+	
 	#設定文章
 	GlobalVar.story = json.result[0].article_content
 	

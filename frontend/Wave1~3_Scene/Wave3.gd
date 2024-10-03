@@ -44,6 +44,8 @@ func _on_PauseButton_pressed() -> void:
 
 ## 玩家按下Enter送出答案
 func _on_LineEdit_text_entered(new_text: String) -> void:
+	GlobalVar.wave_data.append($BattleBackground/LineEdit.text)
+	print(GlobalVar.wave_data)
 	if(true): ## 這裡的條件之後要改成"答案是否正確?"
 		attack_animation.visible = true
 		attack_animation.play()
