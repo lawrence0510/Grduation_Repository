@@ -9,7 +9,7 @@ var data_list = []
 
 func _ready():
 	# 用user_id找尋對應的history資料
-	var url = "http://nccumisreading.ddnsking.com:5001/History/get_history_from_user?user_id=" + str(2) + "&article_category=" + GlobalVar.current_category
+	var url = "http://nccumisreading.ddnsking.com:5001/History/get_history_from_user?user_id=" + str(GlobalVar.user_id) + "&article_category=" + GlobalVar.current_category
 	print("Request URL: " + url)
 	
 	var headers = ["Content-Type: application/json"]
@@ -39,8 +39,10 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 				if title_length > 13:
 					title = title.substr(0, 12) + "..."  # 截斷到11字並補上「...」
 				elif title_length < 13:
-					title = title.ljust(13)  # 如果不足13字，則補滿空格
-
+					var spaces_to_add = 13 - title_length
+					for i in range(spaces_to_add):
+						title += " "  # 手動附加空格
+						
 				var score = str(entry["total_score"])  # 抓取 total_score
 				
 				# 將資料加入 data_list
