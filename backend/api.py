@@ -1582,13 +1582,14 @@ class RecordHistory(Resource):
                 args['q3_total_score'], total_score
             ))
             connection.commit()
-            return {"message": "Record saved successfully", "total_score": total_score}, 201
+            return {"history_id": new_history_id}, 201
 
         except Error as e:
             return {"error": str(e)}, 500
         finally:
             if connection:
                 connection.close()
+
 history_id_parser = reqparse.RequestParser()
 history_id_parser.add_argument(
     'history_id', type=int, required=True, help='歷史紀錄id')
