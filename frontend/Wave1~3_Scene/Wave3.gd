@@ -61,8 +61,8 @@ func _on_LineEdit_text_entered(new_text: String) -> void:
 func send_post_request(article_id: int, answer: String) -> void:
 	var url = "http://nccumisreading.ddnsking.com:5001/OpenAI/get_rate_from_answers"
 	
-	# 準備資料
-	var query_string = "?article_id=" + str(article_id) + "&answer=" + answer
+	# 準備資料，對article_id 和 answer 進行http_escape處理
+	var query_string = "?article_id=" + str(article_id).http_escape() + "&answer=" + answer.http_escape()
 	url += query_string
 	
 	# 準備HTTP headers

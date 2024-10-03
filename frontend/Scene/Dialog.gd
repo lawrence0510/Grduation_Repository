@@ -95,3 +95,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	else:
 		print("error")
 	
+
+
+func _on_cross_pressed():
+	get_tree().change_scene("res://Scene/AnswerAndDescription4.tscn")
