@@ -1880,7 +1880,32 @@ class MatchUser(Resource):
                      (user_birthday.month, user_birthday.day))
                 user_age = min(user_age, 15)
 
-                # 2. 檢查是否有年齡匹配的使用者
+                # 2. 檢查當前使用者是否已經在等待隊列中，並且有匹配對手
+                cursor.execute("""
+                    SELECT user_matched_id, question_set FROM WaitingQueue WHERE user_id = %s
+                """, (user_id,))
+                existing_record = cursor.fetchone()
+
+                if existing_record:
+                    user_matched_id, question_set = existing_record
+
+                    # 如果 user_matched_id 不為空，說明已經匹配到了對手
+                    if user_matched_id:
+                        # 刪除該列並返回匹配成功和對手資料
+                        cursor.execute("DELETE FROM WaitingQueue WHERE user_id = %s", (user_id,))
+                        connection.commit()
+
+                        return {
+                            "message": "Match found",
+                            "opponent_id": user_matched_id,
+                            # 將 JSON 題目集轉為 Python 字典
+                            "questions": json.loads(question_set)
+                        }, 200
+
+                    # 如果還沒匹配到對手
+                    return {"message": "Already waiting for an opponent"}, 200
+
+                # 3. 檢查是否有年齡匹配的使用者
                 cursor.execute("""
                     SELECT user_id, question_set FROM WaitingQueue
                     WHERE user_id != %s AND user_age = %s
@@ -1893,12 +1918,15 @@ class MatchUser(Resource):
                     matched_user_id = match[0]
                     question_set = match[1]  # 匹配對手的題目集
 
-                    # 3. 刪除匹配到的對手
-                    cursor.execute(
-                        "DELETE FROM WaitingQueue WHERE user_id = %s", (matched_user_id,))
+                    # 4. 更新匹配到的對手的 user_matched_id 欄位
+                    cursor.execute("""
+                        UPDATE WaitingQueue
+                        SET user_matched_id = %s
+                        WHERE user_id = %s
+                    """, (user_id, matched_user_id))
                     connection.commit()
 
-                    # 4. 返回匹配成功和題目集
+                    # 5. 返回匹配成功和題目集
                     return {
                         "message": "Match found",
                         "opponent_id": matched_user_id,
@@ -1906,14 +1934,6 @@ class MatchUser(Resource):
                         "questions": json.loads(question_set)
                     }, 200
                 else:
-                    # 5. 檢查當前使用者是否已經在等待隊列中
-                    cursor.execute(
-                        "SELECT question_set FROM WaitingQueue WHERE user_id = %s", (user_id,))
-                    existing_record = cursor.fetchone()
-
-                    if existing_record:
-                        return {"message": "Already waiting for an opponent"}, 200
-
                     # 6. 選取年齡相符的四道題目，這一次隨機選取後存入等待隊列
                     cursor.execute("""
                         SELECT * FROM ShortQuestion
@@ -1956,6 +1976,7 @@ class MatchUser(Resource):
                 connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
+
 
 
 @compete_ns.route('/insert_compete_record')
