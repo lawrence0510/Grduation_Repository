@@ -1939,11 +1939,11 @@ class MatchUser(Resource):
                         SELECT * FROM ShortQuestion
                         WHERE shortquestion_age BETWEEN 8 AND %s + 1
                         ORDER BY RAND()
-                        LIMIT 4
+                        LIMIT 5
                     """, (user_age,))
                     questions = cursor.fetchall()
 
-                    if len(questions) != 4:
+                    if len(questions) != 5:
                         return {"error": "Insufficient questions available"}, 500
 
                     formatted_questions = [

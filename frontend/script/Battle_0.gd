@@ -1,7 +1,6 @@
 extends Node
 
 var time_to_change = 0.5
-var target_scene_path = "res://Scene/Battle_1.tscn"  # 目標場景的路徑
 var request_sent = false  # 用於追蹤是否發送了POST請求
 var continue_request = true  # 追蹤是否繼續發送請求
 
@@ -28,10 +27,6 @@ func _process(delta):
 		# 如果遊戲當前是全螢幕模式，則退出全螢幕
 		if OS.window_fullscreen:
 			get_tree().quit()
-
-func change_scene():
-	# 加載並切換到目標場景
-	get_tree().change_scene(target_scene_path)
 
 func _on_cancel_pressed():
 	get_tree().change_scene("res://Scene/MainPage.tscn")
@@ -69,6 +64,8 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 				GlobalVar.battle_question["shortquestion" + str(i + 1) + "_option3"] = question["shortquestion_option3"]
 				GlobalVar.battle_question["shortquestion" + str(i + 1) + "_option4"] = question["shortquestion_option4"]
 				GlobalVar.battle_question["shortquestion" + str(i + 1) + "_answer"] = question["answer"]
+			print(GlobalVar.battle_question)
+			get_tree().change_scene("res://Scene/Battle_1.tscn")
 
 	elif response_code == 201:
 		print("Still Waiting...")
