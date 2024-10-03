@@ -22,7 +22,7 @@ var target_score_1 = 0  # 玩家計分區塊的目標分數
 var target_score_2 = 0  # 對手計分區塊的目標分數
 var base_score_per_question = 10  # 每題基本分數
 
-# 第二組題目
+# 第三組題目
 var question_content = GlobalVar.battle_question["short_question3"]
 var options = [GlobalVar.battle_question["shortquestion3_option1"], GlobalVar.battle_question["shortquestion3_option2"], GlobalVar.battle_question["shortquestion3_option3"], GlobalVar.battle_question["shortquestion3_option4"]]
 var correct_answer = GlobalVar.battle_question["shortquestion3_answer"]

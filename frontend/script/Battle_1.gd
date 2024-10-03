@@ -123,6 +123,14 @@ func _on_opponent_answer():
 	# 隨機選擇一個答案
 	var random_index = randi() % opponent_button_paths.size()
 	var selected_answer = get_node(opponent_button_paths[random_index] + "/content").text
+	if(correct_answer == 1):
+		correct_answer = GlobalVar.battle_question["shortquestion1_option1"]
+	elif(correct_answer == 2):
+		correct_answer = GlobalVar.battle_question["shortquestion1_option2"]
+	elif(correct_answer == 3):
+		correct_answer = GlobalVar.battle_question["shortquestion1_option3"]
+	elif(correct_answer == 4):
+		correct_answer = GlobalVar.battle_question["shortquestion1_option4"]
 	
 	# 檢查選擇的答案是否正確
 	if selected_answer == correct_answer:
@@ -211,6 +219,7 @@ func add_score():
 	target_score_1 += base_score_per_question
 	target_score_1 += countdown_time  # 玩家計分區塊加上剩餘時間
 	target_score_1 = clamp(target_score_1, 0, max_score)
+	print(target_score_1)
 	GlobalVar.player_score = target_score_1
 	smooth_update_score()
 
