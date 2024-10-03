@@ -200,13 +200,15 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		right_button = "D"
 	GlobalVar.question1["answer"] = right_button + ". " + json.result[0].question1_answer
 
-	#先記錄wave2, 3的問題、答案
-	GlobalVar.question2.append(json.result[0].question_2)
-	GlobalVar.question2.append(json.result[0].question2_answer)
-	GlobalVar.question2.append(json.result[0].question2_choice1)
-	GlobalVar.question2.append(json.result[0].question2_choice2)
-	GlobalVar.question2.append(json.result[0].question2_choice3)
-	GlobalVar.question2.append(json.result[0].question2_choice4)
+	GlobalVar.question2 = {
+		"question2": json.result[0].question_2,
+		"answer": json.result[0].question2_answer,
+		"choice1": json.result[0].question2_choice1,
+		"choice2": json.result[0].question2_choice2,
+		"choice3": json.result[0].question2_choice3,
+		"choice4": json.result[0].question2_choice4
+	}
+
 	
 	GlobalVar.question3.append(json.result[0].question3)
 func _on_HTTPRequest2_request_completed(result, response_code, headers, body):

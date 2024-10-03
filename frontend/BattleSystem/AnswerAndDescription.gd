@@ -2,10 +2,10 @@ extends Control
 
 func _ready() -> void:
 	#問題1、回答1、結果分兩種（對的話，結果=回答正確恭喜你，錯的話，結果=回答錯誤！\n\n正確答案：正確選項+正確選項內文）
-	var wave1 = "Wave1\n\n問題：\n%s\n\n您的回答：\n%s\n\n結果：\n%s"% [GlobalVar.question1["question1"], GlobalVar.question1["response"], GlobalVar.question1["consequence"]]
-	var wave2 = ""
+	var wave1 = "Wave1\n\n問題：\n%s\n\n您的回答：\n%s\n\n結果：\n%s\n"% [GlobalVar.question1["question1"], GlobalVar.question1["response"], GlobalVar.question1["consequence"]]
+	var wave2 = "Wave2\n\n問題：\n%s\n\n您的回答：\n%s\n\n結果：\n%s\n"% [GlobalVar.question2["question2"], GlobalVar.question2["response"], GlobalVar.question2["consequence"]]
 	var wave3 = ""
-	var middle = "-------------------------------------------------------------------------------------------"
+	var middle = "-----------------------------------------------------------------------------------------\n"
 	$ScrollContainer/Label.text = wave1 + middle + wave2 + middle + wave3
 func _on_AskButton_pressed() -> void:
 	get_tree().change_scene("res://Scene/Dialog.tscn")
