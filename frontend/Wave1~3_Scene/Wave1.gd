@@ -65,21 +65,25 @@ func _on_PauseButton_pressed() -> void:
 ## 先複製StyleBox再用Override改顏色 才不會全部button都變色
 func _on_Option_A_pressed() -> void:
 	button_pressed = "A"
+	GlobalVar.question1["response"] = $BattleBackground/Option_A.text
 	GlobalVar.wave_data.append($BattleBackground/Option_A.text.substr(3, $BattleBackground/Option_A.text.length() - 3))
 	change_button_color("BattleBackground/Option_A")
 
 func _on_Option_B_pressed() -> void:
 	button_pressed = "B"
+	GlobalVar.question1["response"] = $BattleBackground/Option_B.text
 	GlobalVar.wave_data.append($BattleBackground/Option_B.text.substr(3, $BattleBackground/Option_B.text.length() - 3))
 	change_button_color("BattleBackground/Option_B")
 
 func _on_Option_C_pressed() -> void:
 	button_pressed = "C"
+	GlobalVar.question1["response"] = $BattleBackground/Option_C.text
 	GlobalVar.wave_data.append($BattleBackground/Option_C.text.substr(3, $BattleBackground/Option_C.text.length() - 3))
 	change_button_color("BattleBackground/Option_C")
 
 func _on_Option_D_pressed() -> void:
 	button_pressed = "D"
+	GlobalVar.question1["response"] = $BattleBackground/Option_D.text
 	GlobalVar.wave_data.append($BattleBackground/Option_D.text.substr(3, $BattleBackground/Option_D.text.length() - 3))
 	change_button_color("BattleBackground/Option_D")
 	
@@ -88,7 +92,8 @@ func _on_Option_D_pressed() -> void:
 func change_button_color(button_path: String) -> void:
 	var new_stylebox = get_node(button_path).get_stylebox("normal").duplicate() ## 複製StyleBox
 	
-	if(right_button == button_pressed): ## 這裡的條件之後要改成"答案是否正確?"
+	if(right_button == button_pressed):
+		GlobalVar.question1["consequence"] = "回答正確，恭喜你！"
 		new_stylebox.bg_color = Color(0.16, 0.64, 0.25) ## 正確選項改成綠色
 		attack_animation.visible = true ## 顯示攻擊特效
 		attack_animation.play() ## 播放攻擊特效
@@ -96,6 +101,7 @@ func change_button_color(button_path: String) -> void:
 	else:
 		new_stylebox.bg_color = Color(0.71, 0.15, 0.15)
 		health_bar.damaged(30) ## 玩家扣血測試
+		GlobalVar.question1["consequence"] = "回答錯誤！\n\n正確答案：\n" + GlobalVar.question1["answer"]
 		
 	get_node(button_path).add_stylebox_override("hover", new_stylebox) ## button變色
 	get_node(button_path).add_stylebox_override("normal", new_stylebox) ## button變色
@@ -107,7 +113,7 @@ func change_button_color(button_path: String) -> void:
 ## Timer倒數結束
 func _on_ChangeLevelTimer_timeout() -> void:
 	get_tree().change_scene("res://Wave1~3_Scene/Wave2.tscn") ## 跳到Wave 2
-
+	print(GlobalVar.question1)
 
 ## Disable其他button 
 ## 防止玩家按到2個以上
@@ -178,6 +184,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	full_story_scene.setStory(story)
 	
 	$BattleBackground/Question.text = json.result[0].question_1
+	GlobalVar.question1["question1"] = json.result[0].question_1
 	$BattleBackground/Option_A.text = "A. " + json.result[0].question1_choice1
 	$BattleBackground/Option_B.text = "B. " + json.result[0].question1_choice2
 	$BattleBackground/Option_C.text = "C. " + json.result[0].question1_choice3
@@ -191,6 +198,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		right_button = "C"
 	elif question1_answer == json.result[0].question1_choice4:
 		right_button = "D"
+	GlobalVar.question1["answer"] = right_button + ". " + json.result[0].question1_answer
 
 	#先記錄wave2, 3的問題、答案
 	GlobalVar.question2.append(json.result[0].question_2)
