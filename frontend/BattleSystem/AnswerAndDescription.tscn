@@ -69,39 +69,23 @@ scroll_horizontal_enabled = false
 
 [node name="Label" type="Label" parent="ScrollContainer"]
 margin_right = 1100.0
-margin_bottom = 1527.0
+margin_bottom = 660.0
 rect_min_size = Vector2( 1100, 400 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
-text = "Wave 1
+text = "Wave 3
 
 問題：
-哪一個地震事件是日本史上死亡人數最高的地震？
+為什麼台灣當時比較不耐震？
 
 您的回答： 
-B. 1923 關東大地震
-
-結果： 
-回答正確！恭喜您！
--------------------------------------------------------------------------------------------
-Wave 2
-
-問題：
-哪一個地震事件是日本史上死亡人數最高的地震？
-
-您的回答： 
-C. 1911 關東大地震
+測試回答測試回答
 
 結果： 
 回答錯誤！
 
-正確答案：
-D. 唐山大地震
--------------------------------------------------------------------------------------------
-Wave 3
-Q. 為什麼當時台灣的傳統建築較不耐震？
-A. qq
-參考答案：因當時的建築多使用木材、磚瓦和石材作為主要建材，易在地震中開裂或倒塌。"
+參考答案：
+D. 唐山大地震"
 autowrap = true
 
 [node name="FinishButton" type="Button" parent="."]

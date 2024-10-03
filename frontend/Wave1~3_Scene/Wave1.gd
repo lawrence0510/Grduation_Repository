@@ -210,7 +210,11 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	}
 
 	
-	GlobalVar.question3.append(json.result[0].question3)
+	GlobalVar.question3 = {
+		"question3": json.result[0].question3,
+		"question3_answer": json.result[0].question3_answer
+	}
+	
 func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
 	# 檢查 HTTP 回應碼是否為 200
 	if response_code == 200:

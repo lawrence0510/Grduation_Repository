@@ -16,7 +16,7 @@ var question1 = {}
 var question2 = {}
 
 #用以記錄wave3的問題、答案(格式同上)
-var question3 = []
+var question3 = {}
 
 var aiResponse = ""
 

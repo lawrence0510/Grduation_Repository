@@ -24,7 +24,7 @@ func _ready() -> void:
 	attack_animation.visible = false ## 隱藏敵人死亡特效
 	
 	#設定題目
-	$BattleBackground/Question.text = GlobalVar.question3[0]
+	$BattleBackground/Question.text = GlobalVar.question3["question3"]
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -69,4 +69,4 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 
 
 func _on_ChangeLevelTimer_timeout() -> void:
-	get_tree().change_scene("res://BattleSystem/AnswerAndDescription.tscn")
+	get_tree().change_scene("res://Scene/AnswerAndDescription4.tscn")
