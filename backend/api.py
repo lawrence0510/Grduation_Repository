@@ -1872,7 +1872,7 @@ class MatchUser(Resource):
                 result = cursor.fetchone()
                 if not result:
                     return {"error": "User not found"}, 404
-
+                
                 user_birthday = result[0]
                 today = datetime.today()
                 user_age = today.year - user_birthday.year - \
@@ -1903,7 +1903,7 @@ class MatchUser(Resource):
                         }, 200
 
                     # 如果還沒匹配到對手
-                    return {"message": "Already waiting for an opponent"}, 200
+                    return {"message": "Already waiting for an opponent"}, 201
 
                 # 3. 檢查是否有年齡匹配的使用者
                 cursor.execute("""

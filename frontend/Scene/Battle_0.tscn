@@ -144,4 +144,7 @@ custom_styles/disabled = SubResource( 7 )
 custom_styles/normal = SubResource( 7 )
 text = "取消匹配"
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
 [connection signal="pressed" from="TextureRect/cancel" to="." method="_on_cancel_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
