@@ -260,3 +260,4 @@ one_shot = true
 [connection signal="animation_finished" from="BattleBackground/AttackAnimation" to="." method="_on_AttackAnimation_animation_finished"]
 [connection signal="timeout" from="BattleBackground/ChangeLevelTimer" to="." method="_on_ChangeLevelTimer_timeout"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
+[connection signal="request_completed" from="HTTPRequest2" to="." method="_on_HTTPRequest2_request_completed"]

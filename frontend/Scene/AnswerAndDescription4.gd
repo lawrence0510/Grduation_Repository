@@ -43,3 +43,9 @@ func _on_cross_pressed():
 
 func _on_score_pressed():
 	get_tree().change_scene("res://Scene/AnswerAndDescription4.tscn")
+
+func _on_AskButton_pressed():
+	get_tree().change_scene("res://Scene/Dialog.tscn")
+
+func _on_FinishButton_pressed():
+	get_tree().change_scene("res://Scene/MainPage.tscn")

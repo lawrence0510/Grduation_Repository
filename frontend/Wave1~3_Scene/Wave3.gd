@@ -99,8 +99,8 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			print("無法解析 API 回應")
 			handle_retry()  # 處理重試
 	else:
-		print("HTTP 請求失敗，狀態碼: ", response_code)
-		handle_retry()  # 處理重試
+		print("詢問OpenAI api時 HTTP 請求失敗，狀態碼: ", response_code)
+		handle_retry()
 
 # 處理重試邏輯的函數
 func handle_retry() -> void:
@@ -141,3 +141,18 @@ func _on_AttackAnimation_animation_finished() -> void:
 	$BattleBackground/Question/Enemy.queue_free() ## 敵人消失
 	var effect = enemy_death_effect.instance() ## 生成敵人死亡動畫
 	get_tree().current_scene.add_child(effect) ## 播放敵人死亡動畫
+
+func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
+	if response_code == 201:
+		var response_body = body.get_string_from_utf8()
+		var json_result = JSON.parse(response_body)
+
+		if json_result.error == OK:
+			var history_id = json_result.result["history_id"]
+			GlobalVar.history_id = history_id
+			print("歷史紀錄已儲存，history_id: ", GlobalVar.history_id)
+			get_tree().change_scene("res://Scene/AnswerAndDescription0.tscn")
+		else:
+			print("無法解析 API 回應")
+	else:
+		print("儲存歷史紀錄時 HTTP 請求失敗，狀態碼: ", response_code)
