@@ -22,9 +22,9 @@ var base_score_per_question = 10  # 每題基本分數
 var question_start_time = 0  # 記錄答題開始時間
 
 # 第一組題目
-var question_content = "牛頓的第一運動定律主要講述什麼？"
-var options = ["物體會保持靜止或等速運動", "物體總是加速", "物體只在外力作用下移動", "物體的運動和能量無關"]
-var correct_answer = options[0]
+var question_content = GlobalVar.battle_question["short_question1"]
+var options = [GlobalVar.battle_question["shortquestion1_option1"], GlobalVar.battle_question["shortquestion1_option2"], GlobalVar.battle_question["shortquestion1_option3"], GlobalVar.battle_question["shortquestion1_option4"]]
+var correct_answer = GlobalVar.battle_question["shortquestion1_answer"]
 
 # 預載入正確的 StyleBox 資源
 var default_stylebox = preload("res://Fonts/battle_hover.tres")

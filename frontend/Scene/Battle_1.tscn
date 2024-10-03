@@ -3,7 +3,7 @@
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Fonts/battle_hover.tres" type="StyleBox" id=2]
 [ext_resource path="res://Fonts/123.tres" type="StyleBox" id=3]
-[ext_resource path="res://script/Battle.gd" type="Script" id=4]
+[ext_resource path="res://script/Battle_1.gd" type="Script" id=4]
 [ext_resource path="res://Pic/battle_B1.png" type="Texture" id=5]
 [ext_resource path="res://Pic/circle.png" type="Texture" id=6]
 [ext_resource path="res://Pic/close (1).png" type="Texture" id=7]
