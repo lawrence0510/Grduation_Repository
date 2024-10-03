@@ -1286,7 +1286,8 @@ class GetRateFromAnswers(Resource):
         args = get_rate_parser.parse_args()
         article_id = args['article_id']
         answer = args['answer']
-        connection = create_db_connection()
+
+        # 評分標準
         rate_standard = (
             "回答評分標準\n"
             "1. 正確度\n"
@@ -1310,82 +1311,79 @@ class GetRateFromAnswers(Resource):
             "4分：回答表達清晰，但可能存在一些表達不夠精確的地方。\n"
             "5分：回答表達非常清晰，言之有物，易於理解。\n\n"
         )
+
+        # 建立資料庫連接
+        connection = create_db_connection()
+
         if connection is not None:
             try:
                 cursor = connection.cursor(dictionary=True)
-                sql = "SELECT a.article_content, q.question3,q.question3_answer FROM Question AS q LEFT JOIN Article AS a ON q.article_id = a.article_id WHERE a.article_id = %s;"
+                # 查詢文章內容和問題
+                sql = """
+                    SELECT a.article_content, q.question3, q.question3_answer
+                    FROM Question AS q
+                    LEFT JOIN Article AS a ON q.article_id = a.article_id
+                    WHERE a.article_id = %s;
+                """
                 cursor.execute(sql, (article_id,))
                 article = cursor.fetchone()
+
                 if article:
                     article_content = article['article_content']
                     question = article['question3']
-                    standard_answer = article['question3_answer']
-                    client = OpenAI(
-                        api_key=os.getenv('OPENAI_API_KEY'))
+                    question_answer = article['question3_answer']
 
+                    # 組裝 Prompt
+                    prompt_message = (
+                        f"我有一篇文章，以及根據這篇文章所產生的開放性問題、我的回答以及此題的標準答案。"
+                        f"請你根據以下三個回答評分標準去對我的回答做評分，"
+                        f"三個各自最低1分，最高5分，並針對你做出的這三個評分給出理由，"
+                        f"最後再給一個總評。並以JSON格式回傳，格式如下："
+                        f'{{"總評": 說明整體回答表現如何, "正確度得分": 1~5, "正確度評分理由": 理由, '
+                        f'"完整度得分": 1~5, "完整度評分理由": 理由, '
+                        f'"語言表達清晰度得分": 1~5, "語言表達清晰度評分理由": 理由}}'
+                        f"\n\n以下是文章內文、此開放性問題、我的回答和標準答案："
+                        f'{{"文章內文": "{article_content}", "開放性問題": "{question}", '
+                        f'"我的回答": "{answer}", "標準答案": "{question_answer}"}}\n\n{rate_standard}'
+                    )
+
+                    # 發送 OpenAI 請求
+                    client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+                    response = client.chat.completions.create(
+                        model="gpt-3.5-turbo",
+                        messages=[
+                            {"role": "system", "content": "你是一名專門在閱讀學生答案後產生評分與評語的老師。"},
+                            {"role": "user", "content": prompt_message}
+                        ],
+                    ) 
+                    response_str = str(response)
+
+                    content_start = response_str.find("總評") - 8
+                    content_end = response_str.find("role='assistant'") - 8
+                    content_json_str = response_str[content_start:content_end]
+                    content_json_str = content_json_str.replace("\\n", "").replace("\n", "").replace("\\", "").strip()
+                    if content_json_str[-2] == ",":
+                        content_json_str = content_json_str[:-2] + content_json_str[-1]
+                    if content_json_str[-1] != "}":
+                        content_json_str += "}"
+                    
+                    print(content_json_str)
+
+                    import json
+                    content_json = None  # 初始化 content_json
                     try:
-                        prompt_message = (
-                            f"以下是一篇文章的內容：\n{article_content}\n以下是根據這篇文章所產生的開放性問題：\n{question}\n然後，以下是我的使用者回答：\n{answer}\n現在，請你根據以下標準，針對此回答給予評分。標準如下：\n{rate_standard}\n，然後根據以下JSON格式回傳你的回覆給我：" +
-                            json.dumps({
-                                "正確度": None,
-                                "正確度原因": None,
-                                "完整度": None,
-                                "完整度原因": None,
-                                "語言表達清晰度": None,
-                                "語言表達清晰度原因": None,
-                                "總分": None,
-                                "總評": None
-                            })
-                        )
-                        response = client.chat.completions.create(
-                            model="gpt-3.5-turbo",
-                            messages=[
-                                {"role": "system",
-                                    "content": "你是一名專門在閱讀學生答案後產生評分與評語的嚴格老師。"},
-                                {"role": "user", "content": prompt_message}
-                            ],
-                        )
-                        print(response)
-                        response_str = str(response).replace(
-                            '\n', '').replace('\\n', '')
-                        content_start = response_str.find(
-                            "content='") + len("content='")
-                        content_end = response_str.find(
-                            "}', role='assistant'", content_start) + 1
-                        content_json_str = response_str[content_start:content_end]
-                        content_json_str = content_json_str.replace(
-                            "\\'", "'").replace('\\"', '"').replace('\\\\', '\\')
-                        print(content_json_str)
-                        try:
-                            content_json = json.loads(content_json_str)
-                        except ValueError as e:
-                            retry_prompt = "請你檢查你剛剛傳給我的訊息，其並非JSON格式，幫我轉成JSON以後再給我一次"
-                            response = client.chat.completions.create(
-                                model="gpt-3.5-turbo",
-                                messages=[
-                                    {"role": "system",
-                                        "content": "你是一名專門在閱讀學生答案後產生評分與評語的嚴格老師。對於胡亂回答的，你可以直接則被使用者，也應該要給予很低的分數。"},
-                                    {"role": "user", "content": retry_prompt}
-                                ],
-                            )
-                            response_str = str(response).replace(
-                                '\n', '').replace('\\n', '')
-                            content_start = response_str.find(
-                                "content='") + len("content='")
-                            content_end = response_str.find(
-                                "}', role='assistant'", content_start) + 1
-                            content_json_str = response_str[content_start:content_end]
-                            content_json_str = content_json_str.replace(
-                                "\\'", "'").replace('\\"', '"').replace('\\\\', '\\')
-                            content_json = json.loads(content_json_str)
-                        return {'status': 'success', 'content': content_json}, 200
-                    except Exception as e:
-                        import traceback
-                        traceback.print_exc()
-                        return {'error': str(e)}, 500
-            except Error as e:
-                import traceback
-                traceback.print_exc()
+                        content_json = json.loads(content_json_str)
+                        print(content_json)
+                    except ValueError as e:
+                        print("JSON 解析錯誤:", e)
+
+                    # 確保 content_json 存在返回
+                    if content_json:
+                        return content_json, 200
+                    else:
+                        return {"error": "無法解析JSON"}, 500
+
+            except Exception as e:
                 return {"error": str(e)}, 500
             finally:
                 cursor.close()

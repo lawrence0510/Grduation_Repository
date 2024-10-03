@@ -26,4 +26,4 @@ var history_data = {}
 
 var current_category = "Chinese"
 
-var wave_data = []
+var wave_data = {}

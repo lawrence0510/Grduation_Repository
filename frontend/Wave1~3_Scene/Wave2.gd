@@ -61,25 +61,25 @@ func _on_PauseButton_pressed() -> void:
 func _on_Option_A_pressed() -> void:
 	button_pressed = "A"
 	GlobalVar.question2["response"] = $BattleBackground/Option_A.text
-	GlobalVar.wave_data.append($BattleBackground/Option_A.text.substr(3, $BattleBackground/Option_A.text.length() - 3))
+	GlobalVar.wave_data["q2_user_answer"]=($BattleBackground/Option_A.text.substr(3, $BattleBackground/Option_A.text.length() - 3))
 	change_button_color("BattleBackground/Option_A")
 
 func _on_Option_B_pressed() -> void:
 	button_pressed = "B"
 	GlobalVar.question2["response"] = $BattleBackground/Option_B.text
-	GlobalVar.wave_data.append($BattleBackground/Option_B.text.substr(3, $BattleBackground/Option_B.text.length() - 3))
+	GlobalVar.wave_data["q2_user_answer"]=($BattleBackground/Option_B.text.substr(3, $BattleBackground/Option_B.text.length() - 3))
 	change_button_color("BattleBackground/Option_B")
 
 func _on_Option_C_pressed() -> void:
 	button_pressed = "C"
 	GlobalVar.question2["response"] = $BattleBackground/Option_C.text
-	GlobalVar.wave_data.append($BattleBackground/Option_C.text.substr(3, $BattleBackground/Option_C.text.length() - 3))
+	GlobalVar.wave_data["q2_user_answer"]=($BattleBackground/Option_C.text.substr(3, $BattleBackground/Option_C.text.length() - 3))
 	change_button_color("BattleBackground/Option_C")
 
 func _on_Option_D_pressed() -> void:
 	button_pressed = "D"
 	GlobalVar.question2["response"] = $BattleBackground/Option_D.text
-	GlobalVar.wave_data.append($BattleBackground/Option_D.text.substr(3, $BattleBackground/Option_D.text.length() - 3))
+	GlobalVar.wave_data["q2_user_answer"]=($BattleBackground/Option_D.text.substr(3, $BattleBackground/Option_D.text.length() - 3))
 	change_button_color("BattleBackground/Option_D")
 
 
