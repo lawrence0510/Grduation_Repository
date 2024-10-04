@@ -26,6 +26,9 @@ custom_styles/panel = SubResource( 1 )
 
 [node name="ScrollContainer" parent="." instance=ExtResource( 3 )]
 script = ExtResource( 5 )
+card_scale = 0.6
+card_current_scale = 1.0
+scroll_duration = 0.3
 
 [node name="cross" type="Button" parent="."]
 margin_left = 1795.0
