@@ -39,10 +39,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 				var title_length = title.length()
 				if title_length > 13:
 					title = title.substr(0, 12) + "..."  # 截斷到11字並補上「...」
-				elif title_length < 13:
-					var spaces_to_add = 13 - title_length
-					for i in range(spaces_to_add):
-						title += " "  # 手動附加空格
+				
 						
 				var score = str(entry["total_score"])  # 抓取 total_score
 				
@@ -56,8 +53,8 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 				
 			# 刷新 UI，動態生成 Label
 			for data in data_list:
-				var text = data["time"] + "              " + data["title"] + "             " + data["score"]
-				create_button_r(text, data["id"])
+				var text = "                                    " + data["title"]
+				create_button_r(text, data["id"], data["score"], data["time"]) 
 		else:
 			print("Error parsing JSON: ", json.error_string)
 	elif response_code == 404:
@@ -68,7 +65,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		print("Request failed with response code: ", response_code)
 
 
-func create_button_r(text, id):
+func create_button_r(text, id, score, time):
 	vbox.set("custom_constants/separation", 10)
 	
 	var new_button = Button.new()  # 建立新的 Button
@@ -103,6 +100,22 @@ func create_button_r(text, id):
 	vbox.add_child(new_button)  # 將 Button 加入 VBoxContainer
 	if(id == 0):
 		new_button.disabled = true
+
+	# 在 VBoxContainer2 中創建一個新的 Label 來顯示 score
+	var new_score_label = Label.new()  # 建立新的 Label
+	new_score_label.text = "                                                                                                          "+score  # 設定 Label 的文字
+	new_score_label.align = Label.ALIGN_LEFT
+	new_score_label.add_font_override("font", custom_font)  # 使用同樣的字體樣式
+	new_score_label.add_color_override("font_color", Color(0, 0, 0))  # 黑色
+	$VBoxContainer2.add_child(new_score_label)
+	
+	# 在 VBoxContainer3 中創建一個新的 Label 來顯示時間
+	var new_time_label = Label.new()  # 建立新的 Label
+	new_time_label.text = time  # 設定 Label 的文字
+	new_time_label.align = Label.ALIGN_LEFT
+	new_time_label.add_font_override("font", custom_font)  # 使用同樣的字體樣式
+	new_time_label.add_color_override("font_color", Color(0, 0, 0))  # 黑色
+	$VBoxContainer3.add_child(new_time_label)  # 將時間 Label 加入 VBoxContainer3
 
 func create_label_r(text, id):
 	vbox.set("custom_constants/separation", 10)
