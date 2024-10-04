@@ -3,6 +3,7 @@ extends ScrollContainer
 # 這裡尋找名為 "VBox" 的 VBoxContainer 節點
 onready var vbox = $VBoxContainer
 onready var http_request = $HTTPRequest
+onready var fixed_title_length = 20
 
 # 變數
 var data_list = []
@@ -60,7 +61,9 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		else:
 			print("Error parsing JSON: ", json.error_string)
 	elif response_code == 404:
-		create_button_r("在" + GlobalVar.current_category + "類別中未找到任何作答紀錄", 0)
+		var text = "在此類別中未找到任何作答紀錄"
+		var id = 1
+		create_label_r(text,id)
 	else:
 		print("Request failed with response code: ", response_code)
 
@@ -100,6 +103,36 @@ func create_button_r(text, id):
 	vbox.add_child(new_button)  # 將 Button 加入 VBoxContainer
 	if(id == 0):
 		new_button.disabled = true
+
+func create_label_r(text, id):
+	vbox.set("custom_constants/separation", 10)
+	
+	var new_label = Label.new()  # 建立新的 Label
+	new_label.text = text  # 設定 Label 的文字
+	new_label.align = Label.ALIGN_LEFT
+	
+	# 設定字體樣式
+	var custom_font = DynamicFont.new()  # 建立一個 DynamicFont
+	var font_data = DynamicFontData.new()  # 建立字體資料
+	
+	font_data.font_path = "res://Fonts/NotoSansTC-VariableFont_wght.ttf"
+	custom_font.font_data = font_data
+	custom_font.size = 45  # 設定字體大小
+	
+	# 將字體應用到 Label
+	new_label.add_font_override("font", custom_font)
+	new_label.add_color_override("font_color", Color(0, 0, 0))  # 黑色
+	new_label.add_color_override("font_color_disabled", Color(0, 0, 0))
+	
+	# 設定 Label 的背景為透明
+	new_label.add_stylebox_override("normal", preload("res://Fonts/record_line.tres"))
+	new_label.add_stylebox_override("disabled", preload("res://Fonts/record_line.tres"))
+
+	# 將 Label 加入 VBoxContainer
+	vbox.add_child(new_label)  # 將 Label 加入 VBoxContainer
+	if(id == 0):
+		new_label.disabled = true
+
 
 # 按鈕被按下時的處理函數
 func _on_button_pressed(text):
