@@ -5,6 +5,7 @@ var countdown_time = 10
 var countdown_timer : Timer
 var delay_timer : Timer  # 用於延遲跳題的 Timer
 var opponent_timer : Timer  # 用於對手答題的 Timer
+var opponent_check_timer : Timer  # 用於檢查對手答題的 Timer
 var button_paths = ["Background/Options1", "Background/Options2", "Background/Options3", "Background/Options4"]
 var opponent_button_paths = ["Background/op_Options1", "Background/op_Options2", "Background/op_Options3", "Background/op_Options4"]
 var all_answered = false  # 用於追蹤兩個人是否已經答完題目
@@ -41,7 +42,7 @@ func _ready():
 	# 創建 Timer 並開始倒數
 	setup_timer()
 	setup_delay_timer()  # 設置延遲跳題的 Timer
-	setup_opponent_timer()  # 設置對手答題 Timer
+	setup_opponent_check_timer()  # 設置檢查對手答題的 Timer
 	
 	# 設置第一組題目文本
 	load_question(question_content, options)
@@ -68,18 +69,16 @@ func setup_timer():
 	countdown_timer.start()
 	update_countdown_label()
 
+# 設置檢查對手答題的 Timer
+func setup_opponent_check_timer():
+	opponent_check_timer = Timer.new()
+	opponent_check_timer.wait_time = 0.5  # 每0.5秒發送一次請求
+	opponent_check_timer.connect("timeout", self, "_on_opponent_answer")
+	add_child(opponent_check_timer)
+	opponent_check_timer.start()
+
 func _on_Timer_timeout():
 	$Background/TextureProgress.value += 1
-
-# 設置對手答題的 Timer
-func setup_opponent_timer():
-	opponent_timer = Timer.new()
-	opponent_timer.wait_time = rand_range(1.0, 3.0)  # 隨機時間為 1 到 5 秒
-	opponent_timer.one_shot = true  # 只啟動一次
-	opponent_timer.connect("timeout", self, "_on_opponent_answer")
-	add_child(opponent_timer)
-	opponent_timer.start()  # 啟動對手答題 Timer
-	print("Opponent will answer in " + str(opponent_timer.wait_time) + " seconds.")  # 調試訊息
 
 # 設置延遲跳題的 Timer
 func setup_delay_timer():
@@ -168,40 +167,45 @@ func update_compete_request(question_number: int, selected_option: String) -> vo
 
 # 對手答題邏輯
 func _on_opponent_answer():
-	pass
-	# if opponent_answered:
-	# 	return  # 避免重複答題
-	# opponent_answered = true  # 設定對手已經答題
-	# print("Opponent is answering...")  # 調試訊息
+	var url = "http://nccumisreading.ddnsking.com:5001/Compete/get_compete_from_id?compete_id=" + str(GlobalVar.compete_id)
+	var headers = ["accept: application/json", "Content-Type: application/json"]
 	
-	# # 隨機選擇一個答案
-	# var random_index = randi() % opponent_button_paths.size()
-	# var selected_answer = opponent_button_paths[opponent_button_paths.length() - 1]
-	
-	# # 檢查選擇的答案是否正確
-	# if str(selected_answer) == str(correct_answer):
-	# 	print("Opponent chose correct answer")  # 調試訊息
-	# 	add_opponent_score()
-	# 	$Background/opponent/correct.show()  # 對手答對顯示
-	# else:
-	# 	print("Opponent chose incorrect answer")  # 調試訊息
-	# 	$Background/opponent/incorrect.show()  # 對手答錯顯示
+	# 發送 GET 請求
+	$HTTPRequest2.request(url, headers, false, HTTPClient.METHOD_GET)
 
-	# # 如果玩家已經答題，立即顯示對手的按鈕效果
-	# if player_answered:
-	# 	apply_opponent_style(opponent_button_paths[random_index], correct_stylebox if selected_answer == correct_answer else incorrect_stylebox, selected_answer == correct_answer)
-	# else:
-	# 	# 玩家還沒答題，暫存對手的答案
-	# 	opponent_pending_answer = {
-	# 		"button_path": opponent_button_paths[random_index],
-	# 		"is_correct": selected_answer == correct_answer
-	# 	}
+func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
+	if response_code == 200:  # 成功接收回應
+		var json_data = JSON.parse(body.get_string_from_utf8()).result
+		var opponent_answer = null
+		var opponent_score = 0
 
-	# # 禁用其他對手按鈕
-	# disable_other_buttons(opponent_button_paths[random_index], opponent_button_paths)
+		# 確定玩家是 user1 還是 user2
+		if GlobalVar.user_id == json_data["user1_id"]:
+			opponent_answer = json_data["user2_question1"]
+			opponent_score = json_data["user2_score"]
+		elif GlobalVar.user_id == json_data["user2_id"]:
+			opponent_answer = json_data["user1_question1"]
+			opponent_score = json_data["user1_score"]
+		
+		# 檢查對手是否已經回答
+		if opponent_answer != null:
+			var selected_answer = str(opponent_answer)
+			print("對方選擇的是：" + str(selected_answer))
+			print("正確答案是: "+ str(correct_answer))
+			
+			# 根據對手的答案更新樣式
+			if str(selected_answer) == str(correct_answer):
+				$Background/opponent/correct.show()  # 對手答對
+			else:
+				$Background/opponent/incorrect.show()  # 對手答錯
 
-	# # 檢查是否所有選項都已經被按下
-	# check_all_answered()
+			# 更新對手的分數
+			GlobalVar.opponent_score = opponent_score
+			smooth_update_score()
+
+			# 對手已經回答，停止檢查
+			opponent_check_timer.stop()
+			print("對手已回答、分數已更新")
 
 # 加載題目和選項
 func load_question(content, options):
@@ -225,14 +229,6 @@ func check_all_answered():
 		if delay_timer.is_stopped():
 			delay_timer.start()
 
-# 根據基礎分數和剩餘時間加分
-func add_opponent_score():
-	target_score_2 += base_score_per_question
-	target_score_2 += countdown_time  # 對手計分區塊加上剩餘時間
-	target_score_2 = clamp(target_score_2, 0, max_score)
-	GlobalVar.opponent_score = target_score_2
-	smooth_update_score()
-
 func add_score():
 	target_score_1 += base_score_per_question
 	target_score_1 += countdown_time  # 玩家計分區塊加上剩餘時間
@@ -251,12 +247,12 @@ func smooth_update_score():
 	current_score_1 = target_score_1
 
 	# 使用Tween來平滑更新對手分數條
-	var tween_2 =  $Background/oppo_score/Tween
+	var tween_2 = $Background/oppo_score/Tween
 	if tween_2.is_active():
 		tween_2.stop_all()
-	tween_2.interpolate_property($Background/oppo_score/score2, "value", current_score_2, target_score_2, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween_2.interpolate_property($Background/oppo_score/score2, "value", current_score_2, GlobalVar.opponent_score, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween_2.start()
-	current_score_2 = target_score_2
+	current_score_2 = GlobalVar.opponent_score
 	update_score_display()
 
 # 更新分數顯示
@@ -294,4 +290,3 @@ func apply_opponent_style(button_path: String, stylebox, is_correct: bool):
 	# 顯示對手的正確或錯誤圖標
 	button.get_node("oppo_correct").visible = is_correct
 	button.get_node("oppo_incorrect").visible = not is_correct
-

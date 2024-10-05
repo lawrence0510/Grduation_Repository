@@ -834,6 +834,8 @@ expand = true
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
+[node name="HTTPRequest2" type="HTTPRequest" parent="."]
+
 [connection signal="timeout" from="Background/Timer" to="." method="_on_Timer_timeout"]
 [connection signal="pressed" from="Background/op_Options1" to="." method="_on_Options1_pressed"]
 [connection signal="pressed" from="Background/op_Options2" to="." method="_on_Options2_pressed"]
@@ -843,3 +845,4 @@ expand = true
 [connection signal="pressed" from="Background/Options2" to="." method="_on_Options2_pressed"]
 [connection signal="pressed" from="Background/Options3" to="." method="_on_Options3_pressed"]
 [connection signal="pressed" from="Background/Options4" to="." method="_on_Options4_pressed"]
+[connection signal="request_completed" from="HTTPRequest2" to="." method="_on_HTTPRequest2_request_completed"]

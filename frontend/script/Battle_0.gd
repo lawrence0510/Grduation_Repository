@@ -66,7 +66,6 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 				GlobalVar.battle_question["shortquestion" + str(i + 1) + "_option3"] = question["shortquestion_option3"]
 				GlobalVar.battle_question["shortquestion" + str(i + 1) + "_option4"] = question["shortquestion_option4"]
 				GlobalVar.battle_question["shortquestion" + str(i + 1) + "_answer"] = question["answer"]
-			print(GlobalVar.battle_question)
 			get_tree().change_scene("res://Scene/Battle_1.tscn")
 
 	elif response_code == 201:
