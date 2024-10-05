@@ -1,6 +1,6 @@
 extends Node
 
-onready var full_story_scene = $BattleBackground/FullStory
+onready var full_story_scene = $BattleBackground/WindowDialog
 onready var pause_scene = $BattleBackground/PauseScene
 onready var attack_animation
 onready var line_edit = $BattleBackground/LineEdit
@@ -14,7 +14,6 @@ onready var enemy_image = $BattleBackground/Question/Enemy
 func _ready() -> void:
 	full_story_scene.setStory(GlobalVar.story)
 	enemy_image.texture = GlobalVar.images[2]
-	full_story_scene.setStory(GlobalVar.story)
 	$BattleBackground/Question.add_child(health_bar) ## 因為畫面前後的關係，所以把節點放在Question的底下
 	health_bar.init_health_value(GlobalVar.global_player_health) ## 設定玩家血量
 	full_story_scene.set_visible(false) ## 隱藏全文

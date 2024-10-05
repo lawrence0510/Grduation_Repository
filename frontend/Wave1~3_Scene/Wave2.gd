@@ -1,7 +1,7 @@
 extends Node
 
 
-onready var full_story_scene = $BattleBackground/FullStory
+onready var full_story_scene = $BattleBackground/WindowDialog
 onready var pause_scene = $BattleBackground/PauseScene
 onready var attack_animation
 onready var http_request: HTTPRequest = $HTTPRequest

@@ -6,7 +6,7 @@
 [ext_resource path="res://Textures/PauseButton.png" type="Texture" id=4]
 [ext_resource path="res://Textures/BattleBG1.png" type="Texture" id=5]
 [ext_resource path="res://Wave1~3_Scene/Wave1.gd" type="Script" id=6]
-[ext_resource path="res://BattleSystem/FullStory.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scene/story.tscn" type="PackedScene" id=7]
 [ext_resource path="res://BattleSystem/PauseScene.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Spritesheets/fx_explosionblueelectrical.png" type="Texture" id=9]
 [ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb5.png" type="Texture" id=10]
@@ -306,8 +306,7 @@ custom_styles/normal = SubResource( 3 )
 icon_align = 1
 expand_icon = true
 
-[node name="FullStory" parent="BattleBackground" instance=ExtResource( 7 )]
-visible = false
+[node name="WindowDialog" parent="BattleBackground" instance=ExtResource( 7 )]
 
 [node name="PauseScene" parent="BattleBackground" instance=ExtResource( 8 )]
 visible = false

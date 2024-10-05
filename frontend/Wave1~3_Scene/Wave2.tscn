@@ -5,7 +5,7 @@
 [ext_resource path="res://Fonts/noto_sans_32.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Textures/PauseButton.png" type="Texture" id=4]
 [ext_resource path="res://Textures/BattleBG2.png" type="Texture" id=5]
-[ext_resource path="res://BattleSystem/FullStory.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scene/story.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Wave1~3_Scene/Wave2.gd" type="Script" id=7]
 [ext_resource path="res://BattleSystem/PauseScene.tscn" type="PackedScene" id=8]
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt3.png" type="Texture" id=9]
@@ -306,9 +306,6 @@ custom_styles/normal = SubResource( 3 )
 icon_align = 1
 expand_icon = true
 
-[node name="FullStory" parent="BattleBackground" instance=ExtResource( 6 )]
-visible = false
-
 [node name="PauseScene" parent="BattleBackground" instance=ExtResource( 8 )]
 visible = false
 
@@ -322,6 +319,8 @@ position = Vector2( 485, 540 )
 scale = Vector2( 6.25767, 3.81555 )
 frames = SubResource( 25 )
 animation = "Spark"
+
+[node name="WindowDialog" parent="BattleBackground" instance=ExtResource( 6 )]
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 

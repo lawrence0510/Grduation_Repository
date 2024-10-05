@@ -1,7 +1,7 @@
 extends Node
 
 
-onready var full_story_scene = $BattleBackground/FullStory
+onready var full_story_scene = $BattleBackground/WindowDialog
 onready var pause_scene = $BattleBackground/PauseScene
 onready var attack_animation
 onready var http_request: HTTPRequest = $HTTPRequest
@@ -150,36 +150,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	
 	#設定文章
 	GlobalVar.story = json.result[0].article_content
-	
-	#修改文章格式
-	#跑過每個字元看有沒有句號
-	var i = 0
-	#用來記錄句號數量
-	var pExist = 0
-	#紀錄距離上一次換行過了幾個字元
-	var distance = 0
-	#設定左邊的留白
-	story = story.insert(0, "      ")
-	while story.length() > i:
-		distance = distance + 1
-		if story[i] == "。":
-			pExist = pExist + 1
-		
-		#如果有三個句號，要換段落
-		if pExist == 3:
-			story = story.insert(i + 1, "\n\n      ||")
-			pExist = 0
-			distance = 0
-		
-		#經過了55個字元要換行
-		if distance == 55:
-			story = story.insert(i + 1, "\n      --")
-			pExist = 0
-			distance = 0
-		i = i + 1
-	
-	print("字元數", i)
-	
+
 
 	full_story_scene.setStory(story)
 	
