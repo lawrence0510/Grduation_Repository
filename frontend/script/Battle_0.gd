@@ -51,7 +51,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			print("Match found!")
 			print("Opponent ID: ", response["opponent_id"])
 			continue_request = false
-			
+			GlobalVar.opponent_id = response["opponent_id"]
 			GlobalVar.compete_id = response["compete_id"]
 			
 			GlobalVar.battle_question = {}  # 清空字典

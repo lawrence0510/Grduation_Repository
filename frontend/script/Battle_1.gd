@@ -47,7 +47,7 @@ func _ready():
 	load_question(question_content, options)
 	# 連接按鈕的 pressed 信號
 	connect_buttons()
-	
+
 	# 設置玩家計分區塊的分數條
 	$Background/player_score/score.max_value = max_score  # 設置最大分數
 	$Background/player_score/score.value = current_score_1  # 初始化分數條為0
@@ -113,73 +113,18 @@ func _on_delay_timeout():
 	
 	get_tree().change_scene("res://Scene/Battle_2.tscn")
 
-# 對手答題邏輯
-func _on_opponent_answer():
-	if opponent_answered:
-		return  # 避免重複答題
-	opponent_answered = true  # 設定對手已經答題
-	print("Opponent is answering...")  # 調試訊息
-	
-	# 隨機選擇一個答案
-	var random_index = randi() % opponent_button_paths.size()
-	var selected_answer = get_node(opponent_button_paths[random_index] + "/content").text
-	if(correct_answer == 1):
-		correct_answer = GlobalVar.battle_question["shortquestion1_option1"]
-	elif(correct_answer == 2):
-		correct_answer = GlobalVar.battle_question["shortquestion1_option2"]
-	elif(correct_answer == 3):
-		correct_answer = GlobalVar.battle_question["shortquestion1_option3"]
-	elif(correct_answer == 4):
-		correct_answer = GlobalVar.battle_question["shortquestion1_option4"]
-	
-	# 檢查選擇的答案是否正確
-	if selected_answer == correct_answer:
-		print("Opponent chose correct answer")  # 調試訊息
-		add_opponent_score()
-		$Background/opponent/correct.show()  # 對手答對顯示
-	else:
-		print("Opponent chose incorrect answer")  # 調試訊息
-		$Background/opponent/incorrect.show()  # 對手答錯顯示
-
-	# 如果玩家已經答題，立即顯示對手的按鈕效果
-	if player_answered:
-		apply_opponent_style(opponent_button_paths[random_index], correct_stylebox if selected_answer == correct_answer else incorrect_stylebox, selected_answer == correct_answer)
-	else:
-		# 玩家還沒答題，暫存對手的答案
-		opponent_pending_answer = {
-			"button_path": opponent_button_paths[random_index],
-			"is_correct": selected_answer == correct_answer
-		}
-
-	# 禁用其他對手按鈕
-	disable_other_buttons(opponent_button_paths[random_index], opponent_button_paths)
-
-	# 檢查是否所有選項都已經被按下
-	check_all_answered()
-
-# 加載題目和選項
-func load_question(content, options):
-	$Background/Topic.text = content
-	for i in range(button_paths.size()):
-		get_node(button_paths[i] + "/content").text = options[i]
-
-	for i in range(opponent_button_paths.size()):
-		get_node(opponent_button_paths[i] + "/content").text = options[i]
-
-# 連接所有選項按鈕
-func connect_buttons():
-	for path in button_paths:
-		get_node(path).connect("pressed", self, "_on_button_pressed", [path])
-
 # 玩家按下的按鈕行為
 func _on_button_pressed(button_path: String):
 	if player_answered:
 		return  # 如果玩家已經答題，則忽略
 
 	player_answered = true  # 玩家已經答題
-	var selected_answer = get_node(button_path + "/content").text
+
+	var selected_answer = button_path[button_path.length() - 1]
+	print("correct_answer: " + str(correct_answer))
+	print("selected answer: " + str(selected_answer))
 	# 檢查選擇的答案是否正確
-	if selected_answer == correct_answer:
+	if str(selected_answer) == str(correct_answer):
 		print("Player chose correct answer")  # 答案正確
 		add_score()  # 加分
 		apply_player_style(button_path, correct_stylebox, true)  # 顯示玩家正確樣式
@@ -199,6 +144,79 @@ func _on_button_pressed(button_path: String):
 
 	# 檢查是否所有選項都已經被按下
 	check_all_answered()
+
+	var question_number = 1
+	var selected_option= str(selected_answer)
+
+	update_compete_request(question_number, selected_option) 
+
+# 發送 POST 請求的函數
+func update_compete_request(question_number: int, selected_option: String) -> void:
+	var url = "http://nccumisreading.ddnsking.com:5001/Compete/update_answer"
+	
+	# 構建 query_string，對 user_id 和 compete_id 進行 http_escape
+	var query_string = "?user_id=" + str(GlobalVar.user_id).http_escape() + "&compete_id=" + str(GlobalVar.compete_id).http_escape() + "&question_number=" + str(question_number).http_escape() + "&selected_option=" + selected_option.http_escape() + "&score=" + str(GlobalVar.player_score).http_escape()
+	url += query_string
+		
+	# 準備 HTTP headers
+	var headers = ["accept: application/json", "Content-Type: application/json"]
+	
+	# 發送 POST 請求
+	$HTTPRequest.request(url, headers, true, HTTPClient.METHOD_POST, "{}")
+
+
+
+# 對手答題邏輯
+func _on_opponent_answer():
+	pass
+	# if opponent_answered:
+	# 	return  # 避免重複答題
+	# opponent_answered = true  # 設定對手已經答題
+	# print("Opponent is answering...")  # 調試訊息
+	
+	# # 隨機選擇一個答案
+	# var random_index = randi() % opponent_button_paths.size()
+	# var selected_answer = opponent_button_paths[opponent_button_paths.length() - 1]
+	
+	# # 檢查選擇的答案是否正確
+	# if str(selected_answer) == str(correct_answer):
+	# 	print("Opponent chose correct answer")  # 調試訊息
+	# 	add_opponent_score()
+	# 	$Background/opponent/correct.show()  # 對手答對顯示
+	# else:
+	# 	print("Opponent chose incorrect answer")  # 調試訊息
+	# 	$Background/opponent/incorrect.show()  # 對手答錯顯示
+
+	# # 如果玩家已經答題，立即顯示對手的按鈕效果
+	# if player_answered:
+	# 	apply_opponent_style(opponent_button_paths[random_index], correct_stylebox if selected_answer == correct_answer else incorrect_stylebox, selected_answer == correct_answer)
+	# else:
+	# 	# 玩家還沒答題，暫存對手的答案
+	# 	opponent_pending_answer = {
+	# 		"button_path": opponent_button_paths[random_index],
+	# 		"is_correct": selected_answer == correct_answer
+	# 	}
+
+	# # 禁用其他對手按鈕
+	# disable_other_buttons(opponent_button_paths[random_index], opponent_button_paths)
+
+	# # 檢查是否所有選項都已經被按下
+	# check_all_answered()
+
+# 加載題目和選項
+func load_question(content, options):
+	$Background/Topic.text = content
+	for i in range(button_paths.size()):
+		get_node(button_paths[i] + "/content").text = options[i]
+
+	for i in range(opponent_button_paths.size()):
+		get_node(opponent_button_paths[i] + "/content").text = options[i]
+
+# 連接所有選項按鈕
+func connect_buttons():
+	for path in button_paths:
+		get_node(path).connect("pressed", self, "_on_button_pressed", [path])
+
 
 # 檢查是否所有選項已經被回答
 func check_all_answered():
@@ -220,7 +238,7 @@ func add_score():
 	target_score_1 += countdown_time  # 玩家計分區塊加上剩餘時間
 	target_score_1 = clamp(target_score_1, 0, max_score)
 	print(target_score_1)
-	GlobalVar.player_score = target_score_1
+	GlobalVar.player_score += target_score_1
 	smooth_update_score()
 
 func smooth_update_score():

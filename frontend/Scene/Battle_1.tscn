@@ -832,6 +832,8 @@ margin_bottom = 35.0
 texture = ExtResource( 7 )
 expand = true
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
 [connection signal="timeout" from="Background/Timer" to="." method="_on_Timer_timeout"]
 [connection signal="pressed" from="Background/op_Options1" to="." method="_on_Options1_pressed"]
 [connection signal="pressed" from="Background/op_Options2" to="." method="_on_Options2_pressed"]

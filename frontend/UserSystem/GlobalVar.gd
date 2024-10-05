@@ -31,4 +31,8 @@ var battle_question = {}
 
 var player_score = 0
 
+var opponent_score = 0
+
 var compete_id = 0
+
+var opponent_id = 0
