@@ -3,10 +3,13 @@ extends Node
 var time_to_change = 0.5
 var request_sent = false  # 用於追蹤是否發送了POST請求
 var continue_request = true  # 追蹤是否繼續發送請求
+var countdown_time = 3.0  # 倒數時間設為3秒
+var countdown_active = false  # 用於啟動倒數計時
 
 onready var ready = $TextureRect/Label2/ready
 onready var ing = $TextureRect/Label2/ing
 onready var http_request = $HTTPRequest
+onready var time_label = $TextureRect/Label2/time
 
 func _ready():
 	# 初始化，當場景準備好後開始計時
@@ -19,9 +22,12 @@ func _process(delta):
 		send_post_request()
 		time_to_change = 0.5
 
-	if time_to_change <= 1:
-		ing.hide()
-		ready.show()
+	if countdown_active:
+		countdown_time -= delta
+		time_label.visible = false
+		if countdown_time <= 0:
+			countdown_active = false
+			get_tree().change_scene("res://Scene/Battle_1.tscn")  # 切換場景
 
 	if Input.is_action_just_pressed("ui_cancel"):
 		# 如果遊戲當前是全螢幕模式，則退出全螢幕
@@ -66,9 +72,18 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 				GlobalVar.battle_question["shortquestion" + str(i + 1) + "_option3"] = question["shortquestion_option3"]
 				GlobalVar.battle_question["shortquestion" + str(i + 1) + "_option4"] = question["shortquestion_option4"]
 				GlobalVar.battle_question["shortquestion" + str(i + 1) + "_answer"] = question["answer"]
-			get_tree().change_scene("res://Scene/Battle_1.tscn")
+			
+			# 隱藏ing，顯示ready，開始倒數計時
+			ing.hide()
+			ready.show()
+			start_countdown()
 
 	elif response_code == 201:
 		print("Still Waiting...")
 	else:
 		print("Error: Response Code ", response_code)
+
+# 啟動倒數計時的函數
+func start_countdown():
+	countdown_time = 3.0  # 重置倒數計時
+	countdown_active = true  # 啟動倒數計時
