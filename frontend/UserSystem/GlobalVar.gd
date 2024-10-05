@@ -30,3 +30,5 @@ var wave_data = {}
 var battle_question = {}
 
 var player_score = 0
+
+var compete_id = 0

@@ -52,6 +52,8 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			print("Opponent ID: ", response["opponent_id"])
 			continue_request = false
 			
+			GlobalVar.compete_id = response["compete_id"]
+			
 			GlobalVar.battle_question = {}  # 清空字典
 
 			# 處理問題

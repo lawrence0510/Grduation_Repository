@@ -1835,23 +1835,6 @@ shortquestion_age_parser.add_argument(
 compete_ns = api.namespace('Compete', description='與對戰操作相關之api')
 match_parser = reqparse.RequestParser()
 match_parser.add_argument('user_id', type=int, required=True, help='使用者ID')
-insert_record_parser = reqparse.RequestParser()
-insert_record_parser.add_argument(
-    'user1_id', type=int, required=True, help='使用者1的ID')
-insert_record_parser.add_argument(
-    'user2_id', type=int, required=True, help='使用者2的ID')
-insert_record_parser.add_argument(
-    'question1_id', type=int, required=True, help='第一個問題ID')
-insert_record_parser.add_argument(
-    'question2_id', type=int, required=True, help='第二個問題ID')
-insert_record_parser.add_argument(
-    'question3_id', type=int, required=True, help='第三個問題ID')
-insert_record_parser.add_argument(
-    'question4_id', type=int, required=True, help='第四個問題ID')
-insert_record_parser.add_argument(
-    'user1_score', type=int, required=True, help='使用者1的得分')
-insert_record_parser.add_argument(
-    'user2_score', type=int, required=True, help='使用者2的得分')
 
 
 @compete_ns.route('/match_user')
@@ -1991,35 +1974,34 @@ class MatchUser(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+# 定義parser來解析compete_id
+compete_id_parser = reqparse.RequestParser()
+compete_id_parser.add_argument('compete_id', type=int, required=True, help='對戰ID')
 
-
-@compete_ns.route('/insert_compete_record')
-class InsertCompeteRecord(Resource):
-    @compete_ns.expect(insert_record_parser)
-    def post(self):
-        args = insert_record_parser.parse_args()
-        user1_id = args['user1_id']
-        user2_id = args['user2_id']
-        question1_id = args['question1_id']
-        question2_id = args['question2_id']
-        question3_id = args['question3_id']
-        question4_id = args['question4_id']
-        user1_score = args['user1_score']
-        user2_score = args['user2_score']
+@compete_ns.route('/get_compete_from_id')
+class GetCompeteById(Resource):
+    @compete_ns.expect(compete_id_parser)
+    def get(self):
+        '''根據 compete_id 獲取比賽資料'''
+        args = compete_id_parser.parse_args()
+        compete_id = args['compete_id']
 
         connection = create_db_connection()
-        if connection:
+        if connection is not None:
             try:
-                cursor = connection.cursor()
-                sql = """
-                INSERT INTO Compete (user1_id, user2_jd, question1_id, question2_id, question3_id, question4_id, user1_score, user2_score, compete_time)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, NOW())
-                """
-                cursor.execute(sql, (user1_id, user2_id, question1_id, question2_id,
-                               question3_id, question4_id, user1_score, user2_score))
-                connection.commit()
+                cursor = connection.cursor(dictionary=True)
+                sql = "SELECT * FROM Compete WHERE compete_id = %s"
+                cursor.execute(sql, (compete_id,))
+                compete = cursor.fetchone()
 
-                return {"message": "Compete record inserted successfully", "compete_id": cursor.lastrowid}, 201
+                if compete:
+                    # 將所有 datetime 類型的欄位轉為 ISO 格式
+                    for key, value in compete.items():
+                        if isinstance(value, (date, datetime)):
+                            compete[key] = value.isoformat()
+                    return compete, 200
+                else:
+                    return {"error": "Compete not found"}, 404
             except Error as e:
                 return {"error": str(e)}, 500
             finally:
@@ -2028,6 +2010,74 @@ class InsertCompeteRecord(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+update_answer_parser = reqparse.RequestParser()
+update_answer_parser.add_argument('user_id', type=int, required=True, help='使用者 ID')
+update_answer_parser.add_argument('compete_id', type=int, required=True, help='比賽 ID')
+update_answer_parser.add_argument('question_number', type=int, required=True, help='問題編號，1-5 之間')
+update_answer_parser.add_argument('selected_option', type=int, required=True, help='使用者選擇的選項')
+update_answer_parser.add_argument('score', type=int, required=True, help='總分')
+@compete_ns.route('/update_answer')
+class UpdateAnswer(Resource):
+    @compete_ns.expect(update_answer_parser)
+    def post(self):
+        """
+        根據 user_id 和 compete_id 更新對應的問題答案與分數
+        傳入參數: user_id, compete_id, question_number, selected_option, score
+        """
+        args = update_answer_parser.parse_args()
+        user_id = args['user_id']
+        compete_id = args['compete_id']
+        question_number = args['question_number']
+        selected_option = args['selected_option']
+        score = args['score']
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+
+                # 1. 確認 user_id 是 user1 還是 user2
+                cursor.execute("""
+                    SELECT user1_id, user2_id FROM Compete WHERE compete_id = %s
+                """, (compete_id,))
+                compete_record = cursor.fetchone()
+
+                if not compete_record:
+                    return {"error": "Compete not found"}, 404
+
+                user1_id, user2_id = compete_record
+
+                if user_id == user1_id:
+                    user_type = 'user1'
+                elif user_id == user2_id:
+                    user_type = 'user2'
+                else:
+                    return {"error": "User not part of this competition"}, 400
+
+                # 2. 根據 question_number 更新對應的欄位
+                if question_number < 1 or question_number > 5:
+                    return {"error": "Invalid question number"}, 400
+
+                question_field = f"{user_type}_question{question_number}"
+                score_field = f"{user_type}_score"
+
+                # 更新選項與分數
+                cursor.execute(f"""
+                    UPDATE Compete
+                    SET {question_field} = %s, {score_field} = %s
+                    WHERE compete_id = %s
+                """, (selected_option, score, compete_id))
+                connection.commit()
+
+                return {"message": "Answer and score updated successfully"}, 200
+
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)
