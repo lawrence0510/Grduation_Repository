@@ -4,7 +4,6 @@ extends Node2D
 var countdown_time = 10
 var countdown_timer : Timer
 var delay_timer : Timer  # 用於延遲跳題的 Timer
-var opponent_timer : Timer  # 用於對手答題的 Timer
 var opponent_check_timer : Timer  # 用於檢查對手答題的 Timer
 var button_paths = ["Background/Options1", "Background/Options2", "Background/Options3", "Background/Options4"]
 var opponent_button_paths = ["Background/op_Options1", "Background/op_Options2", "Background/op_Options3", "Background/op_Options4"]
@@ -120,8 +119,7 @@ func _on_button_pressed(button_path: String):
 	player_answered = true  # 玩家已經答題
 
 	var selected_answer = button_path[button_path.length() - 1]
-	print("correct_answer: " + str(correct_answer))
-	print("selected answer: " + str(selected_answer))
+	GlobalVar.player_selected_answer = selected_answer  # 存儲玩家選擇
 	# 檢查選擇的答案是否正確
 	if str(selected_answer) == str(correct_answer):
 		print("Player chose correct answer")  # 答案正確
@@ -132,11 +130,6 @@ func _on_button_pressed(button_path: String):
 		print("Player chose incorrect answer")  # 答案錯誤
 		apply_player_style(button_path, incorrect_stylebox, false)  # 顯示玩家錯誤樣式
 		$Background/Player/incorrect.show()
-	
-	# 如果對手比玩家先答題，現在顯示對手的按鈕效果
-	if opponent_pending_answer != null:
-		apply_opponent_style(opponent_pending_answer["button_path"], correct_stylebox if opponent_pending_answer["is_correct"] else incorrect_stylebox, opponent_pending_answer["is_correct"])
-		opponent_pending_answer = null  # 清除對手的暫存狀態
 
 	# 禁用其他按鈕
 	disable_other_buttons(button_path, button_paths)
@@ -144,10 +137,15 @@ func _on_button_pressed(button_path: String):
 	# 檢查是否所有選項都已經被按下
 	check_all_answered()
 
-	var question_number = 1
-	var selected_option= str(selected_answer)
+	# 檢查是否有 pending 的對手答案，如果有，立即應用
+	if opponent_pending_answer != null:
+		apply_opponent_style(opponent_pending_answer["button_path"], correct_stylebox if opponent_pending_answer["is_correct"] else incorrect_stylebox, opponent_pending_answer["is_correct"])
+		opponent_pending_answer = null  # 清除對手的暫存狀態
 
-	update_compete_request(question_number, selected_option) 
+	var question_number = 1
+	var selected_option = str(selected_answer)
+
+	update_compete_request(question_number, selected_option)
 
 # 發送 POST 請求的函數
 func update_compete_request(question_number: int, selected_option: String) -> void:
@@ -173,6 +171,7 @@ func _on_opponent_answer():
 	# 發送 GET 請求
 	$HTTPRequest2.request(url, headers, false, HTTPClient.METHOD_GET)
 
+# 處理從API接收到的對手答題
 func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
 	if response_code == 200:  # 成功接收回應
 		var json_data = JSON.parse(body.get_string_from_utf8()).result
@@ -190,8 +189,7 @@ func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
 		# 檢查對手是否已經回答
 		if opponent_answer != null:
 			var selected_answer = str(opponent_answer)
-			print("對方選擇的是：" + str(selected_answer))
-			print("正確答案是: "+ str(correct_answer))
+			GlobalVar.opponent_selected_answer = selected_answer  # 存儲對手選擇
 			
 			# 根據對手的答案更新樣式
 			if str(selected_answer) == str(correct_answer):
@@ -205,6 +203,17 @@ func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
 
 			# 對手已經回答，停止檢查
 			opponent_check_timer.stop()
+			opponent_pending_answer = {
+				"button_path": opponent_button_paths[opponent_answer - 1],
+				"is_correct": str(selected_answer) == str(correct_answer)
+			}
+
+			# 如果玩家已經回答，立即應用對手的樣式
+			if player_answered:
+				apply_opponent_style(opponent_pending_answer["button_path"], correct_stylebox if opponent_pending_answer["is_correct"] else incorrect_stylebox, opponent_pending_answer["is_correct"])
+				opponent_pending_answer = null
+			
+			check_all_answered()
 			print("對手已回答、分數已更新")
 
 # 加載題目和選項
@@ -229,11 +238,23 @@ func check_all_answered():
 		if delay_timer.is_stopped():
 			delay_timer.start()
 
+	print("GlobalVar.player_selected_answer" + str(GlobalVar.player_selected_answer))
+	print("GlobalVar.opponent_selected_answer: " + str(GlobalVar.opponent_selected_answer))
+	print("correct_answer: "+ str(correct_answer))
+
+	# 檢查如果雙方都答錯，顯示正確答案
+	if GlobalVar.player_selected_answer != "" and GlobalVar.opponent_selected_answer != "" and not str(GlobalVar.player_selected_answer) == str(correct_answer) and not str(GlobalVar.opponent_selected_answer) == str(correct_answer):
+		var correct_button_path = button_paths[int(correct_answer) - 1]
+		apply_player_style(correct_button_path, correct_stylebox, true)  # 顯示正確答案的按鈕為綠色
+		GlobalVar.player_selected_answer = ""
+		GlobalVar.opponent_selected_answer = ""
+		print("雙方都答錯，正確答案已顯示")
+	#許馨文救我 他只會出現O不會出現綠色
+
 func add_score():
 	target_score_1 += base_score_per_question
 	target_score_1 += countdown_time  # 玩家計分區塊加上剩餘時間
 	target_score_1 = clamp(target_score_1, 0, max_score)
-	print(target_score_1)
 	GlobalVar.player_score += target_score_1
 	smooth_update_score()
 

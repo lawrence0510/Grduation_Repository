@@ -36,3 +36,7 @@ var opponent_score = 0
 var compete_id = 0
 
 var opponent_id = 0
+
+var player_selected_answer = ""
+
+var opponent_selected_answer = ""
