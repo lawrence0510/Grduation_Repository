@@ -13,12 +13,12 @@ var player_answered = false  # 用來追蹤玩家是否答題
 var opponent_pending_answer = null  # 儲存對手的答案但不立即呈現（只在對手比玩家早答題時使用）
 
 # 分數機制
-var max_score = 100  # 最大分數
+var max_score = 1000  # 最大分數
 var current_score_1 = 0  # 玩家計分區塊的當前分數
 var target_score_1 = 0  # 玩家計分區塊的目標分數（用來平滑過渡）
 var current_score_2 = 0  # 對手計分區塊的當前分數
 var target_score_2 = 0  # 對手計分區塊的目標分數（用來平滑過渡）
-var base_score_per_question = 10  # 每題基本分數
+var base_score_per_question = 120  # 每題基本分數
 var question_start_time = 0  # 記錄答題開始時間
 
 # 第一組題目
@@ -43,21 +43,145 @@ func _ready():
 	setup_delay_timer()  # 設置延遲跳題的 Timer
 	setup_opponent_check_timer()  # 設置檢查對手答題的 Timer
 	
+	# 發送GET請求，獲取玩家資料
+	get_player_data()
+	# 發送GET請求，獲取對手資料
+	get_opponent_data()
+
 	# 設置第一組題目文本
 	load_question(question_content, options)
 	# 連接按鈕的 pressed 信號
 	connect_buttons()
 
 	# 設置玩家計分區塊的分數條
-	$Background/player_score/score.max_value = max_score  # 設置最大分數
-	$Background/player_score/score.value = current_score_1  # 初始化分數條為0
+	$Background/player_score/score2.max_value = max_score  # 設置最大分數
+	$Background/player_score/score2.value = current_score_1  # 初始化分數條為0
 	
 	# 設置對手計分區塊的分數條
-	$Background/oppo_score/score2.max_value = max_score  # 設置最大分數
-	$Background/oppo_score/score2.value = current_score_2  # 初始化分數條為0
+	$Background/oppo_score/score.max_value = max_score  # 設置最大分數
+	$Background/oppo_score/score.value = current_score_2  # 初始化分數條為0
 	
 	# 顯示當前分數
 	update_score_display()
+
+# 發送GET請求，獲取玩家資料
+func get_player_data():
+	var url = "http://nccumisreading.ddnsking.com:5001/User/get_user_from_id?user_id=" + str(GlobalVar.user_id)
+	var headers = ["accept: application/json", "Content-Type: application/json"]
+	$HTTPRequest3.request(url, headers, false, HTTPClient.METHOD_GET)
+
+# 處理從API接收到的玩家資料
+func _on_HTTPRequest3_request_completed(result, response_code, headers, body):
+	if response_code == 200:  # 成功接收回應
+		var json_data = JSON.parse(body.get_string_from_utf8()).result
+		print(json_data)
+		var profile_picture = json_data["profile_picture"]
+		$Background/Player/name.text = json_data["user_name"]
+		var character_id = json_data["character_id"]
+
+		if profile_picture != null and profile_picture != "":
+			load_profile_picture_from_url(profile_picture)
+		else:
+			# 根據 character_id 設置對應圖片
+			print("no profile picture detected, use characters instead")
+			if character_id == 1:
+				$Background/Player/pic.texture = load("res://Pic/battle_B1.png")
+			elif character_id == 2:
+				$Background/Player/pic.texture = load("res://Pic/battle_B2.png")
+			elif character_id == 3:
+				$Background/Player/pic.texture = load("res://Pic/battle_B3.png")
+			elif character_id == 4:
+				$Background/Player/pic.texture = load("res://Pic/battle_B4.png")
+			elif character_id == 5:
+				$Background/Player/pic.texture = load("res://Pic/battle_G1.png")
+			elif character_id == 6:
+				$Background/Player/pic.texture = load("res://Pic/battle_G2.png")
+			elif character_id == 7:
+				$Background/Player/pic.texture = load("res://Pic/battle_G3.png")
+			elif character_id == 8:
+				$Background/Player/pic.texture = load("res://Pic/battle_G4.png")
+
+# 使用 HTTP 請求下載並加載圖片
+func load_profile_picture_from_url(url: String):
+	print("Profile Picture Loading")
+	var image_request = $HTTPRequest4
+	image_request.connect("request_completed", self, "_on_profile_picture_request_completed")
+	image_request.request(url)
+
+# 當圖片下載完成時處理圖片
+func _on_HTTPRequest4_request_completed(result, response_code, headers, body):
+	if response_code == 200:
+		# 嘗試將body轉換為Image
+		var image = Image.new()
+		var load_result = image.load_jpg_from_buffer(body)
+		if load_result == OK:
+			var texture = ImageTexture.new()
+			texture.create_from_image(image)
+			$Background/Player/pic.texture = texture
+			print("Profile picture loaded successfully.")
+		else:
+			print("Failed to load image from buffer.")
+	else:
+		print("Failed to load profile picture from URL.")
+
+func get_opponent_data():
+	var url = "http://nccumisreading.ddnsking.com:5001/User/get_user_from_id?user_id=" + str(GlobalVar.opponent_id)
+	var headers = ["accept: application/json", "Content-Type: application/json"]
+	$HTTPRequest5.request(url, headers, false, HTTPClient.METHOD_GET)
+
+# 處理從API接收到的對手資料
+func _on_HTTPRequest5_request_completed(result, response_code, headers, body):
+	if response_code == 200:  # 成功接收回應
+		var json_data = JSON.parse(body.get_string_from_utf8()).result
+		print(json_data)
+		var profile_picture = json_data["profile_picture"]
+		$Background/opponent/name.text = json_data["user_name"]
+		var character_id = json_data["character_id"]
+
+		if profile_picture != null and profile_picture != "":
+			load_opponent_picture_from_url(profile_picture)
+		else:
+			# 根據 character_id 設置對應圖片
+			print("no profile picture detected for opponent, use characters instead")
+			if character_id == 1:
+				$Background/opponent/pic.texture = load("res://Pic/battle_B1.png")
+			elif character_id == 2:
+				$Background/opponent/pic.texture = load("res://Pic/battle_B2.png")
+			elif character_id == 3:
+				$Background/opponent/pic.texture = load("res://Pic/battle_B3.png")
+			elif character_id == 4:
+				$Background/opponent/pic.texture = load("res://Pic/battle_B4.png")
+			elif character_id == 5:
+				$Background/opponent/pic.texture = load("res://Pic/battle_G1.png")
+			elif character_id == 6:
+				$Background/opponent/pic.texture = load("res://Pic/battle_G2.png")
+			elif character_id == 7:
+				$Background/opponent/pic.texture = load("res://Pic/battle_G3.png")
+			elif character_id == 8:
+				$Background/opponent/pic.texture = load("res://Pic/battle_G4.png")
+
+# 使用 HTTP 請求下載並加載對手的圖片
+func load_opponent_picture_from_url(url: String):
+	print("Opponent Profile Picture Loading")
+	var image_request = $HTTPRequest6
+	image_request.connect("request_completed", self, "_on_opponent_picture_request_completed")
+	image_request.request(url)
+
+# 當對手圖片下載完成時處理圖片
+func _on_opponent_picture_request_completed(result, response_code, headers, body):
+	if response_code == 200:
+		# 嘗試將body轉換為Image
+		var image = Image.new()
+		var load_result = image.load_jpg_from_buffer(body)
+		if load_result == OK:
+			var texture = ImageTexture.new()
+			texture.create_from_image(image)
+			$Background/opponent/pic.texture = texture
+			print("Opponent profile picture loaded successfully.")
+		else:
+			print("Failed to load opponent image from buffer.")
+	else:
+		print("Failed to load opponent profile picture from URL.")
 
 # 設置 Timer
 func setup_timer():
@@ -253,7 +377,7 @@ func check_all_answered():
 
 func add_score():
 	target_score_1 += base_score_per_question
-	target_score_1 += countdown_time  # 玩家計分區塊加上剩餘時間
+	target_score_1 += countdown_time*8  # 玩家計分區塊加上剩餘時間
 	target_score_1 = clamp(target_score_1, 0, max_score)
 	GlobalVar.player_score += target_score_1
 	smooth_update_score()
@@ -263,7 +387,7 @@ func smooth_update_score():
 	var tween_1 =  $Background/player_score/Tween
 	if tween_1.is_active():
 		tween_1.stop_all()
-	tween_1.interpolate_property($Background/player_score/score, "value", current_score_1, target_score_1, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween_1.interpolate_property($Background/player_score/score2, "value", current_score_1, target_score_1, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween_1.start()
 	current_score_1 = target_score_1
 
@@ -271,7 +395,7 @@ func smooth_update_score():
 	var tween_2 = $Background/oppo_score/Tween
 	if tween_2.is_active():
 		tween_2.stop_all()
-	tween_2.interpolate_property($Background/oppo_score/score2, "value", current_score_2, GlobalVar.opponent_score, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween_2.interpolate_property($Background/oppo_score/score, "value", current_score_2, GlobalVar.opponent_score, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween_2.start()
 	current_score_2 = GlobalVar.opponent_score
 	update_score_display()
@@ -311,3 +435,7 @@ func apply_opponent_style(button_path: String, stylebox, is_correct: bool):
 	# 顯示對手的正確或錯誤圖標
 	button.get_node("oppo_correct").visible = is_correct
 	button.get_node("oppo_incorrect").visible = not is_correct
+
+
+func _on_HTTPRequest6_request_completed(result, response_code, headers, body):
+	pass # Replace with function body.
