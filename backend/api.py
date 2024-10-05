@@ -1926,9 +1926,18 @@ class MatchUser(Resource):
                     """, (user_id, matched_user_id))
                     connection.commit()
 
+                    #這裡要insert進去新的Compete列，決定誰是User_1誰是User_2
+                    cursor.execute("""
+                        INSERT INTO Compete (user1_id, user2_id, user1_score, user2_score, compete_time)
+                        VALUES (%s, %s, %s, %s, NOW())
+                    """, (matched_user_id, user_id, 0, 0))
+                    compete_id = cursor.lastrowid
+                    connection.commit()
+
                     # 5. 返回匹配成功和題目集
                     return {
                         "message": "Match found",
+                        "compete_id": compete_id,
                         "opponent_id": matched_user_id,
                         # 將 JSON 題目集轉為 Python 字典
                         "questions": json.loads(question_set)
