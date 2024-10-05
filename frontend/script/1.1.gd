@@ -20,6 +20,11 @@ func _process(delta: float) -> void:
 		if OS.window_fullscreen:
 			get_tree().quit()
 
+func _input(event):
+	if event is InputEventKey:
+		if event.pressed and event.scancode == KEY_ENTER:
+			$BackgroundPicture/BackGroundControl/EnterButton.emit_signal("pressed")  # 觸發按鈕的按下信號
+
 # 註冊ok
 func _on_register_pressed():
 	get_tree().change_scene("res://scene/Regist.tscn")

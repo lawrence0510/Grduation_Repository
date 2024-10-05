@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://script/1.1.gd" type="Script" id=1]
 [ext_resource path="res://fonts/font3.tres" type="DynamicFont" id=2]
@@ -69,18 +69,6 @@ corner_radius_bottom_right = 30
 corner_radius_bottom_left = 30
 
 [sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 0.372549, 0.698039, 0.988235, 1 )
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color( 0, 0, 0, 1 )
-corner_radius_top_left = 30
-corner_radius_top_right = 30
-corner_radius_bottom_right = 30
-corner_radius_bottom_left = 30
-
-[sub_resource type="StyleBoxFlat" id=12]
 bg_color = Color( 0.372549, 0.698039, 0.988235, 1 )
 border_width_left = 2
 border_width_top = 2
@@ -246,6 +234,7 @@ margin_left = -92.0
 margin_top = -64.4319
 margin_right = 92.0
 margin_bottom = -31.4319
+mouse_default_cursor_shape = 2
 custom_colors/font_color_disabled = Color( 0, 0.0156863, 1, 1 )
 custom_colors/font_color_focus = Color( 0, 0.0156863, 1, 1 )
 custom_colors/font_color = Color( 0, 0.0156863, 1, 1 )
@@ -296,7 +285,7 @@ custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 2 )
 custom_styles/hover = SubResource( 3 )
 custom_styles/pressed = SubResource( 4 )
-custom_styles/focus = SubResource( 12 )
+custom_styles/focus = ExtResource( 3 )
 custom_styles/disabled = ExtResource( 3 )
 custom_styles/normal = ExtResource( 3 )
 text = "enter"

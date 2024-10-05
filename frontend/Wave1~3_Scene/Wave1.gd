@@ -18,6 +18,12 @@ var button_pressed = ""
 var right_button = ""
 var enemy_images = []
 
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
+		# 如果遊戲當前是全螢幕模式，則退出全螢幕
+		if OS.window_fullscreen:
+			get_tree().quit()
+
 ## 載入這個場景(Wave 1)後，馬上
 func _ready() -> void:
 	#拿題目
@@ -143,23 +149,22 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	var json = JSON.parse(body.get_string_from_utf8())
 
 	var story = json.result[0].article_content
-	
-	GlobalVar.wave_data["user_id"]=(GlobalVar.user_id)
-	GlobalVar.wave_data["article_id"]=(json.result[0].article_id)
+	story = story.replace("\n", "\n\n")  # 在每個段落後添加一個空行
 
-	
-	#設定文章
-	GlobalVar.story = json.result[0].article_content
+	GlobalVar.wave_data["user_id"] = (GlobalVar.user_id)
+	GlobalVar.wave_data["article_id"] = (json.result[0].article_id)
 
+	# 設定文章
+	GlobalVar.story = story
+	full_story_scene.setStory(story)  # 使用處理過的故事
 
-	full_story_scene.setStory(story)
-	
 	$BattleBackground/Question.text = json.result[0].question_1
 	GlobalVar.question1["question1"] = json.result[0].question_1
 	$BattleBackground/Option_A.text = "A. " + json.result[0].question1_choice1
 	$BattleBackground/Option_B.text = "B. " + json.result[0].question1_choice2
 	$BattleBackground/Option_C.text = "C. " + json.result[0].question1_choice3
 	$BattleBackground/Option_D.text = "D. " + json.result[0].question1_choice4
+
 	var question1_answer = json.result[0].question1_answer
 	if question1_answer == json.result[0].question1_choice1:
 		right_button = "A"
@@ -169,6 +174,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		right_button = "C"
 	elif question1_answer == json.result[0].question1_choice4:
 		right_button = "D"
+
 	GlobalVar.question1["answer"] = right_button + ". " + json.result[0].question1_answer
 
 	GlobalVar.question2 = {
@@ -180,11 +186,11 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		"choice4": json.result[0].question2_choice4
 	}
 
-	
 	GlobalVar.question3 = {
 		"question3": json.result[0].question3,
 		"question3_answer": json.result[0].question3_answer
 	}
+
 	
 func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
 	# 檢查 HTTP 回應碼是否為 200

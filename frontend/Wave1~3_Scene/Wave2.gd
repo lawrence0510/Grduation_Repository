@@ -16,6 +16,12 @@ var health_bar = load("res://UserSystem/HealthBar.tscn").instance()
 var button_pressed = ""
 var right_button = ""
 
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
+		# 如果遊戲當前是全螢幕模式，則退出全螢幕
+		if OS.window_fullscreen:
+			get_tree().quit()
+
 ## 載入這個場景(Wave 2)後，馬上
 func _ready() -> void:	
 	enemy_image.texture = GlobalVar.images[1]

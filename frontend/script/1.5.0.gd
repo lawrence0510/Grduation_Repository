@@ -100,8 +100,11 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			"q3_explanation2": json.result.q3_explanation2,
 			"q3_explanation3": json.result.q3_explanation3,
 		}
+		# 修改 article_content 的格式，增加空行
+		var story = GlobalVar.history_data["article_content"]
+		story = story.replace("\n", "\n\n")  # 在每個段落後添加一個空行
 		
-		$bg/content2.text = GlobalVar.history_data["article_content"]
+		$bg/content2.text = story
 	else:
 		print("Error parsing JSON: ", json.error_string)
 

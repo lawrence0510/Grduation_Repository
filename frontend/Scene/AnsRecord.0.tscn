@@ -121,6 +121,7 @@ margin_left = 112.0
 margin_top = -347.0
 margin_right = 342.0
 margin_bottom = -272.0
+mouse_default_cursor_shape = 2
 custom_colors/font_color_disabled = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color_focus = Color( 0.6, 0.6, 0.6, 1 )
 custom_colors/font_color = Color( 0.6, 0.6, 0.6, 1 )
