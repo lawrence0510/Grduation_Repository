@@ -49,7 +49,8 @@ func _ready() -> void:
 	http_request2.request(enemy_url + "?enemy_category=" + category_id)
 	
 	$BattleBackground/Question.add_child(health_bar) ## 因為畫面前後的關係，所以把節點放在Question的底下
-	health_bar.init_health_value(health_bar.health_value) ## 設定玩家血量
+#	GlobalVar.global_player_health = 100 # 重置玩家血量
+	health_bar.init_health_value(100) ## 設定玩家血量
 	print(health_bar.health_value)
 	full_story_scene.set_visible(true) ## 顯示全文，第一關先讓玩家讀文章再作答
 	pause_scene.set_visible(false) ## 隱藏暫停場景
@@ -161,9 +162,13 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	$BattleBackground/Question.text = json.result[0].question_1
 	GlobalVar.question1["question1"] = json.result[0].question_1
 	$BattleBackground/Option_A.text = "A. " + json.result[0].question1_choice1
+	$BattleBackground/Option_A.adjust_text_size() # 縮放文字至符合button大小
 	$BattleBackground/Option_B.text = "B. " + json.result[0].question1_choice2
+	$BattleBackground/Option_B.adjust_text_size() # 縮放文字至符合button大小
 	$BattleBackground/Option_C.text = "C. " + json.result[0].question1_choice3
+	$BattleBackground/Option_C.adjust_text_size() # 縮放文字至符合button大小
 	$BattleBackground/Option_D.text = "D. " + json.result[0].question1_choice4
+	$BattleBackground/Option_D.adjust_text_size() # 縮放文字至符合button大小
 
 	var question1_answer = json.result[0].question1_answer
 	if question1_answer == json.result[0].question1_choice1:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=2]
+[gd_scene load_steps=74 format=2]
 
 [ext_resource path="res://Fonts/noto_sans_48.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Fonts/noto_sans_64.tres" type="DynamicFont" id=2]
@@ -55,17 +55,21 @@
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt12.png" type="Texture" id=53]
 [ext_resource path="res://AttackAnimation/Spark/spark8.png" type="Texture" id=54]
 [ext_resource path="res://AttackAnimation/Spark/spark1.png" type="Texture" id=55]
+[ext_resource path="res://Wave1~3_Scene/Wave3_Question.gd" type="Script" id=56]
 
 [sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.886275, 0.941176, 0.933333, 1 )
 corner_radius_top_left = 40
 corner_radius_top_right = 40
-corner_radius_bottom_right = 40
-corner_radius_bottom_left = 40
 
 [sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 corner_radius_bottom_right = 40
+
+[sub_resource type="StyleBoxFlat" id=28]
+bg_color = Color( 0.886275, 0.941176, 0.933333, 1 )
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
 
 [sub_resource type="StyleBoxFlat" id=26]
 bg_color = Color( 0.776471, 0.815686, 0.807843, 1 )
@@ -193,13 +197,14 @@ valign = 1
 margin_left = 975.0
 margin_top = 250.0
 margin_right = 1875.0
-margin_bottom = 650.0
+margin_bottom = 591.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
 custom_styles/normal = SubResource( 6 )
 align = 1
 valign = 1
 autowrap = true
+script = ExtResource( 56 )
 
 [node name="OpenStoryButton" type="Button" parent="BattleBackground/Question"]
 margin_left = 624.0
@@ -214,6 +219,13 @@ text = "查看全文 ▼"
 [node name="Enemy" type="Sprite" parent="BattleBackground/Question"]
 position = Vector2( -487, 221 )
 scale = Vector2( 0.562963, 0.521898 )
+
+[node name="LabelBottomBackground" type="Label" parent="BattleBackground/Question"]
+show_behind_parent = true
+margin_top = 340.0
+margin_right = 900.0
+margin_bottom = 399.0
+custom_styles/normal = SubResource( 28 )
 
 [node name="LineEdit" type="LineEdit" parent="BattleBackground"]
 margin_left = 46.0

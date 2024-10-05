@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=2]
+[gd_scene load_steps=84 format=2]
 
 [ext_resource path="res://Fonts/noto_sans_48.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Fonts/noto_sans_64.tres" type="DynamicFont" id=2]
@@ -55,17 +55,25 @@
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt12.png" type="Texture" id=53]
 [ext_resource path="res://AttackAnimation/Spark/spark8.png" type="Texture" id=54]
 [ext_resource path="res://AttackAnimation/Spark/spark1.png" type="Texture" id=55]
+[ext_resource path="res://Wave1~3_Scene/Wave2_Option_C.gd" type="Script" id=56]
+[ext_resource path="res://Wave1~3_Scene/Wave2_Option_A.gd" type="Script" id=57]
+[ext_resource path="res://Wave1~3_Scene/Wave2_Option_B.gd" type="Script" id=58]
+[ext_resource path="res://Wave1~3_Scene/Wave2_Option_D.gd" type="Script" id=59]
+[ext_resource path="res://Wave1~3_Scene/Wave2_Question.gd" type="Script" id=60]
 
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.886275, 0.941176, 0.933333, 1 )
 corner_radius_top_left = 40
 corner_radius_top_right = 40
-corner_radius_bottom_right = 40
-corner_radius_bottom_left = 40
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 corner_radius_bottom_right = 40
+
+[sub_resource type="StyleBoxFlat" id=26]
+bg_color = Color( 0.886275, 0.941176, 0.933333, 1 )
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
 
 [sub_resource type="StyleBoxFlat" id=6]
 corner_radius_top_left = 40
@@ -232,13 +240,14 @@ valign = 1
 margin_left = 975.0
 margin_top = 250.0
 margin_right = 1875.0
-margin_bottom = 650.0
+margin_bottom = 591.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
 custom_styles/normal = SubResource( 4 )
 align = 1
 valign = 1
 autowrap = true
+script = ExtResource( 60 )
 
 [node name="OpenStoryButton" type="Button" parent="BattleBackground/Question"]
 margin_left = 624.0
@@ -254,6 +263,13 @@ text = "查看全文 ▼"
 position = Vector2( -487, 221 )
 scale = Vector2( 0.562963, 0.521898 )
 
+[node name="LabelBottomBackground" type="Label" parent="BattleBackground/Question"]
+show_behind_parent = true
+margin_top = 340.0
+margin_right = 900.0
+margin_bottom = 399.0
+custom_styles/normal = SubResource( 26 )
+
 [node name="Option_A" type="Button" parent="BattleBackground"]
 margin_left = 45.0
 margin_top = 720.0
@@ -264,8 +280,10 @@ custom_fonts/font = ExtResource( 1 )
 custom_styles/hover = SubResource( 6 )
 custom_styles/disabled = SubResource( 10 )
 custom_styles/normal = SubResource( 3 )
+clip_text = true
 icon_align = 1
 expand_icon = true
+script = ExtResource( 57 )
 
 [node name="Option_B" type="Button" parent="BattleBackground"]
 margin_left = 975.0
@@ -277,8 +295,10 @@ custom_fonts/font = ExtResource( 1 )
 custom_styles/hover = SubResource( 7 )
 custom_styles/disabled = SubResource( 11 )
 custom_styles/normal = SubResource( 3 )
+clip_text = true
 icon_align = 1
 expand_icon = true
+script = ExtResource( 58 )
 
 [node name="Option_C" type="Button" parent="BattleBackground"]
 margin_left = 45.0
@@ -290,8 +310,10 @@ custom_fonts/font = ExtResource( 1 )
 custom_styles/hover = SubResource( 8 )
 custom_styles/disabled = SubResource( 12 )
 custom_styles/normal = SubResource( 3 )
+clip_text = true
 icon_align = 1
 expand_icon = true
+script = ExtResource( 56 )
 
 [node name="Option_D" type="Button" parent="BattleBackground"]
 margin_left = 975.0
@@ -303,8 +325,10 @@ custom_fonts/font = ExtResource( 1 )
 custom_styles/hover = SubResource( 9 )
 custom_styles/disabled = SubResource( 13 )
 custom_styles/normal = SubResource( 3 )
+clip_text = true
 icon_align = 1
 expand_icon = true
+script = ExtResource( 59 )
 
 [node name="PauseScene" parent="BattleBackground" instance=ExtResource( 8 )]
 visible = false

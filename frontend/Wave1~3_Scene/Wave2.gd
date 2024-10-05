@@ -37,9 +37,13 @@ func _ready() -> void:
 	#設定問題、選項及答案
 	$BattleBackground/Question.text = GlobalVar.question2["question2"]
 	$BattleBackground/Option_A.text = "A. " + GlobalVar.question2["choice1"]
+	$BattleBackground/Option_A.adjust_text_size() # 縮放文字至符合button大小
 	$BattleBackground/Option_B.text = "B. " + GlobalVar.question2["choice2"]
+	$BattleBackground/Option_B.adjust_text_size() # 縮放文字至符合button大小
 	$BattleBackground/Option_C.text = "C. " + GlobalVar.question2["choice3"]
+	$BattleBackground/Option_C.adjust_text_size() # 縮放文字至符合button大小
 	$BattleBackground/Option_D.text = "D. " + GlobalVar.question2["choice4"]
+	$BattleBackground/Option_D.adjust_text_size() # 縮放文字至符合button大小
 	var question2_answer = GlobalVar.question2["answer"]
 
 	if question2_answer == GlobalVar.question2["choice1"]:

@@ -55,6 +55,7 @@ func _on_LineEdit_text_entered(new_text: String) -> void:
 		attack_animation.visible = true
 		attack_animation.play()
 		line_edit.editable = false
+		
 
 # 發送POST請求的函數
 func send_post_request(article_id: int, answer: String) -> void:
