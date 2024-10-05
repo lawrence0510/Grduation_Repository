@@ -1891,12 +1891,17 @@ class MatchUser(Resource):
 
                     # 如果 user_matched_id 不為空，說明已經匹配到了對手
                     if user_matched_id:
+                        print(user_matched_id)
+                        cursor.execute("SELECT compete_id FROM Compete WHERE user1_id = %s AND user2_id = %s ORDER BY compete_id DESC LIMIT 1;", (user_id, user_matched_id))
+                        compete_record = cursor.fetchone()
+                        new_compete_id = compete_record[0]
                         # 刪除該列並返回匹配成功和對手資料
                         cursor.execute("DELETE FROM WaitingQueue WHERE user_id = %s", (user_id,))
                         connection.commit()
 
                         return {
                             "message": "Match found",
+                            "compete_id": new_compete_id,
                             "opponent_id": user_matched_id,
                             # 將 JSON 題目集轉為 Python 字典
                             "questions": json.loads(question_set)
