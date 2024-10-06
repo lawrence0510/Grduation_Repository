@@ -186,7 +186,6 @@ func setup_opponent_check_timer():
 func setup_delay_timer():
 	delay_timer.wait_time = 2
 	delay_timer.connect("timeout", self, "_on_delay_timeout")
-	print("成功：setup_delay_timer")
 
 # 更新倒數 Label
 func update_countdown_label():
@@ -205,11 +204,9 @@ func _on_timeout():
 		GlobalVar.opponent_score = current_score_2
 
 func _on_delay_timeout():
-	print("成功：_on_delay_timeout1")
 	get_tree().change_scene("res://Scene/Battle_2.tscn")
 	get_tree().set_meta("player_score", current_score_1)
 	get_tree().set_meta("opponent_score", current_score_2)
-	print("成功：_on_delay_timeout2")
 
 # 玩家按下的按鈕行為
 func _on_button_pressed(button_path: String):
@@ -222,16 +219,16 @@ func _on_button_pressed(button_path: String):
 	GlobalVar.player_selected_answer = selected_answer  # 存儲玩家選擇
 	# 檢查選擇的答案是否正確
 	if str(selected_answer) == str(correct_answer):
-		print("Player chose correct answer")  # 答案正確
+		print("使用者作答正確")  # 答案正確
 		add_score()  # 加分
 		apply_player_style(button_path, correct_stylebox, true)  # 顯示玩家正確樣式
-		update_compete_request(1, str(selected_answer))
 		$Background/Player/correct.show()
 	else:
-		print("Player chose incorrect answer")  # 答案錯誤
+		print("使用者作答錯誤")  # 答案錯誤
 		apply_player_style(button_path, incorrect_stylebox, false)  # 顯示玩家錯誤樣式
 		$Background/Player/incorrect.show()
 
+	update_compete_request(1, str(selected_answer))
 	# 禁用其他按鈕
 	disable_other_buttons(button_path, button_paths)
 
@@ -245,6 +242,7 @@ func _on_button_pressed(button_path: String):
 	
 # 發送 POST 請求的函數
 func update_compete_request(question_number: int, selected_option: String) -> void:
+	print("Trying to update...")
 	var url = "http://nccumisreading.ddnsking.com:5001/Compete/update_answer"
 	
 	# 構建 query_string，對 user_id 和 compete_id 進行 http_escape
@@ -271,7 +269,6 @@ func _on_opponent_answer():
 func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
 	if response_code == 200:  # 成功接收回應
 		var json_data = JSON.parse(body.get_string_from_utf8()).result
-		print(json_data["user2_question1"])
 		var opponent_answer = null
 		var opponent_score = 0
 
@@ -333,6 +330,8 @@ func check_all_answered():
 	if GlobalVar.player_selected_answer != "" and GlobalVar.opponent_selected_answer != "":
 		# 玩家和對手都已經答題，啟動3秒延遲跳題
 		print("雙方都已答題")
+		print("我方回答： " + str(GlobalVar.player_selected_answer))
+		print("敵方回答： " + str(GlobalVar.opponent_selected_answer))
 		if delay_timer.is_stopped():
 			delay_timer.start()
 	# 檢查如果雙方都答錯，顯示正確答案
@@ -406,3 +405,7 @@ func apply_opponent_style(button_path: String, stylebox, is_correct: bool):
 
 func _on_HTTPRequest6_request_completed(result, response_code, headers, body):
 	pass # Replace with function body.
+
+
+func _on_HTTPRequest_request_completed(result:int, response_code:int, headers:PoolStringArray, body:PoolByteArray):
+	print("UPDATE STATUS: " + str(response_code))

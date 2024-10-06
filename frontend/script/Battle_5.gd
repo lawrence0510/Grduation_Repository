@@ -222,13 +222,14 @@ func _on_button_pressed(button_path: String):
 		print("Player chose correct answer")  # 答案正確
 		add_score()  # 加分
 		apply_player_style(button_path, correct_stylebox, true)  # 顯示玩家正確樣式
-		update_compete_request(5, str(selected_answer))
+		
 		$Background/Player/correct.show()
 	else:
 		print("Player chose incorrect answer")  # 答案錯誤
 		apply_player_style(button_path, incorrect_stylebox, false)  # 顯示玩家錯誤樣式
 		$Background/Player/incorrect.show()
-
+	
+	update_compete_request(5, str(selected_answer))
 	# 禁用其他按鈕
 	disable_other_buttons(button_path, button_paths)
 
