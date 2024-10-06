@@ -10,6 +10,7 @@ var timer = null
 onready var ready = $TextureRect/Label2/ready
 onready var ing = $TextureRect/Label2/ing
 onready var http_request = $HTTPRequest
+onready var http_request2 = $HTTPRequest2
 onready var time_label = $TextureRect/Label2/time
 onready var ready_time = $TextureRect/Label2/ready_time
 func _ready():
@@ -41,7 +42,16 @@ func _process(delta):
 			get_tree().quit()
 
 func _on_cancel_pressed():
-	get_tree().change_scene("res://Scene/MainPage.tscn")
+	continue_request = false
+	var url = "http://nccumisreading.ddnsking.com:5001/Compete/cancel_queue"
+	# 建立 DELETE 請求的資料
+	var data = {
+		"user_id": GlobalVar.user_id,
+	}
+	# 將資料轉換為 JSON 格式
+	var json_data = JSON.print(data)
+	var headers = ["Content-Type: application/json"]
+	http_request2.request(url, headers, true, HTTPClient.METHOD_DELETE, json_data)
 
 # 發送 POST 請求
 func send_post_request():
@@ -59,6 +69,7 @@ func send_post_request():
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	if response_code == 200:
 		var response = parse_json(body.get_string_from_utf8())
+
 		if response.has("message") and response["message"] == "Match found":
 			print("Match found!")
 			print("Opponent ID: ", response["opponent_id"])
@@ -106,3 +117,9 @@ func _on_Timer_timeout():
 	else:
 		timer.stop()  # 停止計時
 		ready.text = ""  # 可以選擇在這裡清空 "ready" 的顯示
+
+
+func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
+	var response = parse_json(body.get_string_from_utf8())
+	print("cancel matching response: ", response)
+	get_tree().change_scene("res://Scene/MainPage.tscn")
