@@ -5,15 +5,21 @@ var request_sent = false  # 用於追蹤是否發送了POST請求
 var continue_request = true  # 追蹤是否繼續發送請求
 var countdown_time = 3.0  # 倒數時間設為3秒
 var countdown_active = false  # 用於啟動倒數計時
+var timer = null
 
 onready var ready = $TextureRect/Label2/ready
 onready var ing = $TextureRect/Label2/ing
 onready var http_request = $HTTPRequest
 onready var time_label = $TextureRect/Label2/time
-
+onready var ready_time = $TextureRect/Label2/ready_time
 func _ready():
 	# 初始化，當場景準備好後開始計時
 	set_process(true)
+	# 確保 Timer 節點已存在
+	timer = Timer.new()
+	add_child(timer)
+	timer.wait_time = 1  # 每秒觸發一次
+	timer.connect("timeout", self, "_on_Timer_timeout")
 
 func _process(delta):
 	# 每幀減少倒數時間，並檢查是否要發送下一次請求
@@ -77,6 +83,9 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			ing.hide()
 			ready.show()
 			start_countdown()
+			ready_time.text = "3"  # 初始化顯示的秒數
+			ready_time.show()
+			timer.start()  # 開始計時
 
 	elif response_code == 201:
 		print("Still Waiting...")
@@ -87,3 +96,13 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 func start_countdown():
 	countdown_time = 3.0  # 重置倒數計時
 	countdown_active = true  # 啟動倒數計時
+
+func _on_Timer_timeout():
+	# 倒數計時的邏輯
+	var current_time = int(ready_time.text)
+	if current_time > 1:
+		current_time -= 1
+		ready_time.text = str(current_time)  # 更新顯示的秒數
+	else:
+		timer.stop()  # 停止計時
+		ready.text = ""  # 可以選擇在這裡清空 "ready" 的顯示

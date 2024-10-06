@@ -150,7 +150,6 @@ icon_align = 1
 script = ExtResource( 14 )
 
 [node name="white_school" type="Button" parent="bg"]
-visible = false
 margin_left = 749.0
 margin_top = -42.0
 margin_right = 1261.0
@@ -165,7 +164,6 @@ custom_styles/normal = SubResource( 11 )
 icon = ExtResource( 5 )
 
 [node name="white_record" type="Button" parent="bg"]
-visible = false
 margin_left = 1228.0
 margin_top = 552.0
 margin_right = 1740.0
@@ -180,7 +178,6 @@ custom_styles/normal = SubResource( 11 )
 icon = ExtResource( 18 )
 
 [node name="white_story" type="Button" parent="bg"]
-visible = false
 margin_left = 71.0
 margin_top = 28.0
 margin_right = 571.0
@@ -195,7 +192,6 @@ custom_styles/normal = SubResource( 11 )
 icon = ExtResource( 4 )
 
 [node name="white_news" type="Button" parent="bg"]
-visible = false
 margin_left = 1374.0
 margin_top = 34.0
 margin_right = 1874.0
@@ -210,7 +206,6 @@ custom_styles/normal = SubResource( 11 )
 icon = ExtResource( 8 )
 
 [node name="white_player" type="Button" parent="bg"]
-visible = false
 margin_left = 237.0
 margin_top = 575.0
 margin_right = 737.0
