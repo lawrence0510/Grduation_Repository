@@ -267,7 +267,7 @@ func _on_button_pressed(button_path: String):
 		apply_opponent_style(opponent_pending_answer["button_path"], correct_stylebox if opponent_pending_answer["is_correct"] else incorrect_stylebox, opponent_pending_answer["is_correct"])
 		opponent_pending_answer = null  # 清除對手的暫存狀態
 
-	var question_number = 1
+	var question_number = 5
 	var selected_option = str(selected_answer)
 
 	update_compete_request(question_number, selected_option)
