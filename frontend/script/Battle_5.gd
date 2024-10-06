@@ -3,7 +3,7 @@ extends Node2D
 # 倒數初始時間
 var countdown_time = 10
 var countdown_timer : Timer
-var delay_timer : Timer  # 用於延遲跳題的 Timer
+onready var delay_timer : Timer = $"Background/Timer2"  # 用於延遲跳題的 Timer
 var opponent_check_timer : Timer  # 用於檢查對手答題的 Timer
 var button_paths = ["Background/Options1", "Background/Options2", "Background/Options3", "Background/Options4"]
 var opponent_button_paths = ["Background/op_Options1", "Background/op_Options2", "Background/op_Options3", "Background/op_Options4"]
@@ -205,10 +205,9 @@ func _on_Timer_timeout():
 
 # 設置延遲跳題的 Timer
 func setup_delay_timer():
-	delay_timer = Timer.new()
-	delay_timer.wait_time = 3.0  # 設置為3秒
+	delay_timer.wait_time = 2  # 設置為3秒
 	delay_timer.connect("timeout", self, "_on_delay_timeout")
-	add_child(delay_timer)
+	print("成功：setup_delay_timer")
 
 # 更新倒數 Label
 func update_countdown_label():
@@ -358,7 +357,7 @@ func connect_buttons():
 
 # 檢查是否所有選項已經被回答
 func check_all_answered():
-	if player_answered and opponent_answered:
+	if GlobalVar.player_selected_answer != "" and GlobalVar.opponent_selected_answer != "":
 		# 玩家和對手都已經答題，啟動3秒延遲跳題
 		if delay_timer.is_stopped():
 			delay_timer.start()

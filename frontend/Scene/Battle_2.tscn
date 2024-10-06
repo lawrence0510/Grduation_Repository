@@ -826,6 +826,8 @@ margin_bottom = 35.0
 texture = ExtResource( 7 )
 expand = true
 
+[node name="Timer2" type="Timer" parent="Background"]
+
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
 [node name="HTTPRequest2" type="HTTPRequest" parent="."]
@@ -847,6 +849,7 @@ expand = true
 [connection signal="pressed" from="Background/Options2" to="." method="_on_Options2_pressed"]
 [connection signal="pressed" from="Background/Options3" to="." method="_on_Options3_pressed"]
 [connection signal="pressed" from="Background/Options4" to="." method="_on_Options4_pressed"]
+[connection signal="timeout" from="Background/Timer2" to="." method="_on_delay_timeout"]
 [connection signal="request_completed" from="HTTPRequest2" to="." method="_on_HTTPRequest2_request_completed"]
 [connection signal="request_completed" from="HTTPRequest3" to="." method="_on_HTTPRequest3_request_completed"]
 [connection signal="request_completed" from="HTTPRequest4" to="." method="_on_HTTPRequest4_request_completed"]

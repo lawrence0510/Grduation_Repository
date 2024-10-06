@@ -187,7 +187,7 @@ func _on_Timer_timeout():
 
 # 設置延遲跳題的 Timer
 func setup_delay_timer():
-	delay_timer.wait_time = 2.0  # 設置為3秒
+	delay_timer.wait_time = 2  # 設置為3秒
 	delay_timer.connect("timeout", self, "_on_delay_timeout")
 	print("成功：setup_delay_timer")
 
