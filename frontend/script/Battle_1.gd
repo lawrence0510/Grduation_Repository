@@ -182,12 +182,9 @@ func setup_opponent_check_timer():
 	add_child(opponent_check_timer)
 	opponent_check_timer.start()
 
-func _on_Timer_timeout():
-	$Background/TextureProgress.value += 1
-
 # 設置延遲跳題的 Timer
 func setup_delay_timer():
-	delay_timer.wait_time = 2  # 設置為3秒
+	delay_timer.wait_time = 2
 	delay_timer.connect("timeout", self, "_on_delay_timeout")
 	print("成功：setup_delay_timer")
 
@@ -206,9 +203,6 @@ func _on_timeout():
 		# 確保在場景切換前，存儲當前分數到全局變數
 		GlobalVar.player_score = current_score_1
 		GlobalVar.opponent_score = current_score_2
-
-		# 跳轉到下一個場景
-		get_tree().change_scene("res://Scene/Battle_2.tscn")
 
 func _on_delay_timeout():
 	print("成功：_on_delay_timeout1")
@@ -231,6 +225,7 @@ func _on_button_pressed(button_path: String):
 		print("Player chose correct answer")  # 答案正確
 		add_score()  # 加分
 		apply_player_style(button_path, correct_stylebox, true)  # 顯示玩家正確樣式
+		update_compete_request(1, str(selected_answer))
 		$Background/Player/correct.show()
 	else:
 		print("Player chose incorrect answer")  # 答案錯誤
@@ -247,12 +242,7 @@ func _on_button_pressed(button_path: String):
 	if opponent_pending_answer != null:
 		apply_opponent_style(opponent_pending_answer["button_path"], correct_stylebox if opponent_pending_answer["is_correct"] else incorrect_stylebox, opponent_pending_answer["is_correct"])
 		opponent_pending_answer = null  # 清除對手的暫存狀態
-
-	var question_number = 1
-	var selected_option = str(selected_answer)
-
-	update_compete_request(question_number, selected_option)
-
+	
 # 發送 POST 請求的函數
 func update_compete_request(question_number: int, selected_option: String) -> void:
 	var url = "http://nccumisreading.ddnsking.com:5001/Compete/update_answer"
@@ -355,10 +345,8 @@ func check_all_answered():
 	#許馨文救我 他只會出現O不會出現綠色
 
 func add_score():
-	var current_question_score = base_score_per_question + countdown_time * 8  # 計算當前題目的得分
-	target_score_1 += current_question_score  # 更新目標分數
-	target_score_1 = clamp(target_score_1, 0, max_score)  # 確保分數不超過 max_score
-	GlobalVar.player_score += current_question_score  # 只加當前題目的分數
+	target_score_1 = base_score_per_question + countdown_time * 8  # 計算當前題目的得分
+	GlobalVar.player_score = target_score_1
 	smooth_update_score()
 
 func smooth_update_score():

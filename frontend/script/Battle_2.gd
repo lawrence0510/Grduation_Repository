@@ -81,7 +81,6 @@ func _on_HTTPRequest3_request_completed(result, response_code, headers, body):
 		if profile_picture != null and profile_picture != "":
 			load_profile_picture_from_url(profile_picture)
 		else:
-			# 根據 character_id 設置對應圖片
 			if character_id == 1:
 				$Background/Player/pic.texture = load("res://Pic/battle_B1.png")
 			elif character_id == 2:
@@ -125,7 +124,6 @@ func get_opponent_data():
 func _on_HTTPRequest5_request_completed(result, response_code, headers, body):
 	if response_code == 200:  # 成功接收回應
 		var json_data = JSON.parse(body.get_string_from_utf8()).result
-		print(json_data)
 		var profile_picture = json_data["profile_picture"]
 		$Background/opponent/name.text = json_data["user_name"]
 		var character_id = json_data["character_id"]
@@ -133,8 +131,6 @@ func _on_HTTPRequest5_request_completed(result, response_code, headers, body):
 		if profile_picture != null and profile_picture != "":
 			load_opponent_picture_from_url(profile_picture)
 		else:
-			# 根據 character_id 設置對應圖片
-			print("no profile picture detected for opponent, use characters instead")
 			if character_id == 1:
 				$Background/opponent/pic.texture = load("res://Pic/battle_B1.png")
 			elif character_id == 2:
@@ -186,12 +182,9 @@ func setup_opponent_check_timer():
 	add_child(opponent_check_timer)
 	opponent_check_timer.start()
 
-func _on_Timer_timeout():
-	$Background/TextureProgress.value += 1
-
 # 設置延遲跳題的 Timer
 func setup_delay_timer():
-	delay_timer.wait_time = 2  # 設置為3秒
+	delay_timer.wait_time = 2
 	delay_timer.connect("timeout", self, "_on_delay_timeout")
 	print("成功：setup_delay_timer")
 
@@ -211,9 +204,6 @@ func _on_timeout():
 		GlobalVar.player_score = current_score_1
 		GlobalVar.opponent_score = current_score_2
 
-		# 跳轉到下一個場景
-		get_tree().change_scene("res://Scene/Battle_3.tscn")
-
 func _on_delay_timeout():
 	print("成功：_on_delay_timeout1")
 	get_tree().change_scene("res://Scene/Battle_3.tscn")
@@ -232,10 +222,13 @@ func _on_button_pressed(button_path: String):
 	GlobalVar.player_selected_answer = selected_answer  # 存儲玩家選擇
 	# 檢查選擇的答案是否正確
 	if str(selected_answer) == str(correct_answer):
+		print("Player chose correct answer")  # 答案正確
 		add_score()  # 加分
 		apply_player_style(button_path, correct_stylebox, true)  # 顯示玩家正確樣式
+		update_compete_request(2, str(selected_answer))
 		$Background/Player/correct.show()
 	else:
+		print("Player chose incorrect answer")  # 答案錯誤
 		apply_player_style(button_path, incorrect_stylebox, false)  # 顯示玩家錯誤樣式
 		$Background/Player/incorrect.show()
 
@@ -249,12 +242,7 @@ func _on_button_pressed(button_path: String):
 	if opponent_pending_answer != null:
 		apply_opponent_style(opponent_pending_answer["button_path"], correct_stylebox if opponent_pending_answer["is_correct"] else incorrect_stylebox, opponent_pending_answer["is_correct"])
 		opponent_pending_answer = null  # 清除對手的暫存狀態
-
-	var question_number = 2
-	var selected_option = str(selected_answer)
-
-	update_compete_request(question_number, selected_option)
-
+	
 # 發送 POST 請求的函數
 func update_compete_request(question_number: int, selected_option: String) -> void:
 	var url = "http://nccumisreading.ddnsking.com:5001/Compete/update_answer"
@@ -341,22 +329,11 @@ func connect_buttons():
 
 # 檢查是否所有選項已經被回答
 func check_all_answered():
-	# 檢查玩家的正確或錯誤圖標是否可見
-	var player_answered_correctly = $Background/Player/correct.visible
-	var player_answered_incorrectly = $Background/Player/incorrect.visible
-	
-	# 檢查對手的正確或錯誤圖標是否可見
-	var opponent_answered_correctly = $Background/opponent/correct.visible
-	var opponent_answered_incorrectly = $Background/opponent/incorrect.visible
-	if (player_answered_correctly or player_answered_incorrectly) and (opponent_answered_correctly or opponent_answered_incorrectly):
+	if GlobalVar.player_selected_answer != "" and GlobalVar.opponent_selected_answer != "":
 		# 玩家和對手都已經答題，啟動3秒延遲跳題
+		print("雙方都已答題")
 		if delay_timer.is_stopped():
 			delay_timer.start()
-
-	print("GlobalVar.player_selected_answer" + str(GlobalVar.player_selected_answer))
-	print("GlobalVar.opponent_selected_answer: " + str(GlobalVar.opponent_selected_answer))
-	print("correct_answer: "+ str(correct_answer))
-
 	# 檢查如果雙方都答錯，顯示正確答案
 	if GlobalVar.player_selected_answer != "" and GlobalVar.opponent_selected_answer != "" and not str(GlobalVar.player_selected_answer) == str(correct_answer) and not str(GlobalVar.opponent_selected_answer) == str(correct_answer):
 		var correct_button_path = button_paths[int(correct_answer) - 1]
@@ -367,10 +344,9 @@ func check_all_answered():
 	#許馨文救我 他只會出現O不會出現綠色
 
 func add_score():
-	var current_question_score = base_score_per_question + countdown_time * 8  # 計算當前題目的分數
-	target_score_1 += current_question_score  # 更新目標分數
-	GlobalVar.player_score += current_question_score  # 只將當前題目的分數加到全局變數
-	smooth_update_score()  # 平滑更新分數條
+	target_score_1 = base_score_per_question + countdown_time * 8  # 計算當前題目的得分
+	GlobalVar.player_score = target_score_1
+	smooth_update_score()
 
 func smooth_update_score():
 	# 使用Tween來平滑更新玩家分數條
