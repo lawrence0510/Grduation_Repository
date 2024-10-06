@@ -377,11 +377,10 @@ func check_all_answered():
 	#許馨文救我 他只會出現O不會出現綠色
 
 func add_score():
-	target_score_1 += base_score_per_question
-	target_score_1 += countdown_time*8  # 玩家計分區塊加上剩餘時間
-	target_score_1 = clamp(target_score_1, 0, max_score)
-	GlobalVar.player_score += target_score_1
-	smooth_update_score()
+	var current_question_score = base_score_per_question + countdown_time * 8  # 計算當前題目的分數
+	target_score_1 += current_question_score  # 更新目標分數
+	GlobalVar.player_score += current_question_score  # 只將當前題目的分數加到全局變數
+	smooth_update_score()  # 平滑更新分數條
 
 func smooth_update_score():
 	# 使用Tween來平滑更新玩家分數條

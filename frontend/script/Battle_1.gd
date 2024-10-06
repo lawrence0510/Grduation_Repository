@@ -354,10 +354,10 @@ func check_all_answered():
 	#許馨文救我 他只會出現O不會出現綠色
 
 func add_score():
-	target_score_1 += base_score_per_question
-	target_score_1 += countdown_time*8  # 玩家計分區塊加上剩餘時間
-	target_score_1 = clamp(target_score_1, 0, max_score)
-	GlobalVar.player_score += target_score_1
+	var current_question_score = base_score_per_question + countdown_time * 8  # 計算當前題目的得分
+	target_score_1 += current_question_score  # 更新目標分數
+	target_score_1 = clamp(target_score_1, 0, max_score)  # 確保分數不超過 max_score
+	GlobalVar.player_score += current_question_score  # 只加當前題目的分數
 	smooth_update_score()
 
 func smooth_update_score():
