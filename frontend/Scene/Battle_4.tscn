@@ -1,13 +1,11 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Fonts/battle_hover.tres" type="StyleBox" id=2]
 [ext_resource path="res://Fonts/123.tres" type="StyleBox" id=3]
 [ext_resource path="res://script/Battle_4.gd" type="Script" id=4]
-[ext_resource path="res://Pic/battle_B1.png" type="Texture" id=5]
 [ext_resource path="res://Pic/circle.png" type="Texture" id=6]
 [ext_resource path="res://Pic/close (1).png" type="Texture" id=7]
-[ext_resource path="res://Pic/battle_B2.png" type="Texture" id=8]
 [ext_resource path="res://Pic/time1.png" type="Texture" id=9]
 [ext_resource path="res://Pic/time2.png" type="Texture" id=10]
 [ext_resource path="res://Pic/time3.png" type="Texture" id=11]
@@ -126,21 +124,20 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="opponent" type="Panel" parent="Background"]
+[node name="Player" type="Panel" parent="Background"]
 margin_top = 30.0
 margin_right = 450.0
 margin_bottom = 220.0
 custom_styles/panel = SubResource( 2 )
 
-[node name="pic" type="TextureRect" parent="Background/opponent"]
+[node name="pic" type="TextureRect" parent="Background/Player"]
 margin_left = 40.0
 margin_top = 30.0
 margin_right = 200.0
 margin_bottom = 170.0
-texture = ExtResource( 5 )
 expand = true
 
-[node name="name" type="Label" parent="Background/opponent"]
+[node name="name" type="Label" parent="Background/Player"]
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -153,9 +150,8 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 3 )
-text = "吳堃豪"
 
-[node name="correct" type="TextureRect" parent="Background/opponent"]
+[node name="correct" type="TextureRect" parent="Background/Player"]
 visible = false
 margin_left = 393.0
 margin_top = 130.0
@@ -164,7 +160,7 @@ margin_bottom = 210.0
 texture = ExtResource( 15 )
 expand = true
 
-[node name="incorrect" type="TextureRect" parent="Background/opponent"]
+[node name="incorrect" type="TextureRect" parent="Background/Player"]
 visible = false
 margin_left = 393.0
 margin_top = 130.0
@@ -173,7 +169,7 @@ margin_bottom = 210.0
 texture = ExtResource( 14 )
 expand = true
 
-[node name="Player" type="Panel" parent="Background"]
+[node name="opponent" type="Panel" parent="Background"]
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -183,14 +179,13 @@ margin_top = -510.0
 margin_bottom = -320.0
 custom_styles/panel = SubResource( 4 )
 
-[node name="pic" type="TextureRect" parent="Background/Player"]
+[node name="pic" type="TextureRect" parent="Background/opponent"]
 margin_left = 253.0
 margin_top = 30.0
 margin_right = 413.0
 margin_bottom = 170.0
-texture = ExtResource( 8 )
 
-[node name="name" type="Label" parent="Background/Player"]
+[node name="name" type="Label" parent="Background/opponent"]
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_left = 53.0
@@ -201,9 +196,8 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 3 )
-text = "許馨文"
 
-[node name="correct" type="TextureRect" parent="Background/Player"]
+[node name="correct" type="TextureRect" parent="Background/opponent"]
 visible = false
 margin_left = -26.0
 margin_top = 130.0
@@ -212,7 +206,7 @@ margin_bottom = 210.0
 texture = ExtResource( 15 )
 expand = true
 
-[node name="incorrect" type="TextureRect" parent="Background/Player"]
+[node name="incorrect" type="TextureRect" parent="Background/opponent"]
 visible = false
 margin_left = -26.0
 margin_top = 130.0
@@ -315,9 +309,9 @@ clip_text = true
 visible = false
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_left = 37.0
+margin_left = 713.0
 margin_top = -35.0
-margin_right = 107.0
+margin_right = 783.0
 margin_bottom = 35.0
 texture = ExtResource( 6 )
 expand = true
@@ -326,9 +320,9 @@ expand = true
 visible = false
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_left = 37.0
+margin_left = 713.0
 margin_top = -35.0
-margin_right = 107.0
+margin_right = 783.0
 margin_bottom = 35.0
 texture = ExtResource( 7 )
 expand = true
@@ -370,9 +364,9 @@ clip_text = true
 visible = false
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_left = 37.0
+margin_left = 713.0
 margin_top = -35.0
-margin_right = 107.0
+margin_right = 783.0
 margin_bottom = 35.0
 texture = ExtResource( 6 )
 expand = true
@@ -381,9 +375,9 @@ expand = true
 visible = false
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_left = 37.0
+margin_left = 713.0
 margin_top = -35.0
-margin_right = 107.0
+margin_right = 783.0
 margin_bottom = 35.0
 texture = ExtResource( 7 )
 expand = true
@@ -479,9 +473,9 @@ autowrap = true
 visible = false
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_left = 37.0
+margin_left = 713.0
 margin_top = -35.0
-margin_right = 107.0
+margin_right = 783.0
 margin_bottom = 35.0
 texture = ExtResource( 6 )
 expand = true
@@ -490,70 +484,20 @@ expand = true
 visible = false
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_left = 37.0
+margin_left = 713.0
 margin_top = -35.0
-margin_right = 107.0
+margin_right = 783.0
 margin_bottom = 35.0
 texture = ExtResource( 7 )
 expand = true
 
-[node name="oppo_score" type="Label" parent="Background"]
+[node name="player_score" type="Label" parent="Background"]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 278.0
 margin_top = -562.0
 margin_right = 380.0
 margin_bottom = -57.0
-custom_styles/normal = SubResource( 10 )
-
-[node name="total" type="Label" parent="Background/oppo_score"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -37.5
-margin_top = -236.5
-margin_right = 37.5
-margin_bottom = 236.5
-custom_styles/normal = SubResource( 11 )
-
-[node name="score2" type="TextureProgress" parent="Background/oppo_score"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -27.5
-margin_top = -225.0
-margin_right = 27.5
-margin_bottom = 225.0
-texture_progress = ExtResource( 13 )
-fill_mode = 3
-
-[node name="word" type="Label" parent="Background/oppo_score"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -55.0
-margin_top = -124.0
-margin_right = 55.0
-margin_bottom = -21.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 12 )
-align = 1
-valign = 1
-
-[node name="Tween" type="Tween" parent="Background/oppo_score"]
-
-[node name="player_score" type="Label" parent="Background"]
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -372.0
-margin_top = -22.0
-margin_right = -270.0
-margin_bottom = 483.0
 custom_styles/normal = SubResource( 10 )
 
 [node name="total" type="Label" parent="Background/player_score"]
@@ -567,7 +511,7 @@ margin_right = 37.5
 margin_bottom = 236.5
 custom_styles/normal = SubResource( 11 )
 
-[node name="score" type="TextureProgress" parent="Background/player_score"]
+[node name="score2" type="TextureProgress" parent="Background/player_score"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -595,10 +539,60 @@ valign = 1
 
 [node name="Tween" type="Tween" parent="Background/player_score"]
 
+[node name="oppo_score" type="Label" parent="Background"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -372.0
+margin_top = -22.0
+margin_right = -270.0
+margin_bottom = 483.0
+custom_styles/normal = SubResource( 10 )
+
+[node name="total" type="Label" parent="Background/oppo_score"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -37.5
+margin_top = -236.5
+margin_right = 37.5
+margin_bottom = 236.5
+custom_styles/normal = SubResource( 11 )
+
+[node name="score" type="TextureProgress" parent="Background/oppo_score"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -27.5
+margin_top = -225.0
+margin_right = 27.5
+margin_bottom = 225.0
+texture_progress = ExtResource( 13 )
+fill_mode = 3
+
+[node name="word" type="Label" parent="Background/oppo_score"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -55.0
+margin_top = -124.0
+margin_right = 55.0
+margin_bottom = -21.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 12 )
+align = 1
+valign = 1
+
+[node name="Tween" type="Tween" parent="Background/oppo_score"]
+
 [node name="Options1" type="Button" parent="Background"]
-margin_left = 543.0
+margin_left = 545.0
 margin_top = 393.0
-margin_right = 1363.0
+margin_right = 1365.0
 margin_bottom = 533.0
 mouse_default_cursor_shape = 2
 custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
@@ -636,9 +630,9 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -107.0
+margin_left = -783.0
 margin_top = -35.0
-margin_right = -37.0
+margin_right = -713.0
 margin_bottom = 35.0
 texture = ExtResource( 6 )
 expand = true
@@ -649,9 +643,9 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -107.0
+margin_left = -783.0
 margin_top = -35.0
-margin_right = -37.0
+margin_right = -713.0
 margin_bottom = 35.0
 texture = ExtResource( 7 )
 expand = true
@@ -695,9 +689,9 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -107.0
+margin_left = -783.0
 margin_top = -35.0
-margin_right = -37.0
+margin_right = -713.0
 margin_bottom = 35.0
 texture = ExtResource( 6 )
 expand = true
@@ -708,9 +702,9 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -107.0
+margin_left = -783.0
 margin_top = -35.0
-margin_right = -37.0
+margin_right = -713.0
 margin_bottom = 35.0
 texture = ExtResource( 7 )
 expand = true
@@ -754,9 +748,9 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -107.0
+margin_left = -783.0
 margin_top = -35.0
-margin_right = -37.0
+margin_right = -713.0
 margin_bottom = 35.0
 texture = ExtResource( 6 )
 expand = true
@@ -767,9 +761,9 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -107.0
+margin_left = -783.0
 margin_top = -35.0
-margin_right = -37.0
+margin_right = -713.0
 margin_bottom = 35.0
 texture = ExtResource( 7 )
 expand = true
@@ -812,9 +806,9 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -107.0
+margin_left = -783.0
 margin_top = -35.0
-margin_right = -37.0
+margin_right = -713.0
 margin_bottom = 35.0
 texture = ExtResource( 6 )
 expand = true
@@ -825,12 +819,24 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -107.0
+margin_left = -783.0
 margin_top = -35.0
-margin_right = -37.0
+margin_right = -713.0
 margin_bottom = 35.0
 texture = ExtResource( 7 )
 expand = true
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="HTTPRequest2" type="HTTPRequest" parent="."]
+
+[node name="HTTPRequest3" type="HTTPRequest" parent="."]
+
+[node name="HTTPRequest4" type="HTTPRequest" parent="."]
+
+[node name="HTTPRequest5" type="HTTPRequest" parent="."]
+
+[node name="HTTPRequest6" type="HTTPRequest" parent="."]
 
 [connection signal="timeout" from="Background/Timer" to="." method="_on_Timer_timeout"]
 [connection signal="pressed" from="Background/op_Options1" to="." method="_on_op_Options1_pressed"]
@@ -841,3 +847,8 @@ expand = true
 [connection signal="pressed" from="Background/Options2" to="." method="_on_Options2_pressed"]
 [connection signal="pressed" from="Background/Options3" to="." method="_on_Options3_pressed"]
 [connection signal="pressed" from="Background/Options4" to="." method="_on_Options4_pressed"]
+[connection signal="request_completed" from="HTTPRequest2" to="." method="_on_HTTPRequest2_request_completed"]
+[connection signal="request_completed" from="HTTPRequest3" to="." method="_on_HTTPRequest3_request_completed"]
+[connection signal="request_completed" from="HTTPRequest4" to="." method="_on_HTTPRequest4_request_completed"]
+[connection signal="request_completed" from="HTTPRequest5" to="." method="_on_HTTPRequest5_request_completed"]
+[connection signal="request_completed" from="HTTPRequest6" to="." method="_on_HTTPRequest6_request_completed"]
