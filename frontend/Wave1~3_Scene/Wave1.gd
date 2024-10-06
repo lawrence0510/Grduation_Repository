@@ -38,8 +38,7 @@ func _ready() -> void:
 	
 	# 建立 POST 請求的資料
 	var data = {
-#		"user_id": GlobalVar.user_id,
-		"user_id": 15,
+		"user_id": GlobalVar.user_id,
 		"article_category": GlobalVar.current_category,
 	}
 	
@@ -61,7 +60,9 @@ func _ready() -> void:
 	full_story_scene.set_visible(true) ## 顯示全文，第一關先讓玩家讀文章再作答
 	pause_scene.set_visible(false) ## 隱藏暫停場景
 	attack_animation = $BattleBackground/AxeAttackAnimation ## 之後要根據使用者的角色匯入不同攻擊特效
-	
+	#先讓用戶讀文章, 不給按叉叉
+	full_story_scene.set_cross_hide()
+	$BattleBackground/readTheStory.start() #等待三秒
 
 ## 查看全文button按下去
 func _on_OpenStoryButton_pressed() -> void:
@@ -125,6 +126,8 @@ func change_button_color(button_path: String) -> void:
 func _on_ChangeLevelTimer_timeout() -> void:
 	get_tree().change_scene("res://Wave1~3_Scene/Wave2.tscn") ## 跳到Wave 2
 	print(GlobalVar.question1)
+
+
 
 ## Disable其他button 
 ## 防止玩家按到2個以上
@@ -276,3 +279,10 @@ func _on_AxeAttackAnimation_animation_finished() -> void:
 
 	var effect = enemy_death_effect.instance() ## 生成敵人死亡動畫
 	get_tree().current_scene.add_child(effect) ## 播放敵人死亡動畫
+
+#在時間倒數完之後才允許用戶關閉文章
+func _on_readTheStory_timeout():
+	full_story_scene.set_cross_visible()
+
+func _on_Timer_timeout():
+	$BattleBackground/WindowDialog/ProgressBar.value += 1

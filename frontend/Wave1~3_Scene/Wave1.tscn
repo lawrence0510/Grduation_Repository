@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=2]
+[gd_scene load_steps=65 format=2]
 
 [ext_resource path="res://Fonts/noto_sans_48.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Fonts/noto_sans_64.tres" type="DynamicFont" id=2]
@@ -100,6 +100,20 @@ corner_radius_top_left = 40
 corner_radius_top_right = 40
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id=55]
+bg_color = Color( 1, 0.00784314, 0.00784314, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id=56]
+bg_color = Color( 1, 1, 1, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="AtlasTexture" id=37]
 flags = 4
@@ -327,6 +341,20 @@ expand_icon = true
 script = ExtResource( 58 )
 
 [node name="WindowDialog" parent="BattleBackground" instance=ExtResource( 7 )]
+visible = true
+
+[node name="ProgressBar" type="ProgressBar" parent="BattleBackground/WindowDialog"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -700.0
+margin_top = 930.0
+margin_right = 700.0
+margin_bottom = 940.0
+rect_min_size = Vector2( 820, 0 )
+custom_styles/fg = SubResource( 55 )
+custom_styles/bg = SubResource( 56 )
+step = 0.05
+percent_visible = false
 
 [node name="PauseScene" parent="BattleBackground" instance=ExtResource( 8 )]
 visible = false
@@ -335,6 +363,13 @@ visible = false
 process_mode = 0
 wait_time = 3.0
 one_shot = true
+
+[node name="readTheStory" type="Timer" parent="BattleBackground"]
+wait_time = 3.0
+
+[node name="Timer" type="Timer" parent="BattleBackground"]
+wait_time = 0.01
+autostart = true
 
 [node name="BalrogAttackAnimation" type="AnimatedSprite" parent="BattleBackground"]
 position = Vector2( 490, 470 )
@@ -371,6 +406,8 @@ animation = "Axe"
 [connection signal="pressed" from="BattleBackground/Option_C" to="." method="_on_Option_C_pressed"]
 [connection signal="pressed" from="BattleBackground/Option_D" to="." method="_on_Option_D_pressed"]
 [connection signal="timeout" from="BattleBackground/ChangeLevelTimer" to="." method="_on_ChangeLevelTimer_timeout"]
+[connection signal="timeout" from="BattleBackground/readTheStory" to="." method="_on_readTheStory_timeout"]
+[connection signal="timeout" from="BattleBackground/Timer" to="." method="_on_Timer_timeout"]
 [connection signal="animation_finished" from="BattleBackground/BalrogAttackAnimation" to="." method="_on_BalrogAttackAnimation_animation_finished"]
 [connection signal="animation_finished" from="BattleBackground/DarkBoltAttackAnimation" to="." method="_on_DarkBoltAttackAnimation_animation_finished"]
 [connection signal="animation_finished" from="BattleBackground/BombAttackAnimation" to="." method="_on_BombAttackAnimation_animation_finished"]
