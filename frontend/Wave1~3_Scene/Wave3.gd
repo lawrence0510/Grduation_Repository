@@ -2,25 +2,30 @@ extends Node
 
 onready var full_story_scene = $BattleBackground/WindowDialog
 onready var pause_scene = $BattleBackground/PauseScene
-onready var attack_animation
 onready var line_edit = $BattleBackground/LineEdit
 onready var http_request: HTTPRequest = $HTTPRequest
 onready var http_request2: HTTPRequest = $HTTPRequest2
 var enemy_death_effect = preload("res://Enemy/EnemyDeathEffect.tscn")
 var health_bar = load("res://UserSystem/HealthBar.tscn").instance()
 onready var enemy_image = $BattleBackground/Question/Enemy
+var attack_animation
 
 ## 載入這個場景(Wave 3)後，馬上
 func _ready() -> void:
+	#先隱藏所有攻擊特效
+	$BattleBackground/BalrogAttackAnimation.visible = false
+	$BattleBackground/DarkBoltAttackAnimation.visible = false
+	$BattleBackground/BombAttackAnimation.visible = false
+	$BattleBackground/AxeAttackAnimation.visible = false
+	
 	full_story_scene.setStory(GlobalVar.story)
 	enemy_image.texture = GlobalVar.images[2]
 	$BattleBackground/Question.add_child(health_bar) ## 因為畫面前後的關係，所以把節點放在Question的底下
 	health_bar.init_health_value(GlobalVar.global_player_health) ## 設定玩家血量
 	full_story_scene.set_visible(false) ## 隱藏全文
 	pause_scene.set_visible(false) ## 隱藏暫停場景 
-	attack_animation = $BattleBackground/AttackAnimation
-	attack_animation.animation = "DarkBolt" ## 之後要根據使用者的角色匯入不同攻擊特效
-	attack_animation.visible = false ## 隱藏敵人死亡特效
+	attack_animation = $BattleBackground/AxeAttackAnimation
+	
 	
 	#設定題目
 	$BattleBackground/Question.text = GlobalVar.question3["question3"]
@@ -136,11 +141,6 @@ func send_history_post_request() -> void:
 	# 發送第二個 POST 請求
 	http_request2.request(url, [], true, HTTPClient.METHOD_POST, "{}")
 
-## 攻擊特效結束後 讓敵人消失
-func _on_AttackAnimation_animation_finished() -> void:
-	$BattleBackground/Question/Enemy.queue_free() ## 敵人消失
-	var effect = enemy_death_effect.instance() ## 生成敵人死亡動畫
-	get_tree().current_scene.add_child(effect) ## 播放敵人死亡動畫
 
 func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
 	if response_code == 201:
@@ -156,3 +156,47 @@ func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
 			print("無法解析 API 回應")
 	else:
 		print("儲存歷史紀錄時 HTTP 請求失敗，狀態碼: ", response_code)
+
+
+func _on_BalrogAttackAnimation_animation_finished() -> void:
+	if $BattleBackground/Question/Enemy != null:
+		print("Enemy exists, queuing free.")
+		$BattleBackground/Question/Enemy.queue_free() ## 敵人消失
+	else:
+		print("Enemy node is null, cannot queue_free.")
+
+	var effect = enemy_death_effect.instance() ## 生成敵人死亡動畫
+	get_tree().current_scene.add_child(effect) ## 播放敵人死亡動畫
+
+
+func _on_DarkBoltAttackAnimation_animation_finished() -> void:
+	if $BattleBackground/Question/Enemy != null:
+		print("Enemy exists, queuing free.")
+		$BattleBackground/Question/Enemy.queue_free() ## 敵人消失
+	else:
+		print("Enemy node is null, cannot queue_free.")
+
+	var effect = enemy_death_effect.instance() ## 生成敵人死亡動畫
+	get_tree().current_scene.add_child(effect) ## 播放敵人死亡動畫
+
+
+func _on_BombAttackAnimation_animation_finished() -> void:
+	if $BattleBackground/Question/Enemy != null:
+		print("Enemy exists, queuing free.")
+		$BattleBackground/Question/Enemy.queue_free() ## 敵人消失
+	else:
+		print("Enemy node is null, cannot queue_free.")
+
+	var effect = enemy_death_effect.instance() ## 生成敵人死亡動畫
+	get_tree().current_scene.add_child(effect) ## 播放敵人死亡動畫
+
+
+func _on_AxeAttackAnimation_animation_finished() -> void:
+	if $BattleBackground/Question/Enemy != null:
+		print("Enemy exists, queuing free.")
+		$BattleBackground/Question/Enemy.queue_free() ## 敵人消失
+	else:
+		print("Enemy node is null, cannot queue_free.")
+
+	var effect = enemy_death_effect.instance() ## 生成敵人死亡動畫
+	get_tree().current_scene.add_child(effect) ## 播放敵人死亡動畫

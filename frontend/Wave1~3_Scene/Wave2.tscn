@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://Fonts/noto_sans_48.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Fonts/noto_sans_64.tres" type="DynamicFont" id=2]
@@ -11,50 +11,21 @@
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt3.png" type="Texture" id=9]
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt4.png" type="Texture" id=10]
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt5.png" type="Texture" id=11]
-[ext_resource path="res://AttackAnimation/Lightning/Lightning11.png" type="Texture" id=12]
+[ext_resource path="res://AttackAnimation/Axe/Axe4.png" type="Texture" id=12]
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt6.png" type="Texture" id=13]
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt7.png" type="Texture" id=14]
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt9.png" type="Texture" id=15]
-[ext_resource path="res://AttackAnimation/Lightning/Lightning10.png" type="Texture" id=16]
+[ext_resource path="res://AttackAnimation/Axe/Axe1.png" type="Texture" id=16]
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt1.png" type="Texture" id=17]
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt2.png" type="Texture" id=18]
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt8.png" type="Texture" id=19]
-[ext_resource path="res://Spritesheets/fx_explosionblueelectrical.png" type="Texture" id=20]
-[ext_resource path="res://AttackAnimation/Lightning/Lightning2.png" type="Texture" id=21]
-[ext_resource path="res://AttackAnimation/Lightning/Lightning7.png" type="Texture" id=22]
-[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb5.png" type="Texture" id=23]
-[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb9.png" type="Texture" id=24]
-[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb13.png" type="Texture" id=25]
-[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb10.png" type="Texture" id=26]
-[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb7.png" type="Texture" id=27]
-[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb11.png" type="Texture" id=28]
-[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb3.png" type="Texture" id=29]
-[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb14.png" type="Texture" id=30]
-[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb8.png" type="Texture" id=31]
-[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb2.png" type="Texture" id=32]
-[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb4.png" type="Texture" id=33]
-[ext_resource path="res://AttackAnimation/Lightning/Lightning5.png" type="Texture" id=34]
-[ext_resource path="res://AttackAnimation/Lightning/Lightning6.png" type="Texture" id=35]
-[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb1.png" type="Texture" id=36]
-[ext_resource path="res://AttackAnimation/Lightning/Lightning1.png" type="Texture" id=37]
-[ext_resource path="res://AttackAnimation/Lightning/Lightning3.png" type="Texture" id=38]
-[ext_resource path="res://AttackAnimation/Lightning/Lightning9.png" type="Texture" id=39]
-[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb12.png" type="Texture" id=40]
-[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb6.png" type="Texture" id=41]
-[ext_resource path="res://AttackAnimation/FireBomb/Fire-bomb15.png" type="Texture" id=42]
-[ext_resource path="res://AttackAnimation/Lightning/Lightning4.png" type="Texture" id=43]
-[ext_resource path="res://AttackAnimation/Lightning/Lightning8.png" type="Texture" id=44]
-[ext_resource path="res://AttackAnimation/Spark/spark7.png" type="Texture" id=45]
-[ext_resource path="res://AttackAnimation/Spark/spark2.png" type="Texture" id=46]
+[ext_resource path="res://AttackAnimation/Axe/Axe2.png" type="Texture" id=20]
+[ext_resource path="res://AttackAnimation/Axe/Axe3.png" type="Texture" id=21]
+[ext_resource path="res://AttackAnimation/Bomb/Retro Impact Effect Pack 5 D.png" type="Texture" id=22]
+[ext_resource path="res://AttackAnimation/Balrog/Retro Impact Effect Pack 5 A.png" type="Texture" id=23]
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt11.png" type="Texture" id=47]
-[ext_resource path="res://AttackAnimation/Spark/spark6.png" type="Texture" id=48]
-[ext_resource path="res://AttackAnimation/Spark/spark5.png" type="Texture" id=49]
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt10.png" type="Texture" id=50]
-[ext_resource path="res://AttackAnimation/Spark/spark3.png" type="Texture" id=51]
-[ext_resource path="res://AttackAnimation/Spark/spark4.png" type="Texture" id=52]
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt12.png" type="Texture" id=53]
-[ext_resource path="res://AttackAnimation/Spark/spark8.png" type="Texture" id=54]
-[ext_resource path="res://AttackAnimation/Spark/spark1.png" type="Texture" id=55]
 [ext_resource path="res://Wave1~3_Scene/Wave2_Option_C.gd" type="Script" id=56]
 [ext_resource path="res://Wave1~3_Scene/Wave2_Option_A.gd" type="Script" id=57]
 [ext_resource path="res://Wave1~3_Scene/Wave2_Option_B.gd" type="Script" id=58]
@@ -130,82 +101,111 @@ corner_radius_top_right = 40
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
 
-[sub_resource type="AtlasTexture" id=15]
+[sub_resource type="AtlasTexture" id=33]
 flags = 4
-atlas = ExtResource( 20 )
-region = Rect2( 0, 0, 53, 59 )
+atlas = ExtResource( 23 )
+region = Rect2( 0, 1152, 64, 64 )
 
-[sub_resource type="AtlasTexture" id=16]
+[sub_resource type="AtlasTexture" id=34]
 flags = 4
-atlas = ExtResource( 20 )
-region = Rect2( 0, 59, 53, 59 )
+atlas = ExtResource( 23 )
+region = Rect2( 64, 1152, 64, 64 )
 
-[sub_resource type="AtlasTexture" id=17]
+[sub_resource type="AtlasTexture" id=35]
 flags = 4
-atlas = ExtResource( 20 )
-region = Rect2( 0, 118, 53, 59 )
+atlas = ExtResource( 23 )
+region = Rect2( 128, 1152, 64, 64 )
 
-[sub_resource type="AtlasTexture" id=18]
+[sub_resource type="AtlasTexture" id=36]
 flags = 4
-atlas = ExtResource( 20 )
-region = Rect2( 0, 177, 53, 59 )
+atlas = ExtResource( 23 )
+region = Rect2( 192, 1152, 64, 64 )
 
-[sub_resource type="AtlasTexture" id=19]
+[sub_resource type="AtlasTexture" id=37]
 flags = 4
-atlas = ExtResource( 20 )
-region = Rect2( 53, 0, 53, 59 )
+atlas = ExtResource( 23 )
+region = Rect2( 256, 1152, 64, 64 )
 
-[sub_resource type="AtlasTexture" id=20]
+[sub_resource type="AtlasTexture" id=38]
 flags = 4
-atlas = ExtResource( 20 )
-region = Rect2( 53, 59, 53, 59 )
+atlas = ExtResource( 23 )
+region = Rect2( 320, 1152, 64, 64 )
 
-[sub_resource type="AtlasTexture" id=21]
+[sub_resource type="AtlasTexture" id=39]
 flags = 4
-atlas = ExtResource( 20 )
-region = Rect2( 53, 118, 53, 59 )
+atlas = ExtResource( 23 )
+region = Rect2( 384, 1152, 64, 64 )
 
-[sub_resource type="AtlasTexture" id=22]
+[sub_resource type="AtlasTexture" id=40]
 flags = 4
-atlas = ExtResource( 20 )
-region = Rect2( 53, 177, 53, 59 )
-
-[sub_resource type="AtlasTexture" id=23]
-flags = 4
-atlas = ExtResource( 20 )
-region = Rect2( 106, 0, 53, 59 )
-
-[sub_resource type="AtlasTexture" id=24]
-flags = 4
-atlas = ExtResource( 20 )
-region = Rect2( 106, 59, 53, 59 )
+atlas = ExtResource( 23 )
+region = Rect2( 448, 1152, 64, 64 )
 
 [sub_resource type="SpriteFrames" id=25]
+animations = [ {
+"frames": [ SubResource( 33 ), SubResource( 34 ), SubResource( 35 ), SubResource( 36 ), SubResource( 37 ), SubResource( 38 ), SubResource( 39 ), SubResource( 40 ), null ],
+"loop": false,
+"name": "Balrog",
+"speed": 12.0
+} ]
+
+[sub_resource type="SpriteFrames" id=41]
 animations = [ {
 "frames": [ ExtResource( 17 ), ExtResource( 18 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 19 ), ExtResource( 15 ), ExtResource( 50 ), ExtResource( 47 ), ExtResource( 53 ) ],
 "loop": false,
 "name": "DarkBolt",
 "speed": 16.5
-}, {
-"frames": [ ExtResource( 36 ), ExtResource( 32 ), ExtResource( 29 ), ExtResource( 33 ), ExtResource( 23 ), ExtResource( 41 ), ExtResource( 27 ), ExtResource( 31 ), ExtResource( 24 ), ExtResource( 26 ), ExtResource( 28 ), ExtResource( 40 ), ExtResource( 25 ), ExtResource( 30 ), ExtResource( 42 ) ],
+} ]
+
+[sub_resource type="AtlasTexture" id=44]
+flags = 4
+atlas = ExtResource( 22 )
+region = Rect2( 0, 192, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=45]
+flags = 4
+atlas = ExtResource( 22 )
+region = Rect2( 64, 192, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=46]
+flags = 4
+atlas = ExtResource( 22 )
+region = Rect2( 128, 192, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=47]
+flags = 4
+atlas = ExtResource( 22 )
+region = Rect2( 192, 192, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=48]
+flags = 4
+atlas = ExtResource( 22 )
+region = Rect2( 256, 192, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=49]
+flags = 4
+atlas = ExtResource( 22 )
+region = Rect2( 320, 192, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=50]
+flags = 4
+atlas = ExtResource( 22 )
+region = Rect2( 384, 192, 64, 64 )
+
+[sub_resource type="SpriteFrames" id=42]
+animations = [ {
+"frames": [ SubResource( 44 ), SubResource( 45 ), SubResource( 46 ), SubResource( 47 ), SubResource( 48 ), SubResource( 49 ), SubResource( 50 ) ],
 "loop": false,
-"name": "FireBomb",
-"speed": 13.0
-}, {
-"frames": [ SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ) ],
+"name": "Bomb",
+"speed": 12.0
+} ]
+
+[sub_resource type="SpriteFrames" id=43]
+animations = [ {
+"frames": [ ExtResource( 16 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 12 ), null ],
 "loop": false,
-"name": "LightExplosion",
-"speed": 9.0
-}, {
-"frames": [ ExtResource( 37 ), ExtResource( 21 ), ExtResource( 38 ), ExtResource( 43 ), ExtResource( 34 ), ExtResource( 35 ), ExtResource( 22 ), ExtResource( 44 ), ExtResource( 39 ), ExtResource( 16 ), ExtResource( 12 ) ],
-"loop": false,
-"name": "Lightning",
+"name": "Axe",
 "speed": 10.0
-}, {
-"frames": [ ExtResource( 55 ), ExtResource( 46 ), ExtResource( 51 ), ExtResource( 52 ), ExtResource( 49 ), ExtResource( 48 ), ExtResource( 45 ), ExtResource( 54 ) ],
-"loop": false,
-"name": "Spark",
-"speed": 8.0
 } ]
 
 [node name="Wave2" type="Node"]
@@ -330,6 +330,8 @@ icon_align = 1
 expand_icon = true
 script = ExtResource( 59 )
 
+[node name="WindowDialog" parent="BattleBackground" instance=ExtResource( 6 )]
+
 [node name="PauseScene" parent="BattleBackground" instance=ExtResource( 8 )]
 visible = false
 
@@ -338,13 +340,29 @@ process_mode = 0
 wait_time = 3.0
 one_shot = true
 
-[node name="AttackAnimation" type="AnimatedSprite" parent="BattleBackground"]
-position = Vector2( 485, 540 )
-scale = Vector2( 6.25767, 3.81555 )
+[node name="BalrogAttackAnimation" type="AnimatedSprite" parent="BattleBackground"]
+position = Vector2( 490, 470 )
+scale = Vector2( 8.254, 7.854 )
 frames = SubResource( 25 )
-animation = "Spark"
+animation = "Balrog"
 
-[node name="WindowDialog" parent="BattleBackground" instance=ExtResource( 6 )]
+[node name="DarkBoltAttackAnimation" type="AnimatedSprite" parent="BattleBackground"]
+position = Vector2( 490, 490 )
+scale = Vector2( 5.422, 5.773 )
+frames = SubResource( 41 )
+animation = "DarkBolt"
+
+[node name="BombAttackAnimation" type="AnimatedSprite" parent="BattleBackground"]
+position = Vector2( 491, 470 )
+scale = Vector2( 7.281, 7.633 )
+frames = SubResource( 42 )
+animation = "Bomb"
+
+[node name="AxeAttackAnimation" type="AnimatedSprite" parent="BattleBackground"]
+position = Vector2( 460, 417 )
+scale = Vector2( 1, 1.162 )
+frames = SubResource( 43 )
+animation = "Axe"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
@@ -355,5 +373,8 @@ animation = "Spark"
 [connection signal="pressed" from="BattleBackground/Option_C" to="." method="_on_Option_C_pressed"]
 [connection signal="pressed" from="BattleBackground/Option_D" to="." method="_on_Option_D_pressed"]
 [connection signal="timeout" from="BattleBackground/ChangeLevelTimer" to="." method="_on_ChangeLevelTimer_timeout"]
-[connection signal="animation_finished" from="BattleBackground/AttackAnimation" to="." method="_on_AttackAnimation_animation_finished"]
+[connection signal="animation_finished" from="BattleBackground/BalrogAttackAnimation" to="." method="_on_BalrogAttackAnimation_animation_finished"]
+[connection signal="animation_finished" from="BattleBackground/DarkBoltAttackAnimation" to="." method="_on_DarkBoltAttackAnimation_animation_finished"]
+[connection signal="animation_finished" from="BattleBackground/BombAttackAnimation" to="." method="_on_BombAttackAnimation_animation_finished"]
+[connection signal="animation_finished" from="BattleBackground/AxeAttackAnimation" to="." method="_on_AxeAttackAnimation_animation_finished"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
