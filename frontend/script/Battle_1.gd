@@ -74,7 +74,6 @@ func get_player_data():
 func _on_HTTPRequest3_request_completed(result, response_code, headers, body):
 	if response_code == 200:  # 成功接收回應
 		var json_data = JSON.parse(body.get_string_from_utf8()).result
-		print(json_data)
 		var profile_picture = json_data["profile_picture"]
 		$Background/Player/name.text = json_data["user_name"]
 		var character_id = json_data["character_id"]
@@ -82,8 +81,6 @@ func _on_HTTPRequest3_request_completed(result, response_code, headers, body):
 		if profile_picture != null and profile_picture != "":
 			load_profile_picture_from_url(profile_picture)
 		else:
-			# 根據 character_id 設置對應圖片
-			print("no profile picture detected, use characters instead")
 			if character_id == 1:
 				$Background/Player/pic.texture = load("res://Pic/battle_B1.png")
 			elif character_id == 2:
@@ -103,7 +100,6 @@ func _on_HTTPRequest3_request_completed(result, response_code, headers, body):
 
 # 使用 HTTP 請求下載並加載圖片
 func load_profile_picture_from_url(url: String):
-	print("Profile Picture Loading")
 	var image_request = $HTTPRequest4
 	image_request.connect("request_completed", self, "_on_profile_picture_request_completed")
 	image_request.request(url)
@@ -118,11 +114,6 @@ func _on_HTTPRequest4_request_completed(result, response_code, headers, body):
 			var texture = ImageTexture.new()
 			texture.create_from_image(image)
 			$Background/Player/pic.texture = texture
-			print("Profile picture loaded successfully.")
-		else:
-			print("Failed to load image from buffer.")
-	else:
-		print("Failed to load profile picture from URL.")
 
 func get_opponent_data():
 	var url = "http://nccumisreading.ddnsking.com:5001/User/get_user_from_id?user_id=" + str(GlobalVar.opponent_id)
@@ -133,7 +124,6 @@ func get_opponent_data():
 func _on_HTTPRequest5_request_completed(result, response_code, headers, body):
 	if response_code == 200:  # 成功接收回應
 		var json_data = JSON.parse(body.get_string_from_utf8()).result
-		print(json_data)
 		var profile_picture = json_data["profile_picture"]
 		$Background/opponent/name.text = json_data["user_name"]
 		var character_id = json_data["character_id"]
@@ -141,8 +131,6 @@ func _on_HTTPRequest5_request_completed(result, response_code, headers, body):
 		if profile_picture != null and profile_picture != "":
 			load_opponent_picture_from_url(profile_picture)
 		else:
-			# 根據 character_id 設置對應圖片
-			print("no profile picture detected for opponent, use characters instead")
 			if character_id == 1:
 				$Background/opponent/pic.texture = load("res://Pic/battle_B1.png")
 			elif character_id == 2:
@@ -162,7 +150,6 @@ func _on_HTTPRequest5_request_completed(result, response_code, headers, body):
 
 # 使用 HTTP 請求下載並加載對手的圖片
 func load_opponent_picture_from_url(url: String):
-	print("Opponent Profile Picture Loading")
 	var image_request = $HTTPRequest6
 	image_request.connect("request_completed", self, "_on_opponent_picture_request_completed")
 	image_request.request(url)
@@ -177,11 +164,6 @@ func _on_opponent_picture_request_completed(result, response_code, headers, body
 			var texture = ImageTexture.new()
 			texture.create_from_image(image)
 			$Background/opponent/pic.texture = texture
-			print("Opponent profile picture loaded successfully.")
-		else:
-			print("Failed to load opponent image from buffer.")
-	else:
-		print("Failed to load opponent profile picture from URL.")
 
 # 設置 Timer
 func setup_timer():
@@ -299,6 +281,7 @@ func _on_opponent_answer():
 func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
 	if response_code == 200:  # 成功接收回應
 		var json_data = JSON.parse(body.get_string_from_utf8()).result
+		print(json_data["user2_question1"])
 		var opponent_answer = null
 		var opponent_score = 0
 
@@ -361,11 +344,6 @@ func check_all_answered():
 		# 玩家和對手都已經答題，啟動3秒延遲跳題
 		if delay_timer.is_stopped():
 			delay_timer.start()
-
-	print("GlobalVar.player_selected_answer" + str(GlobalVar.player_selected_answer))
-	print("GlobalVar.opponent_selected_answer: " + str(GlobalVar.opponent_selected_answer))
-	print("correct_answer: "+ str(correct_answer))
-
 	# 檢查如果雙方都答錯，顯示正確答案
 	if GlobalVar.player_selected_answer != "" and GlobalVar.opponent_selected_answer != "" and not str(GlobalVar.player_selected_answer) == str(correct_answer) and not str(GlobalVar.opponent_selected_answer) == str(correct_answer):
 		var correct_button_path = button_paths[int(correct_answer) - 1]

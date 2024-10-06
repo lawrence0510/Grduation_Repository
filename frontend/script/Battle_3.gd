@@ -304,10 +304,10 @@ func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
 
 		# 確定玩家是 user1 還是 user2
 		if GlobalVar.user_id == json_data["user1_id"]:
-			opponent_answer = json_data["user2_question2"]
+			opponent_answer = json_data["user2_question3"]
 			opponent_score = json_data["user2_score"]
 		elif GlobalVar.user_id == json_data["user2_id"]:
-			opponent_answer = json_data["user1_question2"]
+			opponent_answer = json_data["user1_question3"]
 			opponent_score = json_data["user1_score"]
 		
 		# 檢查對手是否已經回答
