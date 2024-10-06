@@ -344,8 +344,9 @@ func check_all_answered():
 	#許馨文救我 他只會出現O不會出現綠色
 
 func add_score():
-	target_score_1 = base_score_per_question + countdown_time * 8  # 計算當前題目的得分
-	GlobalVar.player_score = target_score_1
+	var score_for_current_question = base_score_per_question + countdown_time * 8
+	GlobalVar.player_score += score_for_current_question
+	target_score_1 = GlobalVar.player_score
 	smooth_update_score()
 
 func smooth_update_score():

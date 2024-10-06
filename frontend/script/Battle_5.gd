@@ -186,7 +186,6 @@ func setup_opponent_check_timer():
 func setup_delay_timer():
 	delay_timer.wait_time = 2
 	delay_timer.connect("timeout", self, "_on_delay_timeout")
-	print("成功：setup_delay_timer")
 
 # 更新倒數 Label
 func update_countdown_label():
@@ -206,7 +205,6 @@ func _on_timeout():
 func _on_delay_timeout():
 	get_tree().set_meta("player_score", current_score_1)
 	get_tree().set_meta("opponent_score", current_score_2)
-	print("成功：_on_delay_timeout2")
 
 # 玩家按下的按鈕行為
 func _on_button_pressed(button_path: String):
@@ -330,6 +328,8 @@ func check_all_answered():
 	if GlobalVar.player_selected_answer != "" and GlobalVar.opponent_selected_answer != "":
 		# 玩家和對手都已經答題，啟動3秒延遲跳題
 		print("雙方都已答題")
+		print("我方回答： " + str(GlobalVar.player_selected_answer))
+		print("敵方回答： " + str(GlobalVar.opponent_selected_answer))
 		if delay_timer.is_stopped():
 			delay_timer.start()
 	# 檢查如果雙方都答錯，顯示正確答案
@@ -342,8 +342,9 @@ func check_all_answered():
 	#許馨文救我 他只會出現O不會出現綠色
 
 func add_score():
-	target_score_1 = base_score_per_question + countdown_time * 8  # 計算當前題目的得分
-	GlobalVar.player_score = target_score_1
+	var score_for_current_question = base_score_per_question + countdown_time * 8
+	GlobalVar.player_score += score_for_current_question
+	target_score_1 = GlobalVar.player_score
 	smooth_update_score()
 
 func smooth_update_score():
