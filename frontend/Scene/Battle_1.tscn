@@ -232,6 +232,8 @@ align = 1
 valign = 1
 autowrap = true
 
+[node name="Timer2" type="Timer" parent="Background"]
+
 [node name="Timer" type="Timer" parent="Background"]
 process_mode = 0
 wait_time = 0.1
@@ -838,6 +840,7 @@ expand = true
 
 [node name="HTTPRequest6" type="HTTPRequest" parent="."]
 
+[connection signal="timeout" from="Background/Timer2" to="." method="_on_delay_timeout"]
 [connection signal="timeout" from="Background/Timer" to="." method="_on_Timer_timeout"]
 [connection signal="pressed" from="Background/op_Options1" to="." method="_on_Options1_pressed"]
 [connection signal="pressed" from="Background/op_Options2" to="." method="_on_Options2_pressed"]
