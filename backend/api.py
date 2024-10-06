@@ -1974,6 +1974,30 @@ class MatchUser(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+@compete_ns.route('/cancel_queue')
+class CancelQueue(Resource):
+    @compete_ns.expect(match_parser)
+    def delete(self):
+        '''從等待隊列中刪除該使用者的紀錄'''
+        args = match_parser.parse_args()
+        user_id = args['user_id']
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                # 刪除 WaitingQueue 中該 user_id 的紀錄
+                cursor.execute("DELETE FROM WaitingQueue WHERE user_id = %s", (user_id,))
+                connection.commit()
+                return {"message": "User removed from queue successfully"}, 200
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+
 # 定義parser來解析compete_id
 compete_id_parser = reqparse.RequestParser()
 compete_id_parser.add_argument('compete_id', type=int, required=True, help='對戰ID')
