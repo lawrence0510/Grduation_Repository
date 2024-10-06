@@ -221,7 +221,7 @@ func _on_timeout():
 	else:
 		# 當倒數時間為 0，決定跳轉到勝利或失敗場景
 		save_scores()  # 儲存分數到 SceneTree MetaData
-		if target_score_1 >= target_score_2:
+		if GlobalVar.player_score >= GlobalVar.opponent_score:
 			get_tree().change_scene("res://Scene/Battle_Win.tscn")
 		else:
 			get_tree().change_scene("res://Scene/Battle_Lose.tscn")
@@ -231,7 +231,7 @@ func _on_delay_timeout():
 	get_tree().set_meta("opponent_score", current_score_2)
 	
 	save_scores()  # 儲存分數到 SceneTree MetaData
-	if target_score_1 >= target_score_2:
+	if GlobalVar.player_score >= GlobalVar.opponent_score:
 		get_tree().change_scene("res://Scene/Battle_Win.tscn")
 	else:
 		get_tree().change_scene("res://Scene/Battle_Lose.tscn")
