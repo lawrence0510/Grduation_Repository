@@ -1652,7 +1652,7 @@ class GetHistoryFromUser(Resource):
         if connection is not None:
             try:
                 cursor = connection.cursor(dictionary=True)
-                sql = "SELECT h.*, a.article_title FROM `History` h JOIN `Article` a ON h.article_id = a.article_id WHERE h.user_id = %s AND a.article_category = %s;"
+                sql = "SELECT h.*, a.article_title FROM `History` h JOIN `Article` a ON h.article_id = a.article_id WHERE h.user_id = %s AND a.article_category = %s ORDER BY h.time DESC;"
                 cursor.execute(sql, (user_id,article_category))
                 histories = cursor.fetchall()
 
