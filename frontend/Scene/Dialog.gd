@@ -14,6 +14,12 @@ onready var scrollbar = scroll.get_v_scrollbar()
 #用以確認用戶是否已經輸入, 不能連續發問，要等到回復之後才能問下一句
 var checkUserInput = 0
 
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
+		# 如果遊戲當前是全螢幕模式，則退出全螢幕
+		if OS.window_fullscreen:
+			get_tree().quit()
+
 func _ready():
 	scrollbar.connect("changed", self, "handle_scrollbar_changed")
 	max_scroll_length = scrollbar.max_value
@@ -45,7 +51,7 @@ func _on_Input_text_entered(new_text):
 		new_text = new_text.insert(new_text.length(), "        ")
 	else:
 		while new_text.length() > index:
-			new_text = new_text.insert(index, "        \n")
+			new_text = new_text.insert(index, "        "+"\n")
 			
 			#因為前面有增加空格, 所以index加的長度需要比index原本的長度再+6
 			index  = index + 44
@@ -94,7 +100,6 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		add_response_to_game(ai_response)
 	else:
 		print("error")
-	
 
 
 func _on_cross_pressed():
