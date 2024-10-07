@@ -200,17 +200,16 @@ custom_styles/normal = ExtResource( 8 )
 text = "score"
 
 [node name="details" type="RichTextLabel" parent="bg"]
-margin_left = 349.0
+margin_left = 385.0
 margin_top = 378.0
-margin_right = 1596.0
-margin_bottom = 546.0
+margin_right = 1535.0
+margin_bottom = 529.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = ExtResource( 6 )
 custom_styles/normal = SubResource( 4 )
-text = "="
 
 [node name="cross" type="Button" parent="bg"]
 margin_left = 1789.0
@@ -227,9 +226,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -130.0
-margin_top = -234.0
+margin_top = -242.0
 margin_right = -25.0
-margin_bottom = -182.0
+margin_bottom = -190.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 1 )
 text = "總分："
@@ -240,16 +239,16 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -18.0
-margin_top = -258.0
-margin_right = 44.0
-margin_bottom = -170.0
+margin_top = -264.0
+margin_right = 106.0
+margin_bottom = -176.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 2 )
 
 [node name="correct" type="Label" parent="bg"]
-margin_left = 355.0
+margin_left = 388.0
 margin_top = 574.0
-margin_right = 730.0
+margin_right = 721.0
 margin_bottom = 684.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
@@ -275,9 +274,9 @@ custom_fonts/font = SubResource( 6 )
 align = 1
 
 [node name="correct_detail" type="RichTextLabel" parent="bg"]
-margin_left = 350.0
+margin_left = 388.0
 margin_top = 701.0
-margin_right = 738.0
+margin_right = 721.0
 margin_bottom = 946.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
@@ -287,10 +286,14 @@ custom_fonts/normal_font = SubResource( 7 )
 custom_styles/normal = SubResource( 3 )
 
 [node name="Completeness" type="Label" parent="bg"]
-margin_left = 784.0
-margin_top = 574.0
-margin_right = 1159.0
-margin_bottom = 684.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -166.5
+margin_top = 34.0
+margin_right = 166.5
+margin_bottom = 144.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
@@ -316,13 +319,13 @@ align = 1
 
 [node name="com_detail" type="RichTextLabel" parent="bg"]
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -186.0
-margin_top = -377.0
-margin_right = 202.0
-margin_bottom = -132.0
+anchor_bottom = 0.5
+margin_left = -166.5
+margin_top = 163.0
+margin_right = 166.5
+margin_bottom = 408.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
@@ -331,9 +334,9 @@ custom_fonts/normal_font = SubResource( 7 )
 custom_styles/normal = SubResource( 3 )
 
 [node name="clarity" type="Label" parent="bg"]
-margin_left = 1210.0
+margin_left = 1200.0
 margin_top = 574.0
-margin_right = 1585.0
+margin_right = 1533.0
 margin_bottom = 684.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
@@ -359,9 +362,9 @@ custom_fonts/font = SubResource( 6 )
 align = 1
 
 [node name="clsr_detail" type="RichTextLabel" parent="bg"]
-margin_left = 1205.0
+margin_left = 1200.0
 margin_top = 701.0
-margin_right = 1593.0
+margin_right = 1533.0
 margin_bottom = 946.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
