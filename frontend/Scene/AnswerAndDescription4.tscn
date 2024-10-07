@@ -75,23 +75,25 @@ corner_radius_bottom_left = 20
 [sub_resource type="DynamicFont" id=15]
 size = 28
 outline_size = 1
-outline_color = Color( 0.0313726, 0, 1, 1 )
+outline_color = Color( 0.596078, 0.364706, 0, 0.556863 )
 use_filter = true
 font_data = ExtResource( 11 )
 
-[sub_resource type="StyleBoxFlat" id=16]
-bg_color = Color( 0, 0.635294, 1, 0 )
-border_width_bottom = 3
-border_color = Color( 0.0313726, 0, 1, 1 )
-
-[sub_resource type="StyleBoxFlat" id=17]
-bg_color = Color( 0, 0.635294, 1, 0 )
+[sub_resource type="StyleBoxFlat" id=18]
+bg_color = Color( 0.976471, 0.815686, 0.556863, 1 )
 corner_radius_top_left = 30
 corner_radius_top_right = 30
 corner_radius_bottom_right = 30
 corner_radius_bottom_left = 30
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="StyleBoxFlat" id=17]
+bg_color = Color( 0.596078, 0.364706, 0, 1 )
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[node name="Node2D2" type="Node2D"]
 script = ExtResource( 12 )
 
 [node name="bg" type="TextureRect" parent="."]
@@ -223,9 +225,9 @@ text = "score"
 
 [node name="details" type="RichTextLabel" parent="bg"]
 margin_left = 385.0
-margin_top = 366.0
+margin_top = 384.0
 margin_right = 1535.0
-margin_bottom = 534.0
+margin_bottom = 552.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
@@ -260,9 +262,9 @@ custom_fonts/font = SubResource( 2 )
 
 [node name="correct" type="Label" parent="bg"]
 margin_left = 388.0
-margin_top = 550.0
+margin_top = 568.0
 margin_right = 721.0
-margin_bottom = 650.0
+margin_bottom = 658.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
@@ -288,9 +290,9 @@ align = 1
 
 [node name="correct_detail" type="RichTextLabel" parent="bg"]
 margin_left = 388.0
-margin_top = 666.0
+margin_top = 672.0
 margin_right = 721.0
-margin_bottom = 826.0
+margin_bottom = 832.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
@@ -304,9 +306,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -166.5
-margin_top = 10.0
+margin_top = 28.0
 margin_right = 166.5
-margin_bottom = 110.0
+margin_bottom = 118.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
@@ -336,9 +338,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -166.5
-margin_top = 126.0
+margin_top = 132.0
 margin_right = 166.5
-margin_bottom = 286.0
+margin_bottom = 292.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
@@ -348,9 +350,9 @@ custom_styles/normal = SubResource( 3 )
 
 [node name="clarity" type="Label" parent="bg"]
 margin_left = 1200.0
-margin_top = 550.0
+margin_top = 568.0
 margin_right = 1533.0
-margin_bottom = 650.0
+margin_bottom = 658.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
@@ -376,9 +378,9 @@ align = 1
 
 [node name="clsr_detail" type="RichTextLabel" parent="bg"]
 margin_left = 1200.0
-margin_top = 666.0
+margin_top = 672.0
 margin_right = 1533.0
-margin_bottom = 826.0
+margin_bottom = 832.0
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
@@ -391,36 +393,30 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -195.0
+margin_left = -255.0
 margin_top = -205.0
-margin_right = -27.0
-margin_bottom = -163.0
-custom_colors/font_color_disabled = Color( 0.0313726, 0, 1, 1 )
-custom_colors/font_color_focus = Color( 0.0313726, 0, 1, 1 )
-custom_colors/font_color = Color( 0.0313726, 0, 1, 1 )
-custom_colors/font_color_hover = Color( 0.0313726, 0, 1, 1 )
-custom_colors/font_color_pressed = Color( 0.0313726, 0, 1, 1 )
+margin_right = -15.0
+margin_bottom = -140.0
+custom_colors/font_color_hover = Color( 0.596078, 0.364706, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.596078, 0.364706, 0, 1 )
 custom_fonts/font = SubResource( 15 )
-custom_styles/hover = SubResource( 16 )
-custom_styles/pressed = SubResource( 16 )
+custom_styles/hover = SubResource( 18 )
+custom_styles/pressed = SubResource( 18 )
 custom_styles/focus = SubResource( 17 )
 custom_styles/disabled = SubResource( 17 )
 custom_styles/normal = SubResource( 17 )
 text = "前往追問畫面"
 
 [node name="FinishButton" type="Button" parent="bg"]
-margin_left = 1043.0
+margin_left = 1045.0
 margin_top = 875.0
-margin_right = 1099.0
-margin_bottom = 917.0
-custom_colors/font_color_disabled = Color( 0.0313726, 0, 1, 1 )
-custom_colors/font_color_focus = Color( 0.0313726, 0, 1, 1 )
-custom_colors/font_color = Color( 0.0313726, 0, 1, 1 )
-custom_colors/font_color_hover = Color( 0.0313726, 0, 1, 1 )
-custom_colors/font_color_pressed = Color( 0.0313726, 0, 1, 1 )
+margin_right = 1145.0
+margin_bottom = 940.0
+custom_colors/font_color_hover = Color( 0.596078, 0.364706, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.596078, 0.364706, 0, 1 )
 custom_fonts/font = SubResource( 15 )
-custom_styles/hover = SubResource( 16 )
-custom_styles/pressed = SubResource( 16 )
+custom_styles/hover = SubResource( 18 )
+custom_styles/pressed = SubResource( 18 )
 custom_styles/focus = SubResource( 17 )
 custom_styles/disabled = SubResource( 17 )
 custom_styles/normal = SubResource( 17 )
