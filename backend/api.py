@@ -267,7 +267,9 @@ image_parser = reqparse.RequestParser()
 image_parser.add_argument('user_id', type=int, required=True, help='user id')
 image_parser.add_argument('character_id', type=int,
                           required=True, help='character id')
-
+update_offline_parser = reqparse.RequestParser()
+update_offline_parser.add_argument('login_id', type=int, required=True)
+update_offline_parser.add_argument('offline_time', type=str, required=True)
 
 @user_ns.route('/image_register')
 class ImageRegister(Resource):
@@ -347,6 +349,34 @@ class LoginUser(Resource):
                     return {"message": "Login successful", "user_id": user['user_id'], "login_record_id": login_record_id}, 200
                 else:
                     return {"message": "Invalid username or password"}, 401
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+@user_ns.route('/update_offline')
+class UpdateOffline(Resource):
+    @user_ns.expect(update_offline_parser)
+    def post(self):
+        '''更新下線時間'''
+        args = update_offline_parser.parse_args()
+        login_id = args["login_id"]
+        
+        try:
+            offline_time = datetime.strptime(args["offline_time"], '%Y-%m-%d %H:%M:%S')
+        except ValueError as ve:
+            return {"error": str(ve)}, 400
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                sql = "UPDATE `LoginRecord` SET offline_time = %s WHERE login_id = %s;"
+                cursor.execute(sql, (offline_time, login_id))
+                connection.commit()
+                return {"message": "Offline time updated successfully"}, 200
             except Error as e:
                 return {"error": str(e)}, 500
             finally:
