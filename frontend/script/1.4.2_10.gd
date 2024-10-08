@@ -117,3 +117,14 @@ func _on_last_pressed():
 
 func _on_next_pressed():
 	get_tree().change_scene("res://scene/1.4.2_11.tscn")
+
+func _notification(what):
+	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+		# 獲取當前時間
+		var current_time = OS.get_time()
+		var close_time = str(current_time.hour) + ":" + str(current_time.minute) + ":" + str(current_time.second)
+		print("Application closed at: " + close_time)
+		# 你可以在這裡保存時間到文件或其他地方
+		
+		# 記錄完時間後退出應用
+		get_tree().quit()

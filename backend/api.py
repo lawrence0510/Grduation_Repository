@@ -322,11 +322,29 @@ class LoginUser(Resource):
                 user_id = user['user_id'] if user else None
                 success = bool(user)
 
-                insert_login_record(user_id, success)
+                # 插入登錄記錄
+                if user_id:
+                    insert_sql = """
+                    INSERT INTO LoginRecord (user_id, login_time, ip_address, user_agent, success)
+                    VALUES (%s, %s, %s, %s, %s)
+                    """
+                    cursor.execute(insert_sql, (
+                        user_id,
+                        datetime.now(),
+                        request.remote_addr,
+                        request.headers.get('User-Agent'),
+                        success
+                    ))
+                    connection.commit()
+
+                    # 獲取插入的 login_record_id
+                    login_record_id = cursor.lastrowid
+                else:
+                    login_record_id = None
 
                 if success:
                     session['user_id'] = user['user_id']
-                    return {"message": "Login successful", "user_id": user['user_id']}, 200
+                    return {"message": "Login successful", "user_id": user['user_id'], "login_record_id": login_record_id}, 200
                 else:
                     return {"message": "Invalid username or password"}, 401
             except Error as e:
@@ -336,30 +354,6 @@ class LoginUser(Resource):
                 connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
-
-
-def insert_login_record(user_id, success):
-    connection = create_db_connection()
-    if connection is not None:
-        try:
-            cursor = connection.cursor()
-            sql = """
-            INSERT INTO LoginRecord (user_id, login_time, ip_address, user_agent, success)
-            VALUES (%s, %s, %s, %s, %s)
-            """
-            cursor.execute(sql, (
-                user_id,
-                datetime.now(),
-                request.remote_addr,
-                request.headers.get('User-Agent'),
-                success
-            ))
-            connection.commit()
-        except Error as e:
-            print(f"Error logging login attempt: {e}")
-        finally:
-            cursor.close()
-            connection.close()
 
 
 google = oauth.register(

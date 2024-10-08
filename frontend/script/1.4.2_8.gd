@@ -117,3 +117,13 @@ func _on_last_pressed():
 
 func _on_next_pressed():
 	get_tree().change_scene("res://scene/1.4.2_9.tscn")
+
+func _notification(what):
+	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+		var current_datetime = OS.get_datetime()
+		var close_datetime = str(current_datetime.year) + "/" + str(current_datetime.month) + "/" + str(current_datetime.day) + " " + str(current_datetime.hour) + ":" + str(current_datetime.minute) + ":" + str(current_datetime.second)
+		print("Application closed at: " + close_datetime)
+		get_tree().quit()
+
+
+
