@@ -298,7 +298,6 @@ class ImageRegister(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
-
 @user_ns.route('/normal_login')
 class LoginUser(Resource):
     @user_ns.expect(login_parser)
@@ -385,6 +384,76 @@ class UpdateOffline(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+all_history_parser = reqparse.RequestParser()
+all_history_parser.add_argument('user_id', type=int, required=True)
+
+all_history_parser = reqparse.RequestParser()
+all_history_parser.add_argument('user_id', type=int, required=True)
+
+@user_ns.route('/get_all_history_from_user_id')
+class GetHistoryFromUserID(Resource):
+    @user_ns.expect(all_history_parser)
+    def get(self):
+        '''抓取所有上下線歷史、上線時長、作答紀錄'''
+        args = all_history_parser.parse_args()  # 使用 all_history_parser
+        user_id = args["user_id"]
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor(dictionary=True)  # 使用 dictionary 以便返回字典格式
+                sql = \
+                """
+                SELECT 
+                    l.login_id,
+                    l.login_time,
+                    COALESCE(l.offline_time, 
+                        (SELECT MIN(l2.login_time) 
+                        FROM LoginRecord AS l2 
+                        WHERE l2.user_id = l.user_id 
+                        AND l2.login_time > l.login_time)) AS offline_time,  -- 使用 COALESCE 獲取下一次登入的時間
+                    TIMESTAMPDIFF(SECOND, l.login_time, 
+                        COALESCE(l.offline_time, 
+                            (SELECT MIN(l2.login_time) 
+                            FROM LoginRecord AS l2 
+                            WHERE l2.user_id = l.user_id 
+                            AND l2.login_time > l.login_time))) AS online_length,  -- 計算在線時長
+                    COUNT(h.history_id) * 3 AS questions_answered,
+                    AVG(h.total_score) AS average_score
+                FROM 
+                    LoginRecord AS l 
+                LEFT JOIN 
+                    History AS h ON h.user_id = l.user_id 
+                WHERE 
+                    l.user_id = %s
+                    AND h.time BETWEEN l.login_time AND COALESCE(l.offline_time, 
+                        (SELECT MIN(l2.login_time) 
+                        FROM LoginRecord AS l2 
+                        WHERE l2.user_id = l.user_id 
+                        AND l2.login_time > l.login_time))  -- 確保 history_time 在 login_time 和 offline_time 之間
+                GROUP BY 
+                    l.login_id, l.login_time;
+                """
+                cursor.execute(sql, (user_id,))
+                results = cursor.fetchall()  # 獲取查詢結果
+
+                if results:  # 如果找到結果
+                    for record in results:
+                        for key, value in record.items():
+                            if isinstance(value, (date, datetime)):
+                                record[key] = value.isoformat()  # 將日期轉換為 ISO 格式
+                            elif isinstance(value, Decimal):
+                                record[key] = str(value)
+                    return {"data": results}, 200
+                else:
+                    return {"error": "User not found"}, 404   # 如果沒有結果則返回 404
+
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
 
 google = oauth.register(
     name='google',
@@ -457,6 +526,28 @@ def authorize():
     else:
         return {"error": "Unable to connect to the database"}, 500
 
+def insert_login_record(user_id, success):
+    connection = create_db_connection()
+    if connection is not None:
+        try:
+            cursor = connection.cursor()
+            sql = """
+            INSERT INTO LoginRecord (user_id, login_time, ip_address, user_agent, success)
+            VALUES (%s, %s, %s, %s, %s)
+            """
+            cursor.execute(sql, (
+                user_id,
+                datetime.now(),
+                request.remote_addr,
+                request.headers.get('User-Agent'),
+                success
+            ))
+            connection.commit()
+        except Error as e:
+            print(f"Error logging login attempt: {e}")
+        finally:
+            cursor.close()
+            connection.close()
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
