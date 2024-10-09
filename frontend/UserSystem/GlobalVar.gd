@@ -40,3 +40,5 @@ var opponent_id = 0
 var player_selected_answer = ""
 
 var opponent_selected_answer = ""
+
+var login_record_id = 0

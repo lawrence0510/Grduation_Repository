@@ -59,9 +59,8 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		print(body_string)
 		var response = JSON.parse(body_string)
 		if response.error == OK:
-			# 提取 user_id
 			var user_id = response.result["user_id"]
-			print("User ID: ", user_id)
+			GlobalVar.login_record_id = response.result["login_record_id"]
 			
 			# 將 user_id 存入 GlobalVar
 			GlobalVar.user_id = user_id
