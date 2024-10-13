@@ -27,6 +27,7 @@ config/icon="res://icon.png"
 [autoload]
 
 GlobalVar="*res://UserSystem/GlobalVar.gd"
+OfflineUpdater="*res://script/OfflineUpdater.gd"
 
 [display]
 
@@ -44,6 +45,7 @@ font=false
 "字體"=false
 pointing=false
 point=false
+autoload=false
 
 [gui]
 
