@@ -1,6 +1,6 @@
 [gd_scene load_steps=26 format=2]
 
-[ext_resource path="res://Pic/bc911.png" type="Texture" id=1]
+[ext_resource path="res://Pic/1010.png" type="Texture" id=1]
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Pic/1 (2).png" type="Texture" id=3]
 [ext_resource path="res://Pic/00.png" type="Texture" id=4]
