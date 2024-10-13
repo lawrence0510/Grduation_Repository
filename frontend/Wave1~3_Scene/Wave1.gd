@@ -27,6 +27,9 @@ func _process(delta: float) -> void:
 
 ## 載入這個場景(Wave 1)後，馬上
 func _ready() -> void:
+	#根據題目類別設定關卡背景
+	change_category_background()
+	
 	#先隱藏所有攻擊特效
 	$BattleBackground/BalrogAttackAnimation.visible = false
 	$BattleBackground/DarkBoltAttackAnimation.visible = false
@@ -280,9 +283,25 @@ func _on_AxeAttackAnimation_animation_finished() -> void:
 	var effect = enemy_death_effect.instance() ## 生成敵人死亡動畫
 	get_tree().current_scene.add_child(effect) ## 播放敵人死亡動畫
 
+
 #在時間倒數完之後才允許用戶關閉文章
 func _on_readTheStory_timeout():
 	full_story_scene.set_cross_visible()
 
+
 func _on_Timer_timeout():
 	$BattleBackground/WindowDialog/ProgressBar.value += 1
+
+	
+#根據不同題目類別更換背景
+func change_category_background():
+	if(GlobalVar.current_category == "Chinese"):
+		$BattleBackground.texture = load("res://Textures/ChineseWave1.png")
+	elif(GlobalVar.current_category == "Social"):
+		$BattleBackground.texture = load("res://Textures/SocietyWave1.png")
+	elif(GlobalVar.current_category == "Science"):
+		$BattleBackground.texture = load("res://Textures/ScienceWave1.png")
+	elif(GlobalVar.current_category == "story"):
+		$BattleBackground.texture = load("res://Textures/StoryWave1.png")
+	elif(GlobalVar.current_category == "news"):
+		$BattleBackground.texture = load("res://Textures/NewsWave1.png")

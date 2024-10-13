@@ -12,6 +12,9 @@ var attack_animation
 
 ## 載入這個場景(Wave 3)後，馬上
 func _ready() -> void:
+	#根據題目類別設定關卡背景
+	change_category_background()
+	
 	#先隱藏所有攻擊特效
 	$BattleBackground/BalrogAttackAnimation.visible = false
 	$BattleBackground/DarkBoltAttackAnimation.visible = false
@@ -200,3 +203,16 @@ func _on_AxeAttackAnimation_animation_finished() -> void:
 
 	var effect = enemy_death_effect.instance() ## 生成敵人死亡動畫
 	get_tree().current_scene.add_child(effect) ## 播放敵人死亡動畫
+
+#根據不同題目類別更換背景
+func change_category_background():
+	if(GlobalVar.current_category == "Chinese"):
+		$BattleBackground.texture = load("res://Textures/ChineseWave3.png")
+	elif(GlobalVar.current_category == "Social"):
+		$BattleBackground.texture = load("res://Textures/SocietyWave3.png")
+	elif(GlobalVar.current_category == "Science"):
+		$BattleBackground.texture = load("res://Textures/ScienceWave3.png")
+	elif(GlobalVar.current_category == "story"):
+		$BattleBackground.texture = load("res://Textures/StoryWave3.png")
+	elif(GlobalVar.current_category == "news"):
+		$BattleBackground.texture = load("res://Textures/NewsWave3.png")

@@ -215,6 +215,7 @@ script = ExtResource( 7 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 5 )
+expand = true
 
 [node name="PauseButton" type="TextureButton" parent="BattleBackground"]
 margin_left = 1764.0
