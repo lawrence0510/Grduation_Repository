@@ -404,34 +404,31 @@ class GetHistoryFromUserID(Resource):
                 sql = \
                 """
                 SELECT 
-                    l.login_id,
-                    l.login_time,
-                    COALESCE(l.offline_time, 
-                        (SELECT MIN(l2.login_time) 
-                        FROM LoginRecord AS l2 
-                        WHERE l2.user_id = l.user_id 
-                        AND l2.login_time > l.login_time)) AS offline_time,  -- 使用 COALESCE 獲取下一次登入的時間
-                    TIMESTAMPDIFF(SECOND, l.login_time, 
-                        COALESCE(l.offline_time, 
-                            (SELECT MIN(l2.login_time) 
-                            FROM LoginRecord AS l2 
-                            WHERE l2.user_id = l.user_id 
-                            AND l2.login_time > l.login_time))) AS online_length,  -- 計算在線時長
+                    lr.login_id,
+                    lr.login_time,
+                    IFNULL(lr.offline_time, (SELECT MIN(lr2.login_time) 
+                                            FROM LoginRecord lr2 
+                                            WHERE lr2.user_id = lr.user_id 
+                                            AND lr2.login_time > lr.login_time)) AS offline_time,
+                    TIMESTAMPDIFF(SECOND, lr.login_time, IFNULL(lr.offline_time, (SELECT MIN(lr2.login_time) 
+                                                                                FROM LoginRecord lr2 
+                                                                                WHERE lr2.user_id = lr.user_id 
+                                                                                AND lr2.login_time > lr.login_time))) AS online_length,
                     COUNT(h.history_id) * 3 AS questions_answered,
                     AVG(h.total_score) AS average_score
                 FROM 
-                    LoginRecord AS l 
+                    LoginRecord lr
                 LEFT JOIN 
-                    History AS h ON h.user_id = l.user_id 
+                    History h ON h.user_id = lr.user_id
+                    AND h.time BETWEEN lr.login_time AND IFNULL(lr.offline_time, (SELECT MIN(lr2.login_time) 
+                                                                                FROM LoginRecord lr2 
+                                                                                WHERE lr2.user_id = lr.user_id 
+                                                                                AND lr2.login_time > lr.login_time))
                 WHERE 
-                    l.user_id = %s
-                    AND h.time BETWEEN l.login_time AND COALESCE(l.offline_time, 
-                        (SELECT MIN(l2.login_time) 
-                        FROM LoginRecord AS l2 
-                        WHERE l2.user_id = l.user_id 
-                        AND l2.login_time > l.login_time))  -- 確保 history_time 在 login_time 和 offline_time 之間
+                    lr.user_id = %s
                 GROUP BY 
-                    l.login_id, l.login_time;
+                    lr.login_id, lr.login_time, lr.offline_time  
+                ORDER BY `lr`.`login_time`  ASC;
                 """
                 cursor.execute(sql, (user_id,))
                 results = cursor.fetchall()  # 獲取查詢結果
