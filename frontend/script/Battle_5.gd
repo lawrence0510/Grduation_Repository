@@ -37,6 +37,9 @@ func _process(delta: float) -> void:
 		if OS.window_fullscreen:
 			get_tree().quit()
 
+func _on_Timer_timeout():
+	$Background/TextureProgress.value += 1
+
 func _ready():
 	# 創建 Timer 並開始倒數
 	setup_timer()
@@ -335,7 +338,7 @@ func check_all_answered():
 	# 檢查如果雙方都答錯，顯示正確答案
 	if GlobalVar.player_selected_answer != "" and GlobalVar.opponent_selected_answer != "" and not str(GlobalVar.player_selected_answer) == str(correct_answer) and not str(GlobalVar.opponent_selected_answer) == str(correct_answer):
 		var correct_button_path = button_paths[int(correct_answer) - 1]
-		apply_player_style(correct_button_path, correct_stylebox, true)  # 顯示正確答案的按鈕為綠色
+		apply_AllIncorrect_style(correct_button_path, correct_stylebox)
 		GlobalVar.player_selected_answer = ""
 		GlobalVar.opponent_selected_answer = ""
 		print("雙方都答錯，正確答案已顯示")
@@ -401,6 +404,18 @@ func apply_opponent_style(button_path: String, stylebox, is_correct: bool):
 	button.get_node("oppo_correct").visible = is_correct
 	button.get_node("oppo_incorrect").visible = not is_correct
 
+# 只應用正確答案樣式的函數
+func apply_AllIncorrect_style(button_path: String, stylebox):
+	var button = get_node(button_path)
+	# 更新按鈕的樣式為正確答案樣式
+	button.add_stylebox_override("normal", stylebox)
+	button.add_stylebox_override("hover", stylebox)
+	button.add_stylebox_override("pressed", stylebox)
+	button.add_stylebox_override("focus", stylebox)
+	button.add_stylebox_override("disable", stylebox)
+	# 強制刷新按鈕狀態
+	button.release_focus()
+	button.grab_focus()
 
 func _on_HTTPRequest6_request_completed(result, response_code, headers, body):
 	pass # Replace with function body.

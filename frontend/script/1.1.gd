@@ -12,7 +12,7 @@ onready var http_request2: HTTPRequest = $HTTPRequest2
 
 
 func _ready() -> void:
-	pass
+	OfflineUpdater.update_enabled = true
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
