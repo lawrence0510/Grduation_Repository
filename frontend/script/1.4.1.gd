@@ -26,6 +26,7 @@ onready var G4 = $BackgroundPicture/BackgroundBoxPicture/G4
 onready var character_name = $BackgroundPicture/Label
 
 onready var http_request: HTTPRequest = $HTTPRequest
+onready var http_request2: HTTPRequest = $HTTPRequest2
 
 func _ready() -> void:
 	# 用user_id找尋對應的user資料
@@ -35,6 +36,11 @@ func _ready() -> void:
 	var headers = ["Content-Type: application/json"]
 	# 發送HTTP GET請求
 	http_request.request(url, headers, true, HTTPClient.METHOD_GET)
+	
+	var url2 = "http://nccumisreading.ddnsking.com:5001/User/get_all_history_from_user_id?user_id=" + str(GlobalVar.user_id)
+	print("Request URL: " + url2)
+	# 發送 HTTP GET 請求
+	http_request2.request(url2, headers, true, HTTPClient.METHOD_GET)
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -160,3 +166,18 @@ func _on_cross3_pressed():
 
 func _on_cross4_pressed():
 	phone.hide()
+
+
+func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
+	print("Response Code: ", response_code)
+	
+	# 解析回傳的 JSON 資料
+	var json = JSON.parse(body.get_string_from_utf8())
+	
+	# 根據回傳的狀態碼進行處理
+	if response_code == 200:
+		# 將回傳的 data 儲存到 GlobalVar.login_record
+		print(json.result)
+		print("Login records updated in GlobalVar.")
+	else:
+		print("Request failed with response code: ", response_code)
