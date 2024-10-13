@@ -14,8 +14,24 @@ func _ready() -> void:
 		var label = get_node("BackgroundPicture/DayPanel/" + str(i)) 
 		labels.append(label)
 	
-	# 定義要變成按鈕的label號碼，假設是 3, 11 和 28
-	var label_numbers = []
+	var login_record = GlobalVar.login_record["data"]
+	var unique_days = []
+
+	for record in login_record:
+		var login_time = record["login_time"]
+		# 將字串按照 '-' 和 'T' 進行切割來取得年月日
+		var date_parts = login_time.split("T")[0].split("-")
+		var year = int(date_parts[0])
+		var month = int(date_parts[1])
+		var day = int(date_parts[2])
+
+		# 檢查月份是否為 10 月（October）
+		if month == 10:
+			# 如果這個日還沒被添加到 unique_days，則將其加入
+			if not day in unique_days:
+				unique_days.append(day)
+
+	var label_numbers = unique_days
 	
 	# 將這些指定的label變成button
 	for number in label_numbers:
@@ -117,14 +133,3 @@ func _on_last_pressed():
 
 func _on_next_pressed():
 	get_tree().change_scene("res://scene/1.4.2_11.tscn")
-
-func _notification(what):
-	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
-		# 獲取當前時間
-		var current_time = OS.get_time()
-		var close_time = str(current_time.hour) + ":" + str(current_time.minute) + ":" + str(current_time.second)
-		print("Application closed at: " + close_time)
-		# 你可以在這裡保存時間到文件或其他地方
-		
-		# 記錄完時間後退出應用
-		get_tree().quit()

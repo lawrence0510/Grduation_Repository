@@ -174,10 +174,9 @@ func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
 	# 解析回傳的 JSON 資料
 	var json = JSON.parse(body.get_string_from_utf8())
 	
-	# 根據回傳的狀態碼進行處理
 	if response_code == 200:
 		# 將回傳的 data 儲存到 GlobalVar.login_record
-		print(json.result)
+		GlobalVar.login_record = json.result
 		print("Login records updated in GlobalVar.")
 	else:
 		print("Request failed with response code: ", response_code)
