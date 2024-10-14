@@ -28,6 +28,8 @@ onready var character_name = $BackgroundPicture/Label
 onready var http_request: HTTPRequest = $HTTPRequest
 onready var http_request2: HTTPRequest = $HTTPRequest2
 
+var request2_completed = false
+
 func _ready() -> void:
 	# 用user_id找尋對應的user資料
 	var url = "http://nccumisreading.ddnsking.com:5001/User/get_user_from_id?user_id=" + str(GlobalVar.user_id)
@@ -52,7 +54,12 @@ func _on_personal_pressed():
 	get_tree().change_scene("res://scene/1.4.1.tscn")
 
 func _on_record_pressed():
-	get_tree().change_scene("res://scene/1.4.2_9.tscn")
+	if request2_completed:
+		get_tree().change_scene("res://scene/1.4.2_" + str(OS.get_date().month) + ".tscn")
+	else:
+		# 如果尚未完成，提示等待
+		# 馨文這邊麻煩幫我加一個等待之類的小圖示 感謝
+		print("請求尚未完成，請稍候...")
 
 func _on_edit_birth_pressed():
 	birth.popup_centered()
@@ -171,12 +178,12 @@ func _on_cross4_pressed():
 func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
 	print("Response Code: ", response_code)
 	
-	# 解析回傳的 JSON 資料
 	var json = JSON.parse(body.get_string_from_utf8())
 	
 	if response_code == 200:
-		# 將回傳的 data 儲存到 GlobalVar.login_record
 		GlobalVar.login_record = json.result
 		print("Login records updated in GlobalVar.")
+		request2_completed = true
 	else:
 		print("Request failed with response code: ", response_code)
+		request2_completed = true
