@@ -10,8 +10,8 @@ onready var Day: Label = LoginDay.get_node("TextureRect/Day")
 onready var login_scroll = $BackgroundPicture/LoginDay/TextureRect/ScrollContainer
 
 func _ready() -> void:
-	var current_month = 1
-	var days_in_current_month = 31
+	var current_month = 6
+	var days_in_current_month = 30
 	for i in range(1, days_in_current_month + 1):
 		var label = get_node("BackgroundPicture/DayPanel/" + str(i)) 
 		labels.append(label)
@@ -128,7 +128,7 @@ func _on_button_pressed(button_text):
 				var day = int(date_parts[2])
 
 				# 檢查是否是指定的月份（10 月）且日期符合按鈕文字
-				if month == 1 and day == selected_day:
+				if month == 6 and day == selected_day:
 					# 格式化時間範圍
 					var time_start = record["login_time"].split("T")[1].substr(0, 5)  # 抓取登入時間的 HH:MM
 					var time_end = record["offline_time"].split("T")[1].substr(0, 5)  # 抓取登出時間的 HH:MM
@@ -180,7 +180,7 @@ func _on_cross2_pressed():
 	LoginDay.hide()
 
 func _on_last_pressed():
-	get_tree().change_scene("res://scene/1.4.2_12.tscn")
+	get_tree().change_scene("res://scene/1.4.2_5.tscn")
 
 func _on_next_pressed():
-	get_tree().change_scene("res://scene/1.4.2_2.tscn")
+	get_tree().change_scene("res://scene/1.4.2_7.tscn")

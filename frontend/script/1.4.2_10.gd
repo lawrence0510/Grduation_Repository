@@ -11,7 +11,8 @@ onready var login_scroll = $BackgroundPicture/LoginDay/TextureRect/ScrollContain
 
 func _ready() -> void:
 	var current_month = 10
-	for i in range(1, 32):
+	var days_in_current_month = 31
+	for i in range(1, days_in_current_month + 1):
 		var label = get_node("BackgroundPicture/DayPanel/" + str(i)) 
 		labels.append(label)
 	
