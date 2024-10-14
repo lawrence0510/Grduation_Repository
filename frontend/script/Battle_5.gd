@@ -328,15 +328,20 @@ func connect_buttons():
 
 # 檢查是否所有選項已經被回答
 func check_all_answered():
-	if GlobalVar.player_selected_answer != "" and GlobalVar.opponent_selected_answer != "":
+	# 檢查玩家的正確或錯誤圖標是否可見
+	var player_answered_correctly = $Background/Player/correct.visible
+	var player_answered_incorrectly = $Background/Player/incorrect.visible
+	
+	# 檢查對手的正確或錯誤圖標是否可見
+	var opponent_answered_correctly = $Background/opponent/correct.visible
+	var opponent_answered_incorrectly = $Background/opponent/incorrect.visible
+	if (player_answered_correctly or player_answered_incorrectly) and (opponent_answered_correctly or opponent_answered_incorrectly):
 		# 玩家和對手都已經答題，啟動3秒延遲跳題
 		print("雙方都已答題")
 		print("我方回答： " + str(GlobalVar.player_selected_answer))
 		print("敵方回答： " + str(GlobalVar.opponent_selected_answer))
 		if delay_timer.is_stopped():
 			delay_timer.start()
-	# 檢查如果雙方都答錯，顯示正確答案
-	if GlobalVar.player_selected_answer != "" and GlobalVar.opponent_selected_answer != "" and not str(GlobalVar.player_selected_answer) == str(correct_answer) and not str(GlobalVar.opponent_selected_answer) == str(correct_answer):
 		var correct_button_path = button_paths[int(correct_answer) - 1]
 		apply_AllIncorrect_style(correct_button_path, correct_stylebox)
 		GlobalVar.player_selected_answer = ""
