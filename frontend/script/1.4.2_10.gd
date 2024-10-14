@@ -7,8 +7,10 @@ onready var last: Button = $BackgroundPicture/last
 onready var next: Button = $BackgroundPicture/next
 onready var labels = [] # 用來存放日期label的列表
 onready var Day: Label = LoginDay.get_node("TextureRect/Day")
+onready var login_scroll = $BackgroundPicture/LoginDay/TextureRect/ScrollContainer
 
 func _ready() -> void:
+	var current_month = 10
 	# 初始化30個Label節點，假設它們的命名是 label_1, label_2, ..., label_30
 	for i in range(1, 32):
 		var label = get_node("BackgroundPicture/DayPanel/" + str(i)) 
@@ -26,7 +28,7 @@ func _ready() -> void:
 		var day = int(date_parts[2])
 
 		# 檢查月份是否為 10 月（October）
-		if month == 10:
+		if month == current_month:
 			# 如果這個日還沒被添加到 unique_days，則將其加入
 			if not day in unique_days:
 				unique_days.append(day)
@@ -104,10 +106,50 @@ func replace_label_with_button(label, button):	# Button 取代 Label 並在原�
 		
 	button.connect("pressed", self, "_on_button_pressed", [button.text])  # 將按鈕文字作為參數傳遞	
 
-# 按鈕按下時觸發的函數
 func _on_button_pressed(button_text):
 	Day.text = button_text
-	LoginDay.popup_centered()  # 顯示 WindowDialog
+	var selected_day = int(button_text)
+	var filtered_records = []
+
+	var login_record = GlobalVar.login_record["data"]
+	for record in login_record:
+		if record.has("offline_time") and record["offline_time"] != null:
+			var login_time = record["login_time"]
+			var date_parts = login_time.split("T")[0].split("-")
+			var year = int(date_parts[0])
+			var month = int(date_parts[1])
+			var day = int(date_parts[2])
+
+			# 檢查是否是指定的月份（10 月）且日期符合按鈕文字
+			if month == 10 and day == selected_day:
+				# 格式化時間範圍
+				var time_start = record["login_time"].split("T")[1].substr(0, 5)  # 抓取登入時間的 HH:MM
+				var time_end = record["offline_time"].split("T")[1].substr(0, 5)  # 抓取登出時間的 HH:MM
+
+				# 獲取答題數 (play)
+				var play = str(record["questions_answered"])
+				if play.length() < 2:
+					play = "0" + play  # 補 0
+
+				# 獲取分數 (score)
+				var score = record["average_score"]
+				if score == null:
+					score = "N/A"
+				else:
+					score = str(score) + "%"
+
+				# 將資料添加至 filtered_records
+				filtered_records.append({
+					"time_start": time_start,
+					"time_end": time_end,
+					"play": play,
+					"score": score
+				})
+
+	login_scroll.set_login_day_data(filtered_records)
+
+	# 顯示 WindowDialog
+	LoginDay.popup_centered()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
