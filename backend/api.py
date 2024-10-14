@@ -414,7 +414,7 @@ class GetHistoryFromUserID(Resource):
                                                                                 FROM LoginRecord lr2 
                                                                                 WHERE lr2.user_id = lr.user_id 
                                                                                 AND lr2.login_time > lr.login_time))) AS online_length,
-                    COUNT(h.history_id) * 3 AS questions_answered,
+                    COUNT(h.history_id) AS questions_answered,
                     AVG(h.total_score) AS average_score
                 FROM 
                     LoginRecord lr
