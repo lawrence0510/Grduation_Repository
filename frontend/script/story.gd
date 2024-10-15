@@ -7,7 +7,7 @@ func setStory(story: String):
 
 func _on_cross_pressed():
 	self.hide()
-	$ProgressBar.hide()
+	$".".hide()
 
 func set_cross_visible():
 	cross.visible = true
