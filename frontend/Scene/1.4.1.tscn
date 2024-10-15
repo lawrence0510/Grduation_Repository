@@ -894,6 +894,8 @@ flat = true
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
+[node name="HTTPRequest2" type="HTTPRequest" parent="."]
+
 [connection signal="pressed" from="BackgroundPicture/record" to="." method="_on_record_pressed"]
 [connection signal="pressed" from="BackgroundPicture/personal" to="." method="_on_personal_pressed"]
 [connection signal="pressed" from="BackgroundPicture/edit_birth_button" to="." method="_on_edit_birth_pressed"]
@@ -910,3 +912,4 @@ flat = true
 [connection signal="pressed" from="BackgroundPicture/phone/cross4" to="." method="_on_cross4_pressed"]
 [connection signal="pressed" from="BackgroundPicture/cross" to="." method="_on_cross_pressed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
+[connection signal="request_completed" from="HTTPRequest2" to="." method="_on_HTTPRequest2_request_completed"]

@@ -8,10 +8,10 @@
 [ext_resource path="res://Pic/arrow.png" type="Texture" id=6]
 [ext_resource path="res://fonts/font6.tres" type="DynamicFont" id=7]
 [ext_resource path="res://fonts/日期框.tres" type="StyleBox" id=8]
+[ext_resource path="res://script/1.4.2_6.gd" type="Script" id=9]
 [ext_resource path="res://fonts/font1 - 複製 (8) - 複製.tres" type="DynamicFont" id=10]
 [ext_resource path="res://Fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=11]
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=12]
-[ext_resource path="res://script/1.4.2.gd" type="Script" id=13]
 [ext_resource path="res://script/LoginScroll.gd" type="Script" id=14]
 [ext_resource path="res://Fonts/Day.tres" type="DynamicFont" id=15]
 
@@ -81,7 +81,7 @@ use_filter = true
 font_data = ExtResource( 11 )
 
 [node name="Node2D2" type="Node2D"]
-script = ExtResource( 13 )
+script = ExtResource( 9 )
 
 [node name="BackgroundPicture" type="TextureRect" parent="."]
 anchor_right = 1.0

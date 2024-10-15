@@ -4,7 +4,7 @@ var global_player_health = 100 ## 預設玩家血量
 
 var user_email: String = "" ## 玩家帳號
 
-var user_id = 1
+var user_id = 2
 
 var player_character_name = "Tony" ## 玩家角色名稱，用來決定攻擊特效
 
@@ -44,3 +44,5 @@ var player_selected_answer = ""
 var opponent_selected_answer = ""
 
 var login_record_id = 0
+
+var login_record = {}
