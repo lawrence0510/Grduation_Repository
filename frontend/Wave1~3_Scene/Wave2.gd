@@ -28,6 +28,9 @@ func _ready() -> void:
 	#根據題目類別設定關卡背景
 	change_category_background()
 	
+	#根據角色設定攻擊特效
+	change_attack_animation()
+	
 	#先隱藏所有攻擊特效
 	$BattleBackground/BalrogAttackAnimation.visible = false
 	$BattleBackground/DarkBoltAttackAnimation.visible = false
@@ -40,9 +43,8 @@ func _ready() -> void:
 	health_bar.init_health_value(GlobalVar.global_player_health) ## 設定玩家血量
 	full_story_scene.set_visible(false) ## 隱藏全文
 	pause_scene.set_visible(false) ## 隱藏暫停場景
-	attack_animation = $BattleBackground/AxeAttackAnimation ## 之後要根據使用者的角色匯入不同攻擊特效
+#	attack_animation = $BattleBackground/AxeAttackAnimation ## 之後要根據使用者的角色匯入不同攻擊特效
 
-	
 	#設定問題、選項及答案
 	$BattleBackground/Question.text = GlobalVar.question2["question2"]
 	$BattleBackground/Option_A.text = "A. " + GlobalVar.question2["choice1"]
@@ -109,6 +111,7 @@ func change_button_color(button_path: String) -> void:
 	if(right_button == button_pressed):
 		GlobalVar.question2["consequence"] = "回答正確，恭喜你！"
 		new_stylebox.bg_color = Color(0.16, 0.64, 0.25)
+		change_attack_animation() ## 更改攻擊特效
 		attack_animation.visible = true ## 顯示攻擊特效
 		attack_animation.play() ## 播放攻擊特效
 
@@ -203,3 +206,15 @@ func change_category_background():
 		$BattleBackground.texture = load("res://Textures/StoryWave2.png")
 	elif(GlobalVar.current_category == "news"):
 		$BattleBackground.texture = load("res://Textures/NewsWave2.png")
+
+
+#根據不同角色選擇攻擊特效
+func change_attack_animation():
+	if(GlobalVar.player_character_name == "Graves" or GlobalVar.player_character_name == "Esther"):
+		attack_animation = $BattleBackground/BalrogAttackAnimation
+	elif(GlobalVar.player_character_name == "Harry" or GlobalVar.player_character_name == "Lux"):
+		attack_animation = $BattleBackground/DarkBoltAttackAnimation
+	elif(GlobalVar.player_character_name == "Olaf" or GlobalVar.player_character_name == "Xayah"):
+		attack_animation = $BattleBackground/AxeAttackAnimation
+	elif(GlobalVar.player_character_name == "Garen" or GlobalVar.player_character_name == "Mikasa"):
+		attack_animation = $BattleBackground/BombAttackAnimation

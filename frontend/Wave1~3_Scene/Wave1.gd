@@ -62,7 +62,9 @@ func _ready() -> void:
 	print(health_bar.health_value)
 	full_story_scene.set_visible(true) ## 顯示全文，第一關先讓玩家讀文章再作答
 	pause_scene.set_visible(false) ## 隱藏暫停場景
-	attack_animation = $BattleBackground/AxeAttackAnimation ## 之後要根據使用者的角色匯入不同攻擊特效
+	
+#	attack_animation = $BattleBackground/BalrogAttackAnimation ## 之後要根據使用者的角色匯入不同攻擊特效
+
 	#先讓用戶讀文章, 不給按叉叉
 	full_story_scene.set_cross_hide()
 	$BattleBackground/readTheStory.start() #等待三秒
@@ -110,6 +112,7 @@ func change_button_color(button_path: String) -> void:
 	if(right_button == button_pressed):
 		GlobalVar.question1["consequence"] = "回答正確，恭喜你！"
 		new_stylebox.bg_color = Color(0.16, 0.64, 0.25) ## 正確選項改成綠色
+		change_attack_animation() ## 更改攻擊特效
 		attack_animation.visible = true ## 顯示攻擊特效
 		attack_animation.play() ## 播放攻擊特效
 
@@ -305,3 +308,18 @@ func change_category_background():
 		$BattleBackground.texture = load("res://Textures/StoryWave1.png")
 	elif(GlobalVar.current_category == "news"):
 		$BattleBackground.texture = load("res://Textures/NewsWave1.png")
+
+
+#根據不同角色選擇攻擊特效
+func change_attack_animation():
+	print(GlobalVar.player_character_name)
+	if(GlobalVar.player_character_name == "Graves" or GlobalVar.player_character_name == "Esther"):
+		attack_animation = $BattleBackground/BalrogAttackAnimation
+	elif(GlobalVar.player_character_name == "Harry" or GlobalVar.player_character_name == "Lux"):
+		attack_animation = $BattleBackground/DarkBoltAttackAnimation
+	elif(GlobalVar.player_character_name == "Olaf" or GlobalVar.player_character_name == "Xayah"):
+		attack_animation = $BattleBackground/AxeAttackAnimation
+	elif(GlobalVar.player_character_name == "Garen" or GlobalVar.player_character_name == "Mikasa"):
+		attack_animation = $BattleBackground/BombAttackAnimation
+	
+	

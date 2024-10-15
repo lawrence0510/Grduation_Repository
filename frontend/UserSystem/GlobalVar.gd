@@ -6,6 +6,8 @@ var user_email: String = "" ## 玩家帳號
 
 var user_id = 1
 
+var player_character_name = "Tony" ## 玩家角色名稱，用來決定攻擊特效
+
 var story = ""
 
 var images = ""

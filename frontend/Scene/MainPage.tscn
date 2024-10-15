@@ -267,6 +267,8 @@ flat = true
 icon_align = 1
 expand_icon = true
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
 [connection signal="pressed" from="bg/player" to="." method="_on_player_pressed"]
 [connection signal="pressed" from="bg/record" to="." method="_on_record_pressed"]
 [connection signal="pressed" from="bg/story" to="." method="_on_story_pressed"]
@@ -279,3 +281,4 @@ expand_icon = true
 [connection signal="pressed" from="bg/white_player" to="." method="_on_white_player_pressed"]
 [connection signal="pressed" from="bg/pk" to="." method="_on_pk_pressed"]
 [connection signal="pressed" from="bg/pk_hover" to="." method="_on_pk_hover_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

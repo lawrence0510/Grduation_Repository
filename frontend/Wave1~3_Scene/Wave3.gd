@@ -55,6 +55,7 @@ func _on_LineEdit_text_entered(new_text: String) -> void:
 
 	var article_id = GlobalVar.wave_data["article_id"]
 	var answer = GlobalVar.wave_data["q3_user_answer"]
+	change_attack_animation() ## 更改攻擊特效
 	
 	# 發送 HTTP POST 請求
 	send_post_request(article_id, answer)
@@ -216,3 +217,15 @@ func change_category_background():
 		$BattleBackground.texture = load("res://Textures/StoryWave3.png")
 	elif(GlobalVar.current_category == "news"):
 		$BattleBackground.texture = load("res://Textures/NewsWave3.png")
+
+
+#根據不同角色選擇攻擊特效
+func change_attack_animation():
+	if(GlobalVar.player_character_name == "Graves" or GlobalVar.player_character_name == "Esther"):
+		attack_animation = $BattleBackground/BalrogAttackAnimation
+	elif(GlobalVar.player_character_name == "Harry" or GlobalVar.player_character_name == "Lux"):
+		attack_animation = $BattleBackground/DarkBoltAttackAnimation
+	elif(GlobalVar.player_character_name == "Olaf" or GlobalVar.player_character_name == "Xayah"):
+		attack_animation = $BattleBackground/AxeAttackAnimation
+	elif(GlobalVar.player_character_name == "Garen" or GlobalVar.player_character_name == "Mikasa"):
+		attack_animation = $BattleBackground/BombAttackAnimation
