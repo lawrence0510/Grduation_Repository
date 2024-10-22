@@ -111,6 +111,7 @@ func change_button_color(button_path: String) -> void:
 	
 	if(right_button == button_pressed):
 		GlobalVar.question1["consequence"] = "回答正確，恭喜你！"
+		disable_all_buttons()
 		new_stylebox.bg_color = Color(0.16, 0.64, 0.25) ## 正確選項改成綠色
 		change_attack_animation() ## 更改攻擊特效
 		attack_animation.visible = true ## 顯示攻擊特效
@@ -120,10 +121,10 @@ func change_button_color(button_path: String) -> void:
 		new_stylebox.bg_color = Color(0.71, 0.15, 0.15)
 		health_bar.damaged(30) ## 玩家扣血測試
 		GlobalVar.question1["consequence"] = "回答錯誤！\n\n正確答案：\n" + GlobalVar.question1["answer"]
-		
+	
+	get_node(button_path).add_stylebox_override("disabled", new_stylebox) ## button變色
 	get_node(button_path).add_stylebox_override("hover", new_stylebox) ## button變色
 	get_node(button_path).add_stylebox_override("normal", new_stylebox) ## button變色
-	disable_other_buttons(button_path)
 		
 	$BattleBackground/ChangeLevelTimer.start() ## 開始倒數 準備到下一關
 
@@ -135,19 +136,9 @@ func _on_ChangeLevelTimer_timeout() -> void:
 
 
 
-## Disable其他button 
-## 防止玩家按到2個以上
-func disable_other_buttons(button_path: String) -> void:
-	match button_path:
-		"BattleBackground/Option_A":
-			button_path_array.remove(0)
-		"BattleBackground/Option_B":
-			button_path_array.remove(1)
-		"BattleBackground/Option_C":
-			button_path_array.remove(2)
-		"BattleBackground/Option_D":
-			button_path_array.remove(3)
-	
+## Disable所有button 
+## 防止玩家重複點選
+func disable_all_buttons() -> void:
 	for button_path in button_path_array:
 		get_node(button_path).disabled = true
 

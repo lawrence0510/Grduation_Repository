@@ -1,0 +1,348 @@
+[gd_scene load_steps=29 format=2]
+
+[ext_resource path="res://fonts/char_button.tres" type="StyleBox" id=1]
+[ext_resource path="res://Pic/B2.png" type="Texture" id=2]
+[ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://script/1.2.3.gd" type="Script" id=4]
+[ext_resource path="res://Pic/B4.png" type="Texture" id=5]
+[ext_resource path="res://Pic/123.bg.png" type="Texture" id=6]
+[ext_resource path="res://fonts/font3.tres" type="DynamicFont" id=8]
+[ext_resource path="res://Pic/G1.png" type="Texture" id=9]
+[ext_resource path="res://Pic/B1.png" type="Texture" id=10]
+[ext_resource path="res://script/BB1.gd" type="Script" id=11]
+[ext_resource path="res://script/BB2.gd" type="Script" id=12]
+[ext_resource path="res://script/BB3.gd" type="Script" id=13]
+[ext_resource path="res://Pic/B3.png" type="Texture" id=14]
+[ext_resource path="res://Pic/G2.png" type="Texture" id=15]
+[ext_resource path="res://Pic/G3.png" type="Texture" id=16]
+[ext_resource path="res://Pic/G4.png" type="Texture" id=17]
+[ext_resource path="res://script/BG4.gd" type="Script" id=20]
+[ext_resource path="res://script/BG5.gd" type="Script" id=21]
+[ext_resource path="res://script/BG1.gd" type="Script" id=23]
+[ext_resource path="res://script/BG2.gd" type="Script" id=24]
+[ext_resource path="res://script/BG3.gd" type="Script" id=25]
+
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.737255, 0.870588, 1, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 0.952941, 1, 1 )
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.0941176, 0.815686, 0.909804, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.0941176, 0.815686, 0.909804, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 1, 1, 1, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="DynamicFont" id=8]
+size = 40
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_top = -10
+font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.505882, 0.941176, 0.898039, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.505882, 0.941176, 0.898039, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+
+[node name="bg" type="TextureRect" parent="."]
+margin_right = 1920.0
+margin_bottom = 1080.0
+texture = ExtResource( 6 )
+expand = true
+
+[node name="底色2" type="Panel" parent="bg"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -649.5
+margin_top = -371.0
+margin_right = 649.5
+margin_bottom = 371.0
+custom_styles/panel = SubResource( 5 )
+
+[node name="enter" type="Button" parent="bg/底色2"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -110.0
+margin_top = -116.0
+margin_right = 110.0
+margin_bottom = -36.0
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 8 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 9 )
+custom_styles/disabled = SubResource( 9 )
+custom_styles/normal = SubResource( 9 )
+text = "註冊完成"
+
+[node name="B1" type="Sprite" parent="bg/底色2"]
+position = Vector2( 849.5, 350 )
+texture = ExtResource( 10 )
+
+[node name="B2" type="Sprite" parent="bg/底色2"]
+visible = false
+position = Vector2( 862.5, 377 )
+texture = ExtResource( 2 )
+
+[node name="B3" type="Sprite" parent="bg/底色2"]
+visible = false
+position = Vector2( 879.5, 355 )
+texture = ExtResource( 14 )
+
+[node name="G1" type="Sprite" parent="bg/底色2"]
+visible = false
+position = Vector2( 849.5, 350 )
+texture = ExtResource( 9 )
+
+[node name="BB1" type="Button" parent="bg/底色2"]
+margin_left = 300.0
+margin_top = 95.0
+margin_right = 418.0
+margin_bottom = 170.0
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = SubResource( 7 )
+custom_styles/disabled = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+text = "B1"
+script = ExtResource( 11 )
+
+[node name="BB2" type="Button" parent="bg/底色2"]
+margin_left = 300.0
+margin_top = 200.0
+margin_right = 418.0
+margin_bottom = 275.0
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = SubResource( 7 )
+custom_styles/disabled = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+text = "B2"
+script = ExtResource( 12 )
+
+[node name="BB3" type="Button" parent="bg/底色2"]
+margin_left = 300.0
+margin_top = 305.0
+margin_right = 418.0
+margin_bottom = 380.0
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = SubResource( 7 )
+custom_styles/disabled = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+text = "B3"
+script = ExtResource( 13 )
+
+[node name="BG1" type="Button" parent="bg/底色2"]
+margin_left = 99.0
+margin_top = 95.0
+margin_right = 217.0
+margin_bottom = 170.0
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = SubResource( 7 )
+custom_styles/disabled = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+text = "G1"
+script = ExtResource( 23 )
+
+[node name="BG2" type="Button" parent="bg/底色2"]
+margin_left = 99.0
+margin_top = 200.0
+margin_right = 217.0
+margin_bottom = 275.0
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = SubResource( 7 )
+custom_styles/disabled = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+text = "G2"
+script = ExtResource( 24 )
+
+[node name="BG3" type="Button" parent="bg/底色2"]
+margin_left = 99.0
+margin_top = 305.0
+margin_right = 217.0
+margin_bottom = 380.0
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = SubResource( 7 )
+custom_styles/disabled = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+text = "G3"
+script = ExtResource( 25 )
+
+[node name="BG4" type="Button" parent="bg/底色2"]
+margin_left = 99.0
+margin_top = 410.0
+margin_right = 217.0
+margin_bottom = 485.0
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = SubResource( 7 )
+custom_styles/disabled = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+text = "G4"
+script = ExtResource( 20 )
+
+[node name="BB4" type="Button" parent="bg/底色2"]
+margin_left = 300.0
+margin_top = 410.0
+margin_right = 418.0
+margin_bottom = 485.0
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = SubResource( 7 )
+custom_styles/disabled = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+text = "B4"
+script = ExtResource( 21 )
+
+[node name="G2" type="Sprite" parent="bg/底色2"]
+visible = false
+position = Vector2( 848.5, 345 )
+texture = ExtResource( 15 )
+
+[node name="G3" type="Sprite" parent="bg/底色2"]
+visible = false
+position = Vector2( 862.5, 341 )
+texture = ExtResource( 16 )
+
+[node name="G4" type="Sprite" parent="bg/底色2"]
+visible = false
+position = Vector2( 849.5, 350 )
+texture = ExtResource( 17 )
+
+[node name="B4" type="Sprite" parent="bg/底色2"]
+visible = false
+position = Vector2( 849.5, 350 )
+texture = ExtResource( 5 )
+
+[connection signal="pressed" from="bg/底色2/enter" to="." method="_on_enter_pressed"]
+[connection signal="pressed" from="bg/底色2/BB1" to="bg/底色2/BB1" method="_on_BB1_pressed"]
+[connection signal="pressed" from="bg/底色2/BB2" to="bg/底色2/BB2" method="_on_BB2_pressed"]
+[connection signal="pressed" from="bg/底色2/BB3" to="bg/底色2/BB3" method="_on_BB3_pressed"]
+[connection signal="pressed" from="bg/底色2/BG1" to="bg/底色2/BG1" method="_on_BG1_pressed"]
+[connection signal="pressed" from="bg/底色2/BG2" to="bg/底色2/BG2" method="_on_BG2_pressed"]
+[connection signal="pressed" from="bg/底色2/BG3" to="bg/底色2/BG3" method="_on_BG3_pressed"]
+[connection signal="pressed" from="bg/底色2/BG4" to="bg/底色2/BG4" method="_on_BG4_pressed"]
+[connection signal="pressed" from="bg/底色2/BB4" to="bg/底色2/BB4" method="_on_BG5_pressed"]

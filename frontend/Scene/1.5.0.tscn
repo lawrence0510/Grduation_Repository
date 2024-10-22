@@ -1,0 +1,155 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://fonts/1.5.1-1.tres" type="StyleBox" id=1]
+[ext_resource path="res://fonts/font9.tres" type="DynamicFont" id=2]
+[ext_resource path="res://fonts/1.5.1-2.tres" type="StyleBox" id=3]
+[ext_resource path="res://fonts/font8.tres" type="DynamicFont" id=4]
+[ext_resource path="res://pic/框框3.png" type="Texture" id=5]
+[ext_resource path="res://Pic/sea_bg.png" type="Texture" id=6]
+[ext_resource path="res://fonts/font0.tres" type="DynamicFont" id=7]
+[ext_resource path="res://script/1.5.0.gd" type="Script" id=8]
+[ext_resource path="res://pic/delete1.png" type="Texture" id=9]
+
+
+[sub_resource type="StyleBoxFlat" id=1]
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 20.0
+content_margin_bottom = 20.0
+bg_color = Color( 0.956863, 0.941176, 0.941176, 1 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="Node2D2" type="Node2D"]
+script = ExtResource( 8 )
+
+[node name="bg" type="TextureRect" parent="."]
+margin_right = 1920.0
+margin_bottom = 1080.0
+texture = ExtResource( 6 )
+expand = true
+
+[node name="TextureRect" type="TextureRect" parent="bg"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -768.0
+margin_top = -519.0
+margin_right = -214.0
+margin_bottom = -69.0
+rect_scale = Vector2( 2.8, 2.3 )
+texture = ExtResource( 5 )
+
+[node name="content" type="Button" parent="bg"]
+margin_left = 310.0
+margin_top = 141.0
+margin_right = 560.0
+margin_bottom = 216.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = ExtResource( 1 )
+custom_styles/disabled = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+text = "故 事 內 容"
+
+[node name="wave1" type="Button" parent="bg"]
+margin_left = 585.0
+margin_top = 141.0
+margin_right = 835.0
+margin_bottom = 216.0
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "wave 1"
+
+[node name="wave2" type="Button" parent="bg"]
+margin_left = 855.0
+margin_top = 141.0
+margin_right = 1105.0
+margin_bottom = 216.0
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "wave 2"
+
+[node name="wave3" type="Button" parent="bg"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 165.0
+margin_top = -399.0
+margin_right = 415.0
+margin_bottom = -324.0
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "wave 3"
+
+[node name="content2" type="RichTextLabel" parent="bg"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -665.0
+margin_top = -829.0
+margin_right = 714.0
+margin_bottom = -136.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/normal_font = ExtResource( 7 )
+custom_styles/normal = SubResource( 1 )
+text = "我是侯程麟，李多慧是我的女朋友，我們之間的感情是真實且深厚的。我們認識多年，從朋友逐漸發展成為戀人。我們一起度過了無數美好的時光，無論是共同旅行、參加聚會，還是在日常生活中的點滴，她總是陪伴在我身邊。我們之間的交流無比順暢，彼此信任，分享生活中的喜怒哀樂。李多慧了解我所有的喜好和習慣，並且總是關心和支持我。她的家人和朋友也都認可我們的關係，經常一起聚會。她是我生活中最重要的人，我們的未來也充滿了共同的期待和計劃。我愛她，這是我們彼此之間不可否認的事實。
+
+我是侯程麟，李多慧是我的女朋友，我們之間的感情是真實且深厚的。我們認識多年，從朋友逐漸發展成為戀人。我們一起度過了無數美好的時光，無論是共同旅行、參加聚會，還是在日常生活中的點滴，她總是陪伴在我身邊。我們之間的交流無比順暢，彼此信任，分享生活中的喜怒哀樂。李多慧了解我所有的喜好和習慣，並且總是關心和支持我。她的家人和朋友也都認可我們的關係，經常一起聚會。她是我生活中最重要的人，我們的未來也充滿了共同的期待和計劃。我愛她，這是我們彼此之間不可否認的事實。
+
+我是侯程麟，李多慧是我的女朋友，我們之間的感情是真實且深厚的。我們認識多年，從朋友逐漸發展成為戀人。我們一起度過了無數美好的時光，無論是共同旅行、參加聚會，還是在日常生活中的點滴，她總是陪伴在我身邊。我們之間的交流無比順暢，彼此信任，分享生活中的喜怒哀樂。李多慧了解我所有的喜好和習慣，並且總是關心和支持我。她的家人和朋友也都認可我們的關係，經常一起聚會。她是我生活中最重要的人，我們的未來也充滿了共同的期待和計劃。我愛她，這是我們彼此之間不可否認的事實。
+
+我是侯程麟，李多慧是我的女朋友，我們之間的感情是真實且深厚的。我們認識多年，從朋友逐漸發展成為戀人。我們一起度過了無數美好的時光，無論是共同旅行、參加聚會，還是在日常生活中的點滴，她總是陪伴在我身邊。我們之間的交流無比順暢，彼此信任，分享生活中的喜怒哀樂。李多慧了解我所有的喜好和習慣，並且總是關心和支持我。她的家人和朋友也都認可我們的關係，經常一起聚會。她是我生活中最重要的人，我們的未來也充滿了共同的期待和計劃。我愛她，這是我們彼此之間不可否認的事實。"
+
+[node name="cross" type="Button" parent="bg"]
+margin_left = 1789.0
+margin_top = 30.0
+margin_right = 2301.0
+margin_bottom = 536.0
+rect_scale = Vector2( 0.2, 0.2 )
+icon = ExtResource( 9 )
+flat = true
+
+[node name="score" type="Button" parent="bg"]
+margin_left = 1400.0
+margin_top = 141.0
+margin_right = 1650.0
+margin_bottom = 216.0
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "score"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="pressed" from="bg/content" to="." method="_on_content_pressed"]
+[connection signal="pressed" from="bg/wave1" to="." method="_on_wave1_pressed"]
+[connection signal="pressed" from="bg/wave2" to="." method="_on_wave2_pressed"]
+[connection signal="pressed" from="bg/wave3" to="." method="_on_wave3_pressed"]
+[connection signal="pressed" from="bg/cross" to="." method="_on_cross_pressed"]
+[connection signal="pressed" from="bg/score" to="." method="_on_score_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]

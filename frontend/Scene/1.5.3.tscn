@@ -1,0 +1,232 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://fonts/1.5.1-1.tres" type="StyleBox" id=1]
+[ext_resource path="res://fonts/font9.tres" type="DynamicFont" id=2]
+[ext_resource path="res://fonts/1.5.1-2.tres" type="StyleBox" id=3]
+[ext_resource path="res://fonts/font8.tres" type="DynamicFont" id=4]
+[ext_resource path="res://pic/框框3.png" type="Texture" id=5]
+[ext_resource path="res://Pic/sea_bg.png" type="Texture" id=6]
+[ext_resource path="res://script/1.5.3.gd" type="Script" id=7]
+[ext_resource path="res://fonts/詳解字.tres" type="DynamicFont" id=8]
+[ext_resource path="res://fonts/詳解.tres" type="StyleBox" id=9]
+[ext_resource path="res://fonts/答案字.tres" type="DynamicFont" id=10]
+[ext_resource path="res://pic/delete1.png" type="Texture" id=12]
+[ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=13]
+
+
+[sub_resource type="DynamicFont" id=1]
+size = 35
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 60
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 13 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 10.0
+content_margin_bottom = 20.0
+bg_color = Color( 0.976471, 0.823529, 0.462745, 1 )
+border_color = Color( 0.0196078, 0.00784314, 0.00784314, 1 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id=3]
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 11.0
+content_margin_bottom = 20.0
+bg_color = Color( 0.882353, 0.882353, 0.882353, 1 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 7 )
+
+[node name="bg" type="TextureRect" parent="."]
+margin_right = 1920.0
+margin_bottom = 1080.0
+texture = ExtResource( 6 )
+expand = true
+
+[node name="TextureRect" type="TextureRect" parent="bg"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -768.0
+margin_top = -519.0
+margin_right = -214.0
+margin_bottom = -69.0
+rect_scale = Vector2( 2.8, 2.3 )
+texture = ExtResource( 5 )
+expand = true
+
+[node name="content" type="Button" parent="bg"]
+margin_left = 310.0
+margin_top = 141.0
+margin_right = 560.0
+margin_bottom = 216.0
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "故 事 內 容"
+
+[node name="wave1" type="Button" parent="bg"]
+margin_left = 585.0
+margin_top = 141.0
+margin_right = 835.0
+margin_bottom = 216.0
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "wave 1"
+
+[node name="wave2" type="Button" parent="bg"]
+margin_left = 855.0
+margin_top = 141.0
+margin_right = 1105.0
+margin_bottom = 216.0
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "wave 2"
+
+[node name="wave3" type="Button" parent="bg"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 165.0
+margin_top = -399.0
+margin_right = 415.0
+margin_bottom = -324.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = ExtResource( 1 )
+custom_styles/disabled = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+text = "wave 3"
+
+[node name="score" type="Button" parent="bg"]
+margin_left = 1400.0
+margin_top = 141.0
+margin_right = 1650.0
+margin_bottom = 216.0
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = ExtResource( 3 )
+custom_styles/disabled = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "score"
+
+[node name="參考答案" type="RichTextLabel" parent="bg"]
+margin_left = 301.0
+margin_top = 665.0
+margin_right = 1659.0
+margin_bottom = 918.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_colors/selection_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/normal_font = ExtResource( 8 )
+custom_styles/normal = ExtResource( 9 )
+text = "詳解：
+正確答案是：「侯程麟」。
+在這段故事中，敘述者以第一人稱「我」來描述他與女朋友李多慧之間的感情和生活細節。從故事中可以得知：敘述者的名字是「侯程麟」、敘述者的女朋友是「李多慧」、他們之間的關係是真實且深厚的，並且有許多共同的回憶和計劃。題目中問的是「李多慧的男朋友是誰？」，由於整個故事都是以侯程麟的角度來敘述，所以可以得出結論，李多慧的男朋友就是侯程麟本人。因此，正確答案應該是「侯程麟」。
+
+你的回答「這我」在口語上是正確的，但具體而言，應該寫出你的名字來回答問題，因此正確答案是「侯程麟」。"
+
+[node name="cross" type="Button" parent="bg"]
+margin_left = 1789.0
+margin_top = 30.0
+margin_right = 2301.0
+margin_bottom = 536.0
+rect_scale = Vector2( 0.2, 0.2 )
+icon = ExtResource( 12 )
+flat = true
+
+[node name="得分" type="Label" parent="bg"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -130.0
+margin_top = -295.0
+margin_right = -25.0
+margin_bottom = -243.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "得分："
+
+[node name="XX分" type="Label" parent="bg"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -18.0
+margin_top = -312.0
+margin_right = 44.0
+margin_bottom = -224.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "40"
+
+[node name="答案" type="RichTextLabel" parent="bg"]
+margin_left = 912.0
+margin_top = 495.0
+margin_right = 1650.0
+margin_bottom = 634.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_colors/selection_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/normal_font = ExtResource( 10 )
+custom_styles/normal = SubResource( 4 )
+text = "這我 :D"
+
+[node name="問題" type="RichTextLabel" parent="bg"]
+margin_left = 301.0
+margin_top = 333.0
+margin_right = 1039.0
+margin_bottom = 472.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_colors/selection_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/normal_font = ExtResource( 10 )
+custom_styles/normal = SubResource( 3 )
+bbcode_enabled = true
+bbcode_text = "請問李多慧的男朋友是誰?"
+text = "請問李多慧的男朋友是誰?"
+
+[connection signal="pressed" from="bg/content" to="." method="_on_content_pressed"]
+[connection signal="pressed" from="bg/wave1" to="." method="_on_wave1_pressed"]
+[connection signal="pressed" from="bg/wave2" to="." method="_on_wave2_pressed"]
+[connection signal="pressed" from="bg/wave3" to="." method="_on_wave3_pressed"]
+[connection signal="pressed" from="bg/score" to="." method="_on_score_pressed"]
+[connection signal="pressed" from="bg/cross" to="." method="_on_cross_pressed"]
