@@ -28,6 +28,7 @@ config/icon="res://icon.png"
 
 GlobalVar="*res://UserSystem/GlobalVar.gd"
 OfflineUpdater="*res://script/OfflineUpdater.gd"
+Transition="*res://BattleSystem/Transition.tscn"
 
 [display]
 

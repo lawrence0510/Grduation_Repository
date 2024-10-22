@@ -155,7 +155,7 @@ func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
 			var history_id = json_result.result["history_id"]
 			GlobalVar.history_id = history_id
 			print("歷史紀錄已儲存，history_id: ", GlobalVar.history_id)
-			get_tree().change_scene("res://Scene/AnswerAndDescription0.tscn")
+			Transition.change_scene("res://Scene/AnswerAndDescription0.tscn")
 		else:
 			print("無法解析 API 回應")
 	else:

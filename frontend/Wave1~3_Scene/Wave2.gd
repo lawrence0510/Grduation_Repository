@@ -117,6 +117,7 @@ func change_button_color(button_path: String) -> void:
 		attack_animation.play() ## 播放攻擊特效
 
 	else:
+		disable_all_buttons()
 		new_stylebox.bg_color = Color(0.71, 0.15, 0.15)
 		health_bar.damaged(30) ## 玩家扣血測試
 		GlobalVar.question2["consequence"] = "回答錯誤！\n\n正確答案：\n" + GlobalVar.question2["answer"]
@@ -130,7 +131,7 @@ func change_button_color(button_path: String) -> void:
 
 ## Timer倒數結束
 func _on_ChangeLevelTimer_timeout() -> void:
-	get_tree().change_scene("res://Wave1~3_Scene/Wave3.tscn") ## 跳到Wave 3
+	Transition.change_scene("res://Wave1~3_Scene/Wave3.tscn") ## 跳到Wave 3
 
 
 ## Disable所有button 

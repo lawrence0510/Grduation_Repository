@@ -31,11 +31,11 @@ func _on_white_school_pressed():
 
 func _on_white_story_pressed():
 	GlobalVar.current_category = 'story'
-	get_tree().change_scene(("res://Wave1~3_Scene/Wave1.tscn"))
+	Transition.change_scene(("res://Wave1~3_Scene/Wave1.tscn"))
 
 func _on_white_news_pressed():
 	GlobalVar.current_category = 'news'
-	get_tree().change_scene(("res://Wave1~3_Scene/Wave1.tscn"))
+	Transition.change_scene(("res://Wave1~3_Scene/Wave1.tscn"))
 
 func _on_white_player_pressed():
 	get_tree().change_scene("res://scene/1.4.1.tscn")
