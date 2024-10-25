@@ -1462,7 +1462,7 @@ class GetRateFromAnswers(Resource):
                     # 發送 OpenAI 請求
                     client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
                     response = client.chat.completions.create(
-                        model="gpt-3.5-turbo",
+                        model="gpt-4o-mini",
                         messages=[
                             {"role": "system", "content": "你是一名專門在閱讀學生答案後產生評分與評語的老師。"},
                             {"role": "user", "content": prompt_message}
