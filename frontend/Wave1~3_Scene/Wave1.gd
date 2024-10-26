@@ -58,7 +58,7 @@ func _ready() -> void:
 	http_request2.request(enemy_url + "?enemy_category=" + category_id)
 	
 	$BattleBackground/Question.add_child(health_bar) ## 因為畫面前後的關係，所以把節點放在Question的底下
-	health_bar.init_health_value(100) ## 設定玩家血量
+	health_bar.init_health_value(100) ## 設定怪物血量
 	print(health_bar.health_value)
 	full_story_scene.set_visible(true) ## 顯示全文，第一關先讓玩家讀文章再作答
 	pause_scene.set_visible(false) ## 隱藏暫停場景
@@ -111,6 +111,7 @@ func change_button_color(button_path: String) -> void:
 	
 	if(right_button == button_pressed):
 		GlobalVar.question1["consequence"] = "回答正確，恭喜你！"
+		health_bar.damaged(100) ## 答對後把血扣完
 		disable_all_buttons()
 		new_stylebox.bg_color = Color(0.16, 0.64, 0.25) ## 正確選項改成綠色
 		change_attack_animation() ## 更改攻擊特效
@@ -120,7 +121,6 @@ func change_button_color(button_path: String) -> void:
 	else:
 		disable_all_buttons()
 		new_stylebox.bg_color = Color(0.71, 0.15, 0.15)
-		health_bar.damaged(30) ## 玩家扣血測試
 		GlobalVar.question1["consequence"] = "回答錯誤！\n\n正確答案：\n" + GlobalVar.question1["answer"]
 	
 	get_node(button_path).add_stylebox_override("disabled", new_stylebox) ## button變色

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Textures/DialogBoxPic.png" type="Texture" id=1]
 [ext_resource path="res://Fonts/font1 - 複製 (8) - 複製 - 複製.tres" type="DynamicFont" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://pic/delete1.png" type="Texture" id=7]
 [ext_resource path="res://Pic/bc911.png" type="Texture" id=8]
+[ext_resource path="res://Fonts/noto_sans_48.tres" type="DynamicFont" id=9]
 
 [sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 1, 0.878431, 0.721569, 1 )
@@ -126,7 +127,7 @@ rect_min_size = Vector2( 50, 50 )
 custom_styles/panel = SubResource( 5 )
 
 [node name="Input" type="LineEdit" parent="VBoxContainer/DialogBoxBG"]
-margin_left = 177.0
+margin_left = 201.0
 margin_top = 701.0
 margin_right = 1681.0
 margin_bottom = 797.0
@@ -139,6 +140,16 @@ custom_styles/normal = SubResource( 6 )
 placeholder_alpha = 0.1
 caret_blink = true
 script = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="VBoxContainer/DialogBoxBG"]
+margin_left = 166.0
+margin_top = 701.0
+margin_right = 194.0
+margin_bottom = 797.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = ">"
+valign = 1
 
 [node name="Control" type="Control" parent="VBoxContainer"]
 margin_top = 910.0

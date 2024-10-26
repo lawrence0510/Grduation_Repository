@@ -24,7 +24,7 @@ func _ready() -> void:
 	full_story_scene.setStory(GlobalVar.story)
 	enemy_image.texture = GlobalVar.images[2]
 	$BattleBackground/Question.add_child(health_bar) ## 因為畫面前後的關係，所以把節點放在Question的底下
-	health_bar.init_health_value(GlobalVar.global_player_health) ## 設定玩家血量
+	health_bar.init_health_value(100) ## 設定玩家血量
 	full_story_scene.set_visible(false) ## 隱藏全文
 	pause_scene.set_visible(false) ## 隱藏暫停場景 
 	attack_animation = $BattleBackground/AxeAttackAnimation
@@ -60,7 +60,8 @@ func _on_LineEdit_text_entered(new_text: String) -> void:
 	# 發送 HTTP POST 請求
 	send_post_request(article_id, answer)
 	
-	if(true): ## 這裡的條件之後要改成"答案是否正確?"
+	if(true):
+		health_bar.damaged(100) ## 答案送出後把血扣完
 		attack_animation.visible = true
 		attack_animation.play()
 		line_edit.editable = false
