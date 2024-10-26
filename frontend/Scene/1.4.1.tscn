@@ -248,7 +248,7 @@ default_color = Color( 0, 0, 0, 1 )
 visible = false
 position = Vector2( 160, 300 )
 scale = Vector2( 0.4, 0.4 )
-texture = ExtResource( 21 )
+texture = ExtResource( 16 )
 
 [node name="B2" type="Sprite" parent="BackgroundPicture/BackgroundBoxPicture"]
 visible = false
@@ -272,7 +272,7 @@ texture = ExtResource( 6 )
 visible = false
 position = Vector2( 160, 300 )
 scale = Vector2( 0.4, 0.4 )
-texture = ExtResource( 16 )
+texture = ExtResource( 21 )
 
 [node name="G2" type="Sprite" parent="BackgroundPicture/BackgroundBoxPicture"]
 visible = false

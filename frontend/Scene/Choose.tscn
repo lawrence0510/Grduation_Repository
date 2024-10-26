@@ -157,6 +157,7 @@ position = Vector2( 862.5, 377 )
 texture = ExtResource( 2 )
 
 [node name="B3" type="Sprite" parent="bg/底色2"]
+visible = false
 position = Vector2( 879.5, 355 )
 texture = ExtResource( 14 )
 
