@@ -52,6 +52,7 @@ margin_top = 24.0
 margin_right = 2307.0
 margin_bottom = 530.0
 rect_scale = Vector2( 0.2, 0.2 )
+mouse_default_cursor_shape = 2
 icon = ExtResource( 3 )
 flat = true
 

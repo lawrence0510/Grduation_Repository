@@ -1,12 +1,13 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://Pic/Free-Horizontal-2D-Game-Backgrounds-2.jpg" type="Texture" id=1]
+[ext_resource path="res://Textures/DialogBoxPic.png" type="Texture" id=1]
 [ext_resource path="res://Fonts/font1 - 複製 (8) - 複製 - 複製.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Scene/Dialog.gd" type="Script" id=3]
 [ext_resource path="res://Scene/Input.gd" type="Script" id=4]
 [ext_resource path="res://Scene/CommandProcessor.gd" type="Script" id=5]
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://pic/delete1.png" type="Texture" id=7]
+[ext_resource path="res://Pic/bc911.png" type="Texture" id=8]
 
 [sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 1, 0.878431, 0.721569, 1 )
@@ -24,26 +25,22 @@ extra_spacing_char = 8
 extra_spacing_space = 1
 font_data = ExtResource( 6 )
 
-[sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 1, 0.878431, 0.721569, 1 )
-corner_radius_top_left = 30
-corner_radius_top_right = 30
-corner_radius_bottom_right = 30
-corner_radius_bottom_left = 30
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [sub_resource type="StyleBoxEmpty" id=2]
 
 [sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 1, 0.847059, 0.752941, 1 )
+bg_color = Color( 1, 0.92549, 0.752941, 1 )
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color( 0, 0, 0, 0 )
-corner_radius_top_left = 50
-corner_radius_top_right = 50
-corner_radius_bottom_right = 50
-corner_radius_bottom_left = 50
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [sub_resource type="StyleBoxEmpty" id=8]
 
@@ -60,7 +57,7 @@ script = ExtResource( 5 )
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-texture = ExtResource( 1 )
+texture = ExtResource( 8 )
 expand = true
 
 [node name="Panel" type="Panel" parent="."]
@@ -85,92 +82,68 @@ custom_fonts/font = SubResource( 10 )
 text = "AI助手"
 align = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_constants/margin_right = 40
-custom_constants/margin_top = 150
-custom_constants/margin_left = 40
-custom_constants/margin_bottom = 60
-
-[node name="ColorRect" type="ColorRect" parent="MarginContainer"]
-visible = false
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 40.0
 margin_top = 150.0
 margin_right = 1880.0
-margin_bottom = 1020.0
-color = Color( 1, 0.878431, 0.721569, 1 )
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-margin_left = 40.0
-margin_top = 150.0
-margin_right = 1880.0
-margin_bottom = 1020.0
+margin_bottom = 1158.0
 custom_constants/separation = 10
 
-[node name="textArea" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+[node name="DialogBoxBG" type="TextureRect" parent="VBoxContainer"]
 margin_right = 1840.0
-margin_bottom = 762.0
+margin_bottom = 900.0
+rect_min_size = Vector2( 0, 900 )
+texture = ExtResource( 1 )
+stretch_mode = 1
+
+[node name="textArea" type="PanelContainer" parent="VBoxContainer/DialogBoxBG"]
+margin_left = 153.0
+margin_top = 112.0
+margin_right = 1686.0
+margin_bottom = 676.0
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 4 )
+custom_styles/panel = SubResource( 11 )
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/textArea"]
-margin_right = 1840.0
-margin_bottom = 762.0
-custom_constants/margin_right = 20
-custom_constants/margin_top = 20
-custom_constants/margin_left = 20
-custom_constants/margin_bottom = 20
-
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/textArea/MarginContainer"]
-margin_left = 20.0
-margin_top = 20.0
-margin_right = 1820.0
-margin_bottom = 742.0
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/DialogBoxBG/textArea"]
+margin_right = 1533.0
+margin_bottom = 564.0
 custom_styles/bg = SubResource( 2 )
 scroll_horizontal_enabled = false
 
-[node name="HistoryRows" type="VBoxContainer" parent="MarginContainer/VBoxContainer/textArea/MarginContainer/ScrollContainer"]
-margin_right = 1800.0
-margin_bottom = 722.0
+[node name="HistoryRows" type="VBoxContainer" parent="VBoxContainer/DialogBoxBG/textArea/ScrollContainer"]
+margin_right = 1533.0
+margin_bottom = 564.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 20
 
-[node name="InputArea" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 772.0
-margin_right = 1840.0
-margin_bottom = 860.0
+[node name="InputArea" type="PanelContainer" parent="VBoxContainer/DialogBoxBG"]
+margin_left = 151.0
+margin_top = 699.0
+margin_right = 1683.0
+margin_bottom = 799.0
 rect_min_size = Vector2( 50, 50 )
 custom_styles/panel = SubResource( 5 )
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/InputArea"]
-margin_left = 2.0
-margin_top = 2.0
-margin_right = 1838.0
-margin_bottom = 86.0
-custom_constants/margin_right = 10
-custom_constants/margin_top = 2
-custom_constants/margin_left = 10
-custom_constants/margin_bottom = 2
-
-[node name="Input" type="LineEdit" parent="MarginContainer/VBoxContainer/InputArea/MarginContainer"]
-margin_left = 10.0
-margin_top = 2.0
-margin_right = 1826.0
-margin_bottom = 82.0
+[node name="Input" type="LineEdit" parent="VBoxContainer/DialogBoxBG"]
+margin_left = 177.0
+margin_top = 701.0
+margin_right = 1681.0
+margin_bottom = 797.0
 rect_min_size = Vector2( 0, 80 )
 custom_colors/cursor_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 2 )
 custom_styles/focus = SubResource( 8 )
 custom_styles/normal = SubResource( 6 )
+placeholder_alpha = 0.1
+caret_blink = true
 script = ExtResource( 4 )
 
-[node name="Control" type="Control" parent="MarginContainer/VBoxContainer"]
-margin_top = 870.0
+[node name="Control" type="Control" parent="VBoxContainer"]
+margin_top = 910.0
 margin_right = 1840.0
-margin_bottom = 870.0
+margin_bottom = 910.0
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
@@ -182,11 +155,12 @@ margin_top = 28.0
 margin_right = 2299.0
 margin_bottom = 534.0
 rect_scale = Vector2( 0.2, 0.2 )
+mouse_default_cursor_shape = 2
 icon = ExtResource( 7 )
 flat = true
 
-[connection signal="text_entered" from="MarginContainer/VBoxContainer/InputArea/MarginContainer/Input" to="." method="_on_Input_text_entered"]
-[connection signal="text_entered" from="MarginContainer/VBoxContainer/InputArea/MarginContainer/Input" to="MarginContainer/VBoxContainer/InputArea/MarginContainer/Input" method="_on_Input_text_entered"]
+[connection signal="text_entered" from="VBoxContainer/DialogBoxBG/Input" to="." method="_on_Input_text_entered"]
+[connection signal="text_entered" from="VBoxContainer/DialogBoxBG/Input" to="VBoxContainer/DialogBoxBG/Input" method="_on_Input_text_entered"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
 [connection signal="request_completed" from="HTTPRequest" to="CommandProcessor" method="_on_HTTPRequest_request_completed"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

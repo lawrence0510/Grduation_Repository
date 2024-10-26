@@ -7,8 +7,8 @@ const AIResponse = preload("res://Dialog/AIResponse.tscn")
 var max_scroll_length := 0
 
 onready var command_processor = $CommandProcessor
-onready var history_rows = $MarginContainer/VBoxContainer/textArea/MarginContainer/ScrollContainer/HistoryRows
-onready var scroll = $MarginContainer/VBoxContainer/textArea/MarginContainer/ScrollContainer
+onready var history_rows = $VBoxContainer/DialogBoxBG/textArea/ScrollContainer/HistoryRows
+onready var scroll = $VBoxContainer/DialogBoxBG/textArea/ScrollContainer
 onready var scrollbar = scroll.get_v_scrollbar()
 
 #用以確認用戶是否已經輸入, 不能連續發問，要等到回復之後才能問下一句

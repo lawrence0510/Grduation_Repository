@@ -57,7 +57,9 @@ margin_top = 153.0
 margin_right = 600.0
 margin_bottom = 753.0
 rect_min_size = Vector2( 600, 600 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 2 )
+texture_hover = ExtResource( 2 )
 expand = true
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
@@ -82,7 +84,9 @@ margin_top = 153.0
 margin_right = 600.0
 margin_bottom = 753.0
 rect_min_size = Vector2( 600, 600 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 3 )
+texture_hover = ExtResource( 3 )
 expand = true
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
@@ -107,7 +111,9 @@ margin_top = 153.0
 margin_right = 600.0
 margin_bottom = 753.0
 rect_min_size = Vector2( 600, 600 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 1 )
+texture_hover = ExtResource( 1 )
 expand = true
 
 [connection signal="gui_input" from="." to="." method="_on_ScrollContainer_gui_input"]

@@ -12,7 +12,6 @@
 [ext_resource path="res://fonts/1.5.1-2.tres" type="StyleBox" id=11]
 [ext_resource path="res://fonts/font9.tres" type="DynamicFont" id=12]
 
-
 [sub_resource type="StyleBoxFlat" id=4]
 content_margin_left = 10.0
 content_margin_right = 15.0
