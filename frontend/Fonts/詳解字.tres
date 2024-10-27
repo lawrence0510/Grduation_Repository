@@ -3,6 +3,7 @@
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=1]
 
 [resource]
+resource_local_to_scene = true
 size = 25
 outline_color = Color( 0, 0, 0, 1 )
 use_filter = true

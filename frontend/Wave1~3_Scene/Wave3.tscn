@@ -1,7 +1,6 @@
-[gd_scene load_steps=53 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://Fonts/noto_sans_48.tres" type="DynamicFont" id=1]
-[ext_resource path="res://Fonts/noto_sans_64.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Fonts/noto_sans_32.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Textures/PauseButton.png" type="Texture" id=4]
 [ext_resource path="res://Textures/BattleBG3.png" type="Texture" id=5]
@@ -23,15 +22,32 @@
 [ext_resource path="res://AttackAnimation/Axe/Axe3.png" type="Texture" id=21]
 [ext_resource path="res://AttackAnimation/Balrog/Retro Impact Effect Pack 5 A.png" type="Texture" id=22]
 [ext_resource path="res://AttackAnimation/Bomb/Retro Impact Effect Pack 5 D.png" type="Texture" id=23]
+[ext_resource path="res://Fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=24]
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt11.png" type="Texture" id=47]
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt10.png" type="Texture" id=50]
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt12.png" type="Texture" id=53]
 [ext_resource path="res://Wave1~3_Scene/Wave3_Question.gd" type="Script" id=56]
 
+[sub_resource type="DynamicFont" id=60]
+resource_local_to_scene = true
+size = 64
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 24 )
+
 [sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.886275, 0.941176, 0.933333, 1 )
 corner_radius_top_left = 40
 corner_radius_top_right = 40
+
+[sub_resource type="StyleBoxFlat" id=53]
+corner_radius_bottom_right = 40
+
+[sub_resource type="StyleBoxFlat" id=54]
+corner_radius_bottom_right = 40
+
+[sub_resource type="StyleBoxFlat" id=55]
+corner_radius_bottom_right = 40
 
 [sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
@@ -42,21 +58,31 @@ bg_color = Color( 0.886275, 0.941176, 0.933333, 1 )
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
 
-[sub_resource type="StyleBoxFlat" id=26]
+[sub_resource type="DynamicFont" id=59]
+resource_local_to_scene = true
+size = 48
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 24 )
+
+[sub_resource type="StyleBoxFlat" id=56]
 bg_color = Color( 0.776471, 0.815686, 0.807843, 1 )
-corner_radius_top_left = 40
-corner_radius_top_right = 40
-corner_radius_bottom_right = 40
-corner_radius_bottom_left = 40
 
-[sub_resource type="StyleBoxEmpty" id=27]
+[sub_resource type="StyleBoxEmpty" id=57]
 
-[sub_resource type="StyleBoxFlat" id=4]
+[sub_resource type="StyleBoxFlat" id=58]
 bg_color = Color( 0.886275, 0.941176, 0.933333, 1 )
 corner_radius_top_left = 40
 corner_radius_top_right = 40
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
+
+[sub_resource type="DynamicFont" id=61]
+resource_local_to_scene = true
+size = 48
+outline_size = 1
+outline_color = Color( 0.6, 0.6, 0.6, 1 )
+font_data = ExtResource( 24 )
 
 [sub_resource type="AtlasTexture" id=35]
 flags = 4
@@ -188,7 +214,7 @@ margin_top = 15.0
 margin_right = 1410.0
 margin_bottom = 165.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = SubResource( 60 )
 custom_styles/normal = SubResource( 6 )
 text = "Wave 3/3"
 align = 1
@@ -212,8 +238,14 @@ margin_left = 624.0
 margin_top = 335.0
 margin_right = 900.0
 margin_bottom = 399.0
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = SubResource( 53 )
+custom_styles/pressed = SubResource( 54 )
+custom_styles/focus = SubResource( 55 )
 custom_styles/normal = SubResource( 7 )
 text = "查看全文 ▼"
 
@@ -228,23 +260,29 @@ margin_right = 900.0
 margin_bottom = 399.0
 custom_styles/normal = SubResource( 28 )
 
-[node name="LineEdit" type="LineEdit" parent="BattleBackground"]
+[node name="TextEdit" type="TextEdit" parent="BattleBackground"]
 margin_left = 46.0
 margin_top = 717.0
 margin_right = 1875.0
 margin_bottom = 1031.0
-custom_colors/cursor_color = Color( 0.00392157, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_uneditable = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 1 )
-custom_styles/read_only = SubResource( 26 )
-custom_styles/focus = SubResource( 27 )
-custom_styles/normal = SubResource( 4 )
+custom_fonts/font = SubResource( 59 )
+custom_styles/read_only = SubResource( 56 )
+custom_styles/focus = SubResource( 57 )
+custom_styles/normal = SubResource( 58 )
+wrap_enabled = true
+
+[node name="PlaceholderLabel" type="Label" parent="BattleBackground"]
+margin_left = 642.0
+margin_top = 821.0
+margin_right = 1256.0
+margin_bottom = 907.0
+custom_colors/font_color = Color( 0.6, 0.6, 0.6, 1 )
+custom_colors/font_color_shadow = Color( 0.6, 0.6, 0.6, 1 )
+custom_fonts/font = SubResource( 61 )
+text = "(冒險者，請在這裡輸入答案)"
 align = 1
-placeholder_text = "請輸入答案"
-placeholder_alpha = 0.453
-caret_blink = true
-caret_blink_speed = 0.5
+valign = 1
 
 [node name="PauseScene" parent="BattleBackground" instance=ExtResource( 8 )]
 visible = false
@@ -286,7 +324,7 @@ one_shot = true
 
 [connection signal="pressed" from="BattleBackground/PauseButton" to="." method="_on_PauseButton_pressed"]
 [connection signal="pressed" from="BattleBackground/Question/OpenStoryButton" to="." method="_on_OpenStoryButton_pressed"]
-[connection signal="text_entered" from="BattleBackground/LineEdit" to="." method="_on_LineEdit_text_entered"]
+[connection signal="text_changed" from="BattleBackground/TextEdit" to="." method="_on_TextEdit_text_changed"]
 [connection signal="animation_finished" from="BattleBackground/BalrogAttackAnimation" to="." method="_on_BalrogAttackAnimation_animation_finished"]
 [connection signal="animation_finished" from="BattleBackground/DarkBoltAttackAnimation" to="." method="_on_DarkBoltAttackAnimation_animation_finished"]
 [connection signal="animation_finished" from="BattleBackground/BombAttackAnimation" to="." method="_on_BombAttackAnimation_animation_finished"]

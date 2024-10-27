@@ -2,13 +2,14 @@ extends Node
 
 onready var full_story_scene = $BattleBackground/WindowDialog
 onready var pause_scene = $BattleBackground/PauseScene
-onready var line_edit = $BattleBackground/LineEdit
+onready var text_edit = $BattleBackground/TextEdit
 onready var http_request: HTTPRequest = $HTTPRequest
 onready var http_request2: HTTPRequest = $HTTPRequest2
 var enemy_death_effect = preload("res://Enemy/EnemyDeathEffect.tscn")
 var health_bar = load("res://UserSystem/HealthBar.tscn").instance()
 onready var enemy_image = $BattleBackground/Question/Enemy
 var attack_animation
+
 
 ## 載入這個場景(Wave 3)後，馬上
 func _ready() -> void:
@@ -39,6 +40,28 @@ func _process(delta: float) -> void:
 		if OS.window_fullscreen:
 			get_tree().quit()
 
+
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		if event.scancode == KEY_ENTER:
+			# Check if TextEdit is focused
+			if text_edit.has_focus():
+				on_enter_pressed()
+				
+				
+func on_enter_pressed():
+	# Get the text from the TextEdit node
+	var user_input = text_edit.text
+	if user_input != "" and user_input != "(冒險者，請在這裡輸入答案)":  # Adjust as necessary
+		GlobalVar.wave_data["q3_user_answer"] = user_input
+		var article_id = GlobalVar.wave_data["article_id"]
+		change_attack_animation()
+		send_post_request(article_id, user_input)
+		health_bar.damaged(100) 
+		attack_animation.visible = true
+		attack_animation.play()
+
+
 ## 查看全文button按下去
 func _on_OpenStoryButton_pressed() -> void:
 	full_story_scene.set_visible(true) ## 顯示全文
@@ -47,24 +70,6 @@ func _on_OpenStoryButton_pressed() -> void:
 ## 暫停button按下去
 func _on_PauseButton_pressed() -> void:
 	pause_scene.set_visible(true) ## 顯示暫停場景
-
-
-## 玩家按下Enter送出答案
-func _on_LineEdit_text_entered(new_text: String) -> void:
-	GlobalVar.wave_data["q3_user_answer"] = new_text  # 將玩家的答案儲存在 GlobalVar 中
-
-	var article_id = GlobalVar.wave_data["article_id"]
-	var answer = GlobalVar.wave_data["q3_user_answer"]
-	change_attack_animation() ## 更改攻擊特效
-	
-	# 發送 HTTP POST 請求
-	send_post_request(article_id, answer)
-	
-	if(true):
-		health_bar.damaged(100) ## 答案送出後把血扣完
-		attack_animation.visible = true
-		attack_animation.play()
-		line_edit.editable = false
 		
 
 # 發送POST請求的函數
@@ -230,3 +235,8 @@ func change_attack_animation():
 		attack_animation = $BattleBackground/AxeAttackAnimation
 	elif(GlobalVar.player_character_name == "Garen" or GlobalVar.player_character_name == "Mikasa"):
 		attack_animation = $BattleBackground/BombAttackAnimation
+
+
+#使用者一打字就清除Placeholder
+func _on_TextEdit_text_changed() -> void:
+	$BattleBackground/PlaceholderLabel.visible = false

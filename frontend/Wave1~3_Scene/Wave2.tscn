@@ -1,7 +1,7 @@
-[gd_scene load_steps=63 format=2]
+[gd_scene load_steps=71 format=2]
 
 [ext_resource path="res://Fonts/noto_sans_48.tres" type="DynamicFont" id=1]
-[ext_resource path="res://Fonts/noto_sans_64.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Fonts/noto_sans_32.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Textures/PauseButton.png" type="Texture" id=4]
 [ext_resource path="res://Textures/BattleBG2.png" type="Texture" id=5]
@@ -32,10 +32,26 @@
 [ext_resource path="res://Wave1~3_Scene/Wave2_Option_D.gd" type="Script" id=59]
 [ext_resource path="res://Wave1~3_Scene/Wave2_Question.gd" type="Script" id=60]
 
+[sub_resource type="DynamicFont" id=51]
+resource_local_to_scene = true
+size = 64
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
+
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.886275, 0.941176, 0.933333, 1 )
 corner_radius_top_left = 40
 corner_radius_top_right = 40
+
+[sub_resource type="StyleBoxFlat" id=52]
+corner_radius_bottom_right = 40
+
+[sub_resource type="StyleBoxFlat" id=53]
+corner_radius_bottom_right = 40
+
+[sub_resource type="StyleBoxFlat" id=54]
+corner_radius_bottom_right = 40
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
@@ -45,6 +61,13 @@ corner_radius_bottom_right = 40
 bg_color = Color( 0.886275, 0.941176, 0.933333, 1 )
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
+
+[sub_resource type="DynamicFont" id=55]
+resource_local_to_scene = true
+size = 48
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
 
 [sub_resource type="StyleBoxFlat" id=6]
 corner_radius_top_left = 40
@@ -65,6 +88,13 @@ corner_radius_top_right = 40
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
 
+[sub_resource type="DynamicFont" id=56]
+resource_local_to_scene = true
+size = 48
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
+
 [sub_resource type="StyleBoxFlat" id=7]
 corner_radius_top_left = 40
 corner_radius_top_right = 40
@@ -77,6 +107,13 @@ corner_radius_top_right = 40
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
 
+[sub_resource type="DynamicFont" id=57]
+resource_local_to_scene = true
+size = 48
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
+
 [sub_resource type="StyleBoxFlat" id=8]
 corner_radius_top_left = 40
 corner_radius_top_right = 40
@@ -88,6 +125,13 @@ corner_radius_top_left = 40
 corner_radius_top_right = 40
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
+
+[sub_resource type="DynamicFont" id=58]
+resource_local_to_scene = true
+size = 48
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
 
 [sub_resource type="StyleBoxFlat" id=9]
 corner_radius_top_left = 40
@@ -231,7 +275,7 @@ margin_top = 15.0
 margin_right = 1410.0
 margin_bottom = 165.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = SubResource( 51 )
 custom_styles/normal = SubResource( 4 )
 text = "Wave 2/3"
 align = 1
@@ -255,8 +299,14 @@ margin_left = 624.0
 margin_top = 335.0
 margin_right = 900.0
 margin_bottom = 399.0
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = SubResource( 52 )
+custom_styles/pressed = SubResource( 53 )
+custom_styles/focus = SubResource( 54 )
 custom_styles/normal = SubResource( 5 )
 text = "查看全文 ▼"
 
@@ -276,9 +326,12 @@ margin_left = 45.0
 margin_top = 720.0
 margin_right = 945.0
 margin_bottom = 870.0
-custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 55 )
 custom_styles/hover = SubResource( 6 )
 custom_styles/disabled = SubResource( 10 )
 custom_styles/normal = SubResource( 3 )
@@ -292,9 +345,12 @@ margin_left = 975.0
 margin_top = 720.0
 margin_right = 1875.0
 margin_bottom = 870.0
-custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 56 )
 custom_styles/hover = SubResource( 7 )
 custom_styles/disabled = SubResource( 11 )
 custom_styles/normal = SubResource( 3 )
@@ -308,9 +364,12 @@ margin_left = 45.0
 margin_top = 890.0
 margin_right = 945.0
 margin_bottom = 1040.0
-custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 57 )
 custom_styles/hover = SubResource( 8 )
 custom_styles/disabled = SubResource( 12 )
 custom_styles/normal = SubResource( 3 )
@@ -324,9 +383,12 @@ margin_left = 975.0
 margin_top = 890.0
 margin_right = 1875.0
 margin_bottom = 1040.0
-custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 58 )
 custom_styles/hover = SubResource( 9 )
 custom_styles/disabled = SubResource( 13 )
 custom_styles/normal = SubResource( 3 )
