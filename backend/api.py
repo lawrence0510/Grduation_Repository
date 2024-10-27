@@ -238,7 +238,7 @@ class RegisterUser(Resource):
         # 使用 SHA-256 對密碼加密
         encrypted_password = hashlib.sha256(user_password.encode()).hexdigest()
 
-        connection = create_db_connectin()
+        connection = create_db_connection()
         if connection is not None:
             try:
                 cursor = connection.cursor()
