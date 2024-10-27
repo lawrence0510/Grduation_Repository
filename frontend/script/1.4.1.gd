@@ -133,42 +133,42 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		if character_id == 1:
 			B1.visible = true
 			character_name.visible = true
-			character_name.text = "Graves"
+			character_name.text = json.result.user_name
 			GlobalVar.player_character_name = "Graves"
 		if character_id == 2:
 			B2.visible = true
 			character_name.visible = true
-			character_name.text = "Harry"
+			character_name.text = json.result.user_name
 			GlobalVar.player_character_name = "Harry"
 		if character_id == 3:
 			B3.visible = true
 			character_name.visible = true
-			character_name.text = "Olaf"
+			character_name.text = json.result.user_name
 			GlobalVar.player_character_name = "Olaf"
 		if character_id == 4:
 			B4.visible = true
 			character_name.visible = true
-			character_name.text = "Garen"
+			character_name.text = json.result.user_name
 			GlobalVar.player_character_name = "Garen"
 		if character_id == 5:
 			G1.visible = true
 			character_name.visible = true
-			character_name.text = "Esther"
+			character_name.text = json.result.user_name
 			GlobalVar.player_character_name = "Esther"
 		if character_id == 6:
 			G2.visible = true
 			character_name.visible = true
-			character_name.text = "Lux"
+			character_name.text = json.result.user_name
 			GlobalVar.player_character_name = "Lux"
 		if character_id == 7:
 			G3.visible = true
 			character_name.visible = true
-			character_name.text = "Xayah"
+			character_name.text = json.result.user_name
 			GlobalVar.player_character_name = "Xayah"
 		if character_id == 8:
 			G4.visible = true
 			character_name.visible = true
-			character_name.text = "Mikasa"
+			character_name.text = json.result.user_name
 			GlobalVar.player_character_name = "Mikasa"
 	else:
 		print("Request failed with response code: ", response_code)
