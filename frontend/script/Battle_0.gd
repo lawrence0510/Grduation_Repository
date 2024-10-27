@@ -14,6 +14,8 @@ onready var http_request2 = $HTTPRequest2
 onready var time_label = $TextureRect/Label2/time
 onready var ready_time = $TextureRect/Label2/ready_time
 func _ready():
+	GlobalVar.player_score = 0
+	GlobalVar.opponent_score = 0
 	# 初始化，當場景準備好後開始計時
 	set_process(true)
 	# 確保 Timer 節點已存在
