@@ -1443,7 +1443,8 @@ class GetRateFromAnswers(Resource):
                         f'"語法得分": 1~5, "語法評分理由": 理由}}'
                         f"\n\n以下是文章內文、此開放性問題、我的回答和「語意」、「語用」、「語法」的定義："
                         f'{{"文章內文": "{article_content}", "開放性問題": "{question}", '
-                        f'"我的回答": "{answer}", "標準答案": "{question_answer}"}}\n\n{rate_standard}'
+                        f'"我的回答": "{answer}", "標準答案": "{question_answer}"}}\n\n{rate_standard}\n'
+                        f'請務必以上述的JSON格式回傳，並不要帶有其他文字訊息，給我一個純JSON就好'
                     )
 
                     # 發送 OpenAI 請求
