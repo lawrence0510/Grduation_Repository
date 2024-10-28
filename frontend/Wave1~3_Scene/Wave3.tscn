@@ -1,6 +1,7 @@
-[gd_scene load_steps=59 format=2]
+[gd_scene load_steps=65 format=2]
 
 [ext_resource path="res://Fonts/noto_sans_48.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Wave1~3_Scene/LoadingLabel.gd" type="Script" id=2]
 [ext_resource path="res://Fonts/noto_sans_32.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Textures/PauseButton.png" type="Texture" id=4]
 [ext_resource path="res://Textures/BattleBG3.png" type="Texture" id=5]
@@ -23,6 +24,7 @@
 [ext_resource path="res://AttackAnimation/Balrog/Retro Impact Effect Pack 5 A.png" type="Texture" id=22]
 [ext_resource path="res://AttackAnimation/Bomb/Retro Impact Effect Pack 5 D.png" type="Texture" id=23]
 [ext_resource path="res://Fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=24]
+[ext_resource path="res://Wave1~3_Scene/PopupMessage.gd" type="Script" id=25]
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt11.png" type="Texture" id=47]
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt10.png" type="Texture" id=50]
 [ext_resource path="res://AttackAnimation/DarkBolt/Dark-Bolt12.png" type="Texture" id=53]
@@ -191,6 +193,51 @@ animations = [ {
 "speed": 10.0
 } ]
 
+[sub_resource type="DynamicFont" id=62]
+resource_local_to_scene = true
+size = 42
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 24 )
+
+[sub_resource type="StyleBoxFlat" id=63]
+bg_color = Color( 0.682353, 0.980392, 0.937255, 1 )
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="Animation" id=64]
+resource_name = "Popup"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2, 2.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 1e-05, 1e-05 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=65]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1e-05 ) ]
+}
+
 [node name="Wave3" type="Node"]
 script = ExtResource( 7 )
 
@@ -317,6 +364,29 @@ animation = "Axe"
 process_mode = 0
 wait_time = 3.0
 one_shot = true
+
+[node name="PopupMessage" type="Control" parent="BattleBackground"]
+margin_left = 560.0
+margin_top = 350.0
+margin_right = 1360.0
+margin_bottom = 730.0
+rect_scale = Vector2( 1e-05, 1e-05 )
+rect_pivot_offset = Vector2( 400, 190 )
+script = ExtResource( 25 )
+
+[node name="LoadingLabel" type="Label" parent="BattleBackground/PopupMessage"]
+margin_right = 800.0
+margin_bottom = 380.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 62 )
+custom_styles/normal = SubResource( 63 )
+align = 1
+valign = 1
+script = ExtResource( 2 )
+
+[node name="Animation" type="AnimationPlayer" parent="BattleBackground/PopupMessage"]
+anims/Popup = SubResource( 64 )
+anims/RESET = SubResource( 65 )
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 

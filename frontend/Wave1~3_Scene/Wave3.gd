@@ -60,6 +60,7 @@ func on_enter_pressed():
 		health_bar.damaged(100) 
 		attack_animation.visible = true
 		attack_animation.play()
+#		$BattleBackground/PopupMessage.show_popup_message()
 
 
 ## 查看全文button按下去
@@ -177,6 +178,7 @@ func _on_BalrogAttackAnimation_animation_finished() -> void:
 
 	var effect = enemy_death_effect.instance() ## 生成敵人死亡動畫
 	get_tree().current_scene.add_child(effect) ## 播放敵人死亡動畫
+	$BattleBackground/PopupMessage.show_popup_message()
 
 
 func _on_DarkBoltAttackAnimation_animation_finished() -> void:
@@ -188,6 +190,7 @@ func _on_DarkBoltAttackAnimation_animation_finished() -> void:
 
 	var effect = enemy_death_effect.instance() ## 生成敵人死亡動畫
 	get_tree().current_scene.add_child(effect) ## 播放敵人死亡動畫
+	$BattleBackground/PopupMessage.show_popup_message()
 
 
 func _on_BombAttackAnimation_animation_finished() -> void:
@@ -199,6 +202,7 @@ func _on_BombAttackAnimation_animation_finished() -> void:
 
 	var effect = enemy_death_effect.instance() ## 生成敵人死亡動畫
 	get_tree().current_scene.add_child(effect) ## 播放敵人死亡動畫
+	$BattleBackground/PopupMessage.show_popup_message()
 
 
 func _on_AxeAttackAnimation_animation_finished() -> void:
@@ -210,6 +214,7 @@ func _on_AxeAttackAnimation_animation_finished() -> void:
 
 	var effect = enemy_death_effect.instance() ## 生成敵人死亡動畫
 	get_tree().current_scene.add_child(effect) ## 播放敵人死亡動畫
+	$BattleBackground/PopupMessage.show_popup_message()
 
 #根據不同題目類別更換背景
 func change_category_background():
