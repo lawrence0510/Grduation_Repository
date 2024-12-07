@@ -922,7 +922,7 @@ margin_bottom = 68.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 14 )
-text = "答對 / 遊玩關卡"
+text = "完成文章數"
 
 [node name="score" type="Label" parent="BackgroundPicture/LoginDay/TextureRect/bar"]
 margin_left = 504.0
@@ -932,7 +932,7 @@ margin_bottom = 67.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 14 )
-text = "答對率"
+text = "平均得分"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="BackgroundPicture/LoginDay/TextureRect"]
 margin_left = 224.0

@@ -667,16 +667,16 @@ margin_right = 713.0
 margin_bottom = 201.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 11 )
-text = "答對 / 遊玩關卡"
+text = "完成文章數"
 
-[node name="答對率" type="Label" parent="bg/16"]
+[node name="平均得分" type="Label" parent="bg/16"]
 margin_left = 752.0
 margin_top = 146.0
 margin_right = 857.0
 margin_bottom = 201.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 11 )
-text = "答對率"
+text = "平均得分"
 
 [node name="下" type="Line2D" parent="bg/16"]
 position = Vector2( 471.922, 109.499 )
