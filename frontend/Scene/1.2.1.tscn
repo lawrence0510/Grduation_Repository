@@ -415,7 +415,7 @@ margin_right = 319.0
 margin_bottom = 103.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 14 )
-text = "Registration"
+text = "註冊"
 
 [node name="or" type="Label" parent="BackgroundPicture/BackgroundControl"]
 anchor_left = 0.5
@@ -497,7 +497,16 @@ text = "確 定"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
+[node name="HTTPRequest2" type="HTTPRequest" parent="."]
+
+[node name="HTTPRequest3" type="HTTPRequest" parent="."]
+
+[node name="HTTPRequest4" type="HTTPRequest" parent="."]
+
 [connection signal="pressed" from="BackgroundPicture/BackgroundControl/BackButton" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="BackgroundPicture/BackgroundControl/EnterButton" to="." method="_on_enter_pressed"]
 [connection signal="pressed" from="BackgroundPicture/Failed/Label/OKButton" to="." method="_on_OKButton_pressed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
+[connection signal="request_completed" from="HTTPRequest2" to="." method="_on_HTTPRequest2_request_completed"]
+[connection signal="request_completed" from="HTTPRequest3" to="." method="_on_HTTPRequest3_request_completed"]
+[connection signal="request_completed" from="HTTPRequest4" to="." method="_on_HTTPRequest4_request_completed"]

@@ -168,6 +168,7 @@ custom_colors/font_color_uneditable = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 5 )
 custom_styles/focus = SubResource( 12 )
 custom_styles/normal = SubResource( 12 )
+secret = true
 clear_button_enabled = true
 selecting_enabled = false
 deselect_on_focus_loss_enabled = false

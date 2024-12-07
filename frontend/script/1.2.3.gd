@@ -44,7 +44,7 @@ func _on_enter_pressed():
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	if response_code == 200 or response_code == 201:
 
-		get_tree().change_scene("res://scene/SignIn.tscn")
+		get_tree().change_scene("res://Scene/MainPage.tscn")
 	else:
 		print("Error Code: %d" % response_code)
 
