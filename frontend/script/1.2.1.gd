@@ -5,7 +5,7 @@ onready var password_input: LineEdit = $BackgroundPicture/BackgroundControl/Pass
 onready var school_input: LineEdit = $BackgroundPicture/BackgroundControl/SchoolLineEdit
 onready var birthday_input: LineEdit = $BackgroundPicture/BackgroundControl/BirthdayLineEdit
 onready var mail_input: LineEdit = $BackgroundPicture/BackgroundControl/MailLineEdit
-onready var phone_input: LineEdit = $BackgroundPicture/BackgroundControl/PhoneLineEdit  # 修正拼寫錯誤
+onready var phone_input: LineEdit = $BackgroundPicture/BackgroundControl/PhoneLineEdit
 
 onready var Failed: WindowDialog = $BackgroundPicture/Failed
 onready var http_request: HTTPRequest = $HTTPRequest

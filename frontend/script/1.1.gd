@@ -27,6 +27,7 @@ func _ready() -> void:
 	check_timer.set_wait_time(1.0)  # 每秒檢測一次
 	check_timer.set_one_shot(false)
 	check_timer.start()  # 在遊戲啟動時立即啟動定時器檢測最新登入紀錄
+	_check_max_user_id()
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -129,9 +130,10 @@ func _on_HTTPRequest3_request_completed(result, response_code, headers, body):
 				
 				print("成功登入，User ID:", user_id, "Login Record ID:", login_record_id)
 				check_timer.stop()  # 停止定時器
-
-				# 檢測最大 user_id
-				_check_max_user_id()
+				if GlobalVar.user_id > max_user_id:
+					get_tree().change_scene("res://Scene/1.2.2.tscn")
+				else:
+					get_tree().change_scene("res://Scene/MainPage.tscn")
 	else:
 		print("檢測最新的登入紀錄失敗，HTTP狀態碼:", response_code)
 
@@ -149,11 +151,6 @@ func _on_HTTPRequest4_request_completed(result, response_code, headers, body):
 		if response.error == OK:
 			max_user_id = response.result["max_user_id"]
 			print("Max User ID:", max_user_id)
-			# 根據 user_id 判斷場景跳轉
-			if GlobalVar.user_id > max_user_id:
-				get_tree().change_scene("res://Scene/Choose.tscn")
-			else:
-				get_tree().change_scene("res://Scene/MainPage.tscn")
 		else:
 			print("解析 JSON 失敗")
 	else:

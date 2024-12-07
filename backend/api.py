@@ -383,6 +383,50 @@ class UpdateOffline(Resource):
                 connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
+@user_ns.route('/update_user')
+class UpdateUser(Resource):
+    @user_ns.expect(user_parser)
+    def post(self):
+        '''更新使用者資料'''
+        args = user_parser.parse_args()
+        user_id = args['user_id']
+        user_name = args['user_name']
+        user_password = args['user_password']
+        user_school = args['user_school']
+        user_birthday = args['user_birthday']
+        user_email = args['user_email']
+        user_phone = args['user_phone']
+
+        # 使用 SHA-256 對密碼加密
+        encrypted_password = hashlib.sha256(user_password.encode()).hexdigest()
+
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                sql = """
+                UPDATE `User`
+                SET `user_name` = %s,
+                    `user_password` = %s,
+                    `user_school` = %s,
+                    `user_birthday` = %s,
+                    `user_email` = %s,
+                    `user_phone` = %s
+                WHERE `user_id` = %s
+                """
+                cursor.execute(sql, (user_name, encrypted_password, user_school, user_birthday, user_email, user_phone, user_id))
+                if cursor.rowcount == 0:
+                    return {"message": "User not found"}, 404
+                else:
+                    connection.commit()
+                    return {"message": "User updated successfully"}, 200
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
 
 all_history_parser = reqparse.RequestParser()
 all_history_parser.add_argument('user_id', type=int, required=True)
