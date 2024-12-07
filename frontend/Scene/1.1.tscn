@@ -401,6 +401,8 @@ text = "確 定"
 
 [node name="HTTPRequest2" type="HTTPRequest" parent="."]
 
+[node name="HTTPRequest3" type="HTTPRequest" parent="."]
+
 [connection signal="pressed" from="BackgroundPicture/BackGroundControl/GoogleButton" to="." method="_on_GoogleButton_pressed"]
 [connection signal="pressed" from="BackgroundPicture/BackGroundControl/ForgetButton" to="." method="_on_forget_pressed"]
 [connection signal="pressed" from="BackgroundPicture/BackGroundControl/RegisterButton" to="." method="_on_register_pressed"]

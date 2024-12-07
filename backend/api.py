@@ -362,7 +362,7 @@ class UpdateOffline(Resource):
         '''更新下線時間'''
         args = update_offline_parser.parse_args()
         login_id = args["login_id"]
-        
+
         try:
             offline_time = datetime.strptime(args["offline_time"], '%Y-%m-%d %H:%M:%S')
         except ValueError as ve:
@@ -444,6 +444,33 @@ class GetHistoryFromUserID(Resource):
                 else:
                     return {"error": "User not found"}, 404   # 如果沒有結果則返回 404
 
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
+@user_ns.route('/latest_login_record')
+class LatestLoginRecord(Resource):
+
+    def get(self):
+        '''檢測最新的登入紀錄'''
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor(dictionary=True)
+                cursor.execute("""
+                    SELECT login_id, user_id
+                    FROM LoginRecord
+                    ORDER BY login_id DESC
+                    LIMIT 1
+                """)
+                result = cursor.fetchone()
+                if result:
+                    return result, 200
+                else:
+                    return {"error": "No login records found"}, 404
             except Error as e:
                 return {"error": str(e)}, 500
             finally:
@@ -1455,7 +1482,7 @@ class GetRateFromAnswers(Resource):
                             {"role": "system", "content": "你是一名專門在閱讀學生答案後產生評分與評語的老師。"},
                             {"role": "user", "content": prompt_message}
                         ],
-                    ) 
+                    )
                     response_str = str(response)
 
                     content_start = response_str.find("總評") - 8
@@ -1466,7 +1493,7 @@ class GetRateFromAnswers(Resource):
                         content_json_str = content_json_str[:-2] + content_json_str[-1]
                     if content_json_str[-1] != "}":
                         content_json_str += "}"
-                    
+
                     print(content_json_str)
 
                     import json
@@ -1487,7 +1514,7 @@ class GetRateFromAnswers(Resource):
                 return {"error": str(e)}, 500
             finally:
                 cursor.close()
-                connection.close() 
+                connection.close()
 
 
 @openAI_ns.route('/follow_up_question')
@@ -1713,7 +1740,7 @@ class GetAllDataWithHistoryID(Resource):
                     LEFT JOIN Question Q ON A.article_id = Q.article_id
                     WHERE H.history_id = %s
                 """, (history_id,))
-                
+
                 result = cursor.fetchone()
 
                 if result:
@@ -1955,7 +1982,7 @@ class MatchUser(Resource):
                 result = cursor.fetchone()
                 if not result:
                     return {"error": "User not found"}, 404
-                
+
                 user_birthday = result[0]
                 today = datetime.today()
                 user_age = today.year - user_birthday.year - \

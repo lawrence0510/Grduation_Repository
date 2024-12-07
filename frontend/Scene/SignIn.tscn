@@ -391,6 +391,10 @@ text = "確 定"
 
 [node name="HTTPRequest2" type="HTTPRequest" parent="."]
 
+[node name="HTTPRequest3" type="HTTPRequest" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+
 [connection signal="pressed" from="BackgroundPicture/BackGroundControl/GoogleButton" to="." method="_on_GoogleButton_pressed"]
 [connection signal="pressed" from="BackgroundPicture/BackGroundControl/ForgetButton" to="." method="_on_forget_pressed"]
 [connection signal="pressed" from="BackgroundPicture/BackGroundControl/RegisterButton" to="." method="_on_register_pressed"]
@@ -398,3 +402,4 @@ text = "確 定"
 [connection signal="pressed" from="BackgroundPicture/Failed/Label/OKButton" to="." method="_on_OKButton_pressed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
 [connection signal="request_completed" from="HTTPRequest2" to="." method="_on_HTTPRequest2_request_completed"]
+[connection signal="request_completed" from="HTTPRequest3" to="." method="_on_HTTPRequest3_request_completed"]

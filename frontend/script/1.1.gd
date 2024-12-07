@@ -9,10 +9,22 @@ onready var Failed: WindowDialog = $BackgroundPicture/Failed
 
 onready var http_request: HTTPRequest = $HTTPRequest
 onready var http_request2: HTTPRequest = $HTTPRequest2
+onready var http_request3: HTTPRequest = $HTTPRequest3
 
+# 新增檢測定時器
+onready var check_timer: Timer = $Timer
+var last_login_record_id: int = -1  # 用於記錄最新的 login_record_id
+var initial_check_done: bool = false  # 用於確保初始檢測完成後再處理不同的 login_id
 
 func _ready() -> void:
 	OfflineUpdater.update_enabled = true
+	
+	# 確保定時器與檢測函數連接
+	if not check_timer.is_connected("timeout", self, "_check_latest_login"):
+		check_timer.connect("timeout", self, "_check_latest_login")
+	check_timer.set_wait_time(1.0)  # 每秒檢測一次
+	check_timer.set_one_shot(false)
+	check_timer.start()  # 在遊戲啟動時立即啟動定時器檢測最新登入紀錄
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -78,40 +90,47 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 func _on_forget_pressed():
 	get_tree().change_scene("res://scene/Password.1.tscn")
 
-
+# Google登入按鈕
 func _on_GoogleButton_pressed():
 	var url = "http://nccumisreading.ddnsking.com:5001/User/google_login"
+	OS.shell_open(url)  # 打開瀏覽器進行Google登入
+
+# 定時檢測最新登入紀錄
+func _check_latest_login():
+	print("Checking latest login info...")
+	var url = "http://nccumisreading.ddnsking.com:5001/User/latest_login_record"
 	var headers = ["Content-Type: application/json"]
-	http_request2.request(url, headers, false, HTTPClient.METHOD_GET)
-	OS.shell_open(url)
+	http_request3.request(url, headers, false, HTTPClient.METHOD_GET)
 
-
-func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
-	print('response_code: ' + str(response_code))
-	if response_code == 302: 
-		var redirect_url = headers.filter("Location")[0].split(": ")[1]
-		OS.shell_open(redirect_url)
-	elif response_code == 200:
+# 處理最新LoginRecord的HTTP回應
+func _on_HTTPRequest3_request_completed(result, response_code, headers, body):
+	if response_code == 200:
 		var body_string = body.get_string_from_utf8()
-		print("================")
-		#print(body_string)
-		print("================")
-
 		var response = JSON.parse(body_string)
-		print(response)
 		if response.error == OK:
-			# 提取 user_id
+			print(response.result)
+			var login_record_id = response.result["login_id"]
 			var user_id = response.result["user_id"]
-			print("User ID: ", user_id)
 			
-			# 將 user_id 存入 GlobalVar
-			GlobalVar.user_id = user_id
-			
-			print("登入成功")
-			# 成功登入後切換場景
-			get_tree().change_scene("res://scene/MainPage.tscn")
-	else:
-		print("Google登入失敗")
+			# 初次檢測完成，更新初始 login_id，不觸發登入
+			if not initial_check_done:
+				last_login_record_id = login_record_id
+				initial_check_done = true
+				print("初始檢測完成，記錄 ID:", last_login_record_id)
+				return
 
+			# 檢測是否有新紀錄
+			if login_record_id != last_login_record_id:
+				last_login_record_id = login_record_id
+				GlobalVar.login_record_id = login_record_id
+				GlobalVar.user_id = user_id
+				
+				print("成功登入，User ID:", user_id, "Login Record ID:", login_record_id)
+				check_timer.stop()  # 停止定時器
+				get_tree().change_scene("res://scene/MainPage.tscn")  # 跳轉到主界面
+	else:
+		print("檢測最新的登入紀錄失敗，HTTP狀態碼:", response_code)
+
+# 處理錯誤窗口的關閉
 func _on_OKButton_pressed():
 	Failed.hide()
