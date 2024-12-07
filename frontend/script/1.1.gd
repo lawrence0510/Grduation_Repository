@@ -10,15 +10,17 @@ onready var Failed: WindowDialog = $BackgroundPicture/Failed
 onready var http_request: HTTPRequest = $HTTPRequest
 onready var http_request2: HTTPRequest = $HTTPRequest2
 onready var http_request3: HTTPRequest = $HTTPRequest3
+onready var http_request4: HTTPRequest = $HTTPRequest4  # 新增的 HTTPRequest
 
 # 新增檢測定時器
 onready var check_timer: Timer = $Timer
 var last_login_record_id: int = -1  # 用於記錄最新的 login_record_id
 var initial_check_done: bool = false  # 用於確保初始檢測完成後再處理不同的 login_id
+var max_user_id: int = -1  # 用於記錄最大 user_id
 
 func _ready() -> void:
 	OfflineUpdater.update_enabled = true
-	
+
 	# 確保定時器與檢測函數連接
 	if not check_timer.is_connected("timeout", self, "_check_latest_login"):
 		check_timer.connect("timeout", self, "_check_latest_login")
@@ -127,9 +129,35 @@ func _on_HTTPRequest3_request_completed(result, response_code, headers, body):
 				
 				print("成功登入，User ID:", user_id, "Login Record ID:", login_record_id)
 				check_timer.stop()  # 停止定時器
-				get_tree().change_scene("res://scene/MainPage.tscn")  # 跳轉到主界面
+
+				# 檢測最大 user_id
+				_check_max_user_id()
 	else:
 		print("檢測最新的登入紀錄失敗，HTTP狀態碼:", response_code)
+
+# 檢測最大 user_id
+func _check_max_user_id():
+	var url = "http://nccumisreading.ddnsking.com:5001/User/get_max_user_id"
+	var headers = ["Content-Type: application/json"]
+	http_request4.request(url, headers, false, HTTPClient.METHOD_GET)
+
+# 處理最大 user_id 的 HTTP 回應
+func _on_HTTPRequest4_request_completed(result, response_code, headers, body):
+	if response_code == 200:
+		var body_string = body.get_string_from_utf8()
+		var response = JSON.parse(body_string)
+		if response.error == OK:
+			max_user_id = response.result["max_user_id"]
+			print("Max User ID:", max_user_id)
+			# 根據 user_id 判斷場景跳轉
+			if GlobalVar.user_id > max_user_id:
+				get_tree().change_scene("res://Scene/Choose.tscn")
+			else:
+				get_tree().change_scene("res://Scene/MainPage.tscn")
+		else:
+			print("解析 JSON 失敗")
+	else:
+		print("獲取最大 User ID 失敗，HTTP狀態碼:", response_code)
 
 # 處理錯誤窗口的關閉
 func _on_OKButton_pressed():

@@ -350,3 +350,6 @@ margin_bottom = 123.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 13 )
 text = "Registration"
+
+[connection signal="pressed" from="bg/BackgroundPicture/BackgroundControl/already" to="." method="_on_already_pressed"]
+[connection signal="pressed" from="bg/BackgroundPicture/BackgroundControl/enter" to="." method="_on_enter_pressed"]

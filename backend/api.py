@@ -905,6 +905,25 @@ class GetLoginRecord(Resource):
                     connection.close()
         else:
             return {"error": "Unable to connect to the database"}, 500
+@user_ns.route('/get_max_user_id')
+class GetMaxUserID(Resource):
+    def get(self):
+        '''獲取當前資料庫中最大的 user_id'''
+        connection = create_db_connection()
+        if connection is not None:
+            try:
+                cursor = connection.cursor()
+                cursor.execute("SELECT MAX(user_id) AS max_user_id FROM User")
+                result = cursor.fetchone()
+                max_user_id = result[0] if result[0] is not None else 0
+                return {"max_user_id": max_user_id}, 200
+            except Error as e:
+                return {"error": str(e)}, 500
+            finally:
+                cursor.close()
+                connection.close()
+        else:
+            return {"error": "Unable to connect to the database"}, 500
 
 
 # Article api區
