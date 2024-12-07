@@ -61,6 +61,18 @@ user_parser.add_argument('user_email', type=str,
                          required=True, help='使用者email')
 user_parser.add_argument('user_phone', type=str, required=True, help='使用者電話')
 
+user_parser1 = reqparse.RequestParser()
+user_parser1.add_argument('user_id', type=int, required=True, help='使用者id')
+user_parser1.add_argument('user_name', type=str, required=True, help='使用者名稱')
+user_parser1.add_argument('user_password', type=str,
+                         required=True, help='使用者密碼')
+user_parser1.add_argument('user_school', type=str, required=True, help='使用者學校')
+user_parser1.add_argument('user_birthday', type=str,
+                         required=True, help='使用者生日 (YYYY-MM-DD)')
+user_parser1.add_argument('user_email', type=str,
+                         required=True, help='使用者email')
+user_parser1.add_argument('user_phone', type=str, required=True, help='使用者電話')
+
 login_parser = reqparse.RequestParser()
 login_parser.add_argument('user_email', type=str,
                           required=True, help='使用者電子郵件')
@@ -385,10 +397,10 @@ class UpdateOffline(Resource):
             return {"error": "Unable to connect to the database"}, 500
 @user_ns.route('/update_user')
 class UpdateUser(Resource):
-    @user_ns.expect(user_parser)
+    @user_ns.expect(user_parser1)
     def post(self):
         '''更新使用者資料'''
-        args = user_parser.parse_args()
+        args = user_parser1.parse_args()
         user_id = args['user_id']
         user_name = args['user_name']
         user_password = args['user_password']
