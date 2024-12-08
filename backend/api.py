@@ -609,11 +609,27 @@ def authorize():
             else:
                 user_id = user[0]
                 print("User already exists with user_id:", user_id)
+
+                # SQL 指令模板
                 sql = """
                 UPDATE User
                 SET google_id = %s, user_name = %s, profile_picture = %s, user_school = %s
                 WHERE user_id = %s
                 """
+
+                # 格式化後的完整 SQL 指令
+                formatted_sql = sql % (
+                    repr(user_info['id']),
+                    repr(user_info['name']),
+                    repr(profile_picture),
+                    repr(user_school),
+                    repr(user_id)
+                )
+                
+                # 打印格式化後的 SQL
+                print("Executing SQL:", formatted_sql)
+
+                # 執行 SQL 指令
                 cursor.execute(sql, (
                     user_info['id'],
                     user_info['name'],
@@ -622,7 +638,9 @@ def authorize():
                     user_id
                 ))
                 connection.commit()
+
                 print("Existing user updated with user_id:", user_id)
+
 
             print("Inserting login record for user_id:", user_id)
             insert_login_record(user_id, True)
