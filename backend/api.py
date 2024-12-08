@@ -561,46 +561,70 @@ def authorize():
     resp = google.get('userinfo')
     user_info = resp.json()
 
-    user_school = user_info.get('hd')
+    # 獲取可能為 None 的欄位
+    user_school = user_info.get('hd')  # 如果 'hd' 不存在，則為 None
+    profile_picture = user_info.get('picture')  # 如果 'picture' 不存在，則為 None
 
     connection = create_db_connection()
     if connection is not None:
         try:
             cursor = connection.cursor()
+            
+            # 檢查使用者是否已存在
             cursor.execute("SELECT user_id FROM User WHERE google_id = %s OR user_email = %s",
                            (user_info['id'], user_info['email']))
             user = cursor.fetchone()
+            
             if user is None:
+                # 獲取新的 user_id
                 cursor.execute("SELECT MAX(user_id) FROM User")
                 result = cursor.fetchone()
                 max_id = result[0] if result[0] is not None else 0
                 new_user_id = max_id + 1
+
+                # 插入新使用者資料
                 sql = """
                 INSERT INTO User (user_id, google_id, user_name, profile_picture, user_email, user_school, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
                 """
-                cursor.execute(sql, (new_user_id, user_info['id'], user_info['name'], user_info.get(
-                    'picture'), user_info['email'], user_school, datetime.now().date()))
+                cursor.execute(sql, (
+                    new_user_id,
+                    user_info['id'],
+                    user_info['name'],
+                    profile_picture,  # 允許 None 傳遞
+                    user_info['email'],
+                    user_school,  # 允許 None 傳遞
+                    datetime.now().date()
+                ))
                 connection.commit()
                 user_id = new_user_id
             else:
+                # 更新現有使用者資料
                 user_id = user[0]
                 sql = """
                 UPDATE User
                 SET google_id = %s, user_name = %s, profile_picture = %s, user_school = %s
                 WHERE user_id = %s
                 """
-                cursor.execute(sql, (user_info['id'], user_info['name'], user_info.get(
-                    'picture'), user_school, user_id))
+                cursor.execute(sql, (
+                    user_info['id'],
+                    user_info['name'],
+                    profile_picture,  # 允許 None 傳遞
+                    user_school,  # 允許 None 傳遞
+                    user_id
+                ))
                 connection.commit()
 
+            # 插入登入記錄
             insert_login_record(user_id, True)
             session['user_id'] = user_id
             return {"message": f"Login successfully as {user_info['name']}!", "user_id": user_id}, 200
         except Error as e:
+            # 處理例外並插入失敗的登入記錄
             insert_login_record(None, False)
             return {"error": str(e)}, 500
         finally:
+            # 確保資源被正確釋放
             cursor.close()
             connection.close()
     else:
