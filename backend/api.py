@@ -552,35 +552,46 @@ google = oauth.register(
 @app.route('/User/google_login')
 def login():
     redirect_uri = url_for('authorize', _external=True)
+    print("Redirecting to Google OAuth flow...")
     return google.authorize_redirect(redirect_uri)
 
 
 @app.route('/User/authorize')
 def authorize():
+    print("Authorizing user...")
     token = google.authorize_access_token()
+    print("Access token received:", token)
+
     resp = google.get('userinfo')
     user_info = resp.json()
+    print("User info received:", user_info)
 
     # 獲取可能為 None 的欄位
     user_school = user_info.get('hd')  # 如果 'hd' 不存在，則為 None
     profile_picture = user_info.get('picture')  # 如果 'picture' 不存在，則為 None
+    print("Extracted user_school:", user_school, "and profile_picture:", profile_picture)
 
     connection = create_db_connection()
     if connection is not None:
+        print("Database connection established.")
         try:
             cursor = connection.cursor()
-            
+            print("Database cursor created.")
+
             # 檢查使用者是否已存在
             cursor.execute("SELECT user_id FROM User WHERE google_id = %s OR user_email = %s",
                            (user_info['id'], user_info['email']))
             user = cursor.fetchone()
-            
+            print("User lookup result:", user)
+
             if user is None:
                 # 獲取新的 user_id
                 cursor.execute("SELECT MAX(user_id) FROM User")
                 result = cursor.fetchone()
                 max_id = result[0] if result[0] is not None else 0
+                print("Max user_id in the database:", max_id)
                 new_user_id = max_id + 1
+                print("Assigning new user_id:", new_user_id)
 
                 # 插入新使用者資料
                 sql = """
@@ -597,10 +608,12 @@ def authorize():
                     datetime.now().date()
                 ))
                 connection.commit()
+                print("New user inserted with user_id:", new_user_id)
                 user_id = new_user_id
             else:
                 # 更新現有使用者資料
                 user_id = user[0]
+                print("User already exists with user_id:", user_id)
                 sql = """
                 UPDATE User
                 SET google_id = %s, user_name = %s, profile_picture = %s, user_school = %s
@@ -614,20 +627,26 @@ def authorize():
                     user_id
                 ))
                 connection.commit()
+                print("Existing user updated with user_id:", user_id)
 
             # 插入登入記錄
+            print("Inserting login record for user_id:", user_id)
             insert_login_record(user_id, True)
             session['user_id'] = user_id
+            print("Session set for user_id:", user_id)
             return {"message": f"Login successfully as {user_info['name']}!", "user_id": user_id}, 200
         except Error as e:
             # 處理例外並插入失敗的登入記錄
+            print("Error occurred:", e)
             insert_login_record(None, False)
             return {"error": str(e)}, 500
         finally:
             # 確保資源被正確釋放
+            print("Closing database resources.")
             cursor.close()
             connection.close()
     else:
+        print("Failed to connect to the database.")
         return {"error": "Unable to connect to the database"}, 500
 
 def insert_login_record(user_id, success):
