@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://script/Battle_Win.gd" type="Script" id=2]
@@ -7,9 +7,17 @@
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.823529 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=8]
 size = 100
-outline_size = 3
+outline_size = 10
+outline_color = Color( 1, 0.956863, 0, 0.462745 )
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 50
+outline_size = 1
+outline_color = Color( 1, 0.956863, 0, 0.462745 )
 use_filter = true
 font_data = ExtResource( 1 )
 
@@ -55,14 +63,35 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -960.0
-margin_top = -194.0
+margin_top = -246.0
 margin_right = 960.0
-margin_bottom = 26.0
-custom_fonts/font = SubResource( 2 )
-custom_styles/normal = SubResource( 3 )
+margin_bottom = -26.0
+custom_colors/font_color = Color( 1, 0.956863, 0, 0.462745 )
+custom_colors/font_outline_modulate = Color( 1, 0.956863, 0, 0.462745 )
+custom_colors/font_color_shadow = Color( 1, 0.956863, 0, 0.462745 )
+custom_fonts/font = SubResource( 8 )
 text = "勝 利"
 align = 1
 valign = 1
+
+[node name="Label3" type="Label" parent="TextureRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -960.0
+margin_top = -14.5
+margin_right = 960.0
+margin_bottom = 115.5
+custom_colors/font_color = Color( 1, 0.956863, 0, 0.462745 )
+custom_colors/font_outline_modulate = Color( 1, 0.956863, 0, 0.462745 )
+custom_colors/font_color_shadow = Color( 1, 0.956863, 0, 0.462745 )
+custom_fonts/font = SubResource( 7 )
+custom_styles/normal = SubResource( 3 )
+text = "恭喜！挑戰成功！"
+align = 1
+valign = 1
+percent_visible = -0.125
 
 [node name="again" type="Button" parent="TextureRect"]
 anchor_left = 0.5

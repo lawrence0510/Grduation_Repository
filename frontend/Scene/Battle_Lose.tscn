@@ -1,21 +1,19 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://fonts/NotoSansTC-VariableFont_wght.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://script/Battle_Lose.gd" type="Script" id=2]
 [ext_resource path="res://Pic/bc911.png" type="Texture" id=3]
+[ext_resource path="res://Pic/death.png" type="Texture" id=4]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.823529 )
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=10]
 size = 100
-outline_size = 3
-outline_color = Color( 0, 0, 0, 1 )
+outline_size = 10
+outline_color = Color( 1, 1, 1, 0.462745 )
 use_filter = true
 font_data = ExtResource( 1 )
-
-[sub_resource type="StyleBoxFlat" id=8]
-bg_color = Color( 1, 1, 1, 0.462745 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 35
@@ -35,6 +33,16 @@ corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
+
+[sub_resource type="DynamicFont" id=9]
+size = 50
+outline_size = 1
+outline_color = Color( 1, 1, 1, 0.462745 )
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 1, 1, 1, 0.462745 )
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 2 )
@@ -56,14 +64,13 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -960.0
-margin_top = -194.0
+margin_top = -246.0
 margin_right = 960.0
-margin_bottom = 26.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 7 )
-custom_styles/normal = SubResource( 8 )
+margin_bottom = -26.0
+custom_colors/font_color = Color( 1, 1, 1, 0.462745 )
+custom_colors/font_outline_modulate = Color( 1, 1, 1, 0.462745 )
+custom_colors/font_color_shadow = Color( 1, 1, 1, 0.462745 )
+custom_fonts/font = SubResource( 10 )
 text = "失 敗"
 align = 1
 valign = 1
@@ -113,6 +120,40 @@ custom_styles/focus = SubResource( 5 )
 custom_styles/disabled = SubResource( 6 )
 custom_styles/normal = SubResource( 6 )
 text = "回主畫面"
+
+[node name="Label3" type="Label" parent="TextureRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -960.0
+margin_top = -14.5
+margin_right = 960.0
+margin_bottom = 115.5
+custom_colors/font_color = Color( 1, 1, 1, 0.462745 )
+custom_colors/font_outline_modulate = Color( 1, 1, 1, 0.462745 )
+custom_colors/font_color_shadow = Color( 1, 1, 1, 0.462745 )
+custom_fonts/font = SubResource( 9 )
+custom_styles/normal = SubResource( 8 )
+text = "別氣餒！再試一次！"
+align = 1
+valign = 1
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect"]
+margin_left = 648.0
+margin_top = 351.0
+margin_right = 768.0
+margin_bottom = 471.0
+texture = ExtResource( 4 )
+expand = true
+
+[node name="TextureRect2" type="TextureRect" parent="TextureRect"]
+margin_left = 1152.0
+margin_top = 351.0
+margin_right = 1272.0
+margin_bottom = 471.0
+texture = ExtResource( 4 )
+expand = true
 
 [connection signal="pressed" from="TextureRect/again" to="." method="_on_again_pressed"]
 [connection signal="pressed" from="TextureRect/main" to="." method="_on_main_pressed"]

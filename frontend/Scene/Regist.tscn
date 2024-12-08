@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://script/1.2.1.gd" type="Script" id=1]
 [ext_resource path="res://fonts/font2.tres" type="DynamicFont" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://fonts/font1.tres" type="DynamicFont" id=5]
 [ext_resource path="res://fonts/style重新註冊.tres" type="StyleBox" id=6]
 [ext_resource path="res://Pic/123.bg.png" type="Texture" id=7]
-[ext_resource path="res://Pic/signup.png" type="Texture" id=8]
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.737255, 0.870588, 1, 1 )
@@ -20,9 +19,6 @@ corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
-
-[sub_resource type="StyleBoxFlat" id=16]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [sub_resource type="StyleBoxFlat" id=9]
 content_margin_left = 10.0
@@ -94,13 +90,6 @@ use_filter = true
 extra_spacing_top = -10
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=15]
-size = 25
-outline_color = Color( 0, 0, 0, 1 )
-use_filter = true
-extra_spacing_top = -10
-font_data = ExtResource( 3 )
-
 [sub_resource type="StyleBoxFlat" id=17]
 bg_color = Color( 0, 0, 0, 0.772549 )
 
@@ -162,32 +151,11 @@ margin_right = 380.5
 margin_bottom = 351.0
 custom_styles/panel = SubResource( 5 )
 
-[node name="google" type="Button" parent="BackgroundPicture/BackgroundControl"]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -322.0
-margin_top = -188.0
-margin_right = 322.0
-margin_bottom = -14.0
-custom_styles/hover = SubResource( 16 )
-custom_styles/pressed = SubResource( 16 )
-custom_styles/focus = SubResource( 16 )
-custom_styles/disabled = SubResource( 16 )
-custom_styles/normal = SubResource( 16 )
-shortcut_in_tooltip = false
-action_mode = 0
-button_mask = 0
-icon = ExtResource( 8 )
-flat = true
-icon_align = 1
-
 [node name="姓名" type="Label" parent="BackgroundPicture/BackgroundControl"]
 margin_left = 55.0
-margin_top = 127.0
+margin_top = 145.0
 margin_right = 191.0
-margin_bottom = 161.0
+margin_bottom = 179.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 2 )
 text = "User Name"
@@ -198,9 +166,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -325.5
-margin_top = -230.0
+margin_top = -212.0
 margin_right = -45.5
-margin_bottom = -180.0
+margin_bottom = -162.0
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/cursor_color = Color( 0, 0, 0, 1 )
 custom_colors/clear_button_color_pressed = Color( 0, 0, 0, 1 )
@@ -218,18 +186,18 @@ placeholder_alpha = 1.0
 
 [node name="密碼" type="Label" parent="BackgroundPicture/BackgroundControl"]
 margin_left = 400.0
-margin_top = 237.0
+margin_top = 275.0
 margin_right = 537.0
-margin_bottom = 271.0
+margin_bottom = 309.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 2 )
 text = "Password"
 
 [node name="PasswordLineEdit" type="LineEdit" parent="BackgroundPicture/BackgroundControl"]
 margin_left = 400.0
-margin_top = 270.0
+margin_top = 308.0
 margin_right = 680.0
-margin_bottom = 320.0
+margin_bottom = 358.0
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/cursor_color = Color( 0, 0, 0, 1 )
 custom_colors/clear_button_color_pressed = Color( 0, 0, 0, 1 )
@@ -247,18 +215,18 @@ placeholder_alpha = 1.0
 
 [node name="學校" type="Label" parent="BackgroundPicture/BackgroundControl"]
 margin_left = 55.0
-margin_top = 237.0
+margin_top = 275.0
 margin_right = 145.0
-margin_bottom = 271.0
+margin_bottom = 309.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 2 )
 text = "School"
 
 [node name="SchoolLineEdit" type="LineEdit" parent="BackgroundPicture/BackgroundControl"]
 margin_left = 55.0
-margin_top = 270.0
+margin_top = 308.0
 margin_right = 335.0
-margin_bottom = 320.0
+margin_bottom = 358.0
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/cursor_color = Color( 0, 0, 0, 1 )
 custom_colors/clear_button_color_pressed = Color( 0, 0, 0, 1 )
@@ -276,18 +244,18 @@ placeholder_alpha = 1.0
 
 [node name="生日" type="Label" parent="BackgroundPicture/BackgroundControl"]
 margin_left = 55.0
-margin_top = 347.0
+margin_top = 407.0
 margin_right = 145.0
-margin_bottom = 381.0
+margin_bottom = 441.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 2 )
 text = "Birth"
 
 [node name="BirthdayLineEdit" type="LineEdit" parent="BackgroundPicture/BackgroundControl"]
 margin_left = 55.0
-margin_top = 380.0
+margin_top = 440.0
 margin_right = 335.0
-margin_bottom = 430.0
+margin_bottom = 490.0
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/cursor_color = Color( 0, 0, 0, 1 )
 custom_colors/clear_button_color_pressed = Color( 0, 0, 0, 1 )
@@ -307,18 +275,18 @@ placeholder_alpha = 0.296
 
 [node name="信箱" type="Label" parent="BackgroundPicture/BackgroundControl"]
 margin_left = 400.0
-margin_top = 127.0
+margin_top = 145.0
 margin_right = 490.0
-margin_bottom = 161.0
+margin_bottom = 179.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 2 )
 text = "Gmail"
 
 [node name="MailLineEdit" type="LineEdit" parent="BackgroundPicture/BackgroundControl"]
 margin_left = 400.0
-margin_top = 160.0
+margin_top = 178.0
 margin_right = 680.0
-margin_bottom = 210.0
+margin_bottom = 228.0
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/cursor_color = Color( 0, 0, 0, 1 )
 custom_colors/clear_button_color_pressed = Color( 0, 0, 0, 1 )
@@ -336,18 +304,18 @@ placeholder_alpha = 1.0
 
 [node name="電話" type="Label" parent="BackgroundPicture/BackgroundControl"]
 margin_left = 400.0
-margin_top = 347.0
+margin_top = 407.0
 margin_right = 490.0
-margin_bottom = 381.0
+margin_bottom = 441.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 2 )
 text = "Phone"
 
 [node name="PhoneLineEdit" type="LineEdit" parent="BackgroundPicture/BackgroundControl"]
 margin_left = 400.0
-margin_top = 380.0
+margin_top = 440.0
 margin_right = 680.0
-margin_bottom = 430.0
+margin_bottom = 490.0
 custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/cursor_color = Color( 0, 0, 0, 1 )
 custom_colors/clear_button_color_pressed = Color( 0, 0, 0, 1 )
@@ -365,14 +333,14 @@ deselect_on_focus_loss_enabled = false
 placeholder_alpha = 1.0
 
 [node name="BackButton" type="Button" parent="BackgroundPicture/BackgroundControl"]
-anchor_left = 1.0
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -241.5
-margin_top = -258.0
-margin_right = -65.5
-margin_bottom = -214.0
+margin_left = -88.0
+margin_top = -138.0
+margin_right = 88.0
+margin_bottom = -94.0
 custom_colors/font_color_disabled = Color( 0, 0.0156863, 1, 1 )
 custom_colors/font_color_focus = Color( 0, 0.0156863, 1, 1 )
 custom_colors/font_color = Color( 0, 0.0156863, 1, 1 )
@@ -392,9 +360,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -315.0
-margin_top = -328.0
+margin_top = -213.0
 margin_right = 315.0
-margin_bottom = -280.0
+margin_bottom = -165.0
 custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
 custom_colors/font_color_focus = Color( 1, 1, 1, 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
@@ -416,19 +384,6 @@ margin_bottom = 103.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 14 )
 text = "Registration"
-
-[node name="or" type="Label" parent="BackgroundPicture/BackgroundControl"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -295.5
-margin_top = 182.5
-margin_right = 295.5
-margin_bottom = 209.5
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 15 )
-text = "----------------------------------  or  ----------------------------------"
 
 [node name="Failed" type="WindowDialog" parent="BackgroundPicture"]
 anchor_left = 0.5

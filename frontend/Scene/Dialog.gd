@@ -32,6 +32,7 @@ func _ready():
 	#只等一次
 	#$Timer.one_shot = true
 
+
 #追蹤新輸入文字，自動下拉對話視窗
 func handle_scrollbar_changed():
 	if max_scroll_length != scrollbar.max_value:
@@ -93,7 +94,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 		response = response.insert(0, "      ")
 		
 		while responseLength > index:
-			response = response.insert(index, "\n      ")
+			response = response.insert(index, "     " + "\n")
 			index  = index + 40
 
 		ai_response.set_text(response)
