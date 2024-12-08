@@ -566,10 +566,8 @@ def authorize():
     user_info = resp.json()
     print("User info received:", user_info)
 
-    # 獲取可能為 None 的欄位
-    user_school = user_info.get('hd')  # 如果 'hd' 不存在，則為 None
-    profile_picture = user_info.get('picture')  # 如果 'picture' 不存在，則為 None
-    print("Extracted user_school:", user_school, "and profile_picture:", profile_picture)
+    user_school = user_info.get('hd')
+    profile_picture = user_info.get('picture')
 
     connection = create_db_connection()
     if connection is not None:
@@ -578,22 +576,20 @@ def authorize():
             cursor = connection.cursor()
             print("Database cursor created.")
 
-            # 檢查使用者是否已存在
             cursor.execute("SELECT user_id FROM User WHERE google_id = %s OR user_email = %s",
                            (user_info['id'], user_info['email']))
             user = cursor.fetchone()
             print("User lookup result:", user)
-
+            
             if user is None:
-                # 獲取新的 user_id
+                print("No existing user found. Attempting to create a new user.")
                 cursor.execute("SELECT MAX(user_id) FROM User")
                 result = cursor.fetchone()
                 max_id = result[0] if result[0] is not None else 0
-                print("Max user_id in the database:", max_id)
+                print("Max user_id found:", max_id)
                 new_user_id = max_id + 1
                 print("Assigning new user_id:", new_user_id)
 
-                # 插入新使用者資料
                 sql = """
                 INSERT INTO User (user_id, google_id, user_name, profile_picture, user_email, user_school, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
@@ -602,16 +598,15 @@ def authorize():
                     new_user_id,
                     user_info['id'],
                     user_info['name'],
-                    profile_picture,  # 允許 None 傳遞
+                    profile_picture,
                     user_info['email'],
-                    user_school,  # 允許 None 傳遞
+                    user_school,
                     datetime.now().date()
                 ))
                 connection.commit()
                 print("New user inserted with user_id:", new_user_id)
                 user_id = new_user_id
             else:
-                # 更新現有使用者資料
                 user_id = user[0]
                 print("User already exists with user_id:", user_id)
                 sql = """
@@ -622,29 +617,29 @@ def authorize():
                 cursor.execute(sql, (
                     user_info['id'],
                     user_info['name'],
-                    profile_picture,  # 允許 None 傳遞
-                    user_school,  # 允許 None 傳遞
+                    profile_picture,
+                    user_school,
                     user_id
                 ))
                 connection.commit()
                 print("Existing user updated with user_id:", user_id)
 
-            # 插入登入記錄
             print("Inserting login record for user_id:", user_id)
             insert_login_record(user_id, True)
             session['user_id'] = user_id
             print("Session set for user_id:", user_id)
             return {"message": f"Login successfully as {user_info['name']}!", "user_id": user_id}, 200
         except Error as e:
-            # 處理例外並插入失敗的登入記錄
             print("Error occurred:", e)
             insert_login_record(None, False)
             return {"error": str(e)}, 500
         finally:
-            # 確保資源被正確釋放
-            print("Closing database resources.")
-            cursor.close()
-            connection.close()
+            try:
+                print("Closing database resources.")
+                cursor.close()
+                connection.close()
+            except mysql.connector.errors.InternalError as e:
+                print("Error closing cursor:", e)
     else:
         print("Failed to connect to the database.")
         return {"error": "Unable to connect to the database"}, 500
