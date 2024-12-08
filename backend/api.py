@@ -2298,6 +2298,11 @@ class UploadCSV(Resource):
             print("Validating data types...")
             df['answer'] = pd.to_numeric(df['answer'], errors='coerce').fillna(0).astype(int)
 
+            # 過濾題目字數超過 120 的資料
+            print("Filtering rows with content exceeding 120 characters...")
+            df = df[df['shortquestion_content'].str.len() <= 120]
+            print(f"Filtered down to {len(df)} rows from {len(df)} original rows after content filtering.")
+
             # 過濾選項字數超過 10 的資料
             print("Filtering rows with options exceeding 10 characters...")
             filtered_df = df[
@@ -2306,7 +2311,7 @@ class UploadCSV(Resource):
                 (df['shortquestion_option3'].str.len() <= 10) &
                 (df['shortquestion_option4'].str.len() <= 10)
             ]
-            print(f"Filtered down to {len(filtered_df)} rows from {len(df)} original rows.")
+            print(f"Filtered down to {len(filtered_df)} rows after option filtering.")
 
             # 建立資料庫連線
             print("Connecting to database...")
