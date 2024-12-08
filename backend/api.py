@@ -2232,6 +2232,121 @@ class MatchUser(Resource):
         else:
             return {"error": "Unable to connect to the database"}, 500
 
+csv_upload_parser = reqparse.RequestParser()
+csv_upload_parser.add_argument(
+    'file', type=FileStorage, location='files', required=True, help='上傳包含短題目資料的 CSV 檔案'
+)
+csv_upload_parser.add_argument(
+    'shortquestion_age', type=int, required=True, help='設定短題目適合的年齡'
+)   
+@shortquestion_ns.route('/upload_csv')
+class UploadCSV(Resource):
+    @shortquestion_ns.expect(csv_upload_parser)
+    def post(self):
+        """
+        上傳 CSV 並插入到 ShortQuestion 資料表中
+        CSV 格式:
+        作者 | 分數 | 秒數 | 題目 | 正確答案 | 選項一 | 選項二 | 選項三 | 選項四 | 選項五
+        """
+        args = csv_upload_parser.parse_args()
+        uploaded_file = args['file']
+        shortquestion_age = args['shortquestion_age']
+
+        if not uploaded_file:
+            print("No file uploaded")
+            return {"error": "No file uploaded"}, 400
+
+        try:
+            # 讀取 CSV 檔案
+            print("Reading uploaded file...")
+            df = pd.read_csv(uploaded_file.stream)
+            print(f"File read successfully with {len(df)} rows.")
+
+            # 驗證 CSV 是否包含必要欄位
+            required_columns = ['作者', '分數', '秒數', '題目', '正確答案', '選項一', '選項二', '選項三', '選項四', '選項五']
+            if not all(col in df.columns for col in required_columns):
+                missing_columns = [col for col in required_columns if col not in df.columns]
+                print(f"Missing columns: {missing_columns}")
+                return {"error": "CSV 檔案缺少必要的欄位"}, 400
+
+            # 清理和轉換資料
+            print("Processing data...")
+            df = df[['題目', '正確答案', '選項一', '選項二', '選項三', '選項四']].rename(
+                columns={
+                    '題目': 'shortquestion_content',
+                    '正確答案': 'answer',
+                    '選項一': 'shortquestion_option1',
+                    '選項二': 'shortquestion_option2',
+                    '選項三': 'shortquestion_option3',
+                    '選項四': 'shortquestion_option4'
+                }
+            )
+            df['shortquestion_age'] = shortquestion_age  # 使用手動輸入的年齡值
+
+            # 處理 NaN 值
+            print("Filling missing values...")
+            df.fillna({
+                'shortquestion_content': '',
+                'answer': 0,
+                'shortquestion_option1': '',
+                'shortquestion_option2': '',
+                'shortquestion_option3': '',
+                'shortquestion_option4': ''
+            }, inplace=True)
+
+            # 確保數據類型正確
+            print("Validating data types...")
+            df['answer'] = pd.to_numeric(df['answer'], errors='coerce').fillna(0).astype(int)
+
+            # 過濾選項字數超過 10 的資料
+            print("Filtering rows with options exceeding 10 characters...")
+            filtered_df = df[
+                (df['shortquestion_option1'].str.len() <= 10) &
+                (df['shortquestion_option2'].str.len() <= 10) &
+                (df['shortquestion_option3'].str.len() <= 10) &
+                (df['shortquestion_option4'].str.len() <= 10)
+            ]
+            print(f"Filtered down to {len(filtered_df)} rows from {len(df)} original rows.")
+
+            # 建立資料庫連線
+            print("Connecting to database...")
+            connection = create_db_connection()
+            if connection is not None:
+                cursor = connection.cursor()
+                print("Database connection established. Inserting records...")
+
+                # 插入資料
+                insert_query = """
+                INSERT INTO ShortQuestion (
+                    shortquestion_content, answer, shortquestion_option1,
+                    shortquestion_option2, shortquestion_option3, shortquestion_option4,
+                    shortquestion_age
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s)
+                """
+                for index, row in filtered_df.iterrows():
+                    cursor.execute(insert_query, (
+                        row['shortquestion_content'], row['answer'],
+                        row['shortquestion_option1'], row['shortquestion_option2'],
+                        row['shortquestion_option3'], row['shortquestion_option4'],
+                        row['shortquestion_age']
+                    ))
+                    if (index + 1) % 10 == 0:  # 每插入 10 條顯示一次進度
+                        print(f"{index + 1} records inserted...")
+
+                connection.commit()
+                print(f"All {len(filtered_df)} records inserted successfully.")
+                return {"message": "CSV data uploaded successfully"}, 201
+            else:
+                print("Unable to connect to the database.")
+                return {"error": "Unable to connect to the database"}, 500
+        except Exception as e:
+            print(f"Error occurred: {e}")
+            return {"error": str(e)}, 500
+        finally:
+            if connection:
+                connection.close()
+            print("Database connection closed.")
+
 @compete_ns.route('/cancel_queue')
 class CancelQueue(Resource):
     @compete_ns.expect(match_parser)
