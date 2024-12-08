@@ -625,7 +625,7 @@ def authorize():
                     repr(user_school),
                     repr(user_id)
                 )
-                
+
                 # 打印格式化後的 SQL
                 print("Executing SQL:", formatted_sql)
 
@@ -691,7 +691,7 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 app.config['MAIL_USERNAME'] = '110306047@g.nccu.edu.tw'
 app.config['MAIL_PASSWORD'] = 'ahwesebrfcsdrvkl'
-app.config['MAIL_DEFAULT_SENDER'] = ('Reading King', 'reading@gmail.com')
+app.config['MAIL_DEFAULT_SENDER'] = ('猛讀 EduVenture', 'eduventure@gmail.com')
 
 mail = Mail(app)
 
