@@ -206,6 +206,10 @@ func _on_timeout():
 			get_tree().change_scene("res://Scene/Battle_Lose.tscn")
 
 func _on_delay_timeout():
+	if GlobalVar.player_score >= GlobalVar.opponent_score:
+		get_tree().change_scene("res://Scene/Battle_Win.tscn")
+	else:
+		get_tree().change_scene("res://Scene/Battle_Lose.tscn")
 	get_tree().set_meta("player_score", current_score_1)
 	get_tree().set_meta("opponent_score", current_score_2)
 
